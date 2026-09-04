@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transactions — SGTBL</title>
+<link rel="icon" href="assets/img/sgtbl-logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<style>
+.txn-table td:first-child { white-space: nowrap; }
+.team-tag { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; padding: 3px 9px; border-radius: var(--radius-sm); color: #fff; font-size: var(--text-xs); }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>St. Gabriel Basketball</span></span></a>
+    <nav aria-label="Primary"><ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="standings.html">Standings</a></li>
+      <li><a href="teams.html">Teams</a></li>
+      <li><a href="players.html">Players</a></li>
+      <li><a href="leaderboards.html">Leaderboards</a></li>
+      <li><a href="games.html">Games</a></li>
+      <li><a href="transactions.html" aria-current="page">Transactions</a></li>
+    </ul></nav>
+    <div class="nav-actions">
+      <a class="btn btn-outline btn-sm" href="admin/login.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>Captain / Admin</a>
+      <button class="btn btn-icon btn-ghost nav-toggle" aria-label="Toggle menu" aria-expanded="false" style="color:#fff"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap section">
+    <div class="section-head"><div><span class="eyebrow">Auto-posted · Admin reviewed</span><h1>Transactions Log</h1></div></div>
+
+    <div class="filters">
+      <div class="field"><label for="ftype">Type</label><select id="ftype" class="input"><option>All Types</option><option>Trade</option><option>Draft</option><option>Signing</option><option>Injury</option><option>Waiver</option></select></div>
+      <div class="field"><label for="fteam2">Team</label><select id="fteam2" class="input"><option>All Teams</option><option>Lions</option><option>Eagles</option><option>Sharks</option><option>Wolves</option><option>Tigers</option><option>Rams</option></select></div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="table txn-table">
+        <thead><tr><th>Date</th><th>Team</th><th>Type</th><th>Details</th></tr></thead>
+        <tbody>
+          <tr><td class="tnum">Aug 22</td><td><span class="team-tag" style="background:var(--team-sharks-bg)">SHK</span></td><td><span class="badge badge-info">Trade</span></td><td>Traded reserve rights to E. Marsh and 40 pts to Wolves for D. Okafor</td></tr>
+          <tr><td class="tnum">Aug 22</td><td><span class="team-tag" style="background:var(--team-wolves-bg)">WLV</span></td><td><span class="badge badge-info">Trade</span></td><td>Traded D. Okafor to Sharks for reserve rights to E. Marsh and 40 pts</td></tr>
+          <tr><td class="tnum">Aug 21</td><td><span class="team-tag" style="background:var(--team-rams-bg)">RAM</span></td><td><span class="badge">Signing</span></td><td>Signed free agent T. Nguyen (Right Back)</td></tr>
+          <tr><td class="tnum">Aug 20</td><td><span class="team-tag" style="background:var(--team-tigers-bg)">TIG</span></td><td><span class="badge badge-warning">Injury</span></td><td>Placed J. Cole on injured reserve (knee)</td></tr>
+          <tr><td class="tnum">Aug 18</td><td><span class="team-tag" style="background:var(--team-eagles-bg)">EAG</span></td><td><span class="badge badge-danger">Waiver</span></td><td>Waived K. Farrow</td></tr>
+          <tr><td class="tnum">Aug 12</td><td><span class="team-tag" style="background:var(--team-lions-bg)">LIO</span></td><td><span class="badge badge-warning">Injury</span></td><td>Chloe Turner listed Day-to-Day (ankle)</td></tr>
+          <tr><td class="tnum">Jun 14</td><td><span class="team-tag" style="background:var(--team-lions-bg)">LIO</span></td><td><span class="badge badge-accent">Draft</span></td><td>Won Marcus Bello — Season 1 Auction Draft</td></tr>
+          <tr><td class="tnum">Jun 14</td><td><span class="team-tag" style="background:var(--team-eagles-bg)">EAG</span></td><td><span class="badge badge-accent">Draft</span></td><td>Won Priya Nandan — Season 1 Auction Draft</td></tr>
+          <tr><td class="tnum">Jun 14</td><td><span class="team-tag" style="background:var(--team-sharks-bg)">SHK</span></td><td><span class="badge badge-accent">Draft</span></td><td>Won Devon Okafor — Season 1 Auction Draft</td></tr>
+          <tr><td class="tnum">Jun 1</td><td><span class="team-tag" style="background:var(--team-lions-bg)">LIO</span></td><td><span class="badge">Signing</span></td><td>Re-signed Ana Reyes for the 2026 season</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div><a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word" style="color:#fff">SGTBL<span>St. Gabriel Basketball</span></span></a></div>
+    <div><h4>League</h4><ul><li><a href="standings.html">Standings</a></li><li><a href="teams.html">Teams</a></li><li><a href="games.html">Schedule</a></li></ul></div>
+    <div><h4>Stats</h4><ul><li><a href="players.html">Players</a></li><li><a href="leaderboards.html">Leaderboards</a></li><li><a href="transactions.html">Transactions</a></li></ul></div>
+    <div><h4>League Office</h4><ul><li><a href="admin/login.html">Captain / Admin Login</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 St. Gabriel Team Basketball League</span></div>
+</footer>
+<script src="assets/js/interactions.js"></script>
+</body>
+</html>

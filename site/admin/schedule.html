@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schedule &amp; Results — SGTBL Admin</title>
+<link rel="icon" href="../assets/img/sgtbl-logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body class="admin">
+<div class="admin-shell">
+  <div class="admin-scrim"></div>
+  <aside class="admin-side">
+    <a class="brand" href="dashboard.html"><img src="../assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>Admin Portal</span></span></a>
+    <ul class="admin-nav">
+      <li class="nav-group-label">League Operations</li>
+      <li><a href="dashboard.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Dashboard</a></li>
+      <li><a href="schedule.html" aria-current="page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>Schedule &amp; Results</a></li>
+      <li><a href="stats.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Stats</a></li>
+      <li><a href="scorekeeping.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-8z"/></svg>Scorekeeping</a></li>
+      <li class="nav-group-label">Roster &amp; Economy</li>
+      <li><a href="economy.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-6"/></svg>Points / Draft Economy</a></li>
+      <li><a href="draft.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v4a4 4 0 01-8 0V4z"/><path d="M8 6H5a3 3 0 003 3M16 6h3a3 3 0 01-3 3"/><path d="M10 14h4v3h-4z"/><path d="M8 21h8"/></svg>Draft Suite</a></li>
+      <li><a href="registrations.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3.5-6 7-6s7 2 7 6"/><path d="M19 8v6M22 11h-6"/></svg>Registrations</a></li>
+      <li class="nav-group-label">Data &amp; Publishing</li>
+      <li><a href="data-sync.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10a8 8 0 00-14.6-4.6M4 14a8 8 0 0014.6 4.6"/></svg>Data Sync</a></li>
+      <li><a href="publishing.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>Publishing Queue<span class="badge-count">3</span></a></li>
+    </ul>
+    <div class="admin-side-foot"><div class="admin-user"><span class="avatar avatar-sm av-6">S</span><div><div class="name">Smith</div><div class="role">Commissioner &amp; League Admin</div><span class="portal-tag role-admin">Admin</span></div></div></div>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <button class="btn btn-icon btn-ghost admin-topbar-toggle" aria-label="Toggle navigation"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <h1>Schedule &amp; Results</h1>
+      <div class="spacer"></div>
+      <button class="btn btn-primary btn-sm"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Add Game</button>
+      <div class="notif-wrap">
+        <button class="btn btn-icon btn-ghost" id="notifBtn" aria-haspopup="true" aria-expanded="false" aria-label="Notifications">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          <span class="notif-badge">2</span>
+        </button>
+        <div class="notif-panel" id="notifPanel" hidden>
+          <div class="notif-panel-head">Notifications</div>
+          <div class="notif-list">
+            <div class="notif-item unread">
+              <span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></span>
+              <div><div>Recap published: <strong>Lions 27, Eagles 24</strong></div><time>12 minutes ago</time></div>
+            </div>
+            <div class="notif-item unread">
+              <span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg></span>
+              <div><div>Transfer processed — <strong>D. Okafor</strong> now on Sharks' active roster</div><time>2 hours ago</time></div>
+            </div>
+            <div class="notif-item">
+              <span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></span>
+              <div><div>Reminder: roster freeze begins <strong>Sep 8</strong> league-wide (1 week out)</div><time>1 day ago</time></div>
+            </div>
+            <div class="notif-item">
+              <span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4M12 17h.01"/></svg></span>
+              <div><div>Injury update: <strong>Chloe Turner</strong> listed Day-to-Day (ankle)</div><time>3 days ago</time></div>
+            </div>
+          </div>
+          <a class="notif-panel-foot" href="#">Mark all as read</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <div class="tabbar" data-tabbar role="tablist">
+        <button role="tab" aria-selected="true" aria-controls="p-builder" id="t-builder">Schedule Builder</button>
+        <button role="tab" aria-selected="false" aria-controls="p-manual" id="t-manual">Manual Result Entry</button>
+      </div>
+
+      <div id="p-builder" class="tabpanel" role="tabpanel" aria-labelledby="t-builder">
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th>Week</th><th>Matchup</th><th>Date &amp; Time</th><th>Slot</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr><td>14</td><td>Lions vs Eagles</td><td class="tnum">Fri, Aug 22, 8:00 PM</td><td>Anchor Game</td><td><span class="badge">Final</span></td><td><button class="btn btn-outline btn-sm">Edit</button></td></tr>
+              <tr><td>15</td><td>Sharks vs Wolves</td><td class="tnum">Sat, Aug 29, 10:00 AM</td><td>Saturday</td><td><span class="badge badge-live">Live</span></td><td><a class="btn btn-primary btn-sm" href="scorekeeping.html">Score</a></td></tr>
+              <tr><td>15</td><td>Tigers vs Rams</td><td class="tnum">Sat, Aug 29, 11:30 AM</td><td>Saturday</td><td><span class="badge badge-info">Scheduled</span></td><td><button class="btn btn-outline btn-sm">Edit</button></td></tr>
+              <tr><td>15</td><td>Lions vs Eagles</td><td class="tnum">Fri, Sep 4, 8:00 PM</td><td>Anchor Game</td><td><span class="badge badge-info">Scheduled</span></td><td><button class="btn btn-outline btn-sm">Edit</button></td></tr>
+              <tr><td>16</td><td>Playoffs — Round 1 (seeding TBD)</td><td class="tnum">Week of Sep 11</td><td>—</td><td><span class="badge badge-warning">Bracket TBD</span></td><td><button class="btn btn-outline btn-sm">Edit</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="margin:var(--space-6) 0 var(--space-4)">Add a Game</h3>
+        <div class="card card-pad" style="max-width:640px">
+          <div class="field-row" style="margin-bottom:var(--space-4)">
+            <div class="field"><label for="home">Home Team</label><select id="home" class="input"><option>Lions</option><option>Eagles</option><option>Sharks</option><option>Wolves</option><option>Tigers</option><option>Rams</option></select></div>
+            <div class="field"><label for="away">Away Team</label><select id="away" class="input"><option>Eagles</option><option>Lions</option><option>Sharks</option><option>Wolves</option><option>Tigers</option><option>Rams</option></select></div>
+          </div>
+          <div class="field-row" style="margin-bottom:var(--space-4)">
+            <div class="field"><label for="date">Date</label><input id="date" type="date" class="input"></div>
+            <div class="field"><label for="time">Time</label><input id="time" type="time" class="input"></div>
+            <div class="field"><label for="court">Slot</label><select id="court" class="input"><option>Friday Anchor Game</option><option>Saturday</option></select></div>
+          </div>
+          <button class="btn btn-primary">Add to Schedule</button>
+        </div>
+      </div>
+
+      <div id="p-manual" class="tabpanel" role="tabpanel" aria-labelledby="t-manual" hidden>
+        <div class="card card-pad" style="max-width:520px;margin-bottom:var(--space-5)">
+          <span class="badge badge-warning" style="margin-bottom:var(--space-3)">Fallback path</span>
+          <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-4)">Use this when the AI video sync is unavailable or delayed. Manually entered results feed the same internal stats schema and become the source of truth to reconcile against once the vendor feed catches up.</p>
+          <div class="field" style="margin-bottom:var(--space-4)">
+            <label for="mgame">Game</label>
+            <select id="mgame" class="input"><option>Sharks vs Wolves — Aug 29</option><option>Tigers vs Rams — Aug 29</option><option>Lions vs Eagles — Aug 30</option></select>
+          </div>
+          <div class="field-row" style="margin-bottom:var(--space-4)">
+            <div class="field"><label for="hscore">Home Score</label><input id="hscore" type="number" class="input" placeholder="0"></div>
+            <div class="field"><label for="ascore">Away Score</label><input id="ascore" type="number" class="input" placeholder="0"></div>
+          </div>
+          <div class="field" style="margin-bottom:var(--space-4)">
+            <label for="notes">Notes</label>
+            <textarea id="notes" class="input" placeholder="Top performers, notable plays…"></textarea>
+          </div>
+          <button class="btn btn-primary btn-block">Submit Final Result</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="../assets/js/interactions.js"></script>
+</body>
+</html>

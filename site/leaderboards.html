@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stats Leaderboards — SGTBL</title>
+<link rel="icon" href="assets/img/sgtbl-logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>St. Gabriel Basketball</span></span></a>
+    <nav aria-label="Primary"><ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="standings.html">Standings</a></li>
+      <li><a href="teams.html">Teams</a></li>
+      <li><a href="players.html">Players</a></li>
+      <li><a href="leaderboards.html" aria-current="page">Leaderboards</a></li>
+      <li><a href="games.html">Games</a></li>
+      <li><a href="transactions.html">Transactions</a></li>
+    </ul></nav>
+    <div class="nav-actions">
+      <a class="btn btn-outline btn-sm" href="admin/login.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>Captain / Admin</a>
+      <button class="btn btn-icon btn-ghost nav-toggle" aria-label="Toggle menu" aria-expanded="false" style="color:#fff"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap section">
+    <div class="section-head"><div><span class="eyebrow">Sortable · Filterable · Video-derived</span><h1>Stats Leaderboards</h1></div></div>
+
+    <div class="filters">
+      <div class="field search"><label for="lq">Search</label><input id="lq" class="input" type="search" placeholder="Search players…" data-filter-input="tbody tr"></div>
+      <div class="field"><label for="lstat">Stat Category</label><select id="lstat" class="input"><option>Scoring</option><option>Playmaking</option><option>Goalkeeping</option><option>Video-Derived</option></select></div>
+      <div class="field"><label for="lpos">Position</label><select id="lpos" class="input"><option>All Positions</option><option>Wing</option><option>Back</option><option>Center Back</option><option>Pivot</option><option>Goalkeeper</option></select></div>
+      <div class="field"><label for="lmin">Min. Games</label><select id="lmin" class="input"><option>Qualified (10+)</option><option>All Players</option></select></div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="table" data-sortable>
+        <thead>
+          <tr>
+            <th>Rk</th>
+            <th aria-sort="none">Player <span class="sort-caret">▾</span></th>
+            <th>Team</th>
+            <th class="num" aria-sort="descending">G/G <span class="sort-caret">▾</span></th>
+            <th class="num" aria-sort="none">Ast/G <span class="sort-caret">▾</span></th>
+            <th class="num" aria-sort="none">Sh% <span class="sort-caret">▾</span></th>
+            <th class="num" aria-sort="none">Shot Spd<span class="sort-caret">▾</span></th>
+            <th class="num" aria-sort="none">TO/G <span class="sort-caret">▾</span></th>
+            <th class="num" aria-sort="none">GP <span class="sort-caret">▾</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="rank-cell">1</td><td><a href="player.html" style="font-weight:700">Marcus Bello</a></td><td>Lions</td><td class="num" data-sort-value="7.8">7.8</td><td class="num" data-sort-value="3.1">3.1</td><td class="num" data-sort-value="61">61%</td><td class="num" data-sort-value="52.4">52.4 mph</td><td class="num" data-sort-value="1.3">1.3</td><td class="num" data-sort-value="14">14</td></tr>
+          <tr><td class="rank-cell">2</td><td><a href="player.html">Devon Okafor</a></td><td>Sharks</td><td class="num" data-sort-value="7.1">7.1</td><td class="num" data-sort-value="2.4">2.4</td><td class="num" data-sort-value="58">58%</td><td class="num" data-sort-value="54.1">54.1 mph</td><td class="num" data-sort-value="1.8">1.8</td><td class="num" data-sort-value="14">14</td></tr>
+          <tr><td class="rank-cell">3</td><td><a href="player.html">Priya Nandan</a></td><td>Eagles</td><td class="num" data-sort-value="6.9">6.9</td><td class="num" data-sort-value="4.0">4.0</td><td class="num" data-sort-value="55">55%</td><td class="num" data-sort-value="49.8">49.8 mph</td><td class="num" data-sort-value="2.1">2.1</td><td class="num" data-sort-value="14">14</td></tr>
+          <tr><td class="rank-cell">4</td><td><a href="player.html">Tomas Reyes</a></td><td>Wolves</td><td class="num" data-sort-value="6.4">6.4</td><td class="num" data-sort-value="2.0">2.0</td><td class="num" data-sort-value="57">57%</td><td class="num" data-sort-value="51.2">51.2 mph</td><td class="num" data-sort-value="1.5">1.5</td><td class="num" data-sort-value="13">13</td></tr>
+          <tr><td class="rank-cell">5</td><td><a href="player.html">Jonah Kim</a></td><td>Lions</td><td class="num" data-sort-value="6.2">6.2</td><td class="num" data-sort-value="4.8">4.8</td><td class="num" data-sort-value="49">49%</td><td class="num" data-sort-value="46.7">46.7 mph</td><td class="num" data-sort-value="1.9">1.9</td><td class="num" data-sort-value="14">14</td></tr>
+          <tr><td class="rank-cell">6</td><td><a href="player.html">David Whitfield</a></td><td>Lions</td><td class="num" data-sort-value="5.5">5.5</td><td class="num" data-sort-value="1.9">1.9</td><td class="num" data-sort-value="53">53%</td><td class="num" data-sort-value="50.3">50.3 mph</td><td class="num" data-sort-value="1.2">1.2</td><td class="num" data-sort-value="14">14</td></tr>
+          <tr><td class="rank-cell">7</td><td><a href="player.html">Noah Delgado</a></td><td>Tigers</td><td class="num" data-sort-value="5.1">5.1</td><td class="num" data-sort-value="1.4">1.4</td><td class="num" data-sort-value="52">52%</td><td class="num" data-sort-value="48.9">48.9 mph</td><td class="num" data-sort-value="2.4">2.4</td><td class="num" data-sort-value="12">12</td></tr>
+          <tr><td class="rank-cell">8</td><td><a href="player.html">Chloe Turner</a></td><td>Lions</td><td class="num" data-sort-value="4.9">4.9</td><td class="num" data-sort-value="1.2">1.2</td><td class="num" data-sort-value="64">64%</td><td class="num" data-sort-value="44.5">44.5 mph</td><td class="num" data-sort-value="0.9">0.9</td><td class="num" data-sort-value="11">11</td></tr>
+          <tr><td class="rank-cell">9</td><td><a href="player.html">Ibrahim Saleh</a></td><td>Sharks</td><td class="num" data-sort-value="4.6">4.6</td><td class="num" data-sort-value="1.7">1.7</td><td class="num" data-sort-value="50">50%</td><td class="num" data-sort-value="47.6">47.6 mph</td><td class="num" data-sort-value="1.6">1.6</td><td class="num" data-sort-value="14">14</td></tr>
+          <tr><td class="rank-cell">10</td><td><a href="player.html">Sam Osei</a></td><td>Lions</td><td class="num" data-sort-value="4.1">4.1</td><td class="num" data-sort-value="2.3">2.3</td><td class="num" data-sort-value="46">46%</td><td class="num" data-sort-value="45.9">45.9 mph</td><td class="num" data-sort-value="1.7">1.7</td><td class="num" data-sort-value="13">13</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">Click a column header to sort. Shot Speed and other video-derived metrics populate once a game's AI stats sync is reviewed and published.</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div><a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word" style="color:#fff">SGTBL<span>St. Gabriel Basketball</span></span></a></div>
+    <div><h4>League</h4><ul><li><a href="standings.html">Standings</a></li><li><a href="teams.html">Teams</a></li><li><a href="games.html">Schedule</a></li></ul></div>
+    <div><h4>Stats</h4><ul><li><a href="players.html">Players</a></li><li><a href="leaderboards.html">Leaderboards</a></li><li><a href="transactions.html">Transactions</a></li></ul></div>
+    <div><h4>League Office</h4><ul><li><a href="admin/login.html">Captain / Admin Login</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 St. Gabriel Team Basketball League</span></div>
+</footer>
+<script src="assets/js/interactions.js"></script>
+</body>
+</html>

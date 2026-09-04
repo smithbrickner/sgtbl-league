@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marcus Bello — Lions — SGTBL</title>
+<link rel="icon" href="assets/img/sgtbl-logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<style>
+.player-layout { display: grid; grid-template-columns: 260px 1fr; gap: var(--space-6); align-items: start; }
+@media (max-width: 860px) { .player-layout { grid-template-columns: 1fr; } }
+.bio-list { display: flex; flex-direction: column; gap: 10px; font-size: var(--text-sm); }
+.bio-list div { display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.bio-list b { color: var(--text-primary); }
+.video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+@media (max-width: 700px) { .video-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>St. Gabriel Basketball</span></span></a>
+    <nav aria-label="Primary"><ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="standings.html">Standings</a></li>
+      <li><a href="teams.html">Teams</a></li>
+      <li><a href="players.html" aria-current="page">Players</a></li>
+      <li><a href="leaderboards.html">Leaderboards</a></li>
+      <li><a href="games.html">Games</a></li>
+      <li><a href="transactions.html">Transactions</a></li>
+    </ul></nav>
+    <div class="nav-actions">
+      <a class="btn btn-outline btn-sm" href="admin/login.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>Captain / Admin</a>
+      <button class="btn btn-icon btn-ghost nav-toggle" aria-label="Toggle menu" aria-expanded="false" style="color:#fff"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap" style="padding-top:var(--space-6)">
+    <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-4)"><a href="players.html" class="muted">Players</a> / Marcus Bello</p>
+
+    <div class="profile-header">
+      <div class="wrap-inner">
+        <span class="avatar avatar-xl av-1">MB</span>
+        <div>
+          <span class="eyebrow" style="color:var(--gold-400)">Lions · Left Wing · #9</span>
+          <h1>Marcus Bello</h1>
+          <div class="profile-meta"><span>Age <b>24</b></span><span>Height <b>6'1"</b></span><span>Shoots <b>Right</b></span><span>Joined <b>2024</b></span></div>
+        </div>
+        <div class="profile-actions"><a class="btn btn-accent" href="#highlights">Watch Highlights</a></div>
+      </div>
+    </div>
+
+    <div class="tabbar" data-tabbar role="tablist" style="margin-top:var(--space-6)">
+      <button role="tab" aria-selected="true" aria-controls="p-overview" id="t-overview">Overview</button>
+      <button role="tab" aria-selected="false" aria-controls="p-gamelog" id="t-gamelog">Game Log</button>
+      <button role="tab" aria-selected="false" aria-controls="p-video" id="t-video">Highlights</button>
+      <button role="tab" aria-selected="false" aria-controls="p-txn" id="t-txn">Transactions</button>
+    </div>
+
+    <div id="p-overview" class="tabpanel" role="tabpanel" aria-labelledby="t-overview">
+      <div class="player-layout" style="margin-bottom:var(--space-8)">
+        <div class="stack" style="gap:var(--space-5)">
+          <div class="card card-pad">
+            <h3 style="margin-bottom:var(--space-3)">Bio</h3>
+            <div class="bio-list">
+              <div><span>Team</span><b>Lions</b></div>
+              <div><span>Position</span><b>Left Wing</b></div>
+              <div><span>Jersey #</span><b>9</b></div>
+              <div><span>Bats / Shoots</span><b>Right</b></div>
+              <div><span>Parish</span><b>St. Gabriel</b></div>
+              <div><span>Seasons Played</span><b>3</b></div>
+            </div>
+            <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">Salary and individual points-economy allocations are not shown publicly per league policy.</p>
+          </div>
+          <div class="card card-pad">
+            <h3 style="margin-bottom:var(--space-2)">2026 Totals</h3>
+            <table class="table" style="min-width:0"><tbody>
+              <tr><td>Games</td><td class="num tnum">14</td></tr>
+              <tr><td>Goals</td><td class="num tnum">109</td></tr>
+              <tr><td>Assists</td><td class="num tnum">43</td></tr>
+              <tr><td>Shot %</td><td class="num tnum">61%</td></tr>
+              <tr><td>Turnovers</td><td class="num tnum">18</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+
+        <div class="stack" style="gap:var(--space-5)">
+          <div class="card card-pad">
+            <div class="row" style="justify-content:space-between;margin-bottom:var(--space-3)">
+              <h3>Percentile Rankings <span class="muted" style="font-weight:400;font-size:var(--text-sm)">vs. league</span></h3>
+              <span class="badge badge-info">Video-Derived</span>
+            </div>
+            <div class="percentile-row"><span class="p-label">Shot Speed</span><div class="p-track"><span class="p-marker" style="left:88%"></span></div><span class="p-val">88</span></div>
+            <div class="percentile-row"><span class="p-label">Shot Accuracy</span><div class="p-track"><span class="p-marker" style="left:74%"></span></div><span class="p-val">74</span></div>
+            <div class="percentile-row"><span class="p-label">Assist Rate</span><div class="p-track"><span class="p-marker" style="left:66%"></span></div><span class="p-val">66</span></div>
+            <div class="percentile-row"><span class="p-label">Sprint Speed</span><div class="p-track"><span class="p-marker" style="left:81%"></span></div><span class="p-val">81</span></div>
+            <div class="percentile-row"><span class="p-label">Turnover Rate</span><div class="p-track"><span class="p-marker" style="left:39%"></span></div><span class="p-val">39</span></div>
+            <div class="percentile-row"><span class="p-label">Defensive Steals</span><div class="p-track"><span class="p-marker" style="left:57%"></span></div><span class="p-val">57</span></div>
+            <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-2)">Advanced metrics activate once the AI video tracking sync is live for this game. Sample values shown.</p>
+          </div>
+
+          <div class="card card-pad">
+            <h3 style="margin-bottom:var(--space-3)">Season Trend — Goals per Game</h3>
+            <svg viewBox="0 0 480 120" style="width:100%;height:120px">
+              <polyline points="0,90 40,70 80,75 120,55 160,60 200,40 240,48 280,30 320,35 360,22 400,28 440,18 480,15" fill="none" stroke="var(--teal-600)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="0" y1="100" x2="480" y2="100" stroke="var(--border)" stroke-width="1"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="p-gamelog" class="tabpanel" role="tabpanel" aria-labelledby="t-gamelog" hidden>
+      <div class="table-wrap" style="margin-bottom:var(--space-8)">
+        <table class="table" data-sortable>
+          <thead><tr><th aria-sort="descending">Date <span class="sort-caret">▾</span></th><th>Opponent</th><th>Result</th><th class="num">G</th><th class="num">Ast</th><th class="num">Sh%</th><th class="num">TO</th></tr></thead>
+          <tbody>
+            <tr><td class="tnum">Aug 22</td><td>vs Eagles</td><td><span class="badge badge-success">W 27-24</span></td><td class="num">9</td><td class="num">3</td><td class="num">67%</td><td class="num">1</td></tr>
+            <tr><td class="tnum">Aug 15</td><td>@ Sharks</td><td><span class="badge badge-danger">L 21-25</span></td><td class="num">6</td><td class="num">2</td><td class="num">50%</td><td class="num">3</td></tr>
+            <tr><td class="tnum">Aug 8</td><td>vs Rams</td><td><span class="badge badge-success">W 33-19</span></td><td class="num">11</td><td class="num">5</td><td class="num">73%</td><td class="num">0</td></tr>
+            <tr><td class="tnum">Aug 1</td><td>vs Tigers</td><td><span class="badge badge-success">W 29-22</span></td><td class="num">8</td><td class="num">4</td><td class="num">62%</td><td class="num">2</td></tr>
+            <tr><td class="tnum">Jul 25</td><td>@ Wolves</td><td><span class="badge badge-success">W 26-23</span></td><td class="num">7</td><td class="num">2</td><td class="num">55%</td><td class="num">1</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="p-video" class="tabpanel" role="tabpanel" aria-labelledby="t-video" hidden>
+      <div id="highlights" class="video-grid" style="margin-bottom:var(--space-8)">
+        <div class="video-card">
+          <div class="video-frame"><iframe src="https://www.youtube.com/embed/D8xitFa57NI" title="Marcus Bello highlight clip 1" allowfullscreen loading="lazy"></iframe></div>
+          <div class="caption">Spin-shot game winner — Week 14 vs Eagles</div>
+        </div>
+        <div class="video-card">
+          <div class="video-frame"><iframe src="https://www.youtube.com/embed/rsHQ96CLq70" title="Marcus Bello highlight clip 2" allowfullscreen loading="lazy"></iframe></div>
+          <div class="caption">Fast-break assist to Kim — Week 12 vs Rams</div>
+        </div>
+      </div>
+      <p class="muted" style="font-size:var(--text-xs)">Clips are auto-tagged and generated by the AI video agent once a game's stats sync is published. Placeholder video shown for prototype.</p>
+    </div>
+
+    <div id="p-txn" class="tabpanel" role="tabpanel" aria-labelledby="t-txn" hidden>
+      <div class="table-wrap" style="margin-bottom:var(--space-8)">
+        <table class="table">
+          <thead><tr><th>Date</th><th>Type</th><th>Details</th></tr></thead>
+          <tbody>
+            <tr><td class="muted tnum">Jun 14, 2024</td><td><span class="badge badge-accent">Draft</span></td><td>Won by Lions — Season 1 Auction Draft</td></tr>
+            <tr><td class="muted tnum">May 2, 2025</td><td><span class="badge">Signing</span></td><td>Re-signed with Lions for 2025 season</td></tr>
+            <tr><td class="muted tnum">May 20, 2026</td><td><span class="badge">Signing</span></td><td>Re-signed with Lions for 2026 season</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div><a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word" style="color:#fff">SGTBL<span>St. Gabriel Basketball</span></span></a></div>
+    <div><h4>League</h4><ul><li><a href="standings.html">Standings</a></li><li><a href="teams.html">Teams</a></li><li><a href="games.html">Schedule</a></li></ul></div>
+    <div><h4>Stats</h4><ul><li><a href="players.html">Players</a></li><li><a href="leaderboards.html">Leaderboards</a></li><li><a href="transactions.html">Transactions</a></li></ul></div>
+    <div><h4>League Office</h4><ul><li><a href="admin/login.html">Captain / Admin Login</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 St. Gabriel Team Basketball League</span></div>
+</footer>
+<script src="assets/js/interactions.js"></script>
+</body>
+</html>

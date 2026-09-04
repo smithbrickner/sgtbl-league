@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SGTBL — St. Gabriel Team Basketball League</title>
+<meta name="description" content="Official home of the SGTBL: standings, schedules, stats, and recaps for the St. Gabriel Team Basketball League.">
+<link rel="icon" href="assets/img/sgtbl-logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="ticker" aria-label="Live and upcoming scores">
+  <div class="wrap">
+    <span class="ticker-label">THIS WEEK</span>
+    <div class="ticker-items">
+      <span class="ticker-item"><span class="badge badge-live">Live</span> <b>Sharks 14</b> · Wolves 11 — 2nd Half</span>
+      <span class="ticker-item">Sat 11:30 AM — Tigers vs Rams</span>
+      <span class="ticker-item">Fri 8:00 PM — Lions vs Eagles (Anchor Game)</span>
+      <span class="ticker-item">Final — Lions 27, Eagles 24</span>
+      <span class="ticker-item"><span class="badge badge-live">Live</span> <b>Sharks 14</b> · Wolves 11 — 2nd Half</span>
+      <span class="ticker-item">Sat 11:30 AM — Tigers vs Rams</span>
+      <span class="ticker-item">Fri 8:00 PM — Lions vs Eagles (Anchor Game)</span>
+      <span class="ticker-item">Final — Lions 27, Eagles 24</span>
+    </div>
+  </div>
+</div>
+
+<header class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest">
+      <span class="brand-word">SGTBL<span>St. Gabriel Basketball</span></span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="standings.html">Standings</a></li>
+        <li><a href="teams.html">Teams</a></li>
+        <li><a href="players.html">Players</a></li>
+        <li><a href="leaderboards.html">Leaderboards</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="transactions.html">Transactions</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-outline btn-sm" href="admin/login.html">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
+        Captain / Admin
+      </a>
+      <button class="btn btn-icon btn-ghost nav-toggle" aria-label="Toggle menu" aria-expanded="false" style="color:#fff">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <img class="hero-bg" src="assets/img/hero/hero-1.jpg" alt="">
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow">Week 14 Recap</span>
+        <h1>Lions edge Eagles 27–24 to stay atop the table</h1>
+        <p>Marcus Bello's late spin shot sealed a 27–24 win over the Eagles, keeping the Lions in the driver's seat for the No. 1 playoff seed with two games left in the regular season. The top 3 teams advance — the playoffs, not regular-season record, decide the champion.</p>
+        <div class="hero-actions">
+          <a class="btn btn-accent btn-lg" href="game.html">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7V5z" fill="currentColor" stroke="none"/></svg>
+            Watch the Recap
+          </a>
+          <a class="btn btn-outline btn-lg" href="standings.html" style="color:#fff;border-color:rgba(255,255,255,.4)">View Standings</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="row" style="justify-content:space-between;margin-bottom:10px">
+          <strong style="color:#fff">Final — Week 14</strong>
+          <span class="badge badge-accent">Box Score</span>
+        </div>
+        <div class="matchup" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)">
+          <div class="matchup-row win" style="color:#fff">
+            <span class="crest" style="background:var(--team-lions-bg)">L</span>
+            <span class="team-name">Lions</span>
+            <span class="score" style="color:var(--gold-400)">27</span>
+          </div>
+          <div class="matchup-row" style="color:rgba(255,255,255,.75)">
+            <span class="crest" style="background:var(--team-eagles-bg)">E</span>
+            <span class="team-name">Eagles</span>
+            <span class="score">24</span>
+          </div>
+        </div>
+        <p class="muted" style="color:rgba(255,255,255,.65);font-size:var(--text-xs);margin-top:10px">Final · St. Gabriel Fieldhouse · 142 attended</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap section">
+    <div class="home-grid">
+      <div class="stack" style="gap:var(--space-6)">
+
+        <div>
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Week 15</span>
+              <h2>This Week's Schedule</h2>
+            </div>
+            <a class="card-link" href="games.html">Full schedule →</a>
+          </div>
+          <div class="scroller">
+            <div class="matchup">
+              <div class="row" style="justify-content:space-between">
+                <span class="badge badge-live">Live · 2nd Half</span>
+                <span class="muted" style="font-size:var(--text-xs)">Saturday</span>
+              </div>
+              <div class="matchup-row win"><span class="crest" style="background:var(--team-sharks-bg)">S</span><span class="team-name">Sharks</span><span class="score">14</span></div>
+              <div class="matchup-row"><span class="crest" style="background:var(--team-wolves-bg)">W</span><span class="team-name">Wolves</span><span class="score">11</span></div>
+            </div>
+            <div class="matchup">
+              <div class="matchup-meta"><span>Sat, Aug 29 · 11:30 AM</span><span>Saturday</span></div>
+              <div class="matchup-row"><span class="crest" style="background:var(--team-tigers-bg)">T</span><span class="team-name">Tigers</span><span class="muted">—</span></div>
+              <div class="matchup-row"><span class="crest" style="background:var(--team-rams-bg)">R</span><span class="team-name">Rams</span><span class="muted">—</span></div>
+            </div>
+            <div class="matchup">
+              <div class="matchup-meta"><span>Fri, Sep 4 · 8:00 PM</span><span class="badge badge-accent" style="font-size:10px">Anchor Game</span></div>
+              <div class="matchup-row"><span class="crest" style="background:var(--team-lions-bg)">L</span><span class="team-name">Lions</span><span class="muted">—</span></div>
+              <div class="matchup-row"><span class="crest" style="background:var(--team-eagles-bg)">E</span><span class="team-name">Eagles</span><span class="muted">—</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-head">
+            <div><span class="eyebrow">Featured</span><h2>Latest Highlights</h2></div>
+            <a class="card-link" href="games.html">All recaps →</a>
+          </div>
+          <div class="video-card">
+            <div class="video-frame">
+              <iframe src="https://www.youtube.com/embed/mQPbdoRZYY8" title="Week 14 highlight reel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <div class="caption">Top 5 Plays — Lions vs. Eagles, Week 14</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-head">
+            <div><span class="eyebrow">Season Stats</span><h2>League Leaders</h2></div>
+            <a class="card-link" href="leaderboards.html">Full leaderboards →</a>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th>Rank</th><th>Player</th><th>Team</th><th class="num">G/G</th><th class="num">Assists/G</th><th class="num">Sh%</th></tr></thead>
+              <tbody>
+                <tr><td class="rank-cell">1</td><td><a href="player.html" style="font-weight:700">Marcus Bello</a></td><td>Lions</td><td class="num">7.8</td><td class="num">3.1</td><td class="num">61%</td></tr>
+                <tr><td class="rank-cell">2</td><td>Devon Okafor</td><td>Sharks</td><td class="num">7.1</td><td class="num">2.4</td><td class="num">58%</td></tr>
+                <tr><td class="rank-cell">3</td><td>Priya Nandan</td><td>Eagles</td><td class="num">6.9</td><td class="num">4.0</td><td class="num">55%</td></tr>
+                <tr><td class="rank-cell">4</td><td>Tomas Reyes</td><td>Wolves</td><td class="num">6.4</td><td class="num">2.0</td><td class="num">57%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="stack" style="gap:var(--space-6)">
+        <div class="card">
+          <div class="card-head"><h3>Standings Snapshot</h3><a class="card-link" href="standings.html">Full table →</a></div>
+          <div class="card-pad" style="padding-top:var(--space-4)">
+            <table class="table standings-table" style="min-width:0">
+              <thead><tr><th>#</th><th>Team</th><th class="num">W-T-L</th><th class="num">Pts</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-lions-bg)">L</span>Lions</td><td class="num tnum">10-2-1</td><td class="num tnum">32</td></tr>
+                <tr><td>2</td><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-eagles-bg)">E</span>Eagles</td><td class="num tnum">9-1-3</td><td class="num tnum">28</td></tr>
+                <tr class="playoff-line"><td>3</td><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-sharks-bg)">S</span>Sharks</td><td class="num tnum">8-2-3</td><td class="num tnum">26</td></tr>
+                <tr><td>4</td><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-wolves-bg)">W</span>Wolves</td><td class="num tnum">5-3-5</td><td class="num tnum">18</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Recent Transactions</h3><a class="card-link" href="transactions.html">View log →</a></div>
+          <div class="card-pad" style="padding-top:var(--space-2)">
+            <div class="activity-item">
+              <span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg></span>
+              <div><div><strong>Sharks</strong> traded reserve rights and 40 pts to <strong>Wolves</strong> for D. Okafor</div><time>2 hours ago</time></div>
+            </div>
+            <div class="activity-item">
+              <span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span>
+              <div><div><strong>Rams</strong> signed free agent T. Nguyen</div><time>Yesterday</time></div>
+            </div>
+            <div class="activity-item">
+              <span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4M12 17h.01"/></svg></span>
+              <div><div><strong>Tigers</strong> placed J. Cole on injured reserve</div><time>2 days ago</time></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card" style="background:var(--navy-900);border-color:var(--teal-800)">
+          <p class="eyebrow" style="color:var(--gold-400)">Registrations open</p>
+          <h3 style="color:#fff;margin-top:6px">2026–27 season sign-ups are live</h3>
+          <p style="color:rgba(255,255,255,.75);font-size:var(--text-sm);margin-top:6px">Open to any adult 18+. The season runs November through March — register early to be included in the tryout and auction draft.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <a class="brand" href="index.html">
+        <img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest">
+        <span class="brand-word" style="color:#fff">SGTBL<span>St. Gabriel Basketball</span></span>
+      </a>
+      <p class="muted" style="margin-top:var(--space-4);font-size:var(--text-sm);max-width:34ch">The official league site for St. Gabriel Team Basketball — standings, stats, schedules, and recaps.</p>
+    </div>
+    <div><h4>League</h4><ul><li><a href="standings.html">Standings</a></li><li><a href="teams.html">Teams</a></li><li><a href="games.html">Schedule</a></li></ul></div>
+    <div><h4>Stats</h4><ul><li><a href="players.html">Players</a></li><li><a href="leaderboards.html">Leaderboards</a></li><li><a href="transactions.html">Transactions</a></li></ul></div>
+    <div><h4>League Office</h4><ul><li><a href="admin/login.html">Captain / Admin Login</a></li><li><a href="admin/registrations.html">Register a Player</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 St. Gabriel Team Basketball League</span>
+    <span>Built for the SGTBL parish community</span>
+  </div>
+</footer>
+
+<script src="assets/js/interactions.js"></script>
+</body>
+</html>

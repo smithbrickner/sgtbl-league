@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Points / Draft Economy — SGTBL Admin</title>
+<link rel="icon" href="../assets/img/sgtbl-logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body class="admin">
+<div class="admin-shell">
+  <div class="admin-scrim"></div>
+  <aside class="admin-side">
+    <a class="brand" href="dashboard.html"><img src="../assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>Admin Portal</span></span></a>
+    <ul class="admin-nav">
+      <li class="nav-group-label">League Operations</li>
+      <li><a href="dashboard.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Dashboard</a></li>
+      <li><a href="schedule.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>Schedule &amp; Results</a></li>
+      <li><a href="stats.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Stats</a></li>
+      <li><a href="scorekeeping.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-8z"/></svg>Scorekeeping</a></li>
+      <li class="nav-group-label">Roster &amp; Economy</li>
+      <li><a href="economy.html" aria-current="page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-6"/></svg>Points / Draft Economy</a></li>
+      <li><a href="draft.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v4a4 4 0 01-8 0V4z"/><path d="M8 6H5a3 3 0 003 3M16 6h3a3 3 0 01-3 3"/><path d="M10 14h4v3h-4z"/><path d="M8 21h8"/></svg>Draft Suite</a></li>
+      <li><a href="registrations.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3.5-6 7-6s7 2 7 6"/><path d="M19 8v6M22 11h-6"/></svg>Registrations</a></li>
+      <li class="nav-group-label">Data &amp; Publishing</li>
+      <li><a href="data-sync.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10a8 8 0 00-14.6-4.6M4 14a8 8 0 0014.6 4.6"/></svg>Data Sync</a></li>
+      <li><a href="publishing.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>Publishing Queue<span class="badge-count">3</span></a></li>
+    </ul>
+    <div class="admin-side-foot"><div class="admin-user"><span class="avatar avatar-sm av-6">S</span><div><div class="name">Smith</div><div class="role">Commissioner &amp; League Admin</div><span class="portal-tag role-admin">Admin</span></div></div></div>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <button class="btn btn-icon btn-ghost admin-topbar-toggle" aria-label="Toggle navigation"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <h1>Points / Draft Economy Engine</h1>
+      <span class="env-pill">Admin &amp; captains only — never public</span>
+      <div class="spacer"></div>
+      <div class="notif-wrap">
+        <button class="btn btn-icon btn-ghost" id="notifBtn" aria-haspopup="true" aria-expanded="false" aria-label="Notifications">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          <span class="notif-badge">2</span>
+        </button>
+        <div class="notif-panel" id="notifPanel" hidden>
+          <div class="notif-panel-head">Notifications</div>
+          <div class="notif-list">
+            <div class="notif-item unread">
+              <span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></span>
+              <div><div>Recap published: <strong>Lions 27, Eagles 24</strong></div><time>12 minutes ago</time></div>
+            </div>
+            <div class="notif-item unread">
+              <span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg></span>
+              <div><div>Transfer processed — <strong>D. Okafor</strong> now on Sharks' active roster</div><time>2 hours ago</time></div>
+            </div>
+            <div class="notif-item">
+              <span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></span>
+              <div><div>Reminder: roster freeze begins <strong>Sep 8</strong> league-wide (1 week out)</div><time>1 day ago</time></div>
+            </div>
+            <div class="notif-item">
+              <span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4M12 17h.01"/></svg></span>
+              <div><div>Injury update: <strong>Chloe Turner</strong> listed Day-to-Day (ankle)</div><time>3 days ago</time></div>
+            </div>
+          </div>
+          <a class="notif-panel-foot" href="#">Mark all as read</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <div class="card" style="margin-bottom:var(--space-6)">
+        <div class="card-head"><h3>Active-Roster Value vs. 70% Floor</h3><span class="muted" style="font-size:var(--text-xs)">Per League Structure §6.C</span></div>
+        <div class="card-pad">
+          <div class="cap-chart">
+            <div class="cap-floor-line"><span>70% Floor</span></div>
+            <div class="cap-bar-col"><div class="cap-bar" style="height:98%;background:var(--team-lions-bg)"></div><span class="cap-bar-label">LIO</span></div>
+            <div class="cap-bar-col"><div class="cap-bar" style="height:92%;background:var(--team-eagles-bg)"></div><span class="cap-bar-label">EAG</span></div>
+            <div class="cap-bar-col"><div class="cap-bar under-floor" style="height:69%"></div><span class="cap-bar-label">SHK</span></div>
+            <div class="cap-bar-col"><div class="cap-bar" style="height:97%;background:var(--team-wolves-bg)"></div><span class="cap-bar-label">WLV</span></div>
+            <div class="cap-bar-col"><div class="cap-bar" style="height:92%;background:var(--team-tigers-bg)"></div><span class="cap-bar-label">TIG</span></div>
+            <div class="cap-bar-col"><div class="cap-bar" style="height:87%;background:var(--team-rams-bg)"></div><span class="cap-bar-label">RAM</span></div>
+          </div>
+          <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">Bar height = each team's active-roster value as a % of their own points budget. At least 70% must be on the active roster at all times; up to 30% may be banked in reserves or saved for a future transaction. Sharks have fallen below the floor and can't process another transaction until they clear it.</p>
+        </div>
+      </div>
+
+      <div class="grid" style="grid-template-columns:1fr 1fr;margin-bottom:var(--space-6)">
+        <div class="card">
+          <div class="card-head"><h3>Team Budget Summary</h3></div>
+          <div class="card-pad" style="padding-top:var(--space-3)">
+            <table class="table" style="min-width:0"><thead><tr><th>Team</th><th class="num">Budget</th><th class="num">Active</th><th class="num">Active %</th></tr></thead><tbody>
+              <tr><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-lions-bg)">L</span>Lions</td><td class="num tnum">900</td><td class="num tnum">882</td><td class="num tnum" style="color:var(--success)">98%</td></tr>
+              <tr><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-eagles-bg)">E</span>Eagles</td><td class="num tnum">880</td><td class="num tnum">810</td><td class="num tnum" style="color:var(--success)">92%</td></tr>
+              <tr><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-sharks-bg)">S</span>Sharks</td><td class="num tnum">865</td><td class="num tnum">597</td><td class="num tnum" style="color:var(--danger)">69%</td></tr>
+              <tr><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-wolves-bg)">W</span>Wolves</td><td class="num tnum">820</td><td class="num tnum">794</td><td class="num tnum" style="color:var(--success)">97%</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Transfer &amp; Trade Approvals</h3></div>
+          <div class="card-pad">
+            <div class="queue-item">
+              <span class="avatar avatar-sm av-6">DO</span>
+              <div><strong>Sharks ⇄ Wolves</strong><div class="meta">D. Okafor for reserve rights to E. Marsh + 40 pts · both sides return a player, both clear the 70% floor</div></div>
+              <div class="queue-actions"><button class="btn btn-outline btn-sm">Details</button><button class="btn btn-primary btn-sm">Approve</button></div>
+            </div>
+            <div class="queue-item">
+              <span class="avatar avatar-sm av-5">TN</span>
+              <div><strong>Rams sign T. Nguyen</strong><div class="meta">Free agent · 62 pts · keeps Rams above the 70% floor</div></div>
+              <div class="queue-actions"><button class="btn btn-outline btn-sm">Details</button><button class="btn btn-primary btn-sm">Approve</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h3>Lions — Roster Point Allocations</h3><span class="badge badge-warning">Private — not shown publicly</span></div>
+        <div class="card-pad" style="padding-top:var(--space-3)">
+          <table class="table" data-sortable>
+            <thead><tr><th aria-sort="none">Player <span class="sort-caret">▾</span></th><th>Position</th><th class="num" aria-sort="descending">Points <span class="sort-caret">▾</span></th><th>Contract</th></tr></thead>
+            <tbody>
+              <tr><td class="team-cell"><span class="avatar avatar-sm av-1">MB</span>Marcus Bello</td><td>Left Wing</td><td class="num tnum" data-sort-value="180">180</td><td>2026-2027</td></tr>
+              <tr><td class="team-cell"><span class="avatar avatar-sm av-3">JK</span>Jonah Kim</td><td>Center Back</td><td class="num tnum" data-sort-value="165">165</td><td>2026</td></tr>
+              <tr><td class="team-cell"><span class="avatar avatar-sm av-6">AR</span>Ana Reyes</td><td>Goalkeeper</td><td class="num tnum" data-sort-value="140">140</td><td>2026-2028</td></tr>
+              <tr><td class="team-cell"><span class="avatar avatar-sm av-5">DW</span>David Whitfield</td><td>Right Back</td><td class="num tnum" data-sort-value="120">120</td><td>2026</td></tr>
+              <tr><td class="team-cell"><span class="avatar avatar-sm av-4">CT</span>Chloe Turner</td><td>Pivot</td><td class="num tnum" data-sort-value="98">98</td><td>2026-2027</td></tr>
+              <tr><td class="team-cell"><span class="avatar avatar-sm av-2">SO</span>Sam Osei</td><td>Left Back</td><td class="num tnum" data-sort-value="75">75</td><td>2026</td></tr>
+              <tr><td class="team-cell"><span class="avatar avatar-sm av-7">MP</span>Maya Patel</td><td>Right Wing</td><td class="num tnum" data-sort-value="40">40</td><td>2026</td></tr>
+              <tr><td class="team-cell"><span class="avatar avatar-sm av-8">LG</span>Luca Grant</td><td>Goalkeeper</td><td class="num tnum" data-sort-value="20">20</td><td>2026</td></tr>
+              <tr><td class="team-cell"><span class="avatar avatar-sm av-3">RC</span>Rafael Cho</td><td>Point Guard</td><td class="num tnum" data-sort-value="44">44</td><td>2026</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="../assets/js/interactions.js"></script>
+</body>
+</html>

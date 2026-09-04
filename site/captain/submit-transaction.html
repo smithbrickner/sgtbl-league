@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Submit a Transaction — SGTBL Captain Portal</title>
+<link rel="icon" href="../assets/img/sgtbl-logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/admin.css">
+<link rel="stylesheet" href="../assets/css/captain.css">
+<style>
+.trade-asset-row { display: flex; gap: var(--space-2); align-items: center; margin-bottom: var(--space-2); }
+.trade-asset-row select, .trade-asset-row input { flex: 1; }
+.trade-asset-row .cap-points-label { flex: none; font-size: var(--text-xs); color: var(--text-muted); white-space: nowrap; }
+.trade-asset-row .remove-asset-row { flex: none; width: 36px; padding: 0; }
+.trade-columns { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); align-items: start; }
+@media (max-width: 900px) { .trade-columns { grid-template-columns: 1fr; } }
+.trade-col-head { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-3); color: var(--brand-strong); }
+.browse-add-btn.btn-remove-mode { color: var(--danger); border-color: var(--danger); }
+.browse-add-btn.btn-remove-mode:hover:not(:disabled) { background: var(--danger); color: var(--white); }
+.reserve-activate-toggle { flex: none; display: flex; align-items: center; gap: 4px; font-size: var(--text-xs); color: var(--text-muted); white-space: nowrap; }
+.reserve-activate-toggle[hidden] { display: none; }
+.reserve-activate-toggle input { flex: none; width: auto; }
+</style>
+</head>
+<body class="admin">
+<div class="admin-shell">
+  <div class="admin-scrim"></div>
+  <aside class="admin-side">
+    <a class="brand" href="dashboard.html"><img src="../assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>Captain Portal</span></span></a>
+    <ul class="admin-nav">
+      <li class="nav-group-label">Team</li>
+      <li><a href="dashboard.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Dashboard</a></li>
+      <li><a href="my-team.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg>Roster</a></li>
+      <li><a href="submit-transaction.html" aria-current="page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>Submit a Transaction</a></li>
+      <li class="nav-group-label">League</li>
+      <li><a href="transactions.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg>Transactions</a></li>
+      <li><a href="free-agency.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1.2 1.2-2 2.5-2s2.5.8 2.5 2-1.2 1.5-2.5 2-2.5.8-2.5 2 1.2 2 2.5 2 2.5-.8 2.5-2"/></svg>Free Agency</a></li>
+      <li><a href="scouting.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>Scouting Reports</a></li>
+      <li><a href="stats.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Stats</a></li>
+      <li class="nav-group-label">Film</li>
+      <li><a href="film-room.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3V9z" fill="currentColor" stroke="none"/></svg>Film Room</a></li>
+    </ul>
+    <div class="admin-side-foot">
+      <div class="admin-user">
+        <span class="avatar avatar-sm av-2">RA</span>
+        <div><div class="name">R. Alvarez</div><div class="role">Lions · Captain</div><span class="portal-tag">Captain</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <button class="btn btn-icon btn-ghost admin-topbar-toggle" aria-label="Toggle navigation"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <h1>Submit a Transaction</h1>
+      <div class="spacer"></div>
+      <div class="notif-wrap">
+        <button class="btn btn-icon btn-ghost" id="notifBtn" aria-haspopup="true" aria-expanded="false" aria-label="Notifications">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          <span class="notif-badge">2</span>
+        </button>
+        <div class="notif-panel" id="notifPanel" hidden>
+          <div class="notif-panel-head">Notifications</div>
+          <div class="notif-list">
+            <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg></span><div><div>Transfer approved — <strong>D. Okafor</strong> added to your roster</div><time>2 hours ago</time></div></div>
+            <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></span><div><div>Availability locks in <strong>1h 42m</strong></div><time>Just now</time></div></div>
+          </div>
+          <a class="notif-panel-foot" href="#">Mark all as read</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-5)">Pick the type of move you want to make. Submitted requests go to League Admin (and, for trades, the other team's captain) for approval — track their status on the <a href="transactions.html">Transactions</a> page.</p>
+
+      <div class="tabbar" data-tabbar role="tablist">
+        <button role="tab" aria-selected="true" aria-controls="p-nominate" id="t-nominate">Free Agent Nomination</button>
+        <button role="tab" aria-selected="false" aria-controls="p-trade" id="t-trade">Submit a Trade</button>
+        <button role="tab" aria-selected="false" aria-controls="p-reserve" id="t-reserve">Reserve List</button>
+      </div>
+
+      <div id="p-nominate" class="tabpanel" role="tabpanel" aria-labelledby="t-nominate">
+        <div class="card card-pad" style="max-width:520px">
+          <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-4)">Nominations are due Friday, 3:00 PM EST, for the following week's sealed-bid window. If no other team nominates the same player first, you're bound to a baseline offer if nobody outbids it. You need an open active-roster spot to bid once the player is nominated.</p>
+          <div class="field" style="margin-bottom:var(--space-4)">
+            <label for="nom-player">Player</label>
+            <input id="nom-player" class="input" placeholder="Search confirmed-available free agents…">
+          </div>
+          <button class="btn btn-primary">Submit Nomination</button>
+        </div>
+        <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-4)">See this week's open nominees and sealed-bid results on the <a href="free-agency.html">Free Agency</a> page.</p>
+      </div>
+
+      <div id="p-trade" class="tabpanel" role="tabpanel" aria-labelledby="t-trade" hidden>
+        <div class="row" style="justify-content:flex-end;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4)">
+          <span class="muted" id="draft-status" style="font-size:var(--text-xs)"></span>
+          <div style="display:flex;gap:var(--space-2);flex:none">
+            <button type="button" class="btn btn-outline" id="trade-clear-btn">Clear Trade</button>
+            <button type="button" class="btn btn-outline" id="trade-save-draft-btn">Save Draft</button>
+            <button type="button" class="btn btn-primary" id="trade-submit-btn">Submit Trade</button>
+          </div>
+        </div>
+
+        <div class="card card-pad" style="margin-bottom:var(--space-6)">
+          <div class="row" style="justify-content:space-between;margin-bottom:var(--space-4)">
+            <h3>Trade Validity Check
+              <span class="info-tip">
+                <button type="button" class="info-icon" aria-label="About the trade validity check">i</button>
+                <span class="info-tooltip" role="tooltip">Checks both teams' Current Cap (765–1,035 pt band), Pts Spent (must stay at or above the 630 floor and at or below Current Cap), active-player count (9-man roster max), and contract-length slots (league max 2 two-year, 1 three-year active deals) after the swap. A reserve player only counts toward the active count and term-length slots if "Activate on arrival" is checked for him — otherwise he arrives on reserve and neither applies. Draft picks carry no current-season cap hit. Recalculates live as you change the assets or cap points above.</span>
+              </span>
+            </h3>
+            <span class="badge" id="trade-status-badge">—</span>
+          </div>
+
+          <p id="trade-summary-sentence" style="font-size:var(--text-sm);margin-bottom:var(--space-4)"></p>
+
+          <div class="table-wrap" style="margin-bottom:var(--space-3)">
+            <table class="table" style="min-width:0">
+              <thead><tr><th>Team</th><th class="num">Current Cap</th><th class="num">Pts Spent</th><th class="num">Active Players</th><th class="num">2-Yr Deals</th><th class="num">3-Yr Deals</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td>Lions <span class="muted" style="font-weight:400;font-size:var(--text-xs)">(you)</span></td>
+                  <td class="num tnum" id="lions-cap-after">970</td>
+                  <td class="num tnum" id="lions-spent-after">923</td>
+                  <td class="num tnum" id="lions-active-after">9 of 9</td>
+                  <td class="num tnum" id="lions-term2-after">2 of 2</td>
+                  <td class="num tnum" id="lions-term3-after">1 of 1</td>
+                </tr>
+                <tr>
+                  <td>Eagles</td>
+                  <td class="num tnum" id="eagles-cap-after">915</td>
+                  <td class="num tnum" id="eagles-spent-after">860</td>
+                  <td class="num tnum" id="eagles-active-after">9 of 9</td>
+                  <td class="num tnum" id="eagles-term2-after">2 of 2</td>
+                  <td class="num tnum" id="eagles-term3-after">0 of 1</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p id="lions-check-note" style="font-size:var(--text-xs)"></p>
+          <p id="eagles-check-note" style="font-size:var(--text-xs);margin-bottom:var(--space-4)"></p>
+
+          <details>
+            <summary style="cursor:pointer;font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-3)">Multi-Year Salary Comparison</summary>
+            <div class="table-wrap">
+              <table class="table" style="min-width:0" data-sortable>
+                <thead><tr><th aria-sort="none">Name <span class="sort-caret">▾</span></th><th class="num" aria-sort="none">2026 <span class="sort-caret">▾</span></th><th class="num" aria-sort="none">2027 <span class="sort-caret">▾</span></th><th class="num" aria-sort="none">2028 <span class="sort-caret">▾</span></th></tr></thead>
+                <tbody id="salary-compare-body"></tbody>
+              </table>
+            </div>
+          </details>
+          <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">This year's Current Cap and Pts Spent figures are shared between negotiating captains for this proposal only — not visible league-wide. The 630 floor and 765–1,035 Current Cap band apply to the current season only; the table above just shows how far each side's commitment to these assets runs. Draft picks carry no cap value until drafted.</p>
+        </div>
+
+        <div class="trade-columns">
+          <div class="card card-pad">
+            <div class="trade-col-head">Lions <span class="muted" style="font-weight:400;font-size:var(--text-xs)">(you)</span></div>
+
+            <div class="field" style="margin-bottom:var(--space-4)">
+              <label>Offered Assets</label>
+              <div id="out-list"></div>
+              <div style="display:flex;gap:var(--space-2);margin-top:var(--space-2)">
+                <button type="button" class="btn btn-outline btn-sm" id="add-out-player">+ Add Player</button>
+                <button type="button" class="btn btn-outline btn-sm" id="add-out-cap">+ Add Cap Points</button>
+                <button type="button" class="btn btn-outline btn-sm" id="add-out-pick">+ Add Draft Pick</button>
+              </div>
+            </div>
+
+            <h4 style="font-size:var(--text-sm);margin-bottom:var(--space-2)">Active Roster</h4>
+            <div class="table-wrap" style="margin-bottom:var(--space-4)">
+              <table class="table" style="min-width:0" data-sortable>
+                <thead><tr><th aria-sort="none">Player <span class="sort-caret">▾</span></th><th aria-sort="none">Pos <span class="sort-caret">▾</span></th><th aria-sort="none">Term <span class="sort-caret">▾</span></th><th class="num" aria-sort="none">Cap <span class="sort-caret">▾</span></th><th></th></tr></thead>
+                <tbody id="browse-out-player"></tbody>
+              </table>
+            </div>
+
+            <h4 style="font-size:var(--text-sm);margin-bottom:var(--space-2)">Reserve List</h4>
+            <div class="table-wrap" style="margin-bottom:var(--space-4)">
+              <table class="table" style="min-width:0" data-sortable>
+                <thead><tr><th aria-sort="none">Player <span class="sort-caret">▾</span></th><th aria-sort="none">Term <span class="sort-caret">▾</span></th><th class="num" aria-sort="none">Counts Now <span class="sort-caret">▾</span></th><th></th></tr></thead>
+                <tbody id="browse-out-reserve"></tbody>
+              </table>
+            </div>
+
+            <h4 style="font-size:var(--text-sm);margin-bottom:var(--space-2)">Upcoming Draft Picks <span class="muted" style="font-weight:400">(2027 Rookie Draft)</span></h4>
+            <div class="table-wrap">
+              <table class="table" style="min-width:0" data-sortable>
+                <thead><tr><th aria-sort="none">Pick <span class="sort-caret">▾</span></th><th></th></tr></thead>
+                <tbody id="browse-out-pick"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card card-pad">
+            <div class="field" style="margin-bottom:var(--space-4)">
+              <label for="trade-target" class="trade-col-head" style="display:block">Team</label>
+              <select id="trade-target" class="input"><option>Eagles</option><option>Sharks</option><option>Wolves</option><option>Tigers</option><option>Rams</option></select>
+            </div>
+
+            <div class="field" style="margin-bottom:var(--space-4)">
+              <label>Offered Assets</label>
+              <div id="in-list"></div>
+              <div style="display:flex;gap:var(--space-2);margin-top:var(--space-2)">
+                <button type="button" class="btn btn-outline btn-sm" id="add-in-player">+ Add Player</button>
+                <button type="button" class="btn btn-outline btn-sm" id="add-in-cap">+ Add Cap Points</button>
+                <button type="button" class="btn btn-outline btn-sm" id="add-in-pick">+ Add Draft Pick</button>
+              </div>
+            </div>
+
+            <h4 style="font-size:var(--text-sm);margin-bottom:var(--space-2)">Active Roster</h4>
+            <div class="table-wrap" style="margin-bottom:var(--space-4)">
+              <table class="table" style="min-width:0" data-sortable>
+                <thead><tr><th aria-sort="none">Player <span class="sort-caret">▾</span></th><th aria-sort="none">Pos <span class="sort-caret">▾</span></th><th aria-sort="none">Term <span class="sort-caret">▾</span></th><th class="num" aria-sort="none">Cap <span class="sort-caret">▾</span></th><th></th></tr></thead>
+                <tbody id="browse-in-player"></tbody>
+              </table>
+            </div>
+
+            <h4 style="font-size:var(--text-sm);margin-bottom:var(--space-2)">Reserve List</h4>
+            <div class="table-wrap" style="margin-bottom:var(--space-4)">
+              <table class="table" style="min-width:0" data-sortable>
+                <thead><tr><th aria-sort="none">Player <span class="sort-caret">▾</span></th><th aria-sort="none">Term <span class="sort-caret">▾</span></th><th class="num" aria-sort="none">Counts Now <span class="sort-caret">▾</span></th><th></th></tr></thead>
+                <tbody id="browse-in-reserve"></tbody>
+              </table>
+            </div>
+
+            <h4 style="font-size:var(--text-sm);margin-bottom:var(--space-2)">Upcoming Draft Picks <span class="muted" style="font-weight:400">(2027 Rookie Draft)</span></h4>
+            <div class="table-wrap">
+              <table class="table" style="min-width:0" data-sortable>
+                <thead><tr><th aria-sort="none">Pick <span class="sort-caret">▾</span></th><th></th></tr></thead>
+                <tbody id="browse-in-pick"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <p class="muted" style="font-size:var(--text-xs);margin:var(--space-4) 0 0">Individual cap values shown here are shared between negotiating captains for this proposal only. Draft-pick rows follow the same commissioner window as the + Add Draft Pick button above.</p>
+
+        <p class="muted" style="font-size:var(--text-xs);margin:var(--space-3) 0 0" id="pick-window-note"></p>
+        <p id="activation-note-lions" class="muted" style="font-size:var(--text-xs);margin:var(--space-2) 0 0" hidden></p>
+        <p id="activation-note-eagles" class="muted" style="font-size:var(--text-xs);margin:var(--space-2) 0 0" hidden></p>
+      </div>
+
+      <div id="p-reserve" class="tabpanel" role="tabpanel" aria-labelledby="t-reserve" hidden>
+        <div class="card card-pad" style="max-width:520px">
+          <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-4)">Holding a player's rights on reserve instead of releasing him costs you: for the season he first goes to reserve, 50% of that year's salary still counts against your active-roster cap and the 70% floor. Once that season ends, his contract freezes completely (0% counting) until he's reactivated, and his contract-length slot is freed up for another active player in the meantime.</p>
+          <div class="field" style="margin-bottom:var(--space-4)">
+            <label for="reserve-player">Player to Move to Reserve</label>
+            <select id="reserve-player" class="input">
+              <option>Marcus Bello — Small Forward</option>
+              <option>Jonah Kim — Point Guard</option>
+              <option>Ana Reyes — Center</option>
+              <option>David Whitfield — Shooting Guard</option>
+              <option>Chloe Turner — Power Forward</option>
+              <option>Sam Osei — Point Guard</option>
+              <option>Maya Patel — Shooting Guard</option>
+              <option>Luca Grant — Center</option>
+              <option>Rafael Cho — Point Guard</option>
+            </select>
+          </div>
+          <div class="field" style="margin-bottom:var(--space-4)">
+            <label for="reserve-reason">Reason <span class="muted" style="font-weight:400">(optional, visible to League Admin)</span></label>
+            <input id="reserve-reason" class="input" placeholder="e.g. Moved out of area, work travel…">
+          </div>
+          <button class="btn btn-primary">Move to Reserve List</button>
+        </div>
+        <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-4)">You have 1 of 3 reserve spots remaining. See your current Reserve List on the <a href="my-team.html">Roster</a> page.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="../assets/js/interactions.js"></script>
+<script>
+(function () {
+  // LIONS_SPENT (923) = 882 active-roster sum + 41 Counts-Now reserve charge (Grace
+  // Bennett 26 + Nate Price 15), matching the Payroll tab. EAGLES_SPENT (890) likewise
+  // bakes in T. Alvarado's 30-pt Counts-Now charge so his salary still counts even in
+  // trades that don't touch him — matching what "still counting this season" means.
+  var LIONS_CAP = 970, LIONS_SPENT = 923;
+  var EAGLES_CAP = 915, EAGLES_SPENT = 890;
+  var MIN_CAP = 765, MAX_CAP = 1035, FLOOR = 630;
+  var ROSTER_SIZE = 9;
+
+  // Commissioner-controlled: draft-pick trading only opens from the start of the league
+  // calendar through the upcoming rookie draft, and only that draft's picks qualify.
+  // The season is already well underway (see schedule), so that window has closed.
+  var DRAFT_PICKS_TRADEABLE = false;
+
+  var LIONS_PLAYERS = [
+    { name: "Marcus Bello — Small Forward", cap: 180, y2: 180, term: 2 },
+    { name: "Jonah Kim — Point Guard", cap: 165, term: 1 },
+    { name: "Ana Reyes — Center", cap: 140, y2: 140, y3: 140, term: 3 },
+    { name: "David Whitfield — Shooting Guard", cap: 120, term: 1 },
+    { name: "Chloe Turner — Power Forward", cap: 98, y2: 98, term: 2 },
+    { name: "Sam Osei — Point Guard", cap: 75, term: 1 },
+    { name: "Maya Patel — Shooting Guard", cap: 40, term: 1 },
+    { name: "Luca Grant — Center", cap: 20, term: 1 },
+    { name: "Rafael Cho — Point Guard", cap: 44, term: 1 }
+  ];
+  // Term-slot usage on the current active roster only (matches my-team.html's Contract Length Utilization card):
+  // 3-Year: 1 of 1 (Ana Reyes) — full. 2-Year: 2 of 2 (Bello, Turner) — full.
+  var LIONS_TERM_BASE = { c2: 2, c3: 1 };
+  var LIONS_RESERVE = [
+    { name: "Reserve rights: Grace Bennett", shortName: "Grace Bennett", cap: 26, reserve: true, term: 2 },
+    { name: "Reserve rights: Nate Price", shortName: "Nate Price", cap: 15, reserve: true, term: 1 }
+  ];
+  var LIONS_PICKS = [
+    { name: "2027 Rookie Draft — Round 1 (Lions)", pick: true },
+    { name: "2027 Rookie Draft — Round 2 (Lions)", pick: true }
+  ];
+  var EAGLES_PLAYERS = [
+    { name: "Priya Nandan — Point Guard", cap: 195, y2: 195, term: 2 },
+    { name: "K. Farrow — Shooting Guard", cap: 130, term: 1 },
+    { name: "J. Bianchi — Power Forward", cap: 95, y2: 95, term: 2 },
+    { name: "R. Herrera — Center", cap: 60, term: 1 }
+  ];
+  // Eagles' 2-year slots are already full from Nandan + Bianchi alone (2 of 2); their 3-year
+  // slot is assumed open (0 of 1) — nothing in the data establishes a 3-year Eagles contract.
+  var EAGLES_TERM_BASE = { c2: 2, c3: 0 };
+  var EAGLES_RESERVE = [
+    { name: "Reserve rights: T. Alvarado", shortName: "T. Alvarado", cap: 30, reserve: true, term: 1 }
+  ];
+  var EAGLES_PICKS = [
+    { name: "2027 Rookie Draft — Round 1 (Eagles)", pick: true },
+    { name: "2027 Rookie Draft — Round 2 (Eagles)", pick: true }
+  ];
+
+  // Active-player baseline per team, from how many of that team's players this tool
+  // actually tracks (Lions: the full 9-man roster; Eagles: only the 4 named in scouting
+  // reports — the rest of their real roster was never modeled here). The 9-man cap
+  // itself (ROSTER_SIZE) still applies to both regardless of this starting count.
+  var LIONS_ROSTER_BASE = LIONS_PLAYERS.length;
+  var EAGLES_ROSTER_BASE = EAGLES_PLAYERS.length;
+
+  var outListEl = document.getElementById("out-list");
+  var inListEl = document.getElementById("in-list");
+  var lionsNoteEl = document.getElementById("activation-note-lions");
+  var eaglesNoteEl = document.getElementById("activation-note-eagles");
+  var submitBtn = document.getElementById("trade-submit-btn");
+  if (!outListEl || !inListEl) return;
+
+  function fmtYear(v) { return (v === null || v === undefined) ? "—" : v; }
+  function deltaLabel(after, before, suffix) {
+    var diff = after - before;
+    var base = after.toLocaleString() + (suffix || "");
+    if (diff === 0) return base;
+    return base + " (" + (diff > 0 ? "+" : "") + diff.toLocaleString() + ")";
+  }
+  function shortName(a) { return a.shortName || a.name.split(" — ")[0]; }
+
+  function joinList(items) {
+    if (items.length === 0) return "nothing";
+    if (items.length === 1) return items[0];
+    if (items.length === 2) return items[0] + " and " + items[1];
+    return items.slice(0, -1).join(", ") + ", and " + items[items.length - 1];
+  }
+
+  function describeSide(assets, capPoints) {
+    var parts = assets.map(function (a) {
+      if (a.pick) return a.name.replace(/\s*\([^)]*\)$/, "");
+      if (a.reserve) return "the reserve rights to " + shortName(a);
+      return shortName(a);
+    });
+    if (capPoints > 0) parts.push(capPoints + " cap points");
+    return joinList(parts);
+  }
+  function sumCap(list) { return list.reduce(function (t, a) { return t + (a.cap || 0); }, 0); }
+
+  function optionsHtml(side, kind) {
+    if (kind === "pick") {
+      var picks = side === "out" ? LIONS_PICKS : EAGLES_PICKS;
+      return picks.map(function (p, i) { return '<option value="pick:' + i + '">' + p.name + "</option>"; }).join("");
+    }
+    var players = side === "out" ? LIONS_PLAYERS : EAGLES_PLAYERS;
+    var reserve = side === "out" ? LIONS_RESERVE : EAGLES_RESERVE;
+    var html = '<optgroup label="Active Roster">';
+    html += players.map(function (p, i) { return '<option value="player:' + i + '">' + p.name + "</option>"; }).join("");
+    html += '</optgroup><optgroup label="Reserve List">';
+    html += reserve.map(function (p, i) { return '<option value="reserve:' + i + '">' + p.name + "</option>"; }).join("");
+    html += "</optgroup>";
+    return html;
+  }
+
+  function resolveAsset(side, value) {
+    var parts = value.split(":");
+    var kind = parts[0], idx = parseInt(parts[1], 10);
+    var src;
+    if (kind === "pick") src = (side === "out" ? LIONS_PICKS : EAGLES_PICKS)[idx];
+    else if (kind === "reserve") src = (side === "out" ? LIONS_RESERVE : EAGLES_RESERVE)[idx];
+    else src = (side === "out" ? LIONS_PLAYERS : EAGLES_PLAYERS)[idx];
+    return {
+      name: src.name,
+      shortName: src.shortName || src.name.split(" — ")[0],
+      cap: src.cap || 0,
+      y2: src.y2, y3: src.y3,
+      term: src.term,
+      reserve: !!src.reserve,
+      pick: !!src.pick
+    };
+  }
+
+  function termLabel(term) { return term ? term + "-Year" : "—"; }
+
+  function updateRemoveButtons(listEl) {
+    // Removing assets is never blocked — a side can be emptied out freely. Cap points
+    // alone can't be the sole return, but that's enforced at submit time (see recalc's
+    // outHasAsset/inHasAsset check), not by forcing a replacement before you can remove one.
+    var rows = listEl.querySelectorAll(".trade-asset-row");
+    rows.forEach(function (r) {
+      r.querySelector(".remove-asset-row").disabled = false;
+    });
+  }
+
+  function addRow(side, kind, presetValue) {
+    var listEl = side === "out" ? outListEl : inListEl;
+    var row = document.createElement("div");
+    row.className = "trade-asset-row";
+    row.dataset.kind = kind;
+    var control, activateLabel;
+    if (kind === "cap") {
+      var label = document.createElement("span");
+      label.className = "cap-points-label";
+      label.textContent = "Cap Points:";
+      row.appendChild(label);
+      control = document.createElement("input");
+      control.type = "number";
+      control.className = "input";
+      control.placeholder = "0";
+      if (presetValue) control.value = presetValue;
+    } else {
+      control = document.createElement("select");
+      control.className = "input trade-asset-select";
+      control.innerHTML = optionsHtml(side, kind);
+      if (presetValue) control.value = presetValue;
+    }
+    if (kind === "player") {
+      activateLabel = document.createElement("label");
+      activateLabel.className = "reserve-activate-toggle";
+      activateLabel.hidden = true;
+      activateLabel.title = "Counts this player toward the acquiring team's active-roster contract-length slots and active-player count.";
+      var checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.className = "reserve-activate-checkbox";
+      checkbox.addEventListener("change", recalc);
+      activateLabel.appendChild(checkbox);
+      activateLabel.appendChild(document.createTextNode("Activate on arrival"));
+    }
+    var removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "btn btn-outline btn-sm remove-asset-row";
+    removeBtn.textContent = "×";
+    removeBtn.setAttribute("aria-label", "Remove");
+    removeBtn.addEventListener("click", function () {
+      row.remove();
+      updateRemoveButtons(listEl);
+      recalc();
+    });
+    row.appendChild(control);
+    if (activateLabel) row.appendChild(activateLabel);
+    row.appendChild(removeBtn);
+    listEl.appendChild(row);
+    if (kind === "player") {
+      var syncActivateVisibility = function () {
+        var isReserve = control.value.indexOf("reserve:") === 0;
+        activateLabel.hidden = !isReserve;
+        if (!isReserve) activateLabel.querySelector("input").checked = false;
+      };
+      control.addEventListener("change", syncActivateVisibility);
+      syncActivateVisibility();
+    }
+    control.addEventListener(kind === "cap" ? "input" : "change", recalc);
+    updateRemoveButtons(listEl);
+    recalc();
+  }
+
+  function getRowAssets(side) {
+    var listEl = side === "out" ? outListEl : inListEl;
+    var rows = listEl.querySelectorAll('.trade-asset-row[data-kind="player"], .trade-asset-row[data-kind="pick"]');
+    var out = [];
+    rows.forEach(function (r) {
+      var sel = r.querySelector("select");
+      if (sel && sel.value) {
+        var asset = resolveAsset(side, sel.value);
+        var toggle = r.querySelector(".reserve-activate-toggle");
+        asset.willActivate = !!(toggle && !toggle.hidden && toggle.querySelector("input").checked);
+        out.push(asset);
+        return;
+      }
+    });
+    return out;
+  }
+
+  function getCapPoints(side) {
+    var listEl = side === "out" ? outListEl : inListEl;
+    var rows = listEl.querySelectorAll('.trade-asset-row[data-kind="cap"] input');
+    var total = 0;
+    rows.forEach(function (inp) { var v = parseFloat(inp.value); if (!isNaN(v)) total += v; });
+    return total;
+  }
+
+  function renderBrowseTable(tbodyId, side, arrayKind, items) {
+    var tbody = document.getElementById(tbodyId);
+    tbody.innerHTML = items.map(function (item, i) {
+      var value = arrayKind + ":" + i;
+      var addKind = arrayKind === "pick" ? "pick" : "player";
+      var btn = '<button type="button" class="btn btn-outline btn-sm browse-add-btn" data-side="' + side + '" data-kind="' + addKind + '" data-value="' + value + '">+ Add</button>';
+      if (arrayKind === "pick") {
+        return "<tr><td>" + item.name + '</td><td style="width:1%;white-space:nowrap">' + btn + "</td></tr>";
+      }
+      if (arrayKind === "reserve") {
+        return "<tr><td><a href=\"player.html\">" + item.shortName + '</a></td><td data-sort-value="' + (item.term || 0) + '">' + termLabel(item.term) + '</td><td class="num tnum">' + item.cap + '</td><td style="width:1%;white-space:nowrap">' + btn + "</td></tr>";
+      }
+      var parts = item.name.split(" — ");
+      return "<tr><td><a href=\"player.html\">" + parts[0] + "</a></td><td>" + (parts[1] || "") + '</td><td data-sort-value="' + (item.term || 0) + '">' + termLabel(item.term) + '</td><td class="num tnum">' + item.cap + '</td><td style="width:1%;white-space:nowrap">' + btn + "</td></tr>";
+    }).join("");
+  }
+
+  function refreshBrowseButtons() {
+    ["out", "in"].forEach(function (side) {
+      var listEl = side === "out" ? outListEl : inListEl;
+      var rows = Array.prototype.slice.call(listEl.querySelectorAll(".trade-asset-row"));
+      document.querySelectorAll('.browse-add-btn[data-side="' + side + '"]').forEach(function (btn) {
+        var matchRow = rows.find(function (r) {
+          var s = r.querySelector("select");
+          return s && s.value === btn.dataset.value;
+        });
+        if (matchRow) {
+          btn.textContent = "Remove";
+          btn.dataset.mode = "remove";
+          btn.disabled = false;
+          btn.title = "";
+          btn.classList.add("btn-remove-mode");
+        } else {
+          var pickClosed = btn.dataset.kind === "pick" && !DRAFT_PICKS_TRADEABLE;
+          btn.textContent = "+ Add";
+          btn.dataset.mode = "add";
+          btn.disabled = pickClosed;
+          btn.title = pickClosed ? "Draft-pick trading is closed for the season" : "";
+          btn.classList.remove("btn-remove-mode");
+        }
+      });
+    });
+  }
+
+  function removeAssetFromList(side, value) {
+    var listEl = side === "out" ? outListEl : inListEl;
+    var rows = Array.prototype.slice.call(listEl.querySelectorAll(".trade-asset-row"));
+    var target = rows.find(function (r) {
+      var s = r.querySelector("select");
+      return s && s.value === value;
+    });
+    if (!target) return;
+    target.remove();
+    updateRemoveButtons(listEl);
+    recalc();
+  }
+
+  // A reserve player never occupied an active roster spot or term-length slot on the team
+  // sending him away, so "willActivate" (a flag about the RECEIVING team's intent) must
+  // never affect what the sending side gives up — only what the receiving side gains.
+  function activeTermLeaving(assets) {
+    var c2 = 0, c3 = 0, active = 0;
+    assets.forEach(function (a) {
+      if (a.pick || a.reserve) return;
+      active++;
+      if (a.term === 2) c2++;
+      if (a.term === 3) c3++;
+    });
+    return { active: active, c2: c2, c3: c3 };
+  }
+
+  function activeTermArriving(assets) {
+    var c2 = 0, c3 = 0, active = 0;
+    assets.forEach(function (a) {
+      if (a.pick) return;
+      if (a.reserve && !a.willActivate) return;
+      active++;
+      if (a.term === 2) c2++;
+      if (a.term === 3) c3++;
+    });
+    return { active: active, c2: c2, c3: c3 };
+  }
+
+  function noteFor(team, capOk, spentOk, capAfter, spentAfter, termAfter, activeAfter, hasAsset) {
+    var term2Ok = termAfter.c2 <= 2, term3Ok = termAfter.c3 <= 1;
+    var activeOk = activeAfter <= ROSTER_SIZE;
+    if (capOk && spentOk && term2Ok && term3Ok && activeOk && hasAsset) {
+      return "✓ " + team + " compliant.";
+    }
+    var msgs = [];
+    if (!hasAsset) msgs.push("Must send at least one player or draft pick — cap points alone can't be the sole return.");
+    if (!capOk) msgs.push("Current Cap would land at " + capAfter + ", outside the 765–1,035 band.");
+    if (!spentOk) {
+      if (spentAfter > capAfter) msgs.push("Pts Spent would be " + spentAfter + ", over their " + capAfter + " Current Cap. Reduce by " + (spentAfter - capAfter) + ".");
+      else msgs.push("Pts Spent would drop to " + spentAfter + ", below the 630 floor.");
+    }
+    if (!activeOk) msgs.push(activeAfter + " active players, over the " + ROSTER_SIZE + "-man roster limit.");
+    if (!term2Ok) msgs.push(termAfter.c2 + " active 2-year deals, over the league max of 2.");
+    if (!term3Ok) msgs.push(termAfter.c3 + " active 3-year deals, over the league max of 1.");
+    return team + ": " + msgs.join(" | ");
+  }
+
+  function salaryRow(a, direction) {
+    var tr = document.createElement("tr");
+    var badge = a.pick ? ' <span class="badge badge-info" style="margin-left:6px">Draft Pick</span>' : "";
+    var label = a.pick ? a.name : (shortName(a) + " (" + direction + ")");
+    var y1 = a.pick ? "—" : a.cap;
+    var y2 = a.pick ? "—" : fmtYear(a.y2);
+    var y3 = a.pick ? "—" : fmtYear(a.y3);
+    var sv1 = a.pick ? 0 : a.cap;
+    var sv2 = a.pick ? 0 : (a.y2 || 0);
+    var sv3 = a.pick ? 0 : (a.y3 || 0);
+    tr.innerHTML = "<td>" + label + badge + '</td><td class="num tnum" data-sort-value="' + sv1 + '">' + y1 +
+      '</td><td class="num tnum" data-sort-value="' + sv2 + '">' + y2 +
+      '</td><td class="num tnum" data-sort-value="' + sv3 + '">' + y3 + "</td>";
+    return tr;
+  }
+
+  function activationMessage(who, needed, subject, possessive, pronoun) {
+    return "This deal would leave " + who + " short " + needed + (needed === 1 ? " active roster spot" : " active roster spots") +
+      " that reserve rights alone won't fill — " + subject + " will need to confirm which reserve player" + (needed === 1 ? "" : "s") +
+      " " + possessive + " activating when " + pronoun + " accept the trade offer.";
+  }
+
+  function updateActivationGate(outAssets, inAssets) {
+    // A declared "Activate on arrival" already counts that reserve player as active on
+    // the receiving side, so a checked box clears the gap below on its own.
+    var lionsDelta = activeTermArriving(inAssets).active - activeTermLeaving(outAssets).active;
+    var eaglesDelta = activeTermArriving(outAssets).active - activeTermLeaving(inAssets).active;
+
+    if (lionsDelta < 0) {
+      lionsNoteEl.hidden = false;
+      lionsNoteEl.textContent = activationMessage("you", -lionsDelta, "you", "you're", "you");
+    } else {
+      lionsNoteEl.hidden = true;
+    }
+
+    if (eaglesDelta < 0) {
+      eaglesNoteEl.hidden = false;
+      eaglesNoteEl.textContent = activationMessage("Eagles", -eaglesDelta, "their captain", "they're", "they");
+    } else {
+      eaglesNoteEl.hidden = true;
+    }
+
+  }
+
+  function recalc() {
+    var outAssets = getRowAssets("out");
+    var inAssets = getRowAssets("in");
+
+    var outVal = sumCap(outAssets);
+    var inVal = sumCap(inAssets);
+    var pOut = getCapPoints("out"), pIn = getCapPoints("in");
+
+    var lionsCapAfter = LIONS_CAP - pOut + pIn;
+    var eaglesCapAfter = EAGLES_CAP + pOut - pIn;
+    var lionsSpentAfter = LIONS_SPENT - outVal + inVal;
+    var eaglesSpentAfter = EAGLES_SPENT - inVal + outVal;
+
+    var lionsCapOk = lionsCapAfter >= MIN_CAP && lionsCapAfter <= MAX_CAP;
+    var eaglesCapOk = eaglesCapAfter >= MIN_CAP && eaglesCapAfter <= MAX_CAP;
+    var lionsSpentOk = lionsSpentAfter >= FLOOR && lionsSpentAfter <= lionsCapAfter;
+    var eaglesSpentOk = eaglesSpentAfter >= FLOOR && eaglesSpentAfter <= eaglesCapAfter;
+
+    // "Leaving" a side never counts a reserve player (he never held a slot there);
+    // "arriving" counts him only if the receiving side flagged Activate on arrival.
+    var outLeave = activeTermLeaving(outAssets);
+    var outArrive = activeTermArriving(outAssets);
+    var inLeave = activeTermLeaving(inAssets);
+    var inArrive = activeTermArriving(inAssets);
+
+    var lionsTermAfter = { c2: LIONS_TERM_BASE.c2 - outLeave.c2 + inArrive.c2, c3: LIONS_TERM_BASE.c3 - outLeave.c3 + inArrive.c3 };
+    var eaglesTermAfter = { c2: EAGLES_TERM_BASE.c2 - inLeave.c2 + outArrive.c2, c3: EAGLES_TERM_BASE.c3 - inLeave.c3 + outArrive.c3 };
+    var lionsTermOk = lionsTermAfter.c2 <= 2 && lionsTermAfter.c3 <= 1;
+    var eaglesTermOk = eaglesTermAfter.c2 <= 2 && eaglesTermAfter.c3 <= 1;
+
+    var lionsActiveAfter = LIONS_ROSTER_BASE - outLeave.active + inArrive.active;
+    var eaglesActiveAfter = EAGLES_ROSTER_BASE - inLeave.active + outArrive.active;
+    var lionsActiveOk = lionsActiveAfter <= ROSTER_SIZE;
+    var eaglesActiveOk = eaglesActiveAfter <= ROSTER_SIZE;
+
+    document.getElementById("lions-active-after").textContent = deltaLabel(lionsActiveAfter, LIONS_ROSTER_BASE, " of " + ROSTER_SIZE);
+    document.getElementById("eagles-active-after").textContent = deltaLabel(eaglesActiveAfter, EAGLES_ROSTER_BASE, " of " + ROSTER_SIZE);
+    document.getElementById("lions-active-after").style.color = lionsActiveOk ? "" : "var(--danger)";
+    document.getElementById("eagles-active-after").style.color = eaglesActiveOk ? "" : "var(--danger)";
+
+    document.getElementById("lions-cap-after").textContent = deltaLabel(lionsCapAfter, LIONS_CAP);
+    document.getElementById("eagles-cap-after").textContent = deltaLabel(eaglesCapAfter, EAGLES_CAP);
+    document.getElementById("lions-cap-after").style.color = lionsCapOk ? "" : "var(--danger)";
+    document.getElementById("eagles-cap-after").style.color = eaglesCapOk ? "" : "var(--danger)";
+    document.getElementById("lions-spent-after").textContent = deltaLabel(lionsSpentAfter, LIONS_SPENT);
+    document.getElementById("eagles-spent-after").textContent = deltaLabel(eaglesSpentAfter, EAGLES_SPENT);
+    document.getElementById("lions-spent-after").style.color = lionsSpentOk ? "" : "var(--danger)";
+    document.getElementById("eagles-spent-after").style.color = eaglesSpentOk ? "" : "var(--danger)";
+    document.getElementById("lions-term2-after").textContent = deltaLabel(lionsTermAfter.c2, LIONS_TERM_BASE.c2, " of 2");
+    document.getElementById("eagles-term2-after").textContent = deltaLabel(eaglesTermAfter.c2, EAGLES_TERM_BASE.c2, " of 2");
+    document.getElementById("lions-term2-after").style.color = lionsTermAfter.c2 <= 2 ? "" : "var(--danger)";
+    document.getElementById("eagles-term2-after").style.color = eaglesTermAfter.c2 <= 2 ? "" : "var(--danger)";
+    document.getElementById("lions-term3-after").textContent = deltaLabel(lionsTermAfter.c3, LIONS_TERM_BASE.c3, " of 1");
+    document.getElementById("eagles-term3-after").textContent = deltaLabel(eaglesTermAfter.c3, EAGLES_TERM_BASE.c3, " of 1");
+    document.getElementById("lions-term3-after").style.color = lionsTermAfter.c3 <= 1 ? "" : "var(--danger)";
+    document.getElementById("eagles-term3-after").style.color = eaglesTermAfter.c3 <= 1 ? "" : "var(--danger)";
+
+    document.getElementById("trade-summary-sentence").textContent =
+      "Lions send " + describeSide(outAssets, pOut) + " to " + document.getElementById("trade-target").value +
+      " for " + describeSide(inAssets, pIn) + ".";
+
+    // A side must offer at least one player or draft pick — cap points alone (or nothing
+    // at all) can't be the sole return. Removal is never blocked; this is checked here,
+    // at submit time, instead.
+    var outHasAsset = outListEl.querySelectorAll('.trade-asset-row[data-kind="player"], .trade-asset-row[data-kind="pick"]').length > 0;
+    var inHasAsset = inListEl.querySelectorAll('.trade-asset-row[data-kind="player"], .trade-asset-row[data-kind="pick"]').length > 0;
+
+    var lionsNote = document.getElementById("lions-check-note");
+    var eaglesNote = document.getElementById("eagles-check-note");
+    var lionsOk = lionsCapOk && lionsSpentOk && lionsTermOk && lionsActiveOk && outHasAsset;
+    var eaglesOk = eaglesCapOk && eaglesSpentOk && eaglesTermOk && eaglesActiveOk && inHasAsset;
+    lionsNote.textContent = noteFor("Lions", lionsCapOk, lionsSpentOk, lionsCapAfter, lionsSpentAfter, lionsTermAfter, lionsActiveAfter, outHasAsset);
+    lionsNote.style.color = lionsOk ? "var(--success)" : "var(--danger)";
+    eaglesNote.textContent = noteFor("Eagles", eaglesCapOk, eaglesSpentOk, eaglesCapAfter, eaglesSpentAfter, eaglesTermAfter, eaglesActiveAfter, inHasAsset);
+    eaglesNote.style.color = eaglesOk ? "var(--success)" : "var(--danger)";
+
+    var badge = document.getElementById("trade-status-badge");
+    var allOk = lionsOk && eaglesOk;
+    badge.textContent = allOk ? "Valid Trade" : "Trade Invalid";
+    badge.className = "badge " + (allOk ? "badge-success" : "badge-danger");
+    submitBtn.disabled = !allOk;
+    submitBtn.title = allOk ? "" : "Resolve the issues in Trade Validity Check before submitting";
+
+    var tbody = document.getElementById("salary-compare-body");
+    tbody.innerHTML = "";
+    outAssets.forEach(function (a) { tbody.appendChild(salaryRow(a, "to Eagles")); });
+    inAssets.forEach(function (a) { tbody.appendChild(salaryRow(a, "to Lions")); });
+
+    updateActivationGate(outAssets, inAssets);
+    refreshBrowseButtons();
+  }
+
+  document.getElementById("add-out-player").addEventListener("click", function () { addRow("out", "player"); });
+  document.getElementById("add-in-player").addEventListener("click", function () { addRow("in", "player"); });
+  document.getElementById("add-out-cap").addEventListener("click", function () { addRow("out", "cap"); });
+  document.getElementById("add-in-cap").addEventListener("click", function () { addRow("in", "cap"); });
+  document.getElementById("add-out-pick").addEventListener("click", function () { addRow("out", "pick"); });
+  document.getElementById("add-in-pick").addEventListener("click", function () { addRow("in", "pick"); });
+
+  var pickNote = document.getElementById("pick-window-note");
+  if (DRAFT_PICKS_TRADEABLE) {
+    pickNote.textContent = "Draft-pick trading is open — only 2027 Rookie Draft picks qualify, per League Admin.";
+  } else {
+    document.getElementById("add-out-pick").disabled = true;
+    document.getElementById("add-out-pick").title = "Draft-pick trading is closed for the season";
+    document.getElementById("add-in-pick").disabled = true;
+    document.getElementById("add-in-pick").title = "Draft-pick trading is closed for the season";
+    pickNote.innerHTML = "Draft picks become tradeable only when League Admin opens the window — from the start of the league calendar through the rookie draft — and only that upcoming draft's picks qualify. That window is closed for the rest of this season.";
+  }
+
+  renderBrowseTable("browse-out-player", "out", "player", LIONS_PLAYERS);
+  renderBrowseTable("browse-out-reserve", "out", "reserve", LIONS_RESERVE);
+  renderBrowseTable("browse-out-pick", "out", "pick", LIONS_PICKS);
+  renderBrowseTable("browse-in-player", "in", "player", EAGLES_PLAYERS);
+  renderBrowseTable("browse-in-reserve", "in", "reserve", EAGLES_RESERVE);
+  renderBrowseTable("browse-in-pick", "in", "pick", EAGLES_PICKS);
+
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest && e.target.closest(".browse-add-btn");
+    if (!btn || btn.disabled) return;
+    if (btn.dataset.mode === "remove") {
+      removeAssetFromList(btn.dataset.side, btn.dataset.value);
+    } else {
+      addRow(btn.dataset.side, btn.dataset.kind, btn.dataset.value);
+    }
+  });
+
+  function resetToDefaultTrade() {
+    outListEl.innerHTML = "";
+    inListEl.innerHTML = "";
+    document.getElementById("trade-target").selectedIndex = 0;
+    addRow("out", "player", "player:6");
+    addRow("in", "player", "player:0");
+  }
+
+  document.getElementById("trade-clear-btn").addEventListener("click", resetToDefaultTrade);
+
+  var DRAFT_KEY = "sgtbl-trade-draft";
+  var draftStatusEl = document.getElementById("draft-status");
+  var draftStatusTimer = null;
+
+  function showDraftStatus(text) {
+    draftStatusEl.textContent = text;
+    if (draftStatusTimer) clearTimeout(draftStatusTimer);
+    draftStatusTimer = setTimeout(function () { draftStatusEl.textContent = ""; }, 4000);
+  }
+
+  function serializeList(listEl) {
+    return Array.prototype.map.call(listEl.querySelectorAll(".trade-asset-row"), function (r) {
+      if (r.dataset.kind === "cap") {
+        return { kind: "cap", value: r.querySelector("input").value };
+      }
+      var sel = r.querySelector("select");
+      var toggle = r.querySelector(".reserve-activate-toggle");
+      return {
+        kind: r.dataset.kind,
+        value: sel.value,
+        willActivate: !!(toggle && !toggle.hidden && toggle.querySelector("input").checked)
+      };
+    });
+  }
+
+  function saveDraft() {
+    var draft = {
+      out: serializeList(outListEl),
+      in: serializeList(inListEl),
+      targetTeam: document.getElementById("trade-target").value
+    };
+    try {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+      showDraftStatus("Draft saved.");
+    } catch (e) {
+      showDraftStatus("Couldn't save draft — storage unavailable.");
+    }
+  }
+
+  function restoreList(side, entries) {
+    var listEl = side === "out" ? outListEl : inListEl;
+    listEl.innerHTML = "";
+    entries.forEach(function (entry) {
+      addRow(side, entry.kind, entry.value);
+      if (entry.willActivate) {
+        var rows = listEl.querySelectorAll(".trade-asset-row");
+        var toggle = rows[rows.length - 1].querySelector(".reserve-activate-toggle");
+        if (toggle && !toggle.hidden) toggle.querySelector("input").checked = true;
+      }
+    });
+  }
+
+  function loadDraft() {
+    var raw;
+    try { raw = localStorage.getItem(DRAFT_KEY); } catch (e) { return false; }
+    if (!raw) return false;
+    var draft;
+    try { draft = JSON.parse(raw); } catch (e) { return false; }
+    if (!draft || !draft.out || !draft.in) return false;
+    restoreList("out", draft.out);
+    restoreList("in", draft.in);
+    if (draft.targetTeam) document.getElementById("trade-target").value = draft.targetTeam;
+    recalc();
+    return true;
+  }
+
+  document.getElementById("trade-save-draft-btn").addEventListener("click", saveDraft);
+
+  if (loadDraft()) {
+    showDraftStatus("Draft restored from your last visit.");
+  } else {
+    resetToDefaultTrade();
+  }
+})();
+</script>
+</body>
+</html>

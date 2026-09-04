@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Agency — SGTBL Captain Portal</title>
+<link rel="icon" href="../assets/img/sgtbl-logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/admin.css">
+<link rel="stylesheet" href="../assets/css/captain.css">
+</head>
+<body class="admin">
+<div class="admin-shell">
+  <div class="admin-scrim"></div>
+  <aside class="admin-side">
+    <a class="brand" href="dashboard.html"><img src="../assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>Captain Portal</span></span></a>
+    <ul class="admin-nav">
+      <li class="nav-group-label">Team</li>
+      <li><a href="dashboard.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Dashboard</a></li>
+      <li><a href="my-team.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg>Roster</a></li>
+      <li><a href="submit-transaction.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>Submit a Transaction</a></li>
+      <li class="nav-group-label">League</li>
+      <li><a href="transactions.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg>Transactions</a></li>
+      <li><a href="free-agency.html" aria-current="page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1.2 1.2-2 2.5-2s2.5.8 2.5 2-1.2 1.5-2.5 2-2.5.8-2.5 2 1.2 2 2.5 2 2.5-.8 2.5-2"/></svg>Free Agency</a></li>
+      <li><a href="scouting.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>Scouting Reports</a></li>
+      <li><a href="stats.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Stats</a></li>
+      <li class="nav-group-label">Film</li>
+      <li><a href="film-room.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3V9z" fill="currentColor" stroke="none"/></svg>Film Room</a></li>
+    </ul>
+    <div class="admin-side-foot">
+      <div class="admin-user">
+        <span class="avatar avatar-sm av-2">RA</span>
+        <div><div class="name">R. Alvarez</div><div class="role">Lions · Captain</div><span class="portal-tag">Captain</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <button class="btn btn-icon btn-ghost admin-topbar-toggle" aria-label="Toggle navigation"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <h1>Free Agency</h1>
+      <span class="badge badge-info">In-Season · Weekly Cycle</span>
+      <div class="spacer"></div>
+      <div class="notif-wrap">
+        <button class="btn btn-icon btn-ghost" id="notifBtn" aria-haspopup="true" aria-expanded="false" aria-label="Notifications">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          <span class="notif-badge">2</span>
+        </button>
+        <div class="notif-panel" id="notifPanel" hidden>
+          <div class="notif-panel-head">Notifications</div>
+          <div class="notif-list">
+            <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></span><div><div>You won last week's bid on <strong>K. Diallo</strong></div><time>Yesterday</time></div></div>
+            <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg></span><div><div>Transfer approved — <strong>D. Okafor</strong> added to your roster</div><time>2 hours ago</time></div></div>
+          </div>
+          <a class="notif-panel-foot" href="#">Mark all as read</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <div class="fa-window-banner">
+        <div>
+          <span class="eyebrow" style="color:var(--gold-400)">Bidding Window Open</span>
+          <div style="font-size:var(--text-lg);margin-top:4px">This week's nominees close Wednesday, 3:00 PM EST</div>
+          <div class="muted" style="color:rgba(255,255,255,.65);font-size:var(--text-sm);margin-top:4px">Sealed bids only — you won't see other teams' bids, and you get exactly one submission per player.</div>
+        </div>
+        <div style="text-align:center">
+          <div class="timer" data-countdown="1845:00">1845:00</div>
+          <div class="muted" style="color:rgba(255,255,255,.65);font-size:var(--text-xs);margin-top:4px">until bidding closes</div>
+        </div>
+      </div>
+
+      <div class="row" style="justify-content:space-between;margin-bottom:var(--space-3)">
+        <h3>This Week's Nominees</h3>
+        <span class="muted" style="font-size:var(--text-xs)">You need an open active-roster spot to bid — yours is full (9/9)</span>
+      </div>
+
+      <div class="fa-listing">
+        <span class="avatar avatar-sm av-3">TB</span>
+        <div><strong>Theo Bianchi</strong><div class="muted" style="font-size:var(--text-xs)">Point Guard · Nominated by Rams · confirmed available this season</div></div>
+        <div class="fa-sealed-note"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>Bids sealed until close</div>
+      </div>
+      <div class="fa-listing">
+        <span class="avatar avatar-sm av-4">GH</span>
+        <div><strong>Grace Holloway</strong><div class="muted" style="font-size:var(--text-xs)">Power Forward · Nominated by Tigers · confirmed available this season</div></div>
+        <div class="bid-group"><input class="input" type="number" placeholder="Max bid (pts)" disabled title="Roster full — open a spot to bid"><button class="btn btn-outline btn-sm" disabled>Roster Full</button></div>
+      </div>
+      <div class="fa-listing">
+        <span class="avatar avatar-sm av-6">EF</span>
+        <div><strong>Eli Farrow</strong><div class="muted" style="font-size:var(--text-xs)">Shooting Guard · Nominated by Sharks · confirmed available this season</div></div>
+        <div class="bid-group"><input class="input" type="number" placeholder="Max bid (pts)" disabled title="Roster full — open a spot to bid"><button class="btn btn-outline btn-sm" disabled>Roster Full</button></div>
+      </div>
+
+      <h3 style="margin:var(--space-7) 0 var(--space-4)">Nominate a Player for Next Week</h3>
+      <div class="card card-pad" style="max-width:520px;margin-bottom:var(--space-6)">
+        <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-4)">Nominations are due Friday, 3:00 PM EST. If no other team nominates the same player first, you're bound to a baseline offer if nobody outbids it.</p>
+        <div class="field" style="margin-bottom:var(--space-4)">
+          <label for="nom">Player</label>
+          <input id="nom" class="input" placeholder="Search confirmed-available free agents…">
+        </div>
+        <button class="btn btn-primary">Submit Nomination</button>
+      </div>
+
+      <h3 style="margin-bottom:var(--space-4)">Last Week's Results</h3>
+      <div class="table-wrap">
+        <table class="table" style="min-width:0">
+          <thead><tr><th>Player</th><th>Won By</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td class="team-cell"><span class="avatar avatar-sm av-2">KD</span>K. Diallo</td><td><strong>Lions (you)</strong></td><td><span class="badge badge-success">Won</span></td></tr>
+            <tr><td class="team-cell"><span class="avatar avatar-sm av-5">NV</span>Nina Volkov</td><td>Sharks</td><td><span class="badge">Outbid</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">Final bid amounts stay private between the winning team and League Admin — only the outcome (won/outbid) is shown here, consistent with cap-points privacy rules.</p>
+    </div>
+  </div>
+</div>
+<script src="../assets/js/interactions.js"></script>
+</body>
+</html>

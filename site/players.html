@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Players — SGTBL</title>
+<link rel="icon" href="assets/img/sgtbl-logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<style>
+.players-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: var(--space-4); }
+@media (max-width: 980px) { .players-grid { grid-template-columns: repeat(3,1fr); } }
+@media (max-width: 720px) { .players-grid { grid-template-columns: repeat(2,1fr); } }
+.player-card { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: var(--space-5) var(--space-4); }
+.player-card .avatar-lg { margin-bottom: 2px; }
+.player-card .pos { font-size: var(--text-xs); color: var(--text-muted); }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>St. Gabriel Basketball</span></span></a>
+    <nav aria-label="Primary"><ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="standings.html">Standings</a></li>
+      <li><a href="teams.html">Teams</a></li>
+      <li><a href="players.html" aria-current="page">Players</a></li>
+      <li><a href="leaderboards.html">Leaderboards</a></li>
+      <li><a href="games.html">Games</a></li>
+      <li><a href="transactions.html">Transactions</a></li>
+    </ul></nav>
+    <div class="nav-actions">
+      <a class="btn btn-outline btn-sm" href="admin/login.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>Captain / Admin</a>
+      <button class="btn btn-icon btn-ghost nav-toggle" aria-label="Toggle menu" aria-expanded="false" style="color:#fff"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap section">
+    <div class="section-head"><div><span class="eyebrow">2026 Season</span><h1>Players</h1></div></div>
+
+    <div class="filters">
+      <div class="field search"><label for="q">Search</label><input id="q" class="input" type="search" placeholder="Search players…" data-filter-input="[data-player-card]"></div>
+      <div class="field"><label for="fteam">Team</label><select id="fteam" class="input"><option>All Teams</option><option>Lions</option><option>Eagles</option><option>Sharks</option><option>Wolves</option><option>Tigers</option><option>Rams</option></select></div>
+      <div class="field"><label for="fpos">Position</label><select id="fpos" class="input"><option>All Positions</option><option>Goalkeeper</option><option>Wing</option><option>Back</option><option>Pivot</option><option>Center Back</option></select></div>
+    </div>
+
+    <div class="players-grid">
+      <a class="card player-card" href="player.html" data-player-card data-filter-text="marcus bello lions left wing">
+        <span class="avatar avatar-lg av-1">MB</span>
+        <div><strong>Marcus Bello</strong><div class="pos">Left Wing · #9</div></div>
+        <span class="crest" style="width:24px;height:27px;font-size:10px;background:var(--team-lions-bg)">L</span>
+      </a>
+      <a class="card player-card" href="player.html" data-player-card data-filter-text="devon okafor sharks wolves right back">
+        <span class="avatar avatar-lg av-6">DO</span>
+        <div><strong>Devon Okafor</strong><div class="pos">Right Back · #22</div></div>
+        <span class="crest" style="width:24px;height:27px;font-size:10px;background:var(--team-sharks-bg)">S</span>
+      </a>
+      <a class="card player-card" href="player.html" data-player-card data-filter-text="priya nandan eagles center back">
+        <span class="avatar avatar-lg av-3">PN</span>
+        <div><strong>Priya Nandan</strong><div class="pos">Center Back · #14</div></div>
+        <span class="crest" style="width:24px;height:27px;font-size:10px;background:var(--team-eagles-bg)">E</span>
+      </a>
+      <a class="card player-card" href="player.html" data-player-card data-filter-text="tomas reyes wolves pivot">
+        <span class="avatar avatar-lg av-4">TR</span>
+        <div><strong>Tomas Reyes</strong><div class="pos">Pivot · #8</div></div>
+        <span class="crest" style="width:24px;height:27px;font-size:10px;background:var(--team-wolves-bg)">W</span>
+      </a>
+      <a class="card player-card" href="player.html" data-player-card data-filter-text="jonah kim lions center back">
+        <span class="avatar avatar-lg av-3">JK</span>
+        <div><strong>Jonah Kim</strong><div class="pos">Center Back · #4</div></div>
+        <span class="crest" style="width:24px;height:27px;font-size:10px;background:var(--team-lions-bg)">L</span>
+      </a>
+      <a class="card player-card" href="player.html" data-player-card data-filter-text="ana reyes lions goalkeeper">
+        <span class="avatar avatar-lg av-6">AR</span>
+        <div><strong>Ana Reyes</strong><div class="pos">Goalkeeper · #1</div></div>
+        <span class="crest" style="width:24px;height:27px;font-size:10px;background:var(--team-lions-bg)">L</span>
+      </a>
+      <a class="card player-card" href="player.html" data-player-card data-filter-text="chloe turner lions pivot">
+        <span class="avatar avatar-lg av-4">CT</span>
+        <div><strong>Chloe Turner</strong><div class="pos">Pivot · #7</div></div>
+        <span class="crest" style="width:24px;height:27px;font-size:10px;background:var(--team-lions-bg)">L</span>
+      </a>
+      <a class="card player-card" href="player.html" data-player-card data-filter-text="sam osei lions left back">
+        <span class="avatar avatar-lg av-2">SO</span>
+        <div><strong>Sam Osei</strong><div class="pos">Left Back · #18</div></div>
+        <span class="crest" style="width:24px;height:27px;font-size:10px;background:var(--team-lions-bg)">L</span>
+      </a>
+      <a class="card player-card" href="player.html" data-player-card data-filter-text="noah delgado tigers right wing">
+        <span class="avatar avatar-lg av-5">ND</span>
+        <div><strong>Noah Delgado</strong><div class="pos">Right Wing · #12</div></div>
+        <span class="crest" style="width:24px;height:27px;font-size:10px;background:var(--team-tigers-bg)">T</span>
+      </a>
+      <a class="card player-card" href="player.html" data-player-card data-filter-text="ella marsh rams goalkeeper">
+        <span class="avatar avatar-lg av-8">EM</span>
+        <div><strong>Ella Marsh</strong><div class="pos">Goalkeeper · #21</div></div>
+        <span class="crest" style="width:24px;height:27px;font-size:10px;background:var(--team-rams-bg)">R</span>
+      </a>
+      <a class="card player-card" href="player.html" data-player-card data-filter-text="ibrahim saleh sharks left wing">
+        <span class="avatar avatar-lg av-6">IS</span>
+        <div><strong>Ibrahim Saleh</strong><div class="pos">Left Wing · #6</div></div>
+        <span class="crest" style="width:24px;height:27px;font-size:10px;background:var(--team-sharks-bg)">S</span>
+      </a>
+      <a class="card player-card" href="player.html" data-player-card data-filter-text="maya patel lions right wing">
+        <span class="avatar avatar-lg av-7">MP</span>
+        <div><strong>Maya Patel</strong><div class="pos">Right Wing · #11</div></div>
+        <span class="crest" style="width:24px;height:27px;font-size:10px;background:var(--team-lions-bg)">L</span>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div><a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word" style="color:#fff">SGTBL<span>St. Gabriel Basketball</span></span></a></div>
+    <div><h4>League</h4><ul><li><a href="standings.html">Standings</a></li><li><a href="teams.html">Teams</a></li><li><a href="games.html">Schedule</a></li></ul></div>
+    <div><h4>Stats</h4><ul><li><a href="players.html">Players</a></li><li><a href="leaderboards.html">Leaderboards</a></li><li><a href="transactions.html">Transactions</a></li></ul></div>
+    <div><h4>League Office</h4><ul><li><a href="admin/login.html">Captain / Admin Login</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 St. Gabriel Team Basketball League</span></div>
+</footer>
+<script src="assets/js/interactions.js"></script>
+</body>
+</html>

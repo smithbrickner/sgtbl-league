@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign In — SGTBL Admin</title>
+<link rel="icon" href="../assets/img/sgtbl-logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body class="admin">
+<div class="auth-shell">
+  <div class="auth-visual">
+    <img class="bg" src="../assets/img/hero/hero-2.jpg" alt="">
+    <div class="msg">
+      <img src="../assets/img/sgtbl-logo.jpg" alt="SGTBL crest" style="width:88px;height:88px;border-radius:16px;box-shadow:var(--shadow-lg);margin-bottom:var(--space-5)">
+      <h1 style="color:#fff;font-size:var(--text-2xl)">League Admin Portal</h1>
+      <p style="color:rgba(255,255,255,.8);margin-top:var(--space-3)">Commissioner and league admins run scheduling, live scorekeeping, transaction approvals, data sync, and publishing here. Team captains have their own portal for rosters, transfers, and free agency.</p>
+    </div>
+  </div>
+  <div class="auth-form-side">
+    <div class="auth-card">
+      <h2 style="margin-bottom:6px">Sign in</h2>
+      <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-6)">Access is limited to team captains and league admins.</p>
+      <form class="stack" style="gap:var(--space-4)" onsubmit="return false">
+        <div class="field">
+          <label for="email">Email</label>
+          <input class="input" id="email" type="email" autocomplete="username" placeholder="you@stgabriel.org" required>
+        </div>
+        <div class="field">
+          <label for="pw">Password</label>
+          <input class="input" id="pw" type="password" autocomplete="current-password" placeholder="••••••••" required>
+        </div>
+        <div class="row" style="justify-content:space-between">
+          <label class="checkbox-row"><input type="checkbox">Remember me</label>
+          <a class="card-link" href="#">Forgot password?</a>
+        </div>
+        <a class="btn btn-primary btn-block btn-lg" href="dashboard.html">Sign In</a>
+      </form>
+      <hr class="divider">
+      <a class="portal-switch" href="../captain/login.html">Team Captain? Sign in here →</a>
+      <p class="muted center" style="font-size:var(--text-sm);margin-top:var(--space-2)"><a href="../index.html" class="card-link">Go to the public site →</a></p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

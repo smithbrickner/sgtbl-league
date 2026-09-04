@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Standings — SGTBL</title>
+<link rel="icon" href="assets/img/sgtbl-logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>St. Gabriel Basketball</span></span></a>
+    <nav aria-label="Primary"><ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="standings.html" aria-current="page">Standings</a></li>
+      <li><a href="teams.html">Teams</a></li>
+      <li><a href="players.html">Players</a></li>
+      <li><a href="leaderboards.html">Leaderboards</a></li>
+      <li><a href="games.html">Games</a></li>
+      <li><a href="transactions.html">Transactions</a></li>
+    </ul></nav>
+    <div class="nav-actions">
+      <a class="btn btn-outline btn-sm" href="admin/login.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>Captain / Admin</a>
+      <button class="btn btn-icon btn-ghost nav-toggle" aria-label="Toggle menu" aria-expanded="false" style="color:#fff"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap section">
+    <div class="section-head">
+      <div><span class="eyebrow">2026 Season · Regular Season</span><h1>Standings</h1></div>
+      <div class="field" style="min-width:160px">
+        <label for="season" class="sr-only">Season</label>
+        <select id="season" class="input"><option>2026 Season</option><option>2025 Season</option><option>2024 Season</option></select>
+      </div>
+    </div>
+
+    <div class="table-wrap" style="margin-bottom:var(--space-6)">
+      <table class="table standings-table" data-sortable>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th aria-sort="none">Team <span class="sort-caret">▾</span></th>
+            <th class="num" aria-sort="none">GP <span class="sort-caret">▾</span></th>
+            <th class="num" aria-sort="none">W <span class="sort-caret">▾</span></th>
+            <th class="num" aria-sort="none">T <span class="sort-caret">▾</span></th>
+            <th class="num" aria-sort="none">L <span class="sort-caret">▾</span></th>
+            <th class="num" aria-sort="descending">Pts <span class="sort-caret">▾</span></th>
+            <th class="num">GF</th>
+            <th class="num">GA</th>
+            <th class="num">Diff</th>
+            <th>Streak</th>
+            <th>Last 5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td class="team-cell"><span class="crest" style="background:var(--team-lions-bg)">L</span><a href="team.html">Lions</a></td><td class="num tnum">13</td><td class="num tnum" data-sort-value="10">10</td><td class="num tnum" data-sort-value="2">2</td><td class="num tnum" data-sort-value="1">1</td><td class="num tnum" data-sort-value="32">32</td><td class="num tnum">338</td><td class="num tnum">286</td><td class="num tnum">+52</td><td class="streak-w">W3</td><td class="muted">W-W-W-T-L</td></tr>
+          <tr><td>2</td><td class="team-cell"><span class="crest" style="background:var(--team-eagles-bg)">E</span><a href="team.html">Eagles</a></td><td class="num tnum">13</td><td class="num tnum" data-sort-value="9">9</td><td class="num tnum" data-sort-value="1">1</td><td class="num tnum" data-sort-value="3">3</td><td class="num tnum" data-sort-value="28">28</td><td class="num tnum">310</td><td class="num tnum">272</td><td class="num tnum">+38</td><td class="streak-l">L1</td><td class="muted">W-W-W-L-L</td></tr>
+          <tr class="playoff-line"><td>3</td><td class="team-cell"><span class="crest" style="background:var(--team-sharks-bg)">S</span><a href="team.html">Sharks</a></td><td class="num tnum">13</td><td class="num tnum" data-sort-value="8">8</td><td class="num tnum" data-sort-value="2">2</td><td class="num tnum" data-sort-value="3">3</td><td class="num tnum" data-sort-value="26">26</td><td class="num tnum">295</td><td class="num tnum">274</td><td class="num tnum">+21</td><td class="streak-w">W2</td><td class="muted">L-W-W-T-L</td></tr>
+          <tr><td>4</td><td class="team-cell"><span class="crest" style="background:var(--team-wolves-bg)">W</span><a href="team.html">Wolves</a></td><td class="num tnum">13</td><td class="num tnum" data-sort-value="5">5</td><td class="num tnum" data-sort-value="3">3</td><td class="num tnum" data-sort-value="5">5</td><td class="num tnum" data-sort-value="18">18</td><td class="num tnum">270</td><td class="num tnum">274</td><td class="num tnum">-4</td><td class="streak-l">L2</td><td class="muted">W-T-L-W-L</td></tr>
+          <tr><td>5</td><td class="team-cell"><span class="crest" style="background:var(--team-tigers-bg)">T</span><a href="team.html">Tigers</a></td><td class="num tnum">13</td><td class="num tnum" data-sort-value="3">3</td><td class="num tnum" data-sort-value="2">2</td><td class="num tnum" data-sort-value="8">8</td><td class="num tnum" data-sort-value="11">11</td><td class="num tnum">240</td><td class="num tnum">271</td><td class="num tnum">-31</td><td class="streak-w">W1</td><td class="muted">L-L-T-W-L</td></tr>
+          <tr><td>6</td><td class="team-cell"><span class="crest" style="background:var(--team-rams-bg)">R</span><a href="team.html">Rams</a></td><td class="num tnum">13</td><td class="num tnum" data-sort-value="1">1</td><td class="num tnum" data-sort-value="1">1</td><td class="num tnum" data-sort-value="11">11</td><td class="num tnum" data-sort-value="4">4</td><td class="num tnum">210</td><td class="num tnum">286</td><td class="num tnum">-76</td><td class="streak-l">L6</td><td class="muted">L-L-L-L-L</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted" style="font-size:var(--text-xs)">Dashed line marks the playoff cutoff — the top 3 teams advance. Regular season is 15 games per team; the top half of the league makes the playoffs, and the playoffs (not regular-season record) decide the league champion. 3 points for a win, 1 for a tie, 0 for a loss. Tiebreakers, in order: point differential, points, head-to-head record among tied teams, then a coin flip.</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div><a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word" style="color:#fff">SGTBL<span>St. Gabriel Basketball</span></span></a></div>
+    <div><h4>League</h4><ul><li><a href="standings.html">Standings</a></li><li><a href="teams.html">Teams</a></li><li><a href="games.html">Schedule</a></li></ul></div>
+    <div><h4>Stats</h4><ul><li><a href="players.html">Players</a></li><li><a href="leaderboards.html">Leaderboards</a></li><li><a href="transactions.html">Transactions</a></li></ul></div>
+    <div><h4>League Office</h4><ul><li><a href="admin/login.html">Captain / Admin Login</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 St. Gabriel Team Basketball League</span></div>
+</footer>
+<script src="assets/js/interactions.js"></script>
+</body>
+</html>

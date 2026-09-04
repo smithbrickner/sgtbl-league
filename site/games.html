@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Games &amp; Recaps — SGTBL</title>
+<link rel="icon" href="assets/img/sgtbl-logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<style>
+.games-list { display: flex; flex-direction: column; gap: var(--space-3); }
+.game-row { display: grid; grid-template-columns: 90px 1fr auto; gap: var(--space-4); align-items: center; padding: var(--space-4); }
+.game-row .teams { display: flex; flex-direction: column; gap: 6px; }
+.gt { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+.gt .score { margin-left: auto; font-family: var(--font-display); font-weight: 800; }
+.gt.win .score { color: var(--brand); }
+@media (max-width: 640px) { .game-row { grid-template-columns: 1fr; } .game-row > .muted { display:none } }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>St. Gabriel Basketball</span></span></a>
+    <nav aria-label="Primary"><ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="standings.html">Standings</a></li>
+      <li><a href="teams.html">Teams</a></li>
+      <li><a href="players.html">Players</a></li>
+      <li><a href="leaderboards.html">Leaderboards</a></li>
+      <li><a href="games.html" aria-current="page">Games</a></li>
+      <li><a href="transactions.html">Transactions</a></li>
+    </ul></nav>
+    <div class="nav-actions">
+      <a class="btn btn-outline btn-sm" href="admin/login.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>Captain / Admin</a>
+      <button class="btn btn-icon btn-ghost nav-toggle" aria-label="Toggle menu" aria-expanded="false" style="color:#fff"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap section">
+    <div class="section-head"><div><span class="eyebrow">2026 Season</span><h1>Games &amp; Recaps</h1></div></div>
+
+    <div class="card" style="margin-bottom:var(--space-6);border-left:4px solid var(--live)">
+      <div class="game-row">
+        <span class="badge badge-live">Live · 2nd Half</span>
+        <div class="teams">
+          <div class="gt win"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-sharks-bg)">S</span>Sharks<span class="score">14</span></div>
+          <div class="gt"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-wolves-bg)">W</span>Wolves<span class="score">11</span></div>
+        </div>
+        <a class="btn btn-outline btn-sm" href="game.html">Live Box Score</a>
+      </div>
+    </div>
+
+    <div class="games-list">
+      <a class="card game-row" href="game.html">
+        <span class="muted tnum" style="font-size:var(--text-sm)">Aug 22</span>
+        <div class="teams">
+          <div class="gt win"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-lions-bg)">L</span>Lions<span class="score">27</span></div>
+          <div class="gt"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-eagles-bg)">E</span>Eagles<span class="score">24</span></div>
+        </div>
+        <span class="badge">Final</span>
+      </a>
+      <a class="card game-row" href="game.html">
+        <span class="muted tnum" style="font-size:var(--text-sm)">Aug 15</span>
+        <div class="teams">
+          <div class="gt win"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-sharks-bg)">S</span>Sharks<span class="score">25</span></div>
+          <div class="gt"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-lions-bg)">L</span>Lions<span class="score">21</span></div>
+        </div>
+        <span class="badge">Final</span>
+      </a>
+      <div class="card game-row">
+        <span class="muted tnum" style="font-size:var(--text-sm)">Aug 11</span>
+        <div class="teams">
+          <div class="gt"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-wolves-bg)">W</span>Wolves<span class="score">22</span></div>
+          <div class="gt"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-tigers-bg)">T</span>Tigers<span class="score">22</span></div>
+        </div>
+        <span class="badge badge-info">Final · Tie</span>
+      </div>
+      <a class="card game-row" href="game.html">
+        <span class="muted tnum" style="font-size:var(--text-sm)">Aug 8</span>
+        <div class="teams">
+          <div class="gt win"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-lions-bg)">L</span>Lions<span class="score">33</span></div>
+          <div class="gt"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-rams-bg)">R</span>Rams<span class="score">19</span></div>
+        </div>
+        <span class="badge">Final</span>
+      </a>
+      <a class="card game-row" href="game.html">
+        <span class="muted tnum" style="font-size:var(--text-sm)">Aug 1</span>
+        <div class="teams">
+          <div class="gt win"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-eagles-bg)">E</span>Eagles<span class="score">31</span></div>
+          <div class="gt"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-tigers-bg)">T</span>Tigers<span class="score">20</span></div>
+        </div>
+        <span class="badge">Final</span>
+      </a>
+      <div class="card game-row" style="opacity:.85">
+        <span class="muted tnum" style="font-size:var(--text-sm)">Aug 29</span>
+        <div class="teams">
+          <div class="gt"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-tigers-bg)">T</span>Tigers<span class="muted">—</span></div>
+          <div class="gt"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-rams-bg)">R</span>Rams<span class="muted">—</span></div>
+        </div>
+        <span class="badge badge-info">11:30 AM</span>
+      </div>
+      <div class="card game-row" style="opacity:.85">
+        <span class="muted tnum" style="font-size:var(--text-sm)">Sep 4</span>
+        <div class="teams">
+          <div class="gt"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-lions-bg)">L</span>Lions<span class="muted">—</span></div>
+          <div class="gt"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-eagles-bg)">E</span>Eagles<span class="muted">—</span></div>
+        </div>
+        <span class="badge badge-accent">8:00 PM · Anchor Game</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div><a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word" style="color:#fff">SGTBL<span>St. Gabriel Basketball</span></span></a></div>
+    <div><h4>League</h4><ul><li><a href="standings.html">Standings</a></li><li><a href="teams.html">Teams</a></li><li><a href="games.html">Schedule</a></li></ul></div>
+    <div><h4>Stats</h4><ul><li><a href="players.html">Players</a></li><li><a href="leaderboards.html">Leaderboards</a></li><li><a href="transactions.html">Transactions</a></li></ul></div>
+    <div><h4>League Office</h4><ul><li><a href="admin/login.html">Captain / Admin Login</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 St. Gabriel Team Basketball League</span></div>
+</footer>
+<script src="assets/js/interactions.js"></script>
+</body>
+</html>
