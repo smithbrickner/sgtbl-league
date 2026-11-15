@@ -17,18 +17,6 @@
    none of this page's tables have that ancestor, so give it real flex layout here too,
    with more breathing room between the headshot circle and the player name. */
 .team-cell { display: flex; align-items: center; gap: var(--space-4); }
-.term-slot-players .avatar { margin-right: var(--space-3); }
-
-/* Contract Grid and Reserve Contracts: size to their columns instead of stretching full width */
-.table-wrap-auto { display: inline-block; width: auto; max-width: 100%; }
-.table-wrap-auto .contract-table { width: auto; min-width: 0; }
-.table-wrap-auto .contract-table th, .table-wrap-auto .contract-table td { white-space: nowrap; padding-left: var(--space-5); padding-right: var(--space-5); }
-
-/* Contract Grid row: Reserve List + Cap Points by Position stack in the remaining width,
-   each box sized to its own content — no forced height-matching, so neither side shows blank filler. */
-.contract-grid-row { display: grid; grid-template-columns: auto minmax(300px, 1fr); gap: var(--space-6); align-items: start; }
-.contract-grid-side { display: flex; flex-direction: column; gap: var(--space-6); }
-@media (max-width: 900px) { .contract-grid-row { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body class="admin">
@@ -71,7 +59,7 @@
           <div class="notif-panel-head">Notifications</div>
           <div class="notif-list">
             <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></span><div><div>Availability locks in <strong>1h 42m</strong> for Friday's game</div><time>Just now</time></div></div>
-            <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg></span><div><div>Transfer approved — <strong>D. Okafor</strong> added to your roster</div><time>2 hours ago</time></div></div>
+            <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg></span><div><div>Trade approved — <strong>D. Okafor</strong> added to your roster</div><time>2 hours ago</time></div></div>
           </div>
           <a class="notif-panel-foot" href="#">Mark all as read</a>
         </div>
@@ -81,7 +69,6 @@
     <div class="admin-content">
       <div class="tabbar" data-tabbar role="tablist">
         <button role="tab" aria-selected="true" aria-controls="p-roster" id="t-roster">Roster</button>
-        <button role="tab" aria-selected="false" aria-controls="p-payroll" id="t-payroll">Payroll</button>
         <button role="tab" aria-selected="false" aria-controls="p-lineup" id="t-lineup">Weekly Availability</button>
       </div>
 
@@ -135,189 +122,6 @@
         <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">Reactivating a reserve player requires an open active-roster spot — the active roster is currently full (9/9).</p>
       </div>
 
-      <div id="p-payroll" class="tabpanel" role="tabpanel" aria-labelledby="t-payroll" hidden>
-        <div class="card card-pad cap-util-card">
-          <div class="row" style="justify-content:space-between;margin-bottom:var(--space-2)">
-            <h3>Cap Utilization</h3>
-            <span class="badge badge-success">Within Cap Limits</span>
-          </div>
-          <div class="cap-stat-pair">
-            <div class="stat-tile"><div class="value">970</div><div class="label">Current Cap</div></div>
-            <div class="stat-tile"><div class="value">923</div><div class="label">Pts Spent — 47 Remaining (95%)</div></div>
-            <div class="stat-tile"><div class="value">65</div><div class="label">Available to Acquire</div></div>
-            <div class="stat-tile"><div class="value">205</div><div class="label">Available to Sell</div></div>
-          </div>
-          <div class="cap-util-track">
-            <div class="cap-util-fill status-ok" style="width:76.9%"></div>
-            <div class="cap-util-mark floor" style="left:16.5%"><span>630</span></div>
-            <div class="cap-util-mark mincap" style="left:44.3%"><span>765</span></div>
-            <div class="cap-util-mark currentcap" style="left:86.6%"><span>970</span></div>
-            <div class="cap-util-mark maxcap" style="left:auto;right:0"><span>1,035</span></div>
-          </div>
-          <div class="cap-legend">
-            <span class="cap-legend-item"><span class="cap-legend-dot" style="background:var(--danger)"></span>70% Floor — 630 pts (locked at 70% of the fixed 900-pt baseline — fixed all season, regardless of trades)</span>
-            <span class="cap-legend-item"><span class="cap-legend-dot" style="background:var(--slate-500)"></span>Min Cap — 765 pts (lowest your current cap can drop via trades — 900 baseline minus 15%)</span>
-            <span class="cap-legend-item"><span class="cap-legend-dot" style="background:var(--accent-blue)"></span>Current Cap — 970 pts (your team's working budget — moves via transfers)</span>
-            <span class="cap-legend-item"><span class="cap-legend-dot" style="background:var(--warning)"></span>Max Cap — 1,035 pts (highest your current cap can reach — 900 baseline plus 15%)</span>
-          </div>
-          <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-4)">Your current cap is 970 pts — this isn't fixed league-wide, it's your own team's working budget, and it moves within a 765–1,035 range via transfers (±15% of the fixed 900-pt baseline). You've spent 923 of it (95%) — your 9 active players plus the 50% Year-1 reserve charge on Grace Bennett and Nate Price (see Reserve List below) — leaving 47 pts unspent under your current cap. Your current cap itself sits 65 pts below the 1,035 Max Cap and 205 pts above the 765 Min Cap of that working-budget band. Separately, your 630-pt active-roster floor is locked at 70% of the fixed 900-pt baseline — not your current cap — so it doesn't move even if your current cap does, and you're sitting 293 pts above it. The bar turns red if you ever drop below that floor — green means you're in good standing.</p>
-        </div>
-
-        <div class="card card-pad" style="margin-bottom:var(--space-6)">
-          <div class="row" style="justify-content:space-between;margin-bottom:var(--space-4)">
-            <h3>Contract Length Utilization</h3>
-            <span class="muted" style="font-size:var(--text-xs)">Per League Structure — contract-length caps</span>
-          </div>
-
-          <div class="term-slot-row">
-            <div class="term-slot-head">
-              <span class="term-slot-label">3-Year Deals <span class="muted" style="font-weight:400">— max 1 per team</span></span>
-              <span class="badge">1 of 1 — Slot Full</span>
-            </div>
-            <div class="term-bar-track"><div class="term-bar-fill" style="width:100%"></div></div>
-            <div class="term-slot-players"><span class="term-player-chip"><span class="avatar avatar-sm av-6" style="width:22px;height:22px;font-size:10px">AR</span><a href="player.html">Ana Reyes</a></span></div>
-          </div>
-
-          <div class="term-slot-row">
-            <div class="term-slot-head">
-              <span class="term-slot-label">2-Year Deals <span class="muted" style="font-weight:400">— max 2 per team</span></span>
-              <span class="badge">2 of 2 — Slot Full</span>
-            </div>
-            <div class="term-bar-track"><div class="term-bar-fill" style="width:100%"></div></div>
-            <div class="term-slot-players">
-              <span class="term-player-chip"><span class="avatar avatar-sm av-1" style="width:22px;height:22px;font-size:10px">MB</span><a href="player.html">Marcus Bello</a></span>
-              <span class="term-player-chip"><span class="avatar avatar-sm av-4" style="width:22px;height:22px;font-size:10px">CT</span><a href="player.html">Chloe Turner</a></span>
-            </div>
-          </div>
-
-          <div class="term-slot-row">
-            <div class="term-slot-head">
-              <span class="term-slot-label">1-Year Deals <span class="muted" style="font-weight:400">— remaining roster spots, no cap</span></span>
-              <span class="badge">6 of 6 — Slot Full</span>
-            </div>
-            <div class="term-bar-track"><div class="term-bar-fill" style="width:100%"></div></div>
-            <div class="term-slot-players">
-              <span class="term-player-chip"><span class="avatar avatar-sm av-3" style="width:22px;height:22px;font-size:10px">JK</span><a href="player.html">Jonah Kim</a></span>
-              <span class="term-player-chip"><span class="avatar avatar-sm av-5" style="width:22px;height:22px;font-size:10px">DW</span><a href="player.html">David Whitfield</a></span>
-              <span class="term-player-chip"><span class="avatar avatar-sm av-2" style="width:22px;height:22px;font-size:10px">SO</span><a href="player.html">Sam Osei</a></span>
-              <span class="term-player-chip"><span class="avatar avatar-sm av-7" style="width:22px;height:22px;font-size:10px">MP</span><a href="player.html">Maya Patel</a></span>
-              <span class="term-player-chip"><span class="avatar avatar-sm av-8" style="width:22px;height:22px;font-size:10px">LG</span><a href="player.html">Luca Grant</a></span>
-              <span class="term-player-chip"><span class="avatar avatar-sm av-3" style="width:22px;height:22px;font-size:10px">RC</span><a href="player.html">Rafael Cho</a></span>
-            </div>
-          </div>
-
-          <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-5)">Both long-term slots are in use. Any new signing or incoming transfer this season must be a 1-year deal until a 2-year or 3-year slot opens up — e.g. a contract expiring, or that player being traded or moved to reserve.</p>
-        </div>
-
-        <div class="row" style="justify-content:space-between;margin-bottom:var(--space-3)">
-          <h3>Contract Grid</h3>
-          <span class="muted" style="font-size:var(--text-xs)">Individual values visible to you and League Admin only</span>
-        </div>
-        <div class="contract-grid-row">
-          <div class="table-wrap table-wrap-auto">
-            <table class="table contract-table" data-sortable>
-              <thead>
-                <tr>
-                  <th aria-sort="none">Pos <span class="sort-caret">▾</span></th>
-                  <th aria-sort="none">Player <span class="sort-caret">▾</span></th>
-                  <th aria-sort="none">Term <span class="sort-caret">▾</span></th>
-                  <th class="num" aria-sort="descending">2026 <span class="sort-caret">▾</span></th>
-                  <th class="num" aria-sort="none">2027 <span class="sort-caret">▾</span></th>
-                  <th class="num" aria-sort="none">2028 <span class="sort-caret">▾</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>SF</td><td class="team-cell"><span class="avatar avatar-sm av-1">MB</span><a href="player.html">Marcus Bello</a></td><td data-sort-value="2">2-Year</td><td class="num tnum" data-sort-value="180">180</td><td class="num tnum">180</td><td class="num tnum empty-year" data-sort-value="0">—</td></tr>
-                <tr><td>PG</td><td class="team-cell"><span class="avatar avatar-sm av-3">JK</span><a href="player.html">Jonah Kim</a></td><td data-sort-value="1">1-Year</td><td class="num tnum" data-sort-value="165">165</td><td class="num tnum empty-year" data-sort-value="0">—</td><td class="num tnum empty-year" data-sort-value="0">—</td></tr>
-                <tr><td>C</td><td class="team-cell"><span class="avatar avatar-sm av-6">AR</span><a href="player.html">Ana Reyes</a></td><td data-sort-value="3">3-Year</td><td class="num tnum" data-sort-value="140">140</td><td class="num tnum">140</td><td class="num tnum">140</td></tr>
-                <tr><td>SG</td><td class="team-cell"><span class="avatar avatar-sm av-5">DW</span><a href="player.html">David Whitfield</a></td><td data-sort-value="1">1-Year</td><td class="num tnum" data-sort-value="120">120</td><td class="num tnum empty-year" data-sort-value="0">—</td><td class="num tnum empty-year" data-sort-value="0">—</td></tr>
-                <tr><td>PF</td><td class="team-cell"><span class="avatar avatar-sm av-4">CT</span><a href="player.html">Chloe Turner</a></td><td data-sort-value="2">2-Year</td><td class="num tnum" data-sort-value="98">98</td><td class="num tnum">98</td><td class="num tnum empty-year" data-sort-value="0">—</td></tr>
-                <tr><td>PG</td><td class="team-cell"><span class="avatar avatar-sm av-3">RC</span><a href="player.html">Rafael Cho</a></td><td data-sort-value="1">1-Year</td><td class="num tnum" data-sort-value="44">44</td><td class="num tnum empty-year" data-sort-value="0">—</td><td class="num tnum empty-year" data-sort-value="0">—</td></tr>
-                <tr><td>PG</td><td class="team-cell"><span class="avatar avatar-sm av-2">SO</span><a href="player.html">Sam Osei</a></td><td data-sort-value="1">1-Year</td><td class="num tnum" data-sort-value="75">75</td><td class="num tnum empty-year" data-sort-value="0">—</td><td class="num tnum empty-year" data-sort-value="0">—</td></tr>
-                <tr><td>SG</td><td class="team-cell"><span class="avatar avatar-sm av-7">MP</span><a href="player.html">Maya Patel</a></td><td data-sort-value="1">1-Year</td><td class="num tnum" data-sort-value="40">40</td><td class="num tnum empty-year" data-sort-value="0">—</td><td class="num tnum empty-year" data-sort-value="0">—</td></tr>
-                <tr><td>C</td><td class="team-cell"><span class="avatar avatar-sm av-8">LG</span><a href="player.html">Luca Grant</a></td><td data-sort-value="1">1-Year</td><td class="num tnum" data-sort-value="20">20</td><td class="num tnum empty-year" data-sort-value="0">—</td><td class="num tnum empty-year" data-sort-value="0">—</td></tr>
-              </tbody>
-              <tfoot>
-                <tr><td colspan="3">Total</td><td class="num tnum">882</td><td class="num tnum">418</td><td class="num tnum">140</td></tr>
-              </tfoot>
-            </table>
-          </div>
-
-          <div class="contract-grid-side">
-            <div class="card card-pad">
-              <div class="row" style="justify-content:space-between;margin-bottom:var(--space-3)">
-                <h3>Reserve List
-                  <span class="info-tip">
-                    <button type="button" class="info-icon" aria-label="About the Reserve List cap rule">i</button>
-                    <span class="info-tooltip" role="tooltip">Holding a player's rights on reserve instead of releasing him costs you: for the season he first goes to reserve, 50% of that year's salary still counts against your active-roster cap and the 70% floor, same as an active player's. Once that season ends, his contract freezes completely at whichever year it stopped on — 0% counting, no further charges — and stays frozen there until he's reactivated, at which point it resumes exactly where it left off. His contract-length slot is also freed up while frozen, so a different active player can occupy that same term length.</span>
-                  </span>
-                </h3>
-                <span class="badge badge-warning">+41 pts</span>
-              </div>
-              <div class="table-wrap">
-                <table class="table" style="min-width:0" data-sortable>
-                  <thead><tr><th aria-sort="none">Player <span class="sort-caret">▾</span></th><th aria-sort="none"><span class="info-tip th-tip"><span class="th-tip-label" tabindex="0">Yr</span><span class="info-tooltip th-tooltip" role="tooltip">Contract Year — which year of the deal is currently in effect, and years remaining until it expires</span></span> <span class="sort-caret">▾</span></th><th class="num" aria-sort="none">Annual <span class="sort-caret">▾</span></th><th class="num" aria-sort="none">Counts Now <span class="sort-caret">▾</span></th></tr></thead>
-                  <tbody>
-                    <tr><td class="team-cell"><span class="avatar avatar-sm av-6">GB</span><a href="player.html">Grace Bennett</a></td><td data-sort-value="1">Yr 1 of 2<div class="muted" style="font-size:var(--text-xs)">1 remaining</div></td><td class="num tnum">52</td><td class="num tnum" data-sort-value="26">26<div class="muted" style="font-size:var(--text-xs)">1st season · 50%</div></td></tr>
-                    <tr><td class="team-cell"><span class="avatar avatar-sm av-7">NP</span><a href="player.html">Nate Price</a></td><td data-sort-value="1">Yr 1 of 1<div class="muted" style="font-size:var(--text-xs)">Final year</div></td><td class="num tnum">30</td><td class="num tnum" data-sort-value="15">15<div class="muted" style="font-size:var(--text-xs)">1st season · 50%</div></td></tr>
-                  </tbody>
-                  <tfoot>
-                    <tr><td colspan="3">Total Counting Now</td><td class="num tnum">41</td></tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-
-            <div class="card card-pad position-pie-card">
-              <h3 style="margin-bottom:var(--space-4)">Cap Points by Position
-                <span class="info-tip">
-                  <button type="button" class="info-icon" aria-label="About Cap Points by Position">i</button>
-                  <span class="info-tooltip" role="tooltip">Includes each reserve player's 50% Year-1 charge (Grace Bennett's 26 folded into Center, Nate Price's 15 into Shooting Guard) alongside the 9 active players.</span>
-                </span>
-              </h3>
-              <div class="position-pie-body">
-                <div class="position-donut-wrap">
-                  <svg viewBox="0 0 160 160" style="width:100%">
-                    <circle cx="80" cy="80" r="60" fill="none" stroke="var(--slate-100)" stroke-width="28"/>
-                    <circle cx="80" cy="80" r="60" fill="none" stroke="#2d9bb8" stroke-width="28" stroke-dasharray="116.00 376.99" stroke-dashoffset="0" transform="rotate(-90 80 80)"/>
-                    <circle cx="80" cy="80" r="60" fill="none" stroke="#dba94d" stroke-width="28" stroke-dasharray="71.48 376.99" stroke-dashoffset="-116.00" transform="rotate(-90 80 80)"/>
-                    <circle cx="80" cy="80" r="60" fill="none" stroke="#6a4c93" stroke-width="28" stroke-dasharray="73.52 376.99" stroke-dashoffset="-187.48" transform="rotate(-90 80 80)"/>
-                    <circle cx="80" cy="80" r="60" fill="none" stroke="#2e8b57" stroke-width="28" stroke-dasharray="40.03 376.99" stroke-dashoffset="-261.00" transform="rotate(-90 80 80)"/>
-                    <circle cx="80" cy="80" r="60" fill="none" stroke="#b3392b" stroke-width="28" stroke-dasharray="75.97 376.99" stroke-dashoffset="-301.03" transform="rotate(-90 80 80)"/>
-                    <text x="80" y="76" text-anchor="middle" class="donut-total-value">923</text>
-                    <text x="80" y="94" text-anchor="middle" class="donut-total-label">CAP PTS</text>
-                  </svg>
-                </div>
-                <div class="position-legend-list">
-                  <div class="position-legend-row"><span class="dot" style="background:#2d9bb8"></span><span class="pos-name">Point Guard</span><span class="pos-figures">284 pts · 31%</span></div>
-                  <div class="position-legend-row"><span class="dot" style="background:#6a4c93"></span><span class="pos-name">Small Forward</span><span class="pos-figures">180 pts · 20%</span></div>
-                  <div class="position-legend-row"><span class="dot" style="background:#dba94d"></span><span class="pos-name">Shooting Guard</span><span class="pos-figures">175 pts · 19%</span></div>
-                  <div class="position-legend-row"><span class="dot" style="background:#b3392b"></span><span class="pos-name">Center</span><span class="pos-figures">186 pts · 20%</span></div>
-                  <div class="position-legend-row"><span class="dot" style="background:#2e8b57"></span><span class="pos-name">Power Forward</span><span class="pos-figures">98 pts · 11%</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">Contract-length caps: max 1 player on a 3-year deal (Reyes), max 2 on 2-year deals (Bello, Turner) — both slots in use. Remaining spots default to 1-year terms.</p>
-
-        <div class="row" style="justify-content:space-between;margin:var(--space-7) 0 var(--space-3)">
-          <h3>Cap Points Moved in Transfers <span class="muted" style="font-weight:400;font-size:var(--text-sm)">This season</span></h3>
-          <span class="badge badge-info">Net +5 pts</span>
-        </div>
-        <div class="table-wrap">
-          <table class="table">
-            <thead><tr><th>Date</th><th>From</th><th>To</th><th class="num">Cap Points</th></tr></thead>
-            <tbody>
-              <tr data-href="../transactions.html" tabindex="0"><td class="tnum muted">Aug 22, 2026</td><td>Wolves</td><td>Lions</td><td class="num tnum" style="color:var(--success)">+40</td></tr>
-              <tr data-href="../transactions.html" tabindex="0"><td class="tnum muted">Aug 5, 2026</td><td>Lions</td><td>Rams</td><td class="num tnum" style="color:var(--danger)">−65</td></tr>
-              <tr data-href="../transactions.html" tabindex="0"><td class="tnum muted">Jul 18, 2026</td><td>Lions</td><td>Eagles</td><td class="num tnum" style="color:var(--danger)">−25</td></tr>
-              <tr data-href="../transactions.html" tabindex="0"><td class="tnum muted">Jul 2, 2026</td><td>Sharks</td><td>Lions</td><td class="num tnum" style="color:var(--success)">+55</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">Points gained from selling a player push your Current Cap toward the 1,035 Max Cap; points spent acquiring one push it toward the 765 Min Cap of your working-budget band (see the Cap Utilization card above). Click any row for the full record on the League Transactions page.</p>
-      </div>
 
       <div id="p-lineup" class="tabpanel" role="tabpanel" aria-labelledby="t-lineup" hidden>
         <div class="on-clock" style="text-align:left;display:flex;align-items:center;justify-content:space-between;gap:var(--space-5);flex-wrap:wrap;margin-bottom:var(--space-5)">

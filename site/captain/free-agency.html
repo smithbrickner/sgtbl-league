@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="../assets/css/base.css">
 <link rel="stylesheet" href="../assets/css/site.css">
 <link rel="stylesheet" href="../assets/css/admin.css">
+<style>.team-cell { display: flex; align-items: center; gap: var(--space-3); }</style>
 <link rel="stylesheet" href="../assets/css/captain.css">
 </head>
 <body class="admin">
@@ -54,7 +55,7 @@
           <div class="notif-panel-head">Notifications</div>
           <div class="notif-list">
             <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></span><div><div>You won last week's bid on <strong>K. Diallo</strong></div><time>Yesterday</time></div></div>
-            <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg></span><div><div>Transfer approved — <strong>D. Okafor</strong> added to your roster</div><time>2 hours ago</time></div></div>
+            <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg></span><div><div>Trade approved — <strong>D. Okafor</strong> added to your roster</div><time>2 hours ago</time></div></div>
           </div>
           <a class="notif-panel-foot" href="#">Mark all as read</a>
         </div>
@@ -66,12 +67,18 @@
         <div>
           <span class="eyebrow" style="color:var(--gold-400)">Bidding Window Open</span>
           <div style="font-size:var(--text-lg);margin-top:4px">This week's nominees close Wednesday, 3:00 PM EST</div>
-          <div class="muted" style="color:rgba(255,255,255,.65);font-size:var(--text-sm);margin-top:4px">Sealed bids only — you won't see other teams' bids, and you get exactly one submission per player.</div>
+          <div class="muted" style="color:rgba(255,255,255,.65);font-size:var(--text-sm);margin-top:4px">Sealed FAAB bids only ($1 minimum) — you won't see other teams' bids, and you get exactly one submission per player.</div>
         </div>
         <div style="text-align:center">
           <div class="timer" data-countdown="1845:00">1845:00</div>
           <div class="muted" style="color:rgba(255,255,255,.65);font-size:var(--text-xs);margin-top:4px">until bidding closes</div>
         </div>
+      </div>
+
+      <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="kpi-card"><div class="label">FAAB Budget</div><div class="value">$100</div><div class="delta muted">Per season · resets each season</div></div>
+        <div class="kpi-card"><div class="label">Spent</div><div class="value">$14</div><div class="delta muted">K. Diallo (last week)</div></div>
+        <div class="kpi-card"><div class="label">Remaining</div><div class="value">$86</div><div class="delta muted">Max you can bid on any one player</div></div>
       </div>
 
       <div class="row" style="justify-content:space-between;margin-bottom:var(--space-3)">
@@ -87,17 +94,17 @@
       <div class="fa-listing">
         <span class="avatar avatar-sm av-4">GH</span>
         <div><strong>Grace Holloway</strong><div class="muted" style="font-size:var(--text-xs)">Power Forward · Nominated by Tigers · confirmed available this season</div></div>
-        <div class="bid-group"><input class="input" type="number" placeholder="Max bid (pts)" disabled title="Roster full — open a spot to bid"><button class="btn btn-outline btn-sm" disabled>Roster Full</button></div>
+        <div class="bid-group"><input class="input" type="number" placeholder="$ bid" disabled title="Roster full — open a spot to bid"><button class="btn btn-outline btn-sm" disabled>Roster Full</button></div>
       </div>
       <div class="fa-listing">
         <span class="avatar avatar-sm av-6">EF</span>
         <div><strong>Eli Farrow</strong><div class="muted" style="font-size:var(--text-xs)">Shooting Guard · Nominated by Sharks · confirmed available this season</div></div>
-        <div class="bid-group"><input class="input" type="number" placeholder="Max bid (pts)" disabled title="Roster full — open a spot to bid"><button class="btn btn-outline btn-sm" disabled>Roster Full</button></div>
+        <div class="bid-group"><input class="input" type="number" placeholder="$ bid" disabled title="Roster full — open a spot to bid"><button class="btn btn-outline btn-sm" disabled>Roster Full</button></div>
       </div>
 
       <h3 style="margin:var(--space-7) 0 var(--space-4)">Nominate a Player for Next Week</h3>
       <div class="card card-pad" style="max-width:520px;margin-bottom:var(--space-6)">
-        <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-4)">Nominations are due Friday, 3:00 PM EST. If no other team nominates the same player first, you're bound to a baseline offer if nobody outbids it.</p>
+        <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-4)">Nominations are due Friday, 3:00 PM EST. Nominating a player commits you to the $1 minimum FAAB bid on him if nobody else bids.</p>
         <div class="field" style="margin-bottom:var(--space-4)">
           <label for="nom">Player</label>
           <input id="nom" class="input" placeholder="Search confirmed-available free agents…">
@@ -115,7 +122,7 @@
           </tbody>
         </table>
       </div>
-      <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">Final bid amounts stay private between the winning team and League Admin — only the outcome (won/outbid) is shown here, consistent with cap-points privacy rules.</p>
+      <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">Final bid amounts stay private between the winning team and League Admin — only the outcome (won/outbid) is shown here. Tied bids go to the team with the worse record.</p>
     </div>
   </div>
 </div>

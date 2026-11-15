@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Points / Draft Economy — SGTBL Admin</title>
+<title>FAAB &amp; Trades — SGTBL Admin</title>
 <link rel="icon" href="../assets/img/sgtbl-logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="../assets/css/base.css">
 <link rel="stylesheet" href="../assets/css/site.css">
 <link rel="stylesheet" href="../assets/css/admin.css">
+<style>.team-cell { display: flex; align-items: center; gap: var(--space-3); }</style>
 </head>
 <body class="admin">
 <div class="admin-shell">
@@ -23,8 +24,8 @@
       <li><a href="schedule.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>Schedule &amp; Results</a></li>
       <li><a href="stats.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Stats</a></li>
       <li><a href="scorekeeping.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-8z"/></svg>Scorekeeping</a></li>
-      <li class="nav-group-label">Roster &amp; Economy</li>
-      <li><a href="economy.html" aria-current="page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-6"/></svg>Points / Draft Economy</a></li>
+      <li class="nav-group-label">Roster &amp; Transactions</li>
+      <li><a href="economy.html" aria-current="page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-6"/></svg>FAAB &amp; Trades</a></li>
       <li><a href="draft.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v4a4 4 0 01-8 0V4z"/><path d="M8 6H5a3 3 0 003 3M16 6h3a3 3 0 01-3 3"/><path d="M10 14h4v3h-4z"/><path d="M8 21h8"/></svg>Draft Suite</a></li>
       <li><a href="registrations.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3.5-6 7-6s7 2 7 6"/><path d="M19 8v6M22 11h-6"/></svg>Registrations</a></li>
       <li class="nav-group-label">Data &amp; Publishing</li>
@@ -37,7 +38,7 @@
   <div class="admin-main">
     <header class="admin-topbar">
       <button class="btn btn-icon btn-ghost admin-topbar-toggle" aria-label="Toggle navigation"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-      <h1>Points / Draft Economy Engine</h1>
+      <h1>FAAB &amp; Trades</h1>
       <span class="env-pill">Admin &amp; captains only — never public</span>
       <div class="spacer"></div>
       <div class="notif-wrap">
@@ -54,7 +55,7 @@
             </div>
             <div class="notif-item unread">
               <span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg></span>
-              <div><div>Transfer processed — <strong>D. Okafor</strong> now on Sharks' active roster</div><time>2 hours ago</time></div>
+              <div><div>Trade processed — <strong>D. Okafor</strong> now on Sharks' active roster</div><time>2 hours ago</time></div>
             </div>
             <div class="notif-item">
               <span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></span>
@@ -72,67 +73,36 @@
 
     <div class="admin-content">
       <div class="card" style="margin-bottom:var(--space-6)">
-        <div class="card-head"><h3>Active-Roster Value vs. 70% Floor</h3><span class="muted" style="font-size:var(--text-xs)">Per League Structure §6.C</span></div>
-        <div class="card-pad">
-          <div class="cap-chart">
-            <div class="cap-floor-line"><span>70% Floor</span></div>
-            <div class="cap-bar-col"><div class="cap-bar" style="height:98%;background:var(--team-lions-bg)"></div><span class="cap-bar-label">LIO</span></div>
-            <div class="cap-bar-col"><div class="cap-bar" style="height:92%;background:var(--team-eagles-bg)"></div><span class="cap-bar-label">EAG</span></div>
-            <div class="cap-bar-col"><div class="cap-bar under-floor" style="height:69%"></div><span class="cap-bar-label">SHK</span></div>
-            <div class="cap-bar-col"><div class="cap-bar" style="height:97%;background:var(--team-wolves-bg)"></div><span class="cap-bar-label">WLV</span></div>
-            <div class="cap-bar-col"><div class="cap-bar" style="height:92%;background:var(--team-tigers-bg)"></div><span class="cap-bar-label">TIG</span></div>
-            <div class="cap-bar-col"><div class="cap-bar" style="height:87%;background:var(--team-rams-bg)"></div><span class="cap-bar-label">RAM</span></div>
-          </div>
-          <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">Bar height = each team's active-roster value as a % of their own points budget. At least 70% must be on the active roster at all times; up to 30% may be banked in reserves or saved for a future transaction. Sharks have fallen below the floor and can't process another transaction until they clear it.</p>
-        </div>
-      </div>
-
-      <div class="grid" style="grid-template-columns:1fr 1fr;margin-bottom:var(--space-6)">
-        <div class="card">
-          <div class="card-head"><h3>Team Budget Summary</h3></div>
-          <div class="card-pad" style="padding-top:var(--space-3)">
-            <table class="table" style="min-width:0"><thead><tr><th>Team</th><th class="num">Budget</th><th class="num">Active</th><th class="num">Active %</th></tr></thead><tbody>
-              <tr><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-lions-bg)">L</span>Lions</td><td class="num tnum">900</td><td class="num tnum">882</td><td class="num tnum" style="color:var(--success)">98%</td></tr>
-              <tr><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-eagles-bg)">E</span>Eagles</td><td class="num tnum">880</td><td class="num tnum">810</td><td class="num tnum" style="color:var(--success)">92%</td></tr>
-              <tr><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-sharks-bg)">S</span>Sharks</td><td class="num tnum">865</td><td class="num tnum">597</td><td class="num tnum" style="color:var(--danger)">69%</td></tr>
-              <tr><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-wolves-bg)">W</span>Wolves</td><td class="num tnum">820</td><td class="num tnum">794</td><td class="num tnum" style="color:var(--success)">97%</td></tr>
-            </tbody></table>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head"><h3>Transfer &amp; Trade Approvals</h3></div>
-          <div class="card-pad">
-            <div class="queue-item">
-              <span class="avatar avatar-sm av-6">DO</span>
-              <div><strong>Sharks ⇄ Wolves</strong><div class="meta">D. Okafor for reserve rights to E. Marsh + 40 pts · both sides return a player, both clear the 70% floor</div></div>
-              <div class="queue-actions"><button class="btn btn-outline btn-sm">Details</button><button class="btn btn-primary btn-sm">Approve</button></div>
-            </div>
-            <div class="queue-item">
-              <span class="avatar avatar-sm av-5">TN</span>
-              <div><strong>Rams sign T. Nguyen</strong><div class="meta">Free agent · 62 pts · keeps Rams above the 70% floor</div></div>
-              <div class="queue-actions"><button class="btn btn-outline btn-sm">Details</button><button class="btn btn-primary btn-sm">Approve</button></div>
-            </div>
-          </div>
+        <div class="card-head"><h3>FAAB Budgets</h3><span class="muted" style="font-size:var(--text-xs)">$100 per team per season · $1 minimum bid · resets each season</span></div>
+        <div class="card-pad" style="padding-top:var(--space-3)">
+          <table class="table" data-sortable style="min-width:0">
+            <thead><tr><th aria-sort="none">Team <span class="sort-caret">▾</span></th><th class="num" aria-sort="none">Spent <span class="sort-caret">▾</span></th><th class="num" aria-sort="descending">Remaining <span class="sort-caret">▾</span></th><th class="num" aria-sort="none">Players Won <span class="sort-caret">▾</span></th></tr></thead>
+            <tbody>
+              <tr><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-lions-bg)">L</span>Lions</td><td class="num tnum" data-sort-value="14">$14</td><td class="num tnum" data-sort-value="86">$86</td><td class="num tnum">1</td></tr>
+              <tr><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-eagles-bg)">E</span>Eagles</td><td class="num tnum" data-sort-value="0">$0</td><td class="num tnum" data-sort-value="100">$100</td><td class="num tnum">0</td></tr>
+              <tr><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-sharks-bg)">S</span>Sharks</td><td class="num tnum" data-sort-value="31">$31</td><td class="num tnum" data-sort-value="69">$69</td><td class="num tnum">2</td></tr>
+              <tr><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-wolves-bg)">W</span>Wolves</td><td class="num tnum" data-sort-value="8">$8</td><td class="num tnum" data-sort-value="92">$92</td><td class="num tnum">1</td></tr>
+              <tr><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-tigers-bg)">T</span>Tigers</td><td class="num tnum" data-sort-value="22">$22</td><td class="num tnum" data-sort-value="78">$78</td><td class="num tnum">1</td></tr>
+              <tr><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-rams-bg)">R</span>Rams</td><td class="num tnum" data-sort-value="47">$47</td><td class="num tnum" data-sort-value="53">$53</td><td class="num tnum">3</td></tr>
+            </tbody>
+          </table>
+          <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">FAAB is only used for in-season free-agent bidding. It can't be traded, and unspent budget doesn't carry over to the next season. Tied bids go to the team with the worse record.</p>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-head"><h3>Lions — Roster Point Allocations</h3><span class="badge badge-warning">Private — not shown publicly</span></div>
-        <div class="card-pad" style="padding-top:var(--space-3)">
-          <table class="table" data-sortable>
-            <thead><tr><th aria-sort="none">Player <span class="sort-caret">▾</span></th><th>Position</th><th class="num" aria-sort="descending">Points <span class="sort-caret">▾</span></th><th>Contract</th></tr></thead>
-            <tbody>
-              <tr><td class="team-cell"><span class="avatar avatar-sm av-1">MB</span>Marcus Bello</td><td>Left Wing</td><td class="num tnum" data-sort-value="180">180</td><td>2026-2027</td></tr>
-              <tr><td class="team-cell"><span class="avatar avatar-sm av-3">JK</span>Jonah Kim</td><td>Center Back</td><td class="num tnum" data-sort-value="165">165</td><td>2026</td></tr>
-              <tr><td class="team-cell"><span class="avatar avatar-sm av-6">AR</span>Ana Reyes</td><td>Goalkeeper</td><td class="num tnum" data-sort-value="140">140</td><td>2026-2028</td></tr>
-              <tr><td class="team-cell"><span class="avatar avatar-sm av-5">DW</span>David Whitfield</td><td>Right Back</td><td class="num tnum" data-sort-value="120">120</td><td>2026</td></tr>
-              <tr><td class="team-cell"><span class="avatar avatar-sm av-4">CT</span>Chloe Turner</td><td>Pivot</td><td class="num tnum" data-sort-value="98">98</td><td>2026-2027</td></tr>
-              <tr><td class="team-cell"><span class="avatar avatar-sm av-2">SO</span>Sam Osei</td><td>Left Back</td><td class="num tnum" data-sort-value="75">75</td><td>2026</td></tr>
-              <tr><td class="team-cell"><span class="avatar avatar-sm av-7">MP</span>Maya Patel</td><td>Right Wing</td><td class="num tnum" data-sort-value="40">40</td><td>2026</td></tr>
-              <tr><td class="team-cell"><span class="avatar avatar-sm av-8">LG</span>Luca Grant</td><td>Goalkeeper</td><td class="num tnum" data-sort-value="20">20</td><td>2026</td></tr>
-              <tr><td class="team-cell"><span class="avatar avatar-sm av-3">RC</span>Rafael Cho</td><td>Point Guard</td><td class="num tnum" data-sort-value="44">44</td><td>2026</td></tr>
-            </tbody>
-          </table>
+        <div class="card-head"><h3>Pending Approvals</h3><span class="badge badge-warning">2 waiting</span></div>
+        <div class="card-pad">
+          <div class="queue-item">
+            <span class="avatar avatar-sm av-6">DO</span>
+            <div><strong>Trade: Sharks ⇄ Wolves</strong><div class="meta">D. Okafor for E. Marsh (reserve) · both captains confirmed · both rosters stay within 9 active / 3 reserve</div></div>
+            <div class="queue-actions"><button class="btn btn-outline btn-sm">Details</button><button class="btn btn-primary btn-sm">Approve</button></div>
+          </div>
+          <div class="queue-item">
+            <span class="avatar avatar-sm av-5">TN</span>
+            <div><strong>FAAB claim: Rams win T. Nguyen</strong><div class="meta">Winning bid $12 · leaves Rams $41 of $53 remaining · open active-roster spot confirmed</div></div>
+            <div class="queue-actions"><button class="btn btn-outline btn-sm">Details</button><button class="btn btn-primary btn-sm">Approve</button></div>
+          </div>
         </div>
       </div>
     </div>

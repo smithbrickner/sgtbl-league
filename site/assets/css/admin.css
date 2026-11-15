@@ -120,15 +120,6 @@ body.admin { background: var(--surface-alt); }
   .queue-item .queue-actions { grid-column: 1 / -1; justify-content: flex-start; margin-top: var(--space-2); }
 }
 
-/* ---------- Cap tracker bars (70% active-roster floor, per team's own budget) ---------- */
-.cap-chart { position: relative; display: flex; align-items: flex-end; gap: 10px; height: 220px; padding: 0 var(--space-5); border-bottom: 1px solid var(--border); }
-.cap-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 6px; }
-.cap-bar { width: 100%; max-width: 34px; border-radius: 4px 4px 0 0; background: var(--teal-500); position: relative; transition: height var(--dur-slow) var(--ease-out); }
-.cap-bar.under-floor { background: var(--danger); }
-.cap-bar-label { font-size: 10px; font-weight: 700; color: var(--text-muted); }
-.cap-floor-line { position: absolute; left: var(--space-5); right: var(--space-5); bottom: 70%; border-top: 2px dashed var(--danger); }
-.cap-floor-line span { position: absolute; right: 0; top: -20px; font-size: var(--text-xs); color: var(--danger); font-weight: 700; background: var(--surface); padding: 0 4px; }
-
 /* ---------- Draft room ---------- */
 .draft-shell { display: grid; grid-template-columns: 240px 1fr 300px; gap: var(--space-5); align-items: start; }
 @media (max-width: 1180px) { .draft-shell { grid-template-columns: 1fr; } }
@@ -187,8 +178,6 @@ body.admin { background: var(--surface-alt); }
 .film-card .film-meta .muted { display: block; font-size: var(--text-xs); margin-top: 2px; }
 .film-star { background: none; border: none; cursor: pointer; color: var(--slate-300); padding: 2px; flex: none; }
 .film-star.saved { color: var(--gold-500); }
-.contract-table td.empty-year, .contract-table th.empty-year { color: var(--slate-300); }
-.contract-table tfoot td { font-weight: 800; font-family: var(--font-display); border-top: 2px solid var(--border-strong); background: var(--surface-alt); }
 
 /* ---------- Login ---------- */
 .auth-shell { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; }

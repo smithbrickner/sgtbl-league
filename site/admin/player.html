@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="../assets/css/site.css">
 <link rel="stylesheet" href="../assets/css/admin.css">
 <style>
-.player-layout { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); align-items: start; }
+.player-layout { display: grid; grid-template-columns: minmax(260px, 340px) 1fr; gap: var(--space-6); align-items: start; }
 @media (max-width: 900px) { .player-layout { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -27,8 +27,8 @@
       <li><a href="schedule.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>Schedule &amp; Results</a></li>
       <li><a href="stats.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Stats</a></li>
       <li><a href="scorekeeping.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-8z"/></svg>Scorekeeping</a></li>
-      <li class="nav-group-label">Roster &amp; Economy</li>
-      <li><a href="economy.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-6"/></svg>Points / Draft Economy</a></li>
+      <li class="nav-group-label">Roster &amp; Transactions</li>
+      <li><a href="economy.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-6"/></svg>FAAB &amp; Trades</a></li>
       <li><a href="draft.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v4a4 4 0 01-8 0V4z"/><path d="M8 6H5a3 3 0 003 3M16 6h3a3 3 0 01-3 3"/><path d="M10 14h4v3h-4z"/><path d="M8 21h8"/></svg>Draft Suite</a></li>
       <li><a href="registrations.html" aria-current="page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3.5-6 7-6s7 2 7 6"/><path d="M19 8v6M22 11h-6"/></svg>Registrations</a></li>
       <li class="nav-group-label">Data &amp; Publishing</li>
@@ -57,7 +57,7 @@
           <div class="notif-panel-head">Notifications</div>
           <div class="notif-list">
             <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></span><div><div>Recap published: <strong>Lions 27, Eagles 24</strong></div><time>12 minutes ago</time></div></div>
-            <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg></span><div><div>Transfer processed — <strong>D. Okafor</strong> now on Sharks' active roster</div><time>2 hours ago</time></div></div>
+            <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg></span><div><div>Trade processed — <strong>D. Okafor</strong> now on Sharks' active roster</div><time>2 hours ago</time></div></div>
           </div>
           <a class="notif-panel-foot" href="#">Mark all as read</a>
         </div>
@@ -100,45 +100,24 @@
               <div><span>Weight</span><b>205 lbs</b></div>
               <div><span>Born</span><b>Mar 14, 2002 · Riverside, CA</b></div>
               <div><span>Parish</span><b>St. Gabriel</b></div>
-              <div><span>Draft</span><b>Lions · Season 1 Auction (2024) · 140 pts</b></div>
+              <div><span>Draft</span><b>Lions · Season 1 Auction (2024) · $140</b></div>
               <div><span>Seasons Played</span><b>3</b></div>
             </div>
           </div>
 
           <div class="card card-pad">
-            <div class="row" style="justify-content:space-between;margin-bottom:var(--space-3)">
-              <h3>Salary &amp; Contract</h3>
-              <span class="muted" style="font-size:var(--text-xs)">Visible to League Admin and this player's Captain only</span>
+            <h3 style="margin-bottom:var(--space-3)">Statistical Overview</h3>
+            <div class="table-wrap">
+              <table class="table" style="min-width:0">
+                <thead><tr><th>Season</th><th class="num">GP</th><th class="num">PTS</th><th class="num">REB</th><th class="num">AST</th><th class="num">FG%</th><th class="num">3P%</th><th class="num">FT%</th></tr></thead>
+                <tbody>
+                  <tr><td class="tnum">2026</td><td class="num tnum">14</td><td class="num tnum">18.4</td><td class="num tnum">4.2</td><td class="num tnum">3.1</td><td class="num tnum">47.8%</td><td class="num tnum">38.1%</td><td class="num tnum">81.4%</td></tr>
+                  <tr><td class="tnum" style="font-weight:800">Career</td><td class="num tnum" style="font-weight:800">41</td><td class="num tnum" style="font-weight:800">15.6</td><td class="num tnum" style="font-weight:800">3.8</td><td class="num tnum" style="font-weight:800">2.7</td><td class="num tnum" style="font-weight:800">45.3%</td><td class="num tnum" style="font-weight:800">34.6%</td><td class="num tnum" style="font-weight:800">78.3%</td></tr>
+                </tbody>
+              </table>
             </div>
-            <div class="bio-list" style="margin-bottom:var(--space-4)">
-              <div><span>Contract Term</span><b>2-Year (2026–2027)</b></div>
-              <div><span>Current Cap Value</span><b>180 pts</b></div>
-              <div><span>Raise / Decrease</span><b>Flat — 0%</b></div>
-              <div><span>Contract Slot</span><b>1 of 2 — 2-Year Deals</b></div>
-            </div>
-            <table class="table contract-table" style="min-width:0">
-              <thead><tr><th>Year</th><th class="num">Cap Value</th></tr></thead>
-              <tbody>
-                <tr><td>2026</td><td class="num tnum">180</td></tr>
-                <tr><td>2027</td><td class="num tnum">180</td></tr>
-                <tr><td>2028</td><td class="num tnum empty-year">—</td></tr>
-              </tbody>
-            </table>
+            <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">See the Basic Stats tab for the full per-season breakdown, and Game Log for individual games.</p>
           </div>
-        </div>
-
-        <div class="card card-pad" style="margin-top:var(--space-5)">
-          <h3 style="margin-bottom:var(--space-3)">Statistical Overview</h3>
-          <div class="table-wrap">
-            <table class="table" style="min-width:0">
-              <thead><tr><th>Season</th><th class="num">GP</th><th class="num">PTS</th><th class="num">REB</th><th class="num">AST</th><th class="num">FG%</th><th class="num">3P%</th><th class="num">FT%</th></tr></thead>
-              <tbody>
-                <tr><td class="tnum">2026</td><td class="num tnum">14</td><td class="num tnum">18.4</td><td class="num tnum">4.2</td><td class="num tnum">3.1</td><td class="num tnum">47.8%</td><td class="num tnum">38.1%</td><td class="num tnum">81.4%</td></tr>
-                <tr><td class="tnum" style="font-weight:800">Career</td><td class="num tnum" style="font-weight:800">41</td><td class="num tnum" style="font-weight:800">15.6</td><td class="num tnum" style="font-weight:800">3.8</td><td class="num tnum" style="font-weight:800">2.7</td><td class="num tnum" style="font-weight:800">45.3%</td><td class="num tnum" style="font-weight:800">34.6%</td><td class="num tnum" style="font-weight:800">78.3%</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">See the Basic Stats tab for the full per-season breakdown, and Game Log for individual games.</p>
         </div>
       </div>
 
@@ -270,9 +249,7 @@
           <table class="table">
             <thead><tr><th>Date</th><th>Type</th><th>Details</th></tr></thead>
             <tbody>
-              <tr><td class="muted tnum">Jun 14, 2024</td><td><span class="badge badge-accent">Draft</span></td><td>Won by Lions for 140 cap pts — Season 1 Auction Draft</td></tr>
-              <tr><td class="muted tnum">May 2, 2025</td><td><span class="badge">Re-sign</span></td><td>Re-signed with Lions, 1-year deal — 160 cap pts</td></tr>
-              <tr><td class="muted tnum">May 20, 2026</td><td><span class="badge">Re-sign</span></td><td>Re-signed with Lions, 2-year deal — 180 cap pts/yr</td></tr>
+              <tr><td class="muted tnum">Jun 14, 2024</td><td><span class="badge badge-accent">Draft</span></td><td>Won by Lions for $140 — Season 1 Auction Draft</td></tr>
             </tbody>
           </table>
         </div>
