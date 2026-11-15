@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Submit a Transaction — SGTBL Captain Portal</title>
+<title>Submit a Transaction — SGTBL Team Portal</title>
 <link rel="icon" href="../assets/img/sgtbl-logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -30,7 +30,7 @@
 <div class="admin-shell">
   <div class="admin-scrim"></div>
   <aside class="admin-side">
-    <a class="brand" href="dashboard.html"><img src="../assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>Captain Portal</span></span></a>
+    <a class="brand" href="dashboard.html"><img src="../assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>Team Portal</span></span></a>
     <ul class="admin-nav">
       <li class="nav-group-label">Team</li>
       <li><a href="dashboard.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Dashboard</a></li>
@@ -47,7 +47,7 @@
     <div class="admin-side-foot">
       <div class="admin-user">
         <span class="avatar avatar-sm av-2">RA</span>
-        <div><div class="name">R. Alvarez</div><div class="role">Lions · Captain</div><span class="portal-tag">Captain</span></div>
+        <div><div class="name">R. Alvarez</div><div class="role">Knicks · Captain</div><span class="portal-tag">Captain</span></div>
       </div>
     </div>
   </aside>
@@ -122,9 +122,9 @@
               <thead><tr><th>Team</th><th class="num">Active Players</th><th class="num">Reserve List</th></tr></thead>
               <tbody>
                 <tr>
-                  <td>Lions <span class="muted" style="font-weight:400;font-size:var(--text-xs)">(you)</span></td>
-                  <td class="num tnum" id="lions-active-after">9 of 9</td>
-                  <td class="num tnum" id="lions-reserve-after">2 of 3</td>
+                  <td>Knicks <span class="muted" style="font-weight:400;font-size:var(--text-xs)">(you)</span></td>
+                  <td class="num tnum" id="knicks-active-after">9 of 9</td>
+                  <td class="num tnum" id="knicks-reserve-after">2 of 3</td>
                 </tr>
                 <tr>
                   <td>Eagles</td>
@@ -134,13 +134,13 @@
               </tbody>
             </table>
           </div>
-          <p id="lions-check-note" style="font-size:var(--text-xs)"></p>
+          <p id="knicks-check-note" style="font-size:var(--text-xs)"></p>
           <p id="eagles-check-note" style="font-size:var(--text-xs)"></p>
         </div>
 
         <div class="trade-columns">
           <div class="card card-pad">
-            <div class="trade-col-head">Lions <span class="muted" style="font-weight:400;font-size:var(--text-xs)">(you)</span></div>
+            <div class="trade-col-head">Knicks <span class="muted" style="font-weight:400;font-size:var(--text-xs)">(you)</span></div>
 
             <div class="field" style="margin-bottom:var(--space-4)">
               <label>Players Offered</label>
@@ -200,7 +200,7 @@
         </div>
 
         <p class="muted" style="font-size:var(--text-xs);margin:var(--space-4) 0 0">Once both captains confirm, the trade goes to League Admin for final approval before any players move.</p>
-        <p id="activation-note-lions" class="muted" style="font-size:var(--text-xs);margin:var(--space-2) 0 0" hidden></p>
+        <p id="activation-note-knicks" class="muted" style="font-size:var(--text-xs);margin:var(--space-2) 0 0" hidden></p>
         <p id="activation-note-eagles" class="muted" style="font-size:var(--text-xs);margin:var(--space-2) 0 0" hidden></p>
       </div>
 
@@ -237,7 +237,7 @@
 (function () {
   var ROSTER_SIZE = 9, RESERVE_SIZE = 3;
 
-  var LIONS_PLAYERS = [
+  var KNICKS_PLAYERS = [
     { name: "Marcus Bello — Small Forward" },
     { name: "Jonah Kim — Point Guard" },
     { name: "Ana Reyes — Center" },
@@ -248,7 +248,7 @@
     { name: "Luca Grant — Center" },
     { name: "Rafael Cho — Point Guard" }
   ];
-  var LIONS_RESERVE = [
+  var KNICKS_RESERVE = [
     { name: "Grace Bennett — Center", reserve: true },
     { name: "Nate Price — Shooting Guard", reserve: true }
   ];
@@ -262,15 +262,15 @@
     { name: "T. Alvarado — Small Forward", reserve: true }
   ];
 
-  // Active-player baseline per team. Lions: the full 9-man roster. Eagles: only the 4
+  // Active-player baseline per team. Knicks: the full 9-man roster. Eagles: only the 4
   // players named in scouting reports are modeled here, but their real roster is also
   // full, so the baseline is 9 regardless of how many are listed.
-  var LIONS_ROSTER_BASE = 9, EAGLES_ROSTER_BASE = 9;
-  var LIONS_RESERVE_BASE = LIONS_RESERVE.length, EAGLES_RESERVE_BASE = EAGLES_RESERVE.length;
+  var KNICKS_ROSTER_BASE = 9, EAGLES_ROSTER_BASE = 9;
+  var KNICKS_RESERVE_BASE = KNICKS_RESERVE.length, EAGLES_RESERVE_BASE = EAGLES_RESERVE.length;
 
   var outListEl = document.getElementById("out-list");
   var inListEl = document.getElementById("in-list");
-  var lionsNoteEl = document.getElementById("activation-note-lions");
+  var knicksNoteEl = document.getElementById("activation-note-knicks");
   var eaglesNoteEl = document.getElementById("activation-note-eagles");
   var submitBtn = document.getElementById("trade-submit-btn");
   if (!outListEl || !inListEl) return;
@@ -295,8 +295,8 @@
   }
 
   function optionsHtml(side) {
-    var players = side === "out" ? LIONS_PLAYERS : EAGLES_PLAYERS;
-    var reserve = side === "out" ? LIONS_RESERVE : EAGLES_RESERVE;
+    var players = side === "out" ? KNICKS_PLAYERS : EAGLES_PLAYERS;
+    var reserve = side === "out" ? KNICKS_RESERVE : EAGLES_RESERVE;
     var html = '<optgroup label="Active Roster">';
     html += players.map(function (p, i) { return '<option value="player:' + i + '">' + p.name + "</option>"; }).join("");
     html += '</optgroup><optgroup label="Reserve List">';
@@ -309,8 +309,8 @@
     var parts = value.split(":");
     var kind = parts[0], idx = parseInt(parts[1], 10);
     var src = kind === "reserve"
-      ? (side === "out" ? LIONS_RESERVE : EAGLES_RESERVE)[idx]
-      : (side === "out" ? LIONS_PLAYERS : EAGLES_PLAYERS)[idx];
+      ? (side === "out" ? KNICKS_RESERVE : EAGLES_RESERVE)[idx]
+      : (side === "out" ? KNICKS_PLAYERS : EAGLES_PLAYERS)[idx];
     return { name: src.name, reserve: !!src.reserve };
   }
 
@@ -433,9 +433,9 @@
     var outLeave = counts(outAssets, false), outArrive = counts(outAssets, true);
     var inLeave = counts(inAssets, false), inArrive = counts(inAssets, true);
 
-    var lionsActive = LIONS_ROSTER_BASE - outLeave.active + inArrive.active;
+    var knicksActive = KNICKS_ROSTER_BASE - outLeave.active + inArrive.active;
     var eaglesActive = EAGLES_ROSTER_BASE - inLeave.active + outArrive.active;
-    var lionsReserve = LIONS_RESERVE_BASE - outLeave.reserve + inArrive.reserve;
+    var knicksReserve = KNICKS_RESERVE_BASE - outLeave.reserve + inArrive.reserve;
     var eaglesReserve = EAGLES_RESERVE_BASE - inLeave.reserve + outArrive.reserve;
 
     function setCell(id, after, base, max) {
@@ -443,34 +443,34 @@
       el.textContent = deltaLabel(after, base, " of " + max);
       el.style.color = after <= max ? "" : "var(--danger)";
     }
-    setCell("lions-active-after", lionsActive, LIONS_ROSTER_BASE, ROSTER_SIZE);
+    setCell("knicks-active-after", knicksActive, KNICKS_ROSTER_BASE, ROSTER_SIZE);
     setCell("eagles-active-after", eaglesActive, EAGLES_ROSTER_BASE, ROSTER_SIZE);
-    setCell("lions-reserve-after", lionsReserve, LIONS_RESERVE_BASE, RESERVE_SIZE);
+    setCell("knicks-reserve-after", knicksReserve, KNICKS_RESERVE_BASE, RESERVE_SIZE);
     setCell("eagles-reserve-after", eaglesReserve, EAGLES_RESERVE_BASE, RESERVE_SIZE);
 
     document.getElementById("trade-summary-sentence").textContent =
-      "Lions send " + describeSide(outAssets) + " to " + document.getElementById("trade-target").value +
+      "Knicks send " + describeSide(outAssets) + " to " + document.getElementById("trade-target").value +
       " for " + describeSide(inAssets) + ".";
 
-    var lionsOk = outAssets.length > 0 && lionsActive <= ROSTER_SIZE && lionsReserve <= RESERVE_SIZE;
+    var knicksOk = outAssets.length > 0 && knicksActive <= ROSTER_SIZE && knicksReserve <= RESERVE_SIZE;
     var eaglesOk = inAssets.length > 0 && eaglesActive <= ROSTER_SIZE && eaglesReserve <= RESERVE_SIZE;
-    var lionsNote = document.getElementById("lions-check-note");
+    var knicksNote = document.getElementById("knicks-check-note");
     var eaglesNote = document.getElementById("eagles-check-note");
-    lionsNote.textContent = noteFor("Lions", outAssets.length > 0, lionsActive, lionsReserve);
-    lionsNote.style.color = lionsOk ? "var(--success)" : "var(--danger)";
+    knicksNote.textContent = noteFor("Knicks", outAssets.length > 0, knicksActive, knicksReserve);
+    knicksNote.style.color = knicksOk ? "var(--success)" : "var(--danger)";
     eaglesNote.textContent = noteFor("Eagles", inAssets.length > 0, eaglesActive, eaglesReserve);
     eaglesNote.style.color = eaglesOk ? "var(--success)" : "var(--danger)";
 
-    var allOk = lionsOk && eaglesOk;
+    var allOk = knicksOk && eaglesOk;
     var badge = document.getElementById("trade-status-badge");
     badge.textContent = allOk ? "Valid Trade" : "Trade Invalid";
     badge.className = "badge " + (allOk ? "badge-success" : "badge-danger");
     submitBtn.disabled = !allOk;
     submitBtn.title = allOk ? "" : "Resolve the issues in Trade Validity Check before submitting";
 
-    var lionsShort = LIONS_ROSTER_BASE - lionsActive, eaglesShort = EAGLES_ROSTER_BASE - eaglesActive;
-    lionsNoteEl.hidden = !(lionsShort > 0 && inArrive.reserve > 0);
-    if (!lionsNoteEl.hidden) lionsNoteEl.textContent = activationMessage("you", lionsShort, "you", "you're", "you");
+    var knicksShort = KNICKS_ROSTER_BASE - knicksActive, eaglesShort = EAGLES_ROSTER_BASE - eaglesActive;
+    knicksNoteEl.hidden = !(knicksShort > 0 && inArrive.reserve > 0);
+    if (!knicksNoteEl.hidden) knicksNoteEl.textContent = activationMessage("you", knicksShort, "you", "you're", "you");
     eaglesNoteEl.hidden = !(eaglesShort > 0 && outArrive.reserve > 0);
     if (!eaglesNoteEl.hidden) eaglesNoteEl.textContent = activationMessage("Eagles", eaglesShort, "their captain", "they're", "they");
 
@@ -481,8 +481,8 @@
   document.getElementById("add-in-player").addEventListener("click", function () { addRow("in"); });
   document.getElementById("trade-target").addEventListener("change", recalc);
 
-  renderBrowseTable("browse-out-player", "out", "player", LIONS_PLAYERS);
-  renderBrowseTable("browse-out-reserve", "out", "reserve", LIONS_RESERVE);
+  renderBrowseTable("browse-out-player", "out", "player", KNICKS_PLAYERS);
+  renderBrowseTable("browse-out-reserve", "out", "reserve", KNICKS_RESERVE);
   renderBrowseTable("browse-in-player", "in", "player", EAGLES_PLAYERS);
   renderBrowseTable("browse-in-reserve", "in", "reserve", EAGLES_RESERVE);
 

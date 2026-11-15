@@ -113,7 +113,7 @@
 
 /* Team accent palette (sample league) */
 :root {
-  --team-lions-bg: #9c3b30;    --team-lions-fg: #ffffff;
+  --team-knicks-bg: #1d428a;    --team-knicks-fg: #ffffff;
   --team-eagles-bg: #2e7350;   --team-eagles-fg: #ffffff;
   --team-wolves-bg: #55437f;   --team-wolves-fg: #ffffff;
   --team-tigers-bg: #c17324;   --team-tigers-fg: #ffffff;
@@ -121,10 +121,21 @@
   --team-rams-bg:   #79294a;   --team-rams-fg:   #ffffff;
 }
 
-/* Dark mode — Captain Portal & League Admin only (toggled via interactions.js, persisted to
-   localStorage). The public site never sets data-theme, so none of this can leak there even
-   though a few of these tokens are also read by site.css-defined components the portals reuse
-   (e.g. .tabbar) — see CLAUDE.md's dark-mode notes before extending this block. */
+/* Shot-zone heat scale (player spray chart) — diverging, cold = blue, hot = red.
+   Deliberately its own scale rather than --teal/--gold (navy/crest-red) so "hot/cold"
+   reads as data, not branding. Steps get more saturated the further from league average. */
+:root {
+  --zone-cold-3: #1f5fae;
+  --zone-cold-2: #5b8fd1;
+  --zone-cold-1: #b4cdec;
+  --zone-even:   #e6eaee;
+  --zone-hot-1:  #f4b8b0;
+  --zone-hot-2:  #e0695c;
+  --zone-hot-3:  #b8281c;
+}
+
+/* Dark mode — whole site (public + both portals), toggled via interactions.js and persisted to
+   localStorage under "sgtbl-theme". Public-only dark fixes live at the end of site.css. */
 :root[data-theme="dark"] {
   /* Light-end neutral shades a few components reference directly (track/hover/chip backgrounds).
      Kept lighter than --surface itself so these still read as a raised chip/hover, not a shadow. */
@@ -141,6 +152,16 @@
   --border:         #2a3946;
   --border-strong:  #3d4f5d;
   --brand-strong:   #dde4f2;
+
+  /* Shot-zone heat scale: on a dark page "more pronounced" means brighter/more saturated,
+     so the scale runs from muted near --surface out to vivid at the extremes. */
+  --zone-cold-3: #4f95ec;
+  --zone-cold-2: #33639f;
+  --zone-cold-1: #263f5c;
+  --zone-even:   #2b3743;
+  --zone-hot-1:  #5c2c2c;
+  --zone-hot-2:  #a63c33;
+  --zone-hot-3:  #e8574a;
 
   --shadow-sm: 0 1px 2px rgba(0,0,0,.4), 0 1px 1px rgba(0,0,0,.3);
   --shadow-md: 0 4px 12px rgba(0,0,0,.45), 0 2px 4px rgba(0,0,0,.3);

@@ -3,19 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lions — Team — SGTBL</title>
+<title>Knicks — Team — SGTBL</title>
 <link rel="icon" href="assets/img/sgtbl-logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/tokens.css">
 <link rel="stylesheet" href="assets/css/base.css">
 <link rel="stylesheet" href="assets/css/site.css">
+<style>
+/* Roster player cell: avatar/headshot beside the name with a gap (same as the Team Portal roster) */
+.team-cell { display: flex; align-items: center; gap: var(--space-4); }
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-nav">
   <div class="wrap">
-    <a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>St. Gabriel Basketball</span></span></a>
+    <a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>Smithtown Gospel Tabernacle Basketball League</span></span></a>
     <nav aria-label="Primary"><ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="standings.html">Standings</a></li>
@@ -34,15 +38,15 @@
 
 <main id="main">
   <div class="wrap" style="padding-top:var(--space-6)">
-    <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-4)"><a href="teams.html" class="muted">Teams</a> / Lions</p>
+    <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-4)"><a href="teams.html" class="muted">Teams</a> / Knicks</p>
 
     <div class="profile-header">
       <div class="wrap-inner">
-        <span class="crest" style="width:84px;height:94px;font-size:32px;background:var(--team-lions-bg);box-shadow:var(--shadow-md)">L</span>
+        <span class="crest crest-logo" style="width:84px;height:94px;font-size:32px;box-shadow:var(--shadow-md)"><img src="assets/img/knicks-logo.webp" alt="Knicks"></span>
         <div>
           <span class="eyebrow" style="color:var(--gold-400)">1st Place · Clinched Playoff Berth</span>
-          <h1>Lions</h1>
-          <div class="profile-meta"><span><b>10-2-1</b> · 32 pts</span><span>Captain: <b>R. Alvarez</b></span><span>Assoc. Captain: <b>J. Kim</b></span><span>Home Gym: <b>St. Gabriel Fieldhouse</b></span></div>
+          <h1>Knicks</h1>
+          <div class="profile-meta"><span><b>10-2-1</b> · 32 pts</span><span>Captain: <b>R. Alvarez</b></span><span>Assoc. Captain: <b>J. Kim</b></span><span>Home Gym: <b>Smithtown Gospel Tabernacle Gym</b></span></div>
         </div>
         <div class="profile-actions"><a class="btn btn-accent" href="games.html">Schedule</a></div>
       </div>
@@ -57,17 +61,17 @@
     <div id="p-roster" class="tabpanel" role="tabpanel" aria-labelledby="t-roster">
       <div class="table-wrap" style="margin-bottom:var(--space-8)">
         <table class="table" data-sortable>
-          <thead><tr><th>#</th><th aria-sort="none">Player <span class="sort-caret">▾</span></th><th>Position</th><th class="num">G/G</th><th class="num">Ast/G</th><th class="num">Sh%</th><th>Status</th></tr></thead>
+          <thead><tr><th>#</th><th aria-sort="none">Player <span class="sort-caret">▾</span></th><th>Position</th><th class="num">G/G</th><th class="num">Ast/G</th><th class="num">Sh%</th></tr></thead>
           <tbody>
-            <tr><td>9</td><td class="team-cell"><span class="avatar avatar-sm av-1">MB</span><a href="player.html" style="font-weight:700">Marcus Bello</a></td><td>Left Wing</td><td class="num">7.8</td><td class="num">3.1</td><td class="num">61%</td><td><span class="badge badge-success">Active</span></td></tr>
-            <tr><td>4</td><td class="team-cell"><span class="avatar avatar-sm av-3">JK</span>Jonah Kim</td><td>Center Back</td><td class="num">6.2</td><td class="num">4.8</td><td class="num">49%</td><td><span class="badge badge-success">Active</span></td></tr>
-            <tr><td>1</td><td class="team-cell"><span class="avatar avatar-sm av-6">AR</span>Ana Reyes</td><td>Goalkeeper</td><td class="num">0.4</td><td class="num">0.2</td><td class="num tnum">32% <span class="muted">save</span></td><td><span class="badge badge-success">Active</span></td></tr>
-            <tr><td>22</td><td class="team-cell"><span class="avatar avatar-sm av-5">DW</span>David Whitfield</td><td>Right Back</td><td class="num">5.5</td><td class="num">1.9</td><td class="num">53%</td><td><span class="badge badge-success">Active</span></td></tr>
-            <tr><td>7</td><td class="team-cell"><span class="avatar avatar-sm av-4">CT</span>Chloe Turner</td><td>Pivot</td><td class="num">4.9</td><td class="num">1.2</td><td class="num">64%</td><td><span class="badge badge-warning">Day-to-Day</span></td></tr>
-            <tr><td>18</td><td class="team-cell"><span class="avatar avatar-sm av-2">SO</span>Sam Osei</td><td>Left Back</td><td class="num">4.1</td><td class="num">2.3</td><td class="num">46%</td><td><span class="badge badge-success">Active</span></td></tr>
-            <tr><td>11</td><td class="team-cell"><span class="avatar avatar-sm av-7">MP</span>Maya Patel</td><td>Right Wing</td><td class="num">3.6</td><td class="num">1.0</td><td class="num">58%</td><td><span class="badge badge-success">Active</span></td></tr>
-            <tr><td>3</td><td class="team-cell"><span class="avatar avatar-sm av-8">LG</span>Luca Grant</td><td>Goalkeeper</td><td class="num">0.1</td><td class="num">0.0</td><td class="num tnum">29% <span class="muted">save</span></td><td><span class="badge badge-success">Active</span></td></tr>
-            <tr><td>15</td><td class="team-cell"><span class="avatar avatar-sm av-3">RC</span>Rafael Cho</td><td>Center Back</td><td class="num">2.8</td><td class="num">1.6</td><td class="num">44%</td><td><span class="badge badge-success">Active</span></td></tr>
+            <tr><td>9</td><td class="team-cell"><span class="headshot-cutout"><img src="assets/img/headshot-placeholder.webp" alt="Marcus Bello"></span><a href="player.html" style="font-weight:700">Marcus Bello</a></td><td>Small Forward</td><td class="num">7.8</td><td class="num">3.1</td><td class="num">61%</td></tr>
+            <tr><td>4</td><td class="team-cell"><span class="avatar avatar-sm av-3">JK</span>Jonah Kim</td><td>Point Guard</td><td class="num">6.2</td><td class="num">4.8</td><td class="num">49%</td></tr>
+            <tr><td>1</td><td class="team-cell"><span class="avatar avatar-sm av-6">AR</span>Ana Reyes</td><td>Center</td><td class="num">0.4</td><td class="num">0.2</td><td class="num tnum">32% <span class="muted">save</span></td></tr>
+            <tr><td>22</td><td class="team-cell"><span class="avatar avatar-sm av-5">DW</span>David Whitfield</td><td>Shooting Guard</td><td class="num">5.5</td><td class="num">1.9</td><td class="num">53%</td></tr>
+            <tr><td>7</td><td class="team-cell"><span class="avatar avatar-sm av-4">CT</span>Chloe Turner</td><td>Power Forward</td><td class="num">4.9</td><td class="num">1.2</td><td class="num">64%</td></tr>
+            <tr><td>18</td><td class="team-cell"><span class="avatar avatar-sm av-2">SO</span>Sam Osei</td><td>Point Guard</td><td class="num">4.1</td><td class="num">2.3</td><td class="num">46%</td></tr>
+            <tr><td>11</td><td class="team-cell"><span class="avatar avatar-sm av-7">MP</span>Maya Patel</td><td>Shooting Guard</td><td class="num">3.6</td><td class="num">1.0</td><td class="num">58%</td></tr>
+            <tr><td>3</td><td class="team-cell"><span class="avatar avatar-sm av-8">LG</span>Luca Grant</td><td>Center</td><td class="num">0.1</td><td class="num">0.0</td><td class="num tnum">29% <span class="muted">save</span></td></tr>
+            <tr><td>15</td><td class="team-cell"><span class="avatar avatar-sm av-3">RC</span>Rafael Cho</td><td>Point Guard</td><td class="num">2.8</td><td class="num">1.6</td><td class="num">44%</td></tr>
           </tbody>
         </table>
       </div>
@@ -76,10 +80,10 @@
       </div>
       <div class="table-wrap" style="margin-bottom:var(--space-8)">
         <table class="table" style="min-width:0">
-          <thead><tr><th>Player</th><th>Position</th><th>Reason</th></tr></thead>
+          <thead><tr><th>Player</th><th>Position</th></tr></thead>
           <tbody>
-            <tr><td class="team-cell"><span class="avatar avatar-sm av-6">GB</span>Grace Bennett</td><td>Goalkeeper</td><td class="muted">Moved out of area, spring return possible</td></tr>
-            <tr><td class="team-cell"><span class="avatar avatar-sm av-7">NP</span>Nate Price</td><td>Right Back</td><td class="muted">Work travel — inactive since Week 9</td></tr>
+            <tr><td class="team-cell"><span class="avatar avatar-sm av-6">GB</span>Grace Bennett</td><td>Center</td></tr>
+            <tr><td class="team-cell"><span class="avatar avatar-sm av-7">NP</span>Nate Price</td><td>Shooting Guard</td></tr>
           </tbody>
         </table>
       </div>
@@ -99,7 +103,6 @@
         <table class="table">
           <thead><tr><th>Date</th><th>Type</th><th>Details</th></tr></thead>
           <tbody>
-            <tr><td class="muted tnum">Aug 3</td><td><span class="badge badge-warning">Injury</span></td><td>Chloe Turner listed Day-to-Day (ankle)</td></tr>
             <tr><td class="muted tnum">Jun 14</td><td><span class="badge badge-accent">Draft</span></td><td>Won Marcus Bello in the Season 1 auction draft</td></tr>
           </tbody>
         </table>
@@ -110,12 +113,12 @@
 
 <footer class="site-footer">
   <div class="wrap">
-    <div><a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word" style="color:#fff">SGTBL<span>St. Gabriel Basketball</span></span></a></div>
+    <div><a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word" style="color:#fff">SGTBL<span>Smithtown Gospel Tabernacle Basketball League</span></span></a></div>
     <div><h4>League</h4><ul><li><a href="standings.html">Standings</a></li><li><a href="teams.html">Teams</a></li><li><a href="games.html">Schedule</a></li></ul></div>
     <div><h4>Stats</h4><ul><li><a href="players.html">Players</a></li><li><a href="leaderboards.html">Leaderboards</a></li><li><a href="transactions.html">Transactions</a></li></ul></div>
     <div><h4>League Office</h4><ul><li><a href="admin/login.html">Captain / Admin Login</a></li></ul></div>
   </div>
-  <div class="footer-bottom"><span>© 2026 St. Gabriel Team Basketball League</span></div>
+  <div class="footer-bottom"><span>© 2026 Smithtown Gospel Tabernacle Basketball League</span></div>
 </footer>
 <script src="assets/js/interactions.js"></script>
 </body>

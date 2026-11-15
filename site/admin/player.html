@@ -12,8 +12,14 @@
 <link rel="stylesheet" href="../assets/css/site.css">
 <link rel="stylesheet" href="../assets/css/admin.css">
 <style>
-.player-layout { display: grid; grid-template-columns: minmax(260px, 340px) 1fr; gap: var(--space-6); align-items: start; }
-@media (max-width: 900px) { .player-layout { grid-template-columns: 1fr; } }
+.player-layout { display: grid; grid-template-columns: minmax(260px, 340px) 1fr; gap: var(--space-6); align-items: stretch; }
+/* Bio and Percentile Rankings sit side by side at equal height (trend chart runs full-width below),
+   matching the public player page: cards fill their grid cell, percentile rows spread to the Bio's height. */
+.player-layout > .stack > .card { flex: 1 1 auto; }
+.pctl-card { display: flex; flex-direction: column; }
+.pctl-card .pctl-rows { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: space-between; }
+/* Stacks earlier than the public page's 860px since the portal sidebar eats ~260px of width */
+@media (max-width: 1140px) { .player-layout { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body class="admin">
@@ -56,7 +62,7 @@
         <div class="notif-panel" id="notifPanel" hidden>
           <div class="notif-panel-head">Notifications</div>
           <div class="notif-list">
-            <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></span><div><div>Recap published: <strong>Lions 27, Eagles 24</strong></div><time>12 minutes ago</time></div></div>
+            <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></span><div><div>Recap published: <strong>Knicks 27, Eagles 24</strong></div><time>12 minutes ago</time></div></div>
             <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg></span><div><div>Trade processed — <strong>D. Okafor</strong> now on Sharks' active roster</div><time>2 hours ago</time></div></div>
           </div>
           <a class="notif-panel-foot" href="#">Mark all as read</a>
@@ -69,9 +75,9 @@
 
       <div class="profile-header">
         <div class="wrap-inner">
-          <span class="avatar avatar-xl av-1">MB</span>
+          <span class="avatar avatar-xl avatar-photo"><img src="../assets/img/headshot-placeholder.webp" alt="Marcus Bello headshot (placeholder photo)"></span>
           <div>
-            <span class="eyebrow" style="color:var(--gold-400)">Lions · Small Forward · #9</span>
+            <span class="eyebrow" style="color:var(--gold-400)">Knicks · Small Forward · #9</span>
             <h1>Marcus Bello</h1>
             <div class="profile-meta"><span>Age <b>24</b></span><span>Height <b>6'5"</b></span><span>Shoots <b>Right</b></span><span>Joined <b>2024</b></span></div>
           </div>
@@ -85,38 +91,151 @@
         <button role="tab" aria-selected="false" aria-controls="p-gamelog" id="t-gamelog">Game Log</button>
         <button role="tab" aria-selected="false" aria-controls="p-advanced" id="t-advanced">Advanced Stats</button>
         <button role="tab" aria-selected="false" aria-controls="p-avail" id="t-avail">Availability</button>
-        <button role="tab" aria-selected="false" aria-controls="p-clips" id="t-clips">Clips</button>
+        <button role="tab" aria-selected="false" aria-controls="p-clips" id="t-clips">Film Room</button>
         <button role="tab" aria-selected="false" aria-controls="p-txn" id="t-txn">Transactions</button>
       </div>
 
       <div id="p-overview" class="tabpanel" role="tabpanel" aria-labelledby="t-overview">
-        <div class="player-layout" style="margin-top:var(--space-5)">
-          <div class="card card-pad">
-            <h3 style="margin-bottom:var(--space-3)">Bio</h3>
-            <div class="bio-list">
-              <div><span>Full Name</span><b>Marcus Anthony Bello</b></div>
-              <div><span>Team</span><b>Lions</b></div>
-              <div><span>Position</span><b>Small Forward</b></div>
-              <div><span>Weight</span><b>205 lbs</b></div>
-              <div><span>Born</span><b>Mar 14, 2002 · Riverside, CA</b></div>
-              <div><span>Parish</span><b>St. Gabriel</b></div>
-              <div><span>Draft</span><b>Lions · Season 1 Auction (2024) · $140</b></div>
-              <div><span>Seasons Played</span><b>3</b></div>
+        <div class="player-layout" style="margin-top:var(--space-5);margin-bottom:var(--space-5)">
+          <div class="stack" style="gap:var(--space-5)">
+            <div class="card card-pad">
+              <h3 style="margin-bottom:var(--space-3)">Bio</h3>
+              <div class="bio-list">
+                <div><span>Full Name</span><b>Marcus Anthony Bello</b></div>
+                <div><span>Team</span><b>Knicks</b></div>
+                <div><span>Position</span><b>Small Forward</b></div>
+                <div><span>Shooting Hand</span><b>Right</b></div>
+                <div><span>Weight</span><b>205 lbs</b></div>
+                <div><span>Born</span><b>Mar 14, 2002 · Riverside, CA</b></div>
+                <div><span>Church</span><b>Smithtown Gospel Tabernacle</b></div>
+                <div><span>Draft</span><b>Knicks · Season 1 Auction (2024) · $140</b></div>
+                <div><span>Seasons Played</span><b>3</b></div>
+              </div>
             </div>
           </div>
 
-          <div class="card card-pad">
-            <h3 style="margin-bottom:var(--space-3)">Statistical Overview</h3>
-            <div class="table-wrap">
-              <table class="table" style="min-width:0">
-                <thead><tr><th>Season</th><th class="num">GP</th><th class="num">PTS</th><th class="num">REB</th><th class="num">AST</th><th class="num">FG%</th><th class="num">3P%</th><th class="num">FT%</th></tr></thead>
-                <tbody>
-                  <tr><td class="tnum">2026</td><td class="num tnum">14</td><td class="num tnum">18.4</td><td class="num tnum">4.2</td><td class="num tnum">3.1</td><td class="num tnum">47.8%</td><td class="num tnum">38.1%</td><td class="num tnum">81.4%</td></tr>
-                  <tr><td class="tnum" style="font-weight:800">Career</td><td class="num tnum" style="font-weight:800">41</td><td class="num tnum" style="font-weight:800">15.6</td><td class="num tnum" style="font-weight:800">3.8</td><td class="num tnum" style="font-weight:800">2.7</td><td class="num tnum" style="font-weight:800">45.3%</td><td class="num tnum" style="font-weight:800">34.6%</td><td class="num tnum" style="font-weight:800">78.3%</td></tr>
-                </tbody>
+          <div class="stack" style="gap:var(--space-5)">
+            <div class="card card-pad pctl-card">
+              <div class="row" style="justify-content:space-between;margin-bottom:var(--space-3)">
+                <h3>Percentile Rankings <span class="muted" style="font-weight:400;font-size:var(--text-sm)">2026 vs. league</span></h3>
+              </div>
+              <div class="pctl-rows">
+              <div class="percentile-row with-stat"><span class="p-label">MPG</span><span class="p-stat">32.4</span><div class="p-track" role="img" aria-label="MPG 32.4, 84 percentile"><span class="p-marker" style="left:84%"></span></div><span class="p-val">84<span class="p-ord">th</span></span></div>
+              <div class="percentile-row with-stat"><span class="p-label">PPG</span><span class="p-stat">18.4</span><div class="p-track" role="img" aria-label="PPG 18.4, 91 percentile"><span class="p-marker" style="left:91%"></span></div><span class="p-val">91<span class="p-ord">st</span></span></div>
+              <div class="percentile-row with-stat"><span class="p-label">APG</span><span class="p-stat">3.1</span><div class="p-track" role="img" aria-label="APG 3.1, 62 percentile"><span class="p-marker" style="left:62%"></span></div><span class="p-val">62<span class="p-ord">nd</span></span></div>
+              <div class="percentile-row with-stat"><span class="p-label">RPG</span><span class="p-stat">4.2</span><div class="p-track" role="img" aria-label="RPG 4.2, 55 percentile"><span class="p-marker" style="left:55%"></span></div><span class="p-val">55<span class="p-ord">th</span></span></div>
+              <div class="percentile-row with-stat"><span class="p-label">SPG</span><span class="p-stat">1.3</span><div class="p-track" role="img" aria-label="SPG 1.3, 73 percentile"><span class="p-marker" style="left:73%"></span></div><span class="p-val">73<span class="p-ord">rd</span></span></div>
+              <div class="percentile-row with-stat"><span class="p-label">TOPG</span><span class="p-stat">1.8</span><div class="p-track" role="img" aria-label="TOPG 1.8, 68 percentile"><span class="p-marker" style="left:68%"></span></div><span class="p-val">68<span class="p-ord">th</span></span></div>
+              <div class="percentile-row with-stat"><span class="p-label">eFG%</span><span class="p-stat">53.6%</span><div class="p-track" role="img" aria-label="eFG% 53.6%, 70 percentile"><span class="p-marker" style="left:70%"></span></div><span class="p-val">70<span class="p-ord">th</span></span></div>
+              <div class="percentile-row with-stat"><span class="p-label">Win Shares</span><span class="p-stat">1.9</span><div class="p-track" role="img" aria-label="Win Shares 1.9, 87 percentile"><span class="p-marker" style="left:87%"></span></div><span class="p-val">87<span class="p-ord">th</span></span></div>
+              </div>
+              <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-2)">His 2026 number, then where it ranks vs. the league (percentile &mdash; higher is always better). TOPG is inverted, so a high percentile means <em>fewer</em> turnovers. Sample values shown.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-pad pergame-card" style="margin-bottom:var(--space-6)">
+          <div class="pergame-head">
+            <h3>Per Game <span class="muted" style="font-weight:400;font-size:var(--text-sm)">Regular Season</span></h3>
+            <span class="muted" style="font-size:var(--text-xs)">Scroll sideways for every column &middot; hover a heading for its full name</span>
+          </div>
+          <div class="pergame-scroll">
+            <table class="pergame-table">
+              <thead><tr><th scope="col">Season</th><th scope="col" class="num">Age</th><th scope="col">Team</th><th scope="col" class="num" title="Games">G</th><th scope="col" class="num" title="Games Started">GS</th><th scope="col" class="num" title="Minutes Played Per Game">MP</th><th scope="col" class="num" title="Points Per Game">PTS</th><th scope="col" class="num" title="Field Goals Per Game">FG</th><th scope="col" class="num" title="Field Goal Attempts Per Game">FGA</th><th scope="col" class="num" title="Field Goal Percentage">FG%</th><th scope="col" class="num" title="3-Point Field Goals Per Game">3P</th><th scope="col" class="num" title="3-Point Field Goal Attempts Per Game">3PA</th><th scope="col" class="num" title="3-Point Field Goal Percentage">3P%</th><th scope="col" class="num" title="2-Point Field Goals Per Game">2P</th><th scope="col" class="num" title="2-Point Field Goal Attempts Per Game">2PA</th><th scope="col" class="num" title="2-Point Field Goal Percentage">2P%</th><th scope="col" class="num" title="Effective Field Goal Percentage (counts a 3 as 1.5 makes)">eFG%</th><th scope="col" class="num" title="Free Throws Per Game">FT</th><th scope="col" class="num" title="Free Throw Attempts Per Game">FTA</th><th scope="col" class="num" title="Free Throw Percentage">FT%</th><th scope="col" class="num" title="Offensive Rebounds Per Game">ORB</th><th scope="col" class="num" title="Defensive Rebounds Per Game">DRB</th><th scope="col" class="num" title="Total Rebounds Per Game">TRB</th><th scope="col" class="num" title="Assists Per Game">AST</th><th scope="col" class="num" title="Steals Per Game">STL</th><th scope="col" class="num" title="Blocks Per Game">BLK</th><th scope="col" class="num" title="Turnovers Per Game">TOV</th><th scope="col" class="num" title="Personal Fouls Per Game">PF</th></tr></thead>
+              <tbody>
+        <tr><th scope="row">2024</th><td class="num">22</td><td>NYK</td><td class="num">13</td><td class="num">11</td><td class="num">26.5</td><td class="num pts">11.2</td><td class="num">4.2</td><td class="num">9.8</td><td class="num">.422</td><td class="num">1.2</td><td class="num">3.8</td><td class="num">.306</td><td class="num">3.0</td><td class="num">6.1</td><td class="num">.494</td><td class="num">.480</td><td class="num">1.8</td><td class="num">2.4</td><td class="num">.742</td><td class="num">0.8</td><td class="num">2.3</td><td class="num">3.1</td><td class="num">2.0</td><td class="num">0.9</td><td class="num">0.2</td><td class="num">2.4</td><td class="num">2.6</td></tr>
+        <tr><th scope="row">2025</th><td class="num">23</td><td>NYK</td><td class="num">14</td><td class="num">14</td><td class="num">30.9</td><td class="num pts">16.8</td><td class="num">6.4</td><td class="num">13.9</td><td class="num">.459</td><td class="num">1.6</td><td class="num">4.7</td><td class="num">.348</td><td class="num">4.7</td><td class="num">9.1</td><td class="num">.516</td><td class="num">.518</td><td class="num">2.4</td><td class="num">3.1</td><td class="num">.791</td><td class="num">1.0</td><td class="num">2.9</td><td class="num">3.9</td><td class="num">2.9</td><td class="num">1.1</td><td class="num">0.3</td><td class="num">2.1</td><td class="num">2.3</td></tr>
+        <tr><th scope="row">2026</th><td class="num">24</td><td>NYK</td><td class="num">14</td><td class="num">14</td><td class="num">32.4</td><td class="num pts">18.4</td><td class="num">7.1</td><td class="num">14.8</td><td class="num">.478</td><td class="num">1.7</td><td class="num">4.5</td><td class="num">.381</td><td class="num">5.4</td><td class="num">10.3</td><td class="num">.521</td><td class="num">.536</td><td class="num">2.5</td><td class="num">3.1</td><td class="num">.814</td><td class="num">1.1</td><td class="num">3.1</td><td class="num">4.2</td><td class="num">3.1</td><td class="num">1.3</td><td class="num">0.4</td><td class="num">1.8</td><td class="num">2.1</td></tr>
+              </tbody>
+              <tfoot>
+        <tr><th scope="row">Career</th><td></td><td></td><td class="num">41</td><td class="num">39</td><td class="num">30.0</td><td class="num pts">15.6</td><td class="num">5.9</td><td class="num">12.9</td><td class="num">.457</td><td class="num">1.5</td><td class="num">4.3</td><td class="num">.348</td><td class="num">4.4</td><td class="num">8.6</td><td class="num">.513</td><td class="num">.516</td><td class="num">2.2</td><td class="num">2.9</td><td class="num">.786</td><td class="num">1.0</td><td class="num">2.8</td><td class="num">3.8</td><td class="num">2.7</td><td class="num">1.1</td><td class="num">0.3</td><td class="num">2.1</td><td class="num">2.3</td></tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <div class="card card-pad" data-trend-chart style="margin-bottom:var(--space-6)">
+          <div class="trend-head">
+            <h3>Season Trend <span class="muted" style="font-weight:400;font-size:var(--text-sm)">5-game rolling avg</span></h3>
+            <select class="input" data-trend-stat aria-label="Statistic to chart"></select>
+          </div>
+          <script type="application/json">
+            { "window": 5,
+              "stats": [
+                { "key": "PTS",  "label": "Points",            "dp": 0, "adp": 1 },
+                { "key": "REB",  "label": "Rebounds",          "dp": 0, "adp": 1 },
+                { "key": "AST",  "label": "Assists",           "dp": 0, "adp": 1 },
+                { "key": "STL",  "label": "Steals",            "dp": 0, "adp": 1 },
+                { "key": "TOV",  "label": "Turnovers",         "dp": 0, "adp": 1 },
+                { "key": "MIN",  "label": "Minutes",           "dp": 0, "adp": 1 },
+                { "key": "EFG",  "label": "eFG%",              "dp": 0, "adp": 1, "suffix": "%" },
+                { "key": "TS",   "label": "True Shooting %",   "dp": 0, "adp": 1, "suffix": "%" },
+                { "key": "USG",  "label": "Usage Rate",        "dp": 0, "adp": 1, "suffix": "%" },
+                { "key": "GMSC", "label": "Game Score",        "dp": 1, "adp": 1 },
+                { "key": "WS",   "label": "Win Shares",        "dp": 2, "adp": 2 }
+              ],
+              "games": [
+                { "date": "May 16", "opp": "vs Eagles", "PTS": 11, "REB": 3, "AST": 2, "STL": 1, "TOV": 3, "MIN": 30, "EFG": 46, "TS": 51, "USG": 21, "GMSC": 9.8, "WS": 0.08 },
+                { "date": "May 23", "opp": "@ Sharks", "PTS": 15, "REB": 4, "AST": 3, "STL": 0, "TOV": 2, "MIN": 31, "EFG": 51, "TS": 56, "USG": 22, "GMSC": 12.1, "WS": 0.1 },
+                { "date": "May 30", "opp": "vs Wolves", "PTS": 14, "REB": 5, "AST": 4, "STL": 2, "TOV": 2, "MIN": 33, "EFG": 49, "TS": 54, "USG": 23, "GMSC": 12.6, "WS": 0.11 },
+                { "date": "Jun 6", "opp": "@ Tigers", "PTS": 20, "REB": 3, "AST": 2, "STL": 1, "TOV": 1, "MIN": 29, "EFG": 55, "TS": 60, "USG": 24, "GMSC": 15.2, "WS": 0.14 },
+                { "date": "Jun 13", "opp": "vs Rams", "PTS": 16, "REB": 4, "AST": 3, "STL": 2, "TOV": 2, "MIN": 32, "EFG": 50, "TS": 55, "USG": 23, "GMSC": 13, "WS": 0.11 },
+                { "date": "Jun 20", "opp": "@ Eagles", "PTS": 21, "REB": 6, "AST": 3, "STL": 1, "TOV": 1, "MIN": 34, "EFG": 56, "TS": 61, "USG": 25, "GMSC": 17.4, "WS": 0.16 },
+                { "date": "Jun 27", "opp": "vs Sharks", "PTS": 18, "REB": 4, "AST": 4, "STL": 1, "TOV": 2, "MIN": 31, "EFG": 52, "TS": 57, "USG": 24, "GMSC": 14.1, "WS": 0.12 },
+                { "date": "Jul 4", "opp": "@ Rams", "PTS": 23, "REB": 5, "AST": 3, "STL": 2, "TOV": 1, "MIN": 33, "EFG": 57, "TS": 62, "USG": 26, "GMSC": 18.3, "WS": 0.17 },
+                { "date": "Jul 11", "opp": "vs Tigers", "PTS": 24, "REB": 4, "AST": 4, "STL": 1, "TOV": 2, "MIN": 35, "EFG": 58, "TS": 63, "USG": 26, "GMSC": 19, "WS": 0.18 },
+                { "date": "Jul 18", "opp": "@ Wolves", "PTS": 22, "REB": 4, "AST": 3, "STL": 2, "TOV": 1, "MIN": 32, "EFG": 55, "TS": 60, "USG": 25, "GMSC": 17.5, "WS": 0.15 },
+                { "date": "Jul 25", "opp": "@ Wolves", "PTS": 17, "REB": 5, "AST": 3, "STL": 1, "TOV": 2, "MIN": 33, "EFG": 54, "TS": 59, "USG": 24, "GMSC": 15.6, "WS": 0.14 },
+                { "date": "Aug 1", "opp": "vs Tigers", "PTS": 19, "REB": 4, "AST": 3, "STL": 1, "TOV": 1, "MIN": 32, "EFG": 53, "TS": 58, "USG": 24, "GMSC": 15.1, "WS": 0.13 },
+                { "date": "Aug 15", "opp": "@ Sharks", "PTS": 15, "REB": 3, "AST": 2, "STL": 2, "TOV": 3, "MIN": 31, "EFG": 48, "TS": 53, "USG": 23, "GMSC": 10.9, "WS": 0.07 },
+                { "date": "Aug 22", "opp": "vs Eagles", "PTS": 22, "REB": 5, "AST": 4, "STL": 1, "TOV": 2, "MIN": 38, "EFG": 60, "TS": 65, "USG": 27, "GMSC": 19.2, "WS": 0.19 }
+              ] }
+          </script>
+          <div class="trend-plot" data-trend-plot></div>
+          <div class="trend-legend"><span><i class="lg-line"></i>5-game rolling average</span><span><i class="lg-dot"></i>Single game</span><span>Hover or tap a game for details</span></div>
+        </div>
+
+        <div class="card card-pad" data-spray-chart data-player="Marcus Bello" style="margin-bottom:var(--space-6)">
+          <div class="row" style="justify-content:space-between;align-items:flex-start;margin-bottom:var(--space-4)">
+            <div>
+              <h3>Shot Chart — 2026</h3>
+              <p class="muted" style="font-size:var(--text-xs);margin-top:4px;max-width:60ch">FG% from each zone vs. league average from that zone &mdash; red zones are hot, blue zones are cold, and the deeper the shade, the further he is from average. Every shot is plotted: <b>&#9679;</b> make, <b>&#10005;</b> miss &mdash; click any shot to watch it. <span data-spray-totals></span></p>
+            </div>
+            <select class="input spray-filter" data-spray-filter aria-label="Shots to show"><option value="all">All shots</option><option value="makes">Makes only</option><option value="misses">Misses only</option><option value="none">Zones only</option></select>
+          </div>
+          <script type="application/json">
+            { "zones": {
+              "ra":        { "fgm": 34, "fga": 52, "lg": 62.0 },
+              "paint":     { "fgm": 15, "fga": 27, "lg": 40.0 },
+              "midLBase":  { "fgm": 5,  "fga": 11, "lg": 38.0 },
+              "midLElb":   { "fgm": 4,  "fga": 14, "lg": 39.0 },
+              "midTop":    { "fgm": 7,  "fga": 14, "lg": 40.0 },
+              "midRElb":   { "fgm": 7,  "fga": 18, "lg": 40.0 },
+              "midRBase":  { "fgm": 3,  "fga": 8,  "lg": 38.0 },
+              "c3L":       { "fgm": 5,  "fga": 11, "lg": 36.0 },
+              "w3L":       { "fgm": 4,  "fga": 14, "lg": 33.0 },
+              "t3":        { "fgm": 7,  "fga": 20, "lg": 33.0 },
+              "w3R":       { "fgm": 7,  "fga": 13, "lg": 33.0 },
+              "c3R":       { "fgm": 1,  "fga": 5,  "lg": 36.0 }
+            } }
+          </script>
+          <div class="spray-layout">
+            <div>
+              <div data-spray-svg></div>
+              <div class="spray-legend" aria-hidden="true">
+                <span>Cold</span>
+                <span class="swatches"><span style="background:var(--zone-cold-3)"></span><span style="background:var(--zone-cold-2)"></span><span style="background:var(--zone-cold-1)"></span><span style="background:var(--zone-even)"></span><span style="background:var(--zone-hot-1)"></span><span style="background:var(--zone-hot-2)"></span><span style="background:var(--zone-hot-3)"></span></span>
+                <span>Hot</span>
+                <span class="lg-shot"><svg viewBox="0 0 12 12" width="12" height="12"><circle cx="6" cy="6" r="4" class="lg-make"/></svg>Make</span>
+                <span class="lg-shot"><svg viewBox="0 0 12 12" width="12" height="12"><path d="M2.5,2.5 L9.5,9.5 M9.5,2.5 L2.5,9.5" class="lg-miss"/></svg>Miss</span>
+              </div>
+            </div>
+            <div class="table-wrap" data-spray-table>
+              <table class="table spray-table" style="min-width:0">
+                <thead><tr><th>Zone</th><th class="num">FGM–FGA</th><th class="num">FG%</th><th class="num">Lg Avg</th><th class="num">+/−</th></tr></thead>
+                <tbody></tbody>
               </table>
             </div>
-            <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">See the Basic Stats tab for the full per-season breakdown, and Game Log for individual games.</p>
           </div>
         </div>
       </div>
@@ -130,10 +249,10 @@
             <tbody>
               <tr><td class="tnum" data-sort-value="2026">2026</td><td class="num tnum">14</td><td class="num tnum">18.4</td><td class="num tnum">4.2</td><td class="num tnum">3.1</td><td class="num tnum">1.3</td><td class="num tnum">0.4</td><td class="num tnum">47.8%</td><td class="num tnum">38.1%</td><td class="num tnum">81.4%</td><td class="num tnum">1.8</td></tr>
               <tr><td class="tnum" data-sort-value="2025">2025</td><td class="num tnum">14</td><td class="num tnum">16.8</td><td class="num tnum">3.9</td><td class="num tnum">2.9</td><td class="num tnum">1.1</td><td class="num tnum">0.3</td><td class="num tnum">45.9%</td><td class="num tnum">34.8%</td><td class="num tnum">79.1%</td><td class="num tnum">2.1</td></tr>
-              <tr><td class="tnum" data-sort-value="2024">2024</td><td class="num tnum">13</td><td class="num tnum">11.2</td><td class="num tnum">3.1</td><td class="num tnum">2.0</td><td class="num tnum">0.9</td><td class="num tnum">0.2</td><td class="num tnum">42.1%</td><td class="num tnum">30.5%</td><td class="num tnum">74.2%</td><td class="num tnum">2.4</td></tr>
+              <tr><td class="tnum" data-sort-value="2024">2024</td><td class="num tnum">13</td><td class="num tnum">11.2</td><td class="num tnum">3.1</td><td class="num tnum">2.0</td><td class="num tnum">0.9</td><td class="num tnum">0.2</td><td class="num tnum">42.2%</td><td class="num tnum">30.6%</td><td class="num tnum">74.2%</td><td class="num tnum">2.4</td></tr>
             </tbody>
             <tfoot>
-              <tr><td class="tnum">Career</td><td class="num tnum">41</td><td class="num tnum">15.6</td><td class="num tnum">3.8</td><td class="num tnum">2.7</td><td class="num tnum">1.1</td><td class="num tnum">0.3</td><td class="num tnum">45.3%</td><td class="num tnum">34.6%</td><td class="num tnum">78.3%</td><td class="num tnum">2.1</td></tr>
+              <tr><td class="tnum">Career</td><td class="num tnum">41</td><td class="num tnum">15.6</td><td class="num tnum">3.8</td><td class="num tnum">2.7</td><td class="num tnum">1.1</td><td class="num tnum">0.3</td><td class="num tnum">45.7%</td><td class="num tnum">34.8%</td><td class="num tnum">78.6%</td><td class="num tnum">2.1</td></tr>
             </tfoot>
           </table>
         </div>
@@ -164,7 +283,6 @@
       <div id="p-advanced" class="tabpanel" role="tabpanel" aria-labelledby="t-advanced" hidden>
         <div class="row" style="justify-content:space-between;align-items:flex-start;margin-bottom:var(--space-3)">
           <p class="muted" style="font-size:var(--text-xs);max-width:60ch">Percentile chips show this player's rank vs. the league at his position — blue is below average, orange is above average. Derived from the Veo game-camera feed once a game's stats sync is published; sample values shown.</p>
-          <span class="badge badge-info">Video-Derived</span>
         </div>
         <div class="table-wrap">
           <table class="table">
@@ -206,7 +324,7 @@
 
         <div class="avail-row">
           <span class="avatar avatar-sm av-1">MB</span>
-          <div><strong>Marcus Bello</strong><div class="muted" style="font-size:var(--text-xs)">Small Forward · #9 · Lions</div></div>
+          <div><strong>Marcus Bello</strong><div class="muted" style="font-size:var(--text-xs)">Small Forward · #9 · Knicks</div></div>
           <span class="badge badge-success">Available</span>
         </div>
 
@@ -225,23 +343,25 @@
       </div>
 
       <div id="p-clips" class="tabpanel" role="tabpanel" aria-labelledby="t-clips" hidden>
-        <div class="film-grid">
-          <div class="film-card">
-            <div class="thumb-wrap"><iframe src="https://www.youtube.com/embed/mQPbdoRZYY8" title="Bello go-ahead three" loading="lazy" allowfullscreen></iframe></div>
-            <div class="film-tags"><span class="badge badge-accent">3PT Make</span><span class="badge">Clutch</span></div>
-            <div class="film-meta row" style="justify-content:space-between">
-              <div><strong>Bello's go-ahead three</strong><span class="muted">Week 14 vs Eagles · 2H 0:12</span></div>
-            </div>
+        <div class="card card-pad film-library" data-film-library data-player="Marcus Bello" style="margin-bottom:var(--space-6)">
+          <div class="film-lib-head">
+            <h3>Film Room <span class="muted" style="font-weight:400;font-size:var(--text-sm)">2026 season</span></h3>
+            <p class="muted">Every tagged play from his season. Pick a play type to search, narrow it by game or keyword, then click any result to watch it.</p>
           </div>
-          <div class="film-card">
-            <div class="thumb-wrap"><iframe src="https://www.youtube.com/embed/mQPbdoRZYY8" title="Bello steal and dunk" loading="lazy" allowfullscreen></iframe></div>
-            <div class="film-tags"><span class="badge badge-warning">Steal</span><span class="badge">Highlight</span></div>
-            <div class="film-meta row" style="justify-content:space-between">
-              <div><strong>Bello strips it, coast to coast</strong><span class="muted">Week 13 vs Sharks · 1H 6:02</span></div>
-            </div>
+          <!-- Season totals for the non-shot play types (2026: REB 59 incl. 15 offensive, AST 43, STL 18, BLK 6, TOV 25, PF 29).
+               Made/missed shots come straight from the shot chart, so they always match it. -->
+          <script type="application/json">{ "plays": { "Rebound": 59, "Assist": 43, "Steal": 18, "Block": 6, "Turnover": 25, "Foul": 29 }, "offensiveRebounds": 15 }</script>
+          <div class="film-type-chips" role="group" aria-label="Play type" data-film-types></div>
+          <div class="film-lib-controls">
+            <div class="field"><label for="film-game">Game</label><select id="film-game" class="input" data-film-game></select></div>
+            <div class="field"><label for="film-shot">Shot type</label><select id="film-shot" class="input" data-film-shot><option value="">Any shot</option><option value="2PT">2-pointers</option><option value="3PT">3-pointers</option></select></div>
+            <div class="field search"><label for="film-q">Search</label><input id="film-q" class="input" type="search" placeholder="e.g. corner, Eagles, bad pass" data-film-search></div>
           </div>
+          <p class="film-lib-status" data-film-status aria-live="polite"></p>
+          <div class="film-results" data-film-results></div>
+          <div class="film-more"><button type="button" class="btn btn-outline" data-film-more>Show more</button></div>
+          <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-4)">Clips are auto-tagged by the AI video agent once a game's stats sync is published. Placeholder film shown for the prototype.</p>
         </div>
-        <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-5)">Clips are auto-tagged and trimmed by the AI video provider once a game's stats sync is reviewed and published — placeholder video shown for prototype.</p>
       </div>
 
       <div id="p-txn" class="tabpanel" role="tabpanel" aria-labelledby="t-txn" hidden>
@@ -249,7 +369,7 @@
           <table class="table">
             <thead><tr><th>Date</th><th>Type</th><th>Details</th></tr></thead>
             <tbody>
-              <tr><td class="muted tnum">Jun 14, 2024</td><td><span class="badge badge-accent">Draft</span></td><td>Won by Lions for $140 — Season 1 Auction Draft</td></tr>
+              <tr><td class="muted tnum">Jun 14, 2024</td><td><span class="badge badge-accent">Draft</span></td><td>Won by Knicks for $140 — Season 1 Auction Draft</td></tr>
             </tbody>
           </table>
         </div>

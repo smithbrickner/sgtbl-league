@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Film Room — SGTBL Captain Portal</title>
+<title>Film Room — SGTBL Team Portal</title>
 <link rel="icon" href="../assets/img/sgtbl-logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@
 <div class="admin-shell">
   <div class="admin-scrim"></div>
   <aside class="admin-side">
-    <a class="brand" href="dashboard.html"><img src="../assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>Captain Portal</span></span></a>
+    <a class="brand" href="dashboard.html"><img src="../assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>Team Portal</span></span></a>
     <ul class="admin-nav">
       <li class="nav-group-label">Team</li>
       <li><a href="dashboard.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Dashboard</a></li>
@@ -34,7 +34,7 @@
     <div class="admin-side-foot">
       <div class="admin-user">
         <span class="avatar avatar-sm av-2">RA</span>
-        <div><div class="name">R. Alvarez</div><div class="role">Lions · Captain</div><span class="portal-tag">Captain</span></div>
+        <div><div class="name">R. Alvarez</div><div class="role">Knicks · Captain</div><span class="portal-tag">Captain</span></div>
       </div>
     </div>
   </aside>
@@ -66,6 +66,20 @@
         <select class="input" style="width:auto;height:44px"><option>All Games</option><option>Week 14 — vs Eagles</option><option>Week 13 — vs Sharks</option><option>Week 12 — vs Rams</option></select>
         <select class="input" style="width:auto;height:44px"><option>All Players</option><option>Marcus Bello</option><option>Jonah Kim</option><option>Ana Reyes</option></select>
         <select class="input" style="width:auto;height:44px"><option>All Tags</option><option>3PT Make</option><option>Assist</option><option>Block</option><option>Steal</option></select>
+      </div>
+
+      <!-- Filled by interactions.js when arriving from a player's shot chart (film-room.html?shot=…) -->
+      <div class="card card-pad shot-clip-card" data-shot-clip hidden>
+        <div class="row" style="justify-content:space-between;align-items:flex-start;gap:var(--space-3);flex-wrap:wrap;margin-bottom:var(--space-4)">
+          <div>
+            <span class="eyebrow">Shot clip · from the shot chart</span>
+            <h3 data-shot-title style="margin-top:4px"></h3>
+            <div class="muted" data-shot-meta style="font-size:var(--text-sm)"></div>
+          </div>
+          <a class="btn btn-outline btn-sm" href="player.html">← Back to shot chart</a>
+        </div>
+        <div class="thumb-wrap shot-clip-frame"><iframe title="Shot clip" allowfullscreen></iframe></div>
+        <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">Placeholder film for the prototype — each shot links to its own tagged clip once game film is synced.</p>
       </div>
 
       <div class="film-grid">

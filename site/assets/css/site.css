@@ -32,7 +32,7 @@
 .nav-actions { display: flex; align-items: center; gap: var(--space-3); flex: none; }
 .nav-toggle { display: none; }
 
-@media (max-width: 980px) {
+@media (max-width: 1080px) {
   .nav-links { position: fixed; inset: 68px 0 0 0; flex-direction: column; align-items: stretch; background: var(--navy-900);
     padding: var(--space-3) var(--space-4); gap: 0; transform: translateY(-8px); opacity: 0; pointer-events: none;
     transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); overflow-y: auto; }
@@ -41,6 +41,13 @@
   .site-nav.open .nav-links { transform: translateY(0); opacity: 1; pointer-events: auto; }
   .nav-toggle { display: inline-flex; }
   .nav-actions .btn-outline { display: none; }
+}
+/* Phones: the full league name ("Smithtown Gospel Tabernacle Basketball League") is too long for one
+   line beside the menu button, so let the brand shrink and the subtitle wrap to two lines. */
+@media (max-width: 520px) {
+  .site-nav .wrap { gap: var(--space-3); }
+  .site-nav .brand { flex: 1 1 auto; min-width: 0; }
+  .site-nav .brand-word span { letter-spacing: 1px; line-height: 1.25; margin-top: 2px; }
 }
 
 /* ---------- Hero ---------- */
@@ -90,9 +97,21 @@
 .profile-header { background: linear-gradient(135deg, var(--navy-900), var(--teal-800)); color: var(--white); border-radius: var(--radius-lg); overflow: hidden; position: relative; }
 .profile-header .wrap-inner { position: relative; padding: var(--space-7) var(--space-6); display: flex; gap: var(--space-6); align-items: center; flex-wrap: wrap; }
 .profile-header h1 { font-size: clamp(1.9rem, 3.4vw, 2.7rem); }
+/* Public player header visual: no circle — the player's transparent cut-out photo stands in front
+   of a large faded team logo, and the box is pulled down to the header's bottom edge (negative
+   margin = the header's bottom padding) so the photo's cropped-off chest meets the edge cleanly. */
+.profile-visual { position: relative; flex: none; width: 210px; height: 168px; align-self: flex-end; margin-bottom: calc(-1 * var(--space-7)); }
+.profile-visual .pv-logo { position: absolute; inset: 0 0 12px; width: 100%; height: calc(100% - 12px); object-fit: contain; opacity: .45; }
+.profile-visual .pv-photo { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; }
+/* When the header stacks (phones), the visual sits above the name instead of on the bottom edge,
+   so fade the photo's cropped chest out rather than leaving a hard cut line mid-header. */
+@media (max-width: 600px) {
+  .profile-visual { width: 170px; height: 136px; align-self: flex-start; margin-bottom: 0; }
+  .profile-visual .pv-photo { -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent); mask-image: linear-gradient(to bottom, #000 70%, transparent); }
+}
 .profile-meta { display: flex; gap: var(--space-4); flex-wrap: wrap; font-size: var(--text-sm); color: rgba(255,255,255,.82); margin-top: 6px; }
 .profile-meta b { color: var(--white); }
-.profile-actions { margin-left: auto; display: flex; gap: 10px; align-self: flex-start; }
+.profile-actions { margin-left: auto; display: flex; flex-wrap: wrap; gap: 10px; align-self: flex-start; }
 
 .tabbar { display: flex; gap: var(--space-2); border-bottom: 1px solid var(--border); margin-bottom: var(--space-6); overflow-x: auto; }
 .tabbar button { padding: 12px 4px; margin-right: var(--space-5); background: none; border: none; border-bottom: 3px solid transparent; font-weight: 600; color: var(--text-muted); cursor: pointer; white-space: nowrap; }
@@ -106,6 +125,11 @@
 .percentile-row .p-track { position: relative; height: 10px; border-radius: 6px; background: linear-gradient(90deg,#c0473a,#e0b23c,#2e8b57); }
 .percentile-row .p-marker { position: absolute; top: -4px; width: 4px; height: 18px; border-radius: 2px; background: var(--ink); box-shadow: 0 0 0 2px #fff; transform: translateX(-2px); }
 .percentile-row .p-val { font-family: var(--font-display); font-weight: 800; text-align: right; }
+/* Percentile rows that show the actual stat too: label | value | bar | percentile rank (e.g. "MPG  32.4  [====|=]  84th") */
+.percentile-row.with-stat { grid-template-columns: 92px 58px 1fr 48px; }
+.percentile-row .p-stat { font-family: var(--font-display); font-weight: 800; font-size: var(--text-md); color: var(--text-primary); text-align: right; font-variant-numeric: tabular-nums; padding-right: 4px; }
+.percentile-row .p-ord { font-size: 10px; font-weight: 700; margin-left: 1px; vertical-align: super; line-height: 0; }
+@media (max-width: 420px) { .percentile-row.with-stat { grid-template-columns: 78px 52px 1fr 42px; gap: 8px; } }
 
 /* ---------- Video / highlight cards ---------- */
 .video-card { border-radius: var(--radius-lg); overflow: hidden; background: var(--ink); border: 1px solid var(--border); }
@@ -138,3 +162,60 @@
 .play-item { display: grid; grid-template-columns: 56px 1fr auto; gap: 12px; align-items: center; padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border); font-size: var(--text-sm); }
 .play-item:last-child { border-bottom: none; }
 .play-item time { font-family: var(--font-mono); color: var(--text-muted); font-size: var(--text-xs); }
+
+/* ---------- Public dark mode (2026-11-15) ----------
+   The toggle is injected into .site-nav .nav-actions by interactions.js. Most public components
+   already read semantic tokens, which tokens.css flips under :root[data-theme="dark"]; these are
+   the few that hard-code light-theme brand colours and need their own dark values. */
+.site-nav .theme-toggle { color: #fff; }
+.site-nav .theme-toggle:hover { background: rgba(255,255,255,.1); }
+:root[data-theme="dark"] .tabbar button[aria-selected="true"] { color: var(--teal-200); border-color: var(--teal-200); }
+:root[data-theme="dark"] .team-cell a:hover { color: var(--teal-200); }
+/* Dark-mode contrast fixes found by a contrast audit of every public page (also helps the portals,
+   which share these classes). --teal-600/--teal-800/--brand are navy and vanish on dark surfaces. */
+:root[data-theme="dark"] .eyebrow,
+:root[data-theme="dark"] .card-link,
+:root[data-theme="dark"] .table th[aria-sort] .sort-caret { color: var(--teal-200); }
+:root[data-theme="dark"] .card-link:hover { color: #fff; }
+:root[data-theme="dark"] .matchup-row.win .score { color: var(--text-primary); }
+:root[data-theme="dark"] .standings-table .streak-l { color: #f07a6e; }
+:root[data-theme="dark"] .gt.win .score { color: var(--text-primary); } /* games.html winning score */
+
+/* Layout fixes (2026-11-15) — both pre-date the league rename but it made them worse:
+   1) .home-grid children default to min-width:auto, so the homepage's horizontal .scroller
+      (3 x 280px cards) stretched its grid column and pushed phones to ~870px wide. */
+.home-grid > * { min-width: 0; }
+/* 2) Mid-width desktops (1081-1340px; below 1080 the links collapse into the menu button): brand + 7 links + Captain/Admin + theme toggle didn't fit,
+      so wrap the league subtitle onto two lines and tighten the link spacing there. */
+@media (min-width: 1081px) and (max-width: 1340px) {
+  .site-nav .wrap { gap: var(--space-4); }
+  .site-nav .brand-word span { max-width: 205px; line-height: 1.3; letter-spacing: 1.1px; margin-top: 2px; }
+  .nav-links a { padding: 0 9px; }
+}
+
+/* ---------- Film Room play library (public player page "Film Room" tab) ---------- */
+.film-lib-head { margin-bottom: var(--space-4); }
+.film-lib-head p { font-size: var(--text-sm); margin-top: 4px; max-width: 70ch; }
+.film-type-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--space-4); }
+.film-chip { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: var(--radius-pill); border: 1px solid var(--border-strong);
+  background: var(--surface); color: var(--text-primary); font: inherit; font-size: var(--text-sm); font-weight: 600; cursor: pointer; }
+.film-chip:hover { border-color: var(--accent-blue); }
+.film-chip[aria-pressed="true"] { background: var(--accent-blue); border-color: var(--accent-blue); color: #fff; }
+.film-chip-n { font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: var(--radius-pill); background: var(--surface-sunken); color: var(--text-muted); }
+.film-chip[aria-pressed="true"] .film-chip-n { background: rgba(255,255,255,.22); color: #fff; }
+.film-lib-controls { display: grid; grid-template-columns: minmax(160px, 220px) minmax(140px, 180px) 1fr; gap: var(--space-3); align-items: end; margin-bottom: var(--space-3); }
+.film-lib-controls .field[hidden] { display: none; }
+@media (max-width: 700px) { .film-lib-controls { grid-template-columns: 1fr 1fr; } .film-lib-controls .search { grid-column: 1 / -1; } }
+.film-lib-status { font-size: var(--text-sm); color: var(--text-muted); font-weight: 600; margin: 0 0 var(--space-3); }
+.film-results { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--space-4); }
+.film-result { display: flex; flex-direction: column; text-align: left; padding: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden;
+  background: var(--surface); color: var(--text-primary); font: inherit; cursor: pointer; transition: box-shadow var(--dur-fast), transform var(--dur-fast); }
+.film-result:hover, .film-result:focus-visible { box-shadow: var(--shadow-md); transform: translateY(-2px); outline: none; border-color: var(--accent-blue); }
+.film-result .fr-thumb { position: relative; display: block; aspect-ratio: 16 / 9; background: #0b1726; }
+.film-result .fr-thumb img { width: 100%; height: 100%; object-fit: cover; opacity: .85; }
+.film-result .fr-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 26px; text-shadow: 0 2px 8px rgba(0,0,0,.6); }
+.film-result .fr-badge { position: absolute; left: 8px; top: 8px; box-shadow: var(--shadow-sm); }
+.film-result .fr-body { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px 12px; font-size: var(--text-sm); }
+.film-result .fr-body .muted { font-size: var(--text-xs); }
+.film-more { display: flex; justify-content: center; margin-top: var(--space-4); }
+.film-more [hidden] { display: none; }
