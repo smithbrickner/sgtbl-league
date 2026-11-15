@@ -281,7 +281,11 @@ textarea.input { height: auto; padding: var(--space-3) var(--space-4); resize: v
 .trend-legend i { display: inline-block; vertical-align: middle; margin-right: 6px; }
 .trend-legend .lg-line { width: 18px; height: 3px; border-radius: 2px; background: var(--accent-blue); }
 .trend-legend .lg-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-muted); opacity: .45; }
-
+/* League-average reference line on the trend chart (dotted, neutral so it never competes with the player's line) */
+.trend-lg { stroke: var(--text-muted); stroke-width: 1.75; stroke-dasharray: 2 5; stroke-linecap: round; opacity: .9; }
+.trend-lg-label { font-family: var(--font-body); font-size: 11px; font-weight: 700; fill: var(--text-muted); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; }
+.trend-tip .tt-lg { border-top: 1px dashed var(--border); margin-top: 3px; padding-top: 3px; }
+.trend-legend .lg-avg { width: 18px; height: 0; border-top: 2px dotted var(--text-muted); }
 /* ---------- Shot chart: make/miss dots on the shaded zones (2026-11-15) ----------
    Dots are white "make" circles and dark "miss" X marks with a white halo, so both read on any
    zone colour and in both themes. (A KDE heat-grid version was tried and reverted.) */
@@ -339,3 +343,23 @@ textarea.input { height: auto; padding: var(--space-3) var(--space-4); resize: v
 .pergame-table td a:hover { text-decoration: underline; }
 .pergame-table tfoot td, .pergame-table tfoot th { font-weight: 700; border-top: 2px solid var(--border-strong); border-bottom: 0; background: var(--surface-alt); color: var(--text-primary); }
 .pergame-table tfoot th[scope="row"] { background: var(--surface-alt); }
+
+/* Game Log (player pages): reuses the .pergame-* table styling; first column is the game number */
+.gamelog-table th[scope="row"] { color: var(--text-muted); }
+.gamelog-table td .badge { font-size: 11px; }
+.gamelog-table .gl-record { font-weight: 600; color: var(--text-muted); }
+
+/* Game Log stat cells that open the Film Room filtered to that game + play type */
+.gamelog-table a.gl-film { color: var(--accent-blue); font-weight: 600; text-decoration: underline dotted; text-underline-offset: 3px; }
+.gamelog-table a.gl-film:hover, .gamelog-table a.gl-film:focus-visible { text-decoration-style: solid; }
+
+/* Public roster (team.html): Basketball-Reference-style table on the shared .pergame-* styling.
+   The player cell is the row header (pinned while scrolling sideways), so it must stay a table cell. */
+.roster-table th.team-cell { display: table-cell; white-space: nowrap; font-weight: 700; }
+.roster-table th.team-cell .avatar, .roster-table th.team-cell .headshot-cutout { vertical-align: middle; margin-right: 10px; }
+.roster-table th.team-cell .headshot-cutout { margin: -6px 4px -6px -6px; }
+.roster-table th.team-cell a { color: var(--accent-blue); }
+.roster-table tbody th[scope="row"] { color: var(--text-primary); }
+.pergame-table th[aria-sort] { cursor: pointer; user-select: none; }
+.pergame-table th[aria-sort="ascending"]::after { content: " \25B2"; font-size: 9px; color: var(--accent-blue); }
+.pergame-table th[aria-sort="descending"]::after { content: " \25BC"; font-size: 9px; color: var(--accent-blue); }

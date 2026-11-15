@@ -295,7 +295,7 @@
         var kind = z.region === "three" ? "3PT" : "2PT";
         var n = shots.length + 1;
         shots.push({
-          id: "S" + ("00" + n).slice(-3), x: x, y: y, made: made, lg: s.lg, zone: z, kind: kind,
+          id: "S" + ("00" + n).slice(-3), x: x, y: y, made: made, lg: s.lg, zone: z, kind: kind, half: half, clock: clock,
           gameIdx: g ? games.indexOf(g) : -1, sortKey: (half === "2H" ? 1200 : 0) + (1200 - secs),
           title: player + " — " + (made ? "Made " : "Missed ") + kind + ", " + z.name,
           meta: (g ? g.date + " " + g.opp + " · " : "") + half + " " + clock,
@@ -303,6 +303,26 @@
         });
       }
     });
+
+    // Tie every shot to a game so each game's makes/misses match its box score (FGM/FGA/TPM/TPA in the
+    // game data): made threes go to games in proportion to that game's 3PM, missed twos to its 2PA-2PM, etc.
+    if (games.length && games[0].FGA != null) {
+      var slots = { "3PT|1": [], "3PT|0": [], "2PT|1": [], "2PT|0": [] };
+      games.forEach(function (gm, gi) {
+        function add(k, c) { for (var q = 0; q < c; q++) slots[k].push(gi); }
+        add("3PT|1", gm.TPM); add("3PT|0", gm.TPA - gm.TPM);
+        add("2PT|1", gm.FGM - gm.TPM); add("2PT|0", (gm.FGA - gm.TPA) - (gm.FGM - gm.TPM));
+      });
+      Object.keys(slots).forEach(function (k) {
+        var arr = slots[k];
+        for (var q = arr.length - 1; q > 0; q--) { var j = Math.floor(rand() * (q + 1)), tmp = arr[q]; arr[q] = arr[j]; arr[j] = tmp; }
+      });
+      shots.forEach(function (sh) {
+        var gi = slots[sh.kind + "|" + (sh.made ? 1 : 0)].pop();
+        if (gi == null) return;
+        sh.gameIdx = gi; sh.meta = games[gi].date + " " + games[gi].opp + " · " + sh.half + " " + sh.clock;
+      });
+    }
 
     SHOT_STORE[player] = shots;
 
@@ -449,9 +469,23 @@
       Turnover: function () { return "Turnover — " + pick(["bad pass", "lost ball", "travel", "offensive foul", "stepped out of bounds"]); },
       Foul:     function () { return "Personal foul — " + pick(["reach-in", "shooting foul", "blocking foul", "loose-ball foul"]); }
     };
+    // Each play goes to a game in line with that game's box score (AST, STL, BLK, TOV, PF, ORB/DRB in the
+    // game data), so filtering the Film Room to one game shows exactly that game's plays.
+    var slotCache = {}, STAT_KEY = { Assist: "AST", Steal: "STL", Block: "BLK", Turnover: "TOV", Foul: "PF" };
+    function gameSlot(key) {
+      if (!slotCache[key]) {
+        var arr = [];
+        if (games.length && games[0][key] != null) games.forEach(function (gm, gi) { for (var q = 0; q < gm[key]; q++) arr.push(gi); });
+        for (var q = arr.length - 1; q > 0; q--) { var j = Math.floor(rand() * (q + 1)), tmp = arr[q]; arr[q] = arr[j]; arr[j] = tmp; }
+        slotCache[key] = arr;
+      }
+      var v = slotCache[key].pop();
+      return v == null ? (games.length ? Math.floor(rand() * games.length) : -1) : v;
+    }
     Object.keys(cfg.plays || {}).forEach(function (type) {
       for (var i = 0; i < cfg.plays[type]; i++) {
-        var gi = games.length ? Math.floor(rand() * games.length) : -1, g = games[gi];
+        var key = type === "Rebound" ? (i < (cfg.offensiveRebounds || 0) ? "ORB" : "DRB") : STAT_KEY[type];
+        var gi = key ? gameSlot(key) : (games.length ? Math.floor(rand() * games.length) : -1), g = games[gi];
         var half = rand() < 0.5 ? "1H" : "2H", secs = Math.floor(rand() * 1200);
         var clock = Math.floor(secs / 60) + ":" + ("0" + (secs % 60)).slice(-2);
         plays.push({ type: type, shot: "", title: (TEMPLATES[type] || function () { return type; })(i),
@@ -469,12 +503,14 @@
         statusEl = lib.querySelector("[data-film-status]"), resultsEl = lib.querySelector("[data-film-results]"),
         moreEl = lib.querySelector("[data-film-more]"), shotField = shotEl ? shotEl.closest(".field") : null;
 
-    function count(type) { return plays.filter(function (p) { return !type || p.type === type; }).length; }
-    [""].concat(TYPES).forEach(function (type) {
+    // "Shot" is a combined type (made + missed), used for attempts (FGA/3PA/2PA) and shown as "All shots"
+    function typeMatches(type, p) { return !type || (type === "Shot" ? (p.type === "Made Shot" || p.type === "Missed Shot") : p.type === type); }
+    function count(type) { return plays.filter(function (p) { return typeMatches(type, p); }).length; }
+    ["", "Shot"].concat(TYPES).forEach(function (type) {
       var b = document.createElement("button");
       b.type = "button"; b.className = "film-chip"; b.setAttribute("data-type", type);
       b.setAttribute("aria-pressed", type === state.type ? "true" : "false");
-      b.innerHTML = (type || "All plays") + ' <span class="film-chip-n">' + count(type) + "</span>";
+      b.innerHTML = (type === "Shot" ? "All shots" : type || "All plays") + ' <span class="film-chip-n">' + count(type) + "</span>";
       b.addEventListener("click", function () { state.type = type; state.shown = 24; render(); });
       chipsEl.appendChild(b);
     });
@@ -488,10 +524,10 @@
 
     function render() {
       chipsEl.querySelectorAll(".film-chip").forEach(function (c) { c.setAttribute("aria-pressed", c.getAttribute("data-type") === state.type ? "true" : "false"); });
-      var shotsOnly = !state.type || state.type === "Made Shot" || state.type === "Missed Shot";
+      var shotsOnly = !state.type || state.type === "Shot" || state.type === "Made Shot" || state.type === "Missed Shot";
       if (shotField) shotField.hidden = !shotsOnly;
       var list = plays.filter(function (p) {
-        if (state.type && p.type !== state.type) return false;
+        if (!typeMatches(state.type, p)) return false;
         if (state.game !== "" && String(p.gameIdx) !== state.game) return false;
         if (shotsOnly && state.shot && p.shot !== state.shot) return false;
         if (state.q && (p.type + " " + p.title + " " + p.meta).toLowerCase().indexOf(state.q) === -1) return false;
@@ -525,6 +561,92 @@
       if (moreEl) moreEl.hidden = list.length <= state.shown;
     }
     render();
+
+    // Let other parts of the page (the Game Log's stat links) open the library pre-filtered:
+    // lib.filmFilter({ type: "Assist", game: 13, shot: "3PT", q: "offensive" }) — missing keys reset to "any".
+    lib.filmFilter = function (opts) {
+      opts = opts || {};
+      state.type = opts.type || ""; state.game = opts.game != null ? String(opts.game) : "";
+      state.shot = opts.shot || ""; state.q = (opts.q || "").toLowerCase(); state.shown = 24;
+      if (gameEl) gameEl.value = state.game;
+      if (shotEl) shotEl.value = state.shot;
+      if (qEl) qEl.value = opts.q || "";
+      render();
+    };
+  });
+
+  // Game Log (all three player pages): [data-gamelog] is filled with a Basketball-Reference-style game log built
+  // from the same per-game JSON as the trend chart (one source, so the log, trend chart, shot chart and Film Room
+  // always agree). Columns mirror the Per Game table, plus Rk/Date/Opp/Result and Game Score; the footer row is the
+  // season per-game average, which matches the Per Game table's 2026 row. data-game-href = where Result links.
+  document.querySelectorAll("[data-gamelog]").forEach(function (host) {
+    var src = document.querySelector('[data-trend-chart] script[type="application/json"]');
+    if (!src) return;
+    var games = [];
+    try { games = JSON.parse(src.textContent).games || []; } catch (e) { return; }
+    var gameHref = host.getAttribute("data-game-href");
+    function f1(v) { return (Math.round(v * 10) / 10).toFixed(1); }
+    function pct(m, a) { if (!a) return ""; var s = (m / a).toFixed(3); return s.charAt(0) === "0" ? s.slice(1) : s; }
+    var COLS = [
+      ["G", "Game number"], ["Date", ""], ["Opp", "Opponent"], ["Result", "Final score (Knicks first)"], ["GS", "Game Started"], ["MP", "Minutes Played"], ["PTS", "Points"],
+      ["FG", "Field Goals"], ["FGA", "Field Goal Attempts"], ["FG%", "Field Goal Percentage"], ["3P", "3-Point Field Goals"], ["3PA", "3-Point Field Goal Attempts"],
+      ["3P%", "3-Point Field Goal Percentage"], ["2P", "2-Point Field Goals"], ["2PA", "2-Point Field Goal Attempts"], ["2P%", "2-Point Field Goal Percentage"],
+      ["eFG%", "Effective Field Goal Percentage (counts a 3 as 1.5 makes)"], ["FT", "Free Throws"], ["FTA", "Free Throw Attempts"], ["FT%", "Free Throw Percentage"],
+      ["ORB", "Offensive Rebounds"], ["DRB", "Defensive Rebounds"], ["TRB", "Total Rebounds"], ["AST", "Assists"], ["STL", "Steals"], ["BLK", "Blocks"],
+      ["TOV", "Turnovers"], ["PF", "Personal Fouls"], ["GmSc", "Game Score (John Hollinger's single-number summary of a box score)"]
+    ];
+    function line(g, avg) {
+      var n = avg ? games.length : 1, num = function (v) { return avg ? f1(v / n) : String(v); };
+      return [num(g.GS), num(g.MIN), num(g.PTS), num(g.FGM), num(g.FGA), pct(g.FGM, g.FGA), num(g.TPM), num(g.TPA), pct(g.TPM, g.TPA),
+        num(g.FGM - g.TPM), num(g.FGA - g.TPA), pct(g.FGM - g.TPM, g.FGA - g.TPA), pct(g.FGM + 0.5 * g.TPM, g.FGA),
+        num(g.FTM), num(g.FTA), pct(g.FTM, g.FTA), num(g.ORB), num(g.DRB), num(g.REB), num(g.AST), num(g.STL), num(g.BLK), num(g.TOV), num(g.PF),
+        avg ? f1(g.GMSC / n) : f1(g.GMSC)];
+    }
+    var head = "<tr>" + COLS.map(function (c, i) {
+      return "<th scope=\"col\"" + (i === 1 || i === 2 || i === 3 ? "" : " class=\"num\"") + (c[1] ? " title=\"" + c[1] + "\"" : "") + ">" + c[0] + "</th>";
+    }).join("") + "</tr>";
+    // Stat cells that link into the Film Room (index into line()'s output -> Film Room filter + wording for the tooltip)
+    var FILM = {
+      3: { type: "Made Shot", what: "made shots" }, 4: { type: "Shot", what: "shots" },
+      6: { type: "Made Shot", shot: "3PT", what: "made threes" }, 7: { type: "Shot", shot: "3PT", what: "three-point attempts" },
+      9: { type: "Made Shot", shot: "2PT", what: "made twos" }, 10: { type: "Shot", shot: "2PT", what: "two-point attempts" },
+      16: { type: "Rebound", q: "offensive", what: "offensive rebounds" }, 17: { type: "Rebound", q: "defensive", what: "defensive rebounds" },
+      18: { type: "Rebound", what: "rebounds" }, 19: { type: "Assist", what: "assists" }, 20: { type: "Steal", what: "steals" },
+      21: { type: "Block", what: "blocks" }, 22: { type: "Turnover", what: "turnovers" }, 23: { type: "Foul", what: "fouls" }
+    };
+    var hasFilm = !!document.querySelector("[data-film-library]");
+    var body = games.map(function (g, i) {
+      var r = String(g.result || ""), cls = r.charAt(0) === "W" ? "badge-success" : r.charAt(0) === "L" ? "badge-danger" : "";
+      var badge = "<span class=\"badge " + cls + "\">" + r + "</span>";
+      return "<tr><th scope=\"row\" class=\"num\">" + (i + 1) + "</th><td>" + g.date + "</td><td>" + g.opp + "</td><td>" +
+        (gameHref ? "<a href=\"" + gameHref + "\">" + badge + "</a>" : badge) + "</td>" +
+        line(g).map(function (v, ci) {
+          var f = FILM[ci];
+          if (!hasFilm || !f || !(+v > 0)) return "<td class=\"num\">" + v + "</td>";
+          return "<td class=\"num\"><a href=\"#film-room\" class=\"gl-film\" data-ci=\"" + ci + "\" data-game=\"" + i + "\" title=\"Watch his " + v + " " +
+            (+v === 1 ? f.what.replace(/s$/, "").replace(/attempt$/, "attempt") : f.what) + " from " + g.date + " in the Film Room\">" + v + "</a></td>";
+        }).join("") + "</tr>";
+    }).join("");
+    var tot = {};
+    ["GS", "MIN", "PTS", "FGM", "FGA", "TPM", "TPA", "FTM", "FTA", "ORB", "DRB", "REB", "AST", "STL", "BLK", "TOV", "PF", "GMSC"].forEach(function (k) {
+      tot[k] = games.reduce(function (a, g) { return a + (+g[k] || 0); }, 0);
+    });
+    var w = games.filter(function (g) { return /^W/.test(g.result); }).length, l = games.filter(function (g) { return /^L/.test(g.result); }).length, t = games.length - w - l;
+    var foot = "<tr><th scope=\"row\" colspan=\"4\">Season per game <span class=\"gl-record\">(" + w + "-" + l + (t ? "-" + t : "") + ")</span></th>" +
+      line(tot, true).map(function (v) { return "<td class=\"num\">" + v + "</td>"; }).join("") + "</tr>";
+    host.innerHTML = "<div class=\"pergame-scroll\"><table class=\"pergame-table gamelog-table\"><thead>" + head + "</thead><tbody>" + body + "</tbody><tfoot>" + foot + "</tfoot></table></div>";
+
+    // Clicking a linked stat switches to the Film Room tab and filters it to that game + play type
+    host.addEventListener("click", function (e) {
+      var a = e.target.closest("a.gl-film"); if (!a) return;
+      var lib = document.querySelector("[data-film-library]"); if (!lib || !lib.filmFilter) return;
+      e.preventDefault();
+      var f = FILM[+a.getAttribute("data-ci")], panel = lib.closest("[role=tabpanel]");
+      var tab = panel ? document.querySelector('[role=tab][aria-controls="' + panel.id + '"]') : null;
+      if (tab) tab.click();
+      lib.filmFilter({ type: f.type, shot: f.shot, q: f.q, game: +a.getAttribute("data-game") });
+      lib.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   });
 
   // Buttons that open a tab elsewhere on the page, e.g. the player header's "Watch Film" -> Film Room tab
@@ -599,7 +721,8 @@
         var from = Math.max(0, i - N + 1), win = vals.slice(from, i + 1);
         return win.reduce(function (a, b) { return a + b; }, 0) / win.length;
       });
-      var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+      var hasLg = typeof s.lg === "number";
+      var lo = Math.min.apply(null, hasLg ? vals.concat([s.lg]) : vals), hi = Math.max.apply(null, hasLg ? vals.concat([s.lg]) : vals);
       var step = niceStep((hi - lo) || 1);
       var y0 = Math.floor(lo / step) * step, y1 = Math.ceil(hi / step) * step;
       if (y1 === y0) y1 = y0 + step;
@@ -619,6 +742,13 @@
       games.forEach(function (g, i) {
         if ((games.length - 1 - i) % labelEvery === 0) el("text", { x: x(i), y: H - 8, class: "trend-axis", "text-anchor": "middle" }, svg).textContent = g.date;
       });
+      // league average for this stat: dotted line across the plot, labelled at the right edge
+      if (hasLg) {
+        el("line", { x1: PL, x2: W - PR, y1: y(s.lg), y2: y(s.lg), class: "trend-lg" }, svg);
+        var lgLabelAbove = y(s.lg) - PT > 16;
+        el("text", { x: W - PR - 2, y: y(s.lg) + (lgLabelAbove ? -6 : 14), class: "trend-lg-label", "text-anchor": "end" }, svg)
+          .textContent = "Lg avg " + fmt(s.lg, s, true);
+      }
       // raw single-game values (faint), then the rolling-average line + points on top
       games.forEach(function (g, i) { el("circle", { cx: x(i), cy: y(vals[i]), r: 3.5, class: "trend-raw" }, svg); });
       el("polyline", { points: roll.map(function (v, i) { return x(i) + "," + y(v); }).join(" "), class: "trend-line" }, svg);
@@ -628,13 +758,15 @@
       var colW = (W - PL - PR) / Math.max(1, games.length - 1);
       games.forEach(function (g, i) {
         var hit = el("rect", { x: x(i) - colW / 2, y: PT, width: colW, height: H - PT - PB, class: "trend-hit", tabindex: 0,
-          "aria-label": g.date + " " + g.opp + ": " + fmt(vals[i], s) + ", " + N + "-game average " + fmt(roll[i], s, true) }, svg);
+          "aria-label": g.date + " " + g.opp + ": " + fmt(vals[i], s) + ", " + N + "-game average " + fmt(roll[i], s, true) +
+            (hasLg ? ", league average " + fmt(s.lg, s, true) : "") }, svg);
         function show() {
           dots.forEach(function (d) { d.classList.remove("is-active"); }); dots[i].classList.add("is-active");
           var n = Math.min(i + 1, N);
           tip.innerHTML = '<div class="tt-date">' + g.date + " · " + g.opp + (g.result ? ' <span class="tt-res">' + g.result + "</span>" : "") + "</div>" +
             '<div class="tt-row"><span>' + s.label + "</span><b>" + fmt(vals[i], s) + "</b></div>" +
-            '<div class="tt-row"><span>' + (n < N ? n + "-game avg (season start)" : N + "-game avg") + "</span><b>" + fmt(roll[i], s, true) + "</b></div>";
+            '<div class="tt-row"><span>' + (n < N ? n + "-game avg (season start)" : N + "-game avg") + "</span><b>" + fmt(roll[i], s, true) + "</b></div>" +
+            (hasLg ? '<div class="tt-row tt-lg"><span>League avg</span><b>' + fmt(s.lg, s, true) + "</b></div>" : "");
           tip.hidden = false;
           var pr = plot.getBoundingClientRect(), sr = svg.getBoundingClientRect();
           var px = (x(i) / W) * sr.width + (sr.left - pr.left), py = (y(roll[i]) / H) * sr.height + (sr.top - pr.top);

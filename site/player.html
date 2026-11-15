@@ -7,9 +7,9 @@
 <link rel="icon" href="assets/img/sgtbl-logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/tokens.css">
-<link rel="stylesheet" href="assets/css/base.css">
-<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/tokens.css?v=20261115e">
+<link rel="stylesheet" href="assets/css/base.css?v=20261115e">
+<link rel="stylesheet" href="assets/css/site.css?v=20261115e">
 <style>
 .player-layout { display: grid; grid-template-columns: minmax(260px, 340px) 1fr; gap: var(--space-6); align-items: stretch; }
 /* Bio and Percentile Rankings sit side by side at equal height (the trend chart runs full-width below):
@@ -136,37 +136,37 @@
         <script type="application/json">
           { "window": 5,
             "stats": [
-              { "key": "PTS",  "label": "Points",            "dp": 0, "adp": 1 },
-              { "key": "REB",  "label": "Rebounds",          "dp": 0, "adp": 1 },
-              { "key": "AST",  "label": "Assists",           "dp": 0, "adp": 1 },
-              { "key": "STL",  "label": "Steals",            "dp": 0, "adp": 1 },
-              { "key": "TOV",  "label": "Turnovers",         "dp": 0, "adp": 1 },
-              { "key": "MIN",  "label": "Minutes",           "dp": 0, "adp": 1 },
-              { "key": "EFG",  "label": "eFG%",              "dp": 0, "adp": 1, "suffix": "%" },
-              { "key": "TS",   "label": "True Shooting %",   "dp": 0, "adp": 1, "suffix": "%" },
-              { "key": "USG",  "label": "Usage Rate",        "dp": 0, "adp": 1, "suffix": "%" },
-              { "key": "GMSC", "label": "Game Score",        "dp": 1, "adp": 1 },
-              { "key": "WS",   "label": "Win Shares",        "dp": 2, "adp": 2 }
+              { "key": "PTS",  "label": "Points",            "dp": 0, "adp": 1, "lg": 11.0 },
+              { "key": "REB",  "label": "Rebounds",          "dp": 0, "adp": 1, "lg": 4.0 },
+              { "key": "AST",  "label": "Assists",           "dp": 0, "adp": 1, "lg": 2.6 },
+              { "key": "STL",  "label": "Steals",            "dp": 0, "adp": 1, "lg": 1.0 },
+              { "key": "TOV",  "label": "Turnovers",         "dp": 0, "adp": 1, "lg": 2.0 },
+              { "key": "MIN",  "label": "Minutes",           "dp": 0, "adp": 1, "lg": 26.0 },
+              { "key": "EFG",  "label": "eFG%",              "dp": 0, "adp": 1, "suffix": "%", "lg": 50.0 },
+              { "key": "TS",   "label": "True Shooting %",   "dp": 0, "adp": 1, "suffix": "%", "lg": 54.0 },
+              { "key": "USG",  "label": "Usage Rate",        "dp": 0, "adp": 1, "suffix": "%", "lg": 20.0 },
+              { "key": "GMSC", "label": "Game Score",        "dp": 1, "adp": 1, "lg": 9.5 },
+              { "key": "WS",   "label": "Win Shares",        "dp": 2, "adp": 2, "lg": 0.08 }
             ],
             "games": [
-              { "date": "May 16", "opp": "vs Eagles", "PTS": 11, "REB": 3, "AST": 2, "STL": 1, "TOV": 3, "MIN": 30, "EFG": 46, "TS": 51, "USG": 21, "GMSC": 9.8, "WS": 0.08 },
-              { "date": "May 23", "opp": "@ Sharks", "PTS": 15, "REB": 4, "AST": 3, "STL": 0, "TOV": 2, "MIN": 31, "EFG": 51, "TS": 56, "USG": 22, "GMSC": 12.1, "WS": 0.1 },
-              { "date": "May 30", "opp": "vs Wolves", "PTS": 14, "REB": 5, "AST": 4, "STL": 2, "TOV": 2, "MIN": 33, "EFG": 49, "TS": 54, "USG": 23, "GMSC": 12.6, "WS": 0.11 },
-              { "date": "Jun 6", "opp": "@ Tigers", "PTS": 20, "REB": 3, "AST": 2, "STL": 1, "TOV": 1, "MIN": 29, "EFG": 55, "TS": 60, "USG": 24, "GMSC": 15.2, "WS": 0.14 },
-              { "date": "Jun 13", "opp": "vs Rams", "PTS": 16, "REB": 4, "AST": 3, "STL": 2, "TOV": 2, "MIN": 32, "EFG": 50, "TS": 55, "USG": 23, "GMSC": 13, "WS": 0.11 },
-              { "date": "Jun 20", "opp": "@ Eagles", "PTS": 21, "REB": 6, "AST": 3, "STL": 1, "TOV": 1, "MIN": 34, "EFG": 56, "TS": 61, "USG": 25, "GMSC": 17.4, "WS": 0.16 },
-              { "date": "Jun 27", "opp": "vs Sharks", "PTS": 18, "REB": 4, "AST": 4, "STL": 1, "TOV": 2, "MIN": 31, "EFG": 52, "TS": 57, "USG": 24, "GMSC": 14.1, "WS": 0.12 },
-              { "date": "Jul 4", "opp": "@ Rams", "PTS": 23, "REB": 5, "AST": 3, "STL": 2, "TOV": 1, "MIN": 33, "EFG": 57, "TS": 62, "USG": 26, "GMSC": 18.3, "WS": 0.17 },
-              { "date": "Jul 11", "opp": "vs Tigers", "PTS": 24, "REB": 4, "AST": 4, "STL": 1, "TOV": 2, "MIN": 35, "EFG": 58, "TS": 63, "USG": 26, "GMSC": 19, "WS": 0.18 },
-              { "date": "Jul 18", "opp": "@ Wolves", "PTS": 22, "REB": 4, "AST": 3, "STL": 2, "TOV": 1, "MIN": 32, "EFG": 55, "TS": 60, "USG": 25, "GMSC": 17.5, "WS": 0.15 },
-              { "date": "Jul 25", "opp": "@ Wolves", "PTS": 17, "REB": 5, "AST": 3, "STL": 1, "TOV": 2, "MIN": 33, "EFG": 54, "TS": 59, "USG": 24, "GMSC": 15.6, "WS": 0.14 },
-              { "date": "Aug 1", "opp": "vs Tigers", "PTS": 19, "REB": 4, "AST": 3, "STL": 1, "TOV": 1, "MIN": 32, "EFG": 53, "TS": 58, "USG": 24, "GMSC": 15.1, "WS": 0.13 },
-              { "date": "Aug 15", "opp": "@ Sharks", "PTS": 15, "REB": 3, "AST": 2, "STL": 2, "TOV": 3, "MIN": 31, "EFG": 48, "TS": 53, "USG": 23, "GMSC": 10.9, "WS": 0.07 },
-              { "date": "Aug 22", "opp": "vs Eagles", "PTS": 22, "REB": 5, "AST": 4, "STL": 1, "TOV": 2, "MIN": 38, "EFG": 60, "TS": 65, "USG": 27, "GMSC": 19.2, "WS": 0.19 }
+              { "date": "May 16", "opp": "vs Eagles", "result": "L 19-25", "GS": 1, "MIN": 30, "PTS": 11, "FGM": 5, "FGA": 8, "TPM": 0, "TPA": 1, "FTM": 1, "FTA": 1, "ORB": 1, "DRB": 2, "REB": 3, "AST": 2, "STL": 1, "BLK": 0, "TOV": 3, "PF": 0, "EFG": 62, "TS": 65, "USG": 21, "GMSC": 8.1, "WS": 0.08 },
+              { "date": "May 23", "opp": "@ Sharks", "result": "W 21-14", "GS": 1, "MIN": 31, "PTS": 15, "FGM": 6, "FGA": 14, "TPM": 3, "TPA": 7, "FTM": 0, "FTA": 0, "ORB": 0, "DRB": 4, "REB": 4, "AST": 3, "STL": 0, "BLK": 1, "TOV": 2, "PF": 2, "EFG": 54, "TS": 54, "USG": 22, "GMSC": 8.8, "WS": 0.10 },
+              { "date": "May 30", "opp": "vs Wolves", "result": "L 24-27", "GS": 1, "MIN": 33, "PTS": 14, "FGM": 7, "FGA": 11, "TPM": 0, "TPA": 0, "FTM": 0, "FTA": 1, "ORB": 1, "DRB": 4, "REB": 5, "AST": 4, "STL": 2, "BLK": 0, "TOV": 2, "PF": 1, "EFG": 64, "TS": 61, "USG": 23, "GMSC": 13.0, "WS": 0.11 },
+              { "date": "Jun 6", "opp": "@ Tigers", "result": "W 27-26", "GS": 1, "MIN": 29, "PTS": 20, "FGM": 6, "FGA": 12, "TPM": 2, "TPA": 6, "FTM": 6, "FTA": 7, "ORB": 2, "DRB": 1, "REB": 3, "AST": 2, "STL": 1, "BLK": 0, "TOV": 1, "PF": 1, "EFG": 58, "TS": 66, "USG": 24, "GMSC": 16.3, "WS": 0.14 },
+              { "date": "Jun 13", "opp": "vs Rams", "result": "W 22-18", "GS": 1, "MIN": 32, "PTS": 16, "FGM": 7, "FGA": 12, "TPM": 2, "TPA": 2, "FTM": 0, "FTA": 0, "ORB": 0, "DRB": 4, "REB": 4, "AST": 3, "STL": 2, "BLK": 1, "TOV": 2, "PF": 2, "EFG": 67, "TS": 67, "USG": 23, "GMSC": 13.6, "WS": 0.11 },
+              { "date": "Jun 20", "opp": "@ Eagles", "result": "W 29-27", "GS": 1, "MIN": 34, "PTS": 21, "FGM": 7, "FGA": 14, "TPM": 3, "TPA": 7, "FTM": 4, "FTA": 5, "ORB": 2, "DRB": 4, "REB": 6, "AST": 3, "STL": 1, "BLK": 0, "TOV": 1, "PF": 1, "EFG": 61, "TS": 65, "USG": 25, "GMSC": 17.9, "WS": 0.16 },
+              { "date": "Jun 27", "opp": "vs Sharks", "result": "T 24-24", "GS": 1, "MIN": 31, "PTS": 18, "FGM": 7, "FGA": 22, "TPM": 0, "TPA": 3, "FTM": 4, "FTA": 4, "ORB": 0, "DRB": 4, "REB": 4, "AST": 4, "STL": 1, "BLK": 1, "TOV": 2, "PF": 2, "EFG": 32, "TS": 38, "USG": 24, "GMSC": 8.3, "WS": 0.12 },
+              { "date": "Jul 4", "opp": "@ Rams", "result": "W 35-27", "GS": 1, "MIN": 33, "PTS": 23, "FGM": 10, "FGA": 20, "TPM": 2, "TPA": 4, "FTM": 1, "FTA": 1, "ORB": 2, "DRB": 3, "REB": 5, "AST": 3, "STL": 2, "BLK": 0, "TOV": 1, "PF": 2, "EFG": 55, "TS": 56, "USG": 26, "GMSC": 17.6, "WS": 0.17 },
+              { "date": "Jul 11", "opp": "vs Tigers", "result": "W 33-28", "GS": 1, "MIN": 35, "PTS": 24, "FGM": 11, "FGA": 22, "TPM": 2, "TPA": 5, "FTM": 0, "FTA": 0, "ORB": 3, "DRB": 1, "REB": 4, "AST": 4, "STL": 1, "BLK": 0, "TOV": 2, "PF": 3, "EFG": 55, "TS": 55, "USG": 26, "GMSC": 16.0, "WS": 0.18 },
+              { "date": "Jul 18", "opp": "@ Wolves", "result": "W 34-30", "GS": 1, "MIN": 32, "PTS": 22, "FGM": 9, "FGA": 18, "TPM": 3, "TPA": 7, "FTM": 1, "FTA": 1, "ORB": 0, "DRB": 4, "REB": 4, "AST": 3, "STL": 2, "BLK": 0, "TOV": 1, "PF": 2, "EFG": 58, "TS": 60, "USG": 25, "GMSC": 16.5, "WS": 0.15 },
+              { "date": "Jul 25", "opp": "@ Wolves", "result": "W 26-23", "GS": 1, "MIN": 33, "PTS": 17, "FGM": 5, "FGA": 13, "TPM": 1, "TPA": 4, "FTM": 6, "FTA": 7, "ORB": 0, "DRB": 5, "REB": 5, "AST": 3, "STL": 1, "BLK": 2, "TOV": 2, "PF": 3, "EFG": 42, "TS": 53, "USG": 24, "GMSC": 12.3, "WS": 0.14 },
+              { "date": "Aug 1", "opp": "vs Tigers", "result": "W 29-22", "GS": 1, "MIN": 32, "PTS": 19, "FGM": 6, "FGA": 13, "TPM": 2, "TPA": 6, "FTM": 5, "FTA": 7, "ORB": 3, "DRB": 1, "REB": 4, "AST": 3, "STL": 1, "BLK": 0, "TOV": 1, "PF": 2, "EFG": 54, "TS": 59, "USG": 24, "GMSC": 15.2, "WS": 0.13 },
+              { "date": "Aug 15", "opp": "@ Sharks", "result": "L 21-25", "GS": 1, "MIN": 31, "PTS": 15, "FGM": 4, "FGA": 12, "TPM": 2, "TPA": 7, "FTM": 5, "FTA": 7, "ORB": 1, "DRB": 2, "REB": 3, "AST": 2, "STL": 2, "BLK": 1, "TOV": 3, "PF": 4, "EFG": 42, "TS": 50, "USG": 23, "GMSC": 8.2, "WS": 0.07 },
+              { "date": "Aug 22", "opp": "vs Eagles", "result": "W 27-24", "GS": 1, "MIN": 38, "PTS": 22, "FGM": 9, "FGA": 16, "TPM": 2, "TPA": 4, "FTM": 2, "FTA": 2, "ORB": 0, "DRB": 5, "REB": 5, "AST": 4, "STL": 1, "BLK": 0, "TOV": 2, "PF": 4, "EFG": 62, "TS": 65, "USG": 27, "GMSC": 16.1, "WS": 0.19 }
             ] }
         </script>
         <div class="trend-plot" data-trend-plot></div>
-        <div class="trend-legend"><span><i class="lg-line"></i>5-game rolling average</span><span><i class="lg-dot"></i>Single game</span><span>Hover or tap a game for details</span></div>
+        <div class="trend-legend"><span><i class="lg-line"></i>5-game rolling average</span><span><i class="lg-dot"></i>Single game</span><span><i class="lg-avg"></i>League average</span><span>Hover or tap a game for details</span></div>
       </div>
 
       <div class="card card-pad" data-spray-chart data-player="Marcus Bello" style="margin-bottom:var(--space-8)">
@@ -215,17 +215,15 @@
     </div>
 
     <div id="p-gamelog" class="tabpanel" role="tabpanel" aria-labelledby="t-gamelog" hidden>
-      <div class="table-wrap" style="margin-bottom:var(--space-8)">
-        <table class="table" data-sortable>
-          <thead><tr><th aria-sort="descending">Date <span class="sort-caret">▾</span></th><th>Opponent</th><th>Result</th><th class="num">G</th><th class="num">Ast</th><th class="num">Sh%</th><th class="num">TO</th></tr></thead>
-          <tbody>
-            <tr><td class="tnum">Aug 22</td><td>vs Eagles</td><td><span class="badge badge-success">W 27-24</span></td><td class="num">9</td><td class="num">3</td><td class="num">67%</td><td class="num">1</td></tr>
-            <tr><td class="tnum">Aug 15</td><td>@ Sharks</td><td><span class="badge badge-danger">L 21-25</span></td><td class="num">6</td><td class="num">2</td><td class="num">50%</td><td class="num">3</td></tr>
-            <tr><td class="tnum">Aug 8</td><td>vs Rams</td><td><span class="badge badge-success">W 33-19</span></td><td class="num">11</td><td class="num">5</td><td class="num">73%</td><td class="num">0</td></tr>
-            <tr><td class="tnum">Aug 1</td><td>vs Tigers</td><td><span class="badge badge-success">W 29-22</span></td><td class="num">8</td><td class="num">4</td><td class="num">62%</td><td class="num">2</td></tr>
-            <tr><td class="tnum">Jul 25</td><td>@ Wolves</td><td><span class="badge badge-success">W 26-23</span></td><td class="num">7</td><td class="num">2</td><td class="num">55%</td><td class="num">1</td></tr>
-          </tbody>
-        </table>
+      <div class="card card-pad gamelog-card" style="margin-bottom:var(--space-8)">
+        <div class="pergame-head">
+          <h3>Game Log <span class="muted" style="font-weight:400;font-size:var(--text-sm)">2026 Regular Season</span></h3>
+          <span class="muted" style="font-size:var(--text-xs)">Scroll sideways for every column &middot; hover a heading for its full name</span>
+        </div>
+        <div data-gamelog data-game-href="game.html"></div>
+        <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">
+      Every game he played this season, oldest first. The bottom row is his season average, which matches the Per Game table.
+      </p>
       </div>
     </div>
 
@@ -273,6 +271,6 @@
   </div>
   <div class="footer-bottom"><span>© 2026 Smithtown Gospel Tabernacle Basketball League</span></div>
 </footer>
-<script src="assets/js/interactions.js"></script>
+<script src="assets/js/interactions.js?v=20261115e"></script>
 </body>
 </html>
