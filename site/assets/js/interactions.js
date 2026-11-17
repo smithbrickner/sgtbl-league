@@ -345,17 +345,17 @@
       });
     }
 
-    // Real game film: when the page data has SportsVisio clips, each made shot takes a real clip from the same game
-    // and shot type (in film order). Shots without one (misses, untagged makes) aren't clickable. Shot LOCATIONS
-    // are still estimated - SportsVisio doesn't publish them - only the makes/attempts per game are real.
+    // Real game film: when the page data has SportsVisio clips, each shot takes a real clip from the same game,
+    // shot type and result (make/miss), in film order. Shots without one (untagged makes/misses) aren't clickable.
+    // Shot LOCATIONS are still estimated - SportsVisio doesn't publish them - only the makes/attempts are real.
     if (realClips) {
       var pool = {};
       realClips.slice().sort(function (a, b) { return a.t < b.t ? -1 : a.t > b.t ? 1 : 0; })
-        .forEach(function (c) { var k = c.game + "|" + c.kind; (pool[k] = pool[k] || []).push(c); });
+        .forEach(function (c) { var k = c.game + "|" + c.kind + "|" + (c.made !== false); (pool[k] = pool[k] || []).push(c); });
       shots.forEach(function (sh) {
         sh.clipless = true;
-        if (!sh.made || sh.gameIdx < 0) return;
-        var list = pool[sh.gameIdx + "|" + sh.kind];
+        if (sh.gameIdx < 0) return;
+        var list = pool[sh.gameIdx + "|" + sh.kind + "|" + !!sh.made];
         if (!list || !list.length) return;
         var c = list.shift();
         sh.src = c.src; sh.thumb = c.thumb; sh.clipless = false;
@@ -506,7 +506,9 @@
     if (realClips) {
       realClips.forEach(function (c, i) {
         var g = games[c.game], p = String(c.t || "").split(":");
-        plays.push({ id: "C" + (i + 1), type: "Made Shot", shot: c.kind, title: "Made " + (c.kind === "3PT" ? "3-pointer" : "2-pointer"),
+        var made = c.made !== false, ft = c.kind === "FT";
+        plays.push({ id: "C" + (i + 1), type: ft ? "Free Throw" : made ? "Made Shot" : "Missed Shot", shot: ft ? "" : c.kind,
+          title: (made ? "Made " : "Missed ") + (ft ? "free throw" : c.kind === "3PT" ? "3-pointer" : "2-pointer"),
           meta: (g ? g.date + " " + g.opp + " · " : "") + "film " + filmTime(c.t), gameIdx: c.game,
           sortKey: (+p[0] || 0) * 3600 + (+p[1] || 0) * 60 + (+p[2] || 0), src: c.src, thumb: c.thumb });
       });
@@ -550,8 +552,10 @@
     });
     plays.sort(function (a, b) { return (b.gameIdx - a.gameIdx) || (b.sortKey - a.sortKey); }); // newest game first, latest in the game first
 
-    var TYPES = ["Made Shot", "Missed Shot", "Rebound", "Assist", "Steal", "Block", "Turnover", "Foul"];
-    var BADGE = { "Made Shot": "badge-success", "Missed Shot": "badge-danger", Rebound: "badge-info", Assist: "badge-accent", Steal: "badge-warning", Block: "badge-info", Turnover: "badge-danger", Foul: "" };
+    // "Free Throw" only exists with real film (SportsVisio clips free throws); placeholder data has none
+    var TYPES = ["Made Shot", "Missed Shot"].concat(plays.some(function (p) { return p.type === "Free Throw"; }) ? ["Free Throw"] : [])
+      .concat(["Rebound", "Assist", "Steal", "Block", "Turnover", "Foul"]);
+    var BADGE = { "Made Shot": "badge-success", "Missed Shot": "badge-danger", "Free Throw": "badge-success", Rebound: "badge-info", Assist: "badge-accent", Steal: "badge-warning", Block: "badge-info", Turnover: "badge-danger", Foul: "" };
     var state = { type: "", game: "", shot: "", q: "", shown: 24 };
     var chipsEl = lib.querySelector("[data-film-types]"), gameEl = lib.querySelector("[data-film-game]"),
         shotEl = lib.querySelector("[data-film-shot]"), qEl = lib.querySelector("[data-film-search]"),
@@ -677,8 +681,8 @@
     col("2PA", "2-Point Field Goal Attempts", c2(diff("FGA", "TPA")), { type: "Shot", shot: "2PT", what: "two-point attempts" });
     col("2P%", "2-Point Field Goal Percentage", ratio(diff("FGM", "TPM"), diff("FGA", "TPA")));
     col("eFG%", "Effective Field Goal Percentage (counts a 3 as 1.5 makes)", ratio(function (g) { return (+g.FGM || 0) + 0.5 * (+g.TPM || 0); }, k("FGA")));
-    col("FT", "Free Throws", cnt("FTM"));
-    col("FTA", "Free Throw Attempts", cnt("FTA"));
+    col("FT", "Free Throws", cnt("FTM"), { type: "Free Throw", q: "made", what: "made free throws" });
+    col("FTA", "Free Throw Attempts", cnt("FTA"), { type: "Free Throw", what: "free-throw attempts" });
     col("FT%", "Free Throw Percentage", ratio(k("FTM"), k("FTA")));
     col("ORB", "Offensive Rebounds", cnt("ORB"), { type: "Rebound", q: "offensive", what: "offensive rebounds" });
     col("DRB", "Defensive Rebounds", cnt("DRB"), { type: "Rebound", q: "defensive", what: "defensive rebounds" });
