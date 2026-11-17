@@ -184,6 +184,14 @@
   //    Room (public site, League Admin) play the clip in a pop-up instead.
   var CLIP_VIDEOS = ["mQPbdoRZYY8", "D8xitFa57NI", "rsHQ96CLq70"]; // placeholder film, same clips the Film Room uses
   var SHOT_STORE = {}; // player name -> generated shots, shared with the Film Room tab's play library
+  // Real game film (SportsVisio MP4 clips) is only ever loaded from this host
+  var REAL_CLIP_RE = /^https:\/\/api\.sportsvisio-api\.com\/media\/[0-9a-f\/-]+\/clip\.mp4$/;
+  // SportsVisio clip start times are video timecodes "HH:MM:SS:FF" -> "MM:SS" (or "H:MM:SS")
+  function filmTime(tc) {
+    var p = String(tc || "").split(":"); if (p.length < 3) return tc || "";
+    var h = +p[0], m = p[1], s = p[2];
+    return (h ? h + ":" + m : String(+m)) + ":" + s;
+  }
   var clipDialog = null;
   function openClipDialog(shot) {
     if (!clipDialog) {
@@ -192,16 +200,29 @@
       clipDialog.innerHTML =
         '<div class="clip-head"><div><strong data-clip-title></strong><div class="muted" data-clip-meta></div></div>' +
         '<button type="button" class="btn btn-icon btn-ghost" data-clip-close aria-label="Close clip">&#10005;</button></div>' +
-        '<div class="clip-frame"><iframe title="Shot clip" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>' +
-        '<p class="muted clip-note">Placeholder film for the prototype &mdash; each shot links to its own tagged clip once game film is synced.</p>';
+        '<div class="clip-frame"><iframe title="Shot clip" allow="autoplay; encrypted-media" allowfullscreen></iframe>' +
+        '<video controls playsinline preload="metadata" hidden></video></div>' +
+        '<p class="muted clip-note" data-clip-note></p>';
       document.body.appendChild(clipDialog);
       clipDialog.querySelector("[data-clip-close]").addEventListener("click", function () { clipDialog.close(); });
       clipDialog.addEventListener("click", function (e) { if (e.target === clipDialog) clipDialog.close(); });
-      clipDialog.addEventListener("close", function () { clipDialog.querySelector("iframe").src = "about:blank"; });
+      clipDialog.addEventListener("close", function () {
+        clipDialog.querySelector("iframe").src = "about:blank";
+        var v = clipDialog.querySelector("video"); v.pause(); v.removeAttribute("src"); v.load();
+      });
     }
     clipDialog.querySelector("[data-clip-title]").textContent = shot.title;
     clipDialog.querySelector("[data-clip-meta]").textContent = shot.meta;
-    clipDialog.querySelector("iframe").src = "https://www.youtube.com/embed/" + shot.video + "?start=" + shot.start + "&autoplay=1";
+    var frame = clipDialog.querySelector("iframe"), video = clipDialog.querySelector("video"), note = clipDialog.querySelector("[data-clip-note]");
+    if (shot.src && REAL_CLIP_RE.test(shot.src)) {          // real game film
+      frame.hidden = true; frame.src = "about:blank";
+      video.hidden = false; video.src = shot.src; video.play().catch(function () {});
+      note.textContent = "Game film from SportsVisio.";
+    } else {                                                 // placeholder YouTube film
+      video.hidden = true; video.removeAttribute("src");
+      frame.hidden = false; frame.src = "https://www.youtube.com/embed/" + shot.video + "?start=" + shot.start + "&autoplay=1";
+      note.textContent = "Placeholder film for the prototype — each shot links to its own tagged clip once game film is synced.";
+    }
     if (clipDialog.showModal) clipDialog.showModal(); else clipDialog.setAttribute("open", "");
   }
 
@@ -266,10 +287,10 @@
       };
     }
 
-    // Games for clip labels come from the page's trend chart data when present
-    var games = [];
+    // Games (and any real game-film clips) come from the page's trend chart data when present
+    var games = [], realClips = null;
     var trendSrc = document.querySelector('[data-trend-chart] script[type="application/json"]');
-    if (trendSrc) { try { games = JSON.parse(trendSrc.textContent).games || []; } catch (e) {} }
+    if (trendSrc) { try { var td = JSON.parse(trendSrc.textContent); games = td.games || []; realClips = td.clips || null; } catch (e) {} }
 
     // --- 1) generate shots ---
     var rand = seededRandom(player + "|shots");
@@ -324,6 +345,24 @@
       });
     }
 
+    // Real game film: when the page data has SportsVisio clips, each made shot takes a real clip from the same game
+    // and shot type (in film order). Shots without one (misses, untagged makes) aren't clickable. Shot LOCATIONS
+    // are still estimated - SportsVisio doesn't publish them - only the makes/attempts per game are real.
+    if (realClips) {
+      var pool = {};
+      realClips.slice().sort(function (a, b) { return a.t < b.t ? -1 : a.t > b.t ? 1 : 0; })
+        .forEach(function (c) { var k = c.game + "|" + c.kind; (pool[k] = pool[k] || []).push(c); });
+      shots.forEach(function (sh) {
+        sh.clipless = true;
+        if (!sh.made || sh.gameIdx < 0) return;
+        var list = pool[sh.gameIdx + "|" + sh.kind];
+        if (!list || !list.length) return;
+        var c = list.shift();
+        sh.src = c.src; sh.thumb = c.thumb; sh.clipless = false;
+        sh.meta = games[sh.gameIdx].date + " " + games[sh.gameIdx].opp + " · film " + filmTime(c.t);
+      });
+    }
+
     SHOT_STORE[player] = shots;
 
     // --- 2) zones: each zone shaded by its FG% minus league average from that zone ---
@@ -372,13 +411,20 @@
     // --- 3) shot dots, each a link to its clip ---
     var dots = el("g", { class: "shot-dots" }, svg);
     shots.forEach(function (s) {
-      var href = filmHref
-        ? filmHref + "?shot=" + encodeURIComponent(s.id) + "&title=" + encodeURIComponent(s.title) +
-          "&meta=" + encodeURIComponent(s.meta) + "&v=" + s.video + "&t=" + s.start
-        : "#" + s.id;
-      var a = el("a", { href: href, class: "shot " + (s.made ? "shot-make" : "shot-miss"),
-        "aria-label": s.title + ", " + s.meta + ". Watch clip" }, dots);
-      el("title", {}, a).textContent = s.title + "\n" + s.meta + "\nClick to watch the clip";
+      var a;
+      if (s.clipless) {
+        // no film for this shot: plain mark, not a link
+        a = el("g", { class: "shot shot-nofilm " + (s.made ? "shot-make" : "shot-miss") }, dots);
+        el("title", {}, a).textContent = s.title + "\n" + s.meta + "\nNo clip for this shot";
+      } else {
+        var href = filmHref
+          ? filmHref + "?shot=" + encodeURIComponent(s.id) + "&title=" + encodeURIComponent(s.title) +
+            "&meta=" + encodeURIComponent(s.meta) + (s.src ? "&src=" + encodeURIComponent(s.src) : "&v=" + s.video + "&t=" + s.start)
+          : "#" + s.id;
+        a = el("a", { href: href, class: "shot " + (s.made ? "shot-make" : "shot-miss"),
+          "aria-label": s.title + ", " + s.meta + ". Watch clip" }, dots);
+        el("title", {}, a).textContent = s.title + "\n" + s.meta + "\nClick to watch the clip";
+      }
       el("circle", { cx: s.x.toFixed(1), cy: s.y.toFixed(1), r: 7, class: "shot-hit" }, a);
       if (s.made) {
         el("circle", { cx: s.x.toFixed(1), cy: s.y.toFixed(1), r: 3.6, class: "shot-mark" }, a);
@@ -388,7 +434,7 @@
         el("path", { d: d, class: "shot-halo" }, a);
         el("path", { d: d, class: "shot-mark" }, a);
       }
-      if (!filmHref) a.addEventListener("click", function (e) { e.preventDefault(); openClipDialog(s); });
+      if (!filmHref && !s.clipless) a.addEventListener("click", function (e) { e.preventDefault(); openClipDialog(s); });
     });
 
 
@@ -441,9 +487,9 @@
     var cfg = {};
     var cfgSrc = lib.querySelector('script[type="application/json"]');
     if (cfgSrc) { try { cfg = JSON.parse(cfgSrc.textContent); } catch (e) {} }
-    var games = [];
+    var games = [], realClips = null;
     var trendSrc = document.querySelector('[data-trend-chart] script[type="application/json"]');
-    if (trendSrc) { try { games = JSON.parse(trendSrc.textContent).games || []; } catch (e) {} }
+    if (trendSrc) { try { var td = JSON.parse(trendSrc.textContent); games = td.games || []; realClips = td.clips || null; } catch (e) {} }
 
     var h = 2166136261, seed = player + "|plays";
     for (var si = 0; si < seed.length; si++) { h ^= seed.charCodeAt(si); h = Math.imul(h, 16777619); }
@@ -456,7 +502,16 @@
     function pick(a) { return a[Math.floor(rand() * a.length)]; }
 
     var plays = [];
-    (SHOT_STORE[player] || []).forEach(function (s) {
+    // Real game film (SportsVisio): the library is exactly his real clips - no placeholder plays at all.
+    if (realClips) {
+      realClips.forEach(function (c, i) {
+        var g = games[c.game], p = String(c.t || "").split(":");
+        plays.push({ id: "C" + (i + 1), type: "Made Shot", shot: c.kind, title: "Made " + (c.kind === "3PT" ? "3-pointer" : "2-pointer"),
+          meta: (g ? g.date + " " + g.opp + " · " : "") + "film " + filmTime(c.t), gameIdx: c.game,
+          sortKey: (+p[0] || 0) * 3600 + (+p[1] || 0) * 60 + (+p[2] || 0), src: c.src, thumb: c.thumb });
+      });
+    }
+    (realClips ? [] : SHOT_STORE[player] || []).forEach(function (s) {
       plays.push({ id: s.id, type: s.made ? "Made Shot" : "Missed Shot", shot: s.kind, title: s.title.replace(player + " — ", ""),
         meta: s.meta, gameIdx: s.gameIdx, sortKey: s.sortKey, video: s.video, start: s.start });
     });
@@ -482,7 +537,7 @@
       var v = slotCache[key].pop();
       return v == null ? (games.length ? Math.floor(rand() * games.length) : -1) : v;
     }
-    Object.keys(cfg.plays || {}).forEach(function (type) {
+    Object.keys(realClips ? {} : cfg.plays || {}).forEach(function (type) {
       for (var i = 0; i < cfg.plays[type]; i++) {
         var key = type === "Rebound" ? (i < (cfg.offensiveRebounds || 0) ? "ORB" : "DRB") : STAT_KEY[type];
         var gi = key ? gameSlot(key) : (games.length ? Math.floor(rand() * games.length) : -1), g = games[gi];
@@ -543,17 +598,17 @@
         b.type = "button"; b.className = "film-result";
         b.setAttribute("aria-label", p.type + ": " + p.title + ", " + p.meta + ". Watch clip");
         b.innerHTML =
-          '<span class="fr-thumb"><img src="https://i.ytimg.com/vi/' + p.video + '/mqdefault.jpg" alt="" loading="lazy">' +
+          '<span class="fr-thumb"><img src="' + (p.thumb || "https://i.ytimg.com/vi/" + p.video + "/mqdefault.jpg") + '" alt="" loading="lazy">' +
           '<span class="fr-play" aria-hidden="true">&#9654;</span><span class="fr-badge badge ' + (BADGE[p.type] || "") + '"></span></span>' +
           '<span class="fr-body"><strong></strong><span class="muted"></span></span>';
         b.querySelector(".fr-badge").textContent = p.type;
         b.querySelector(".fr-body strong").textContent = p.title;
         b.querySelector(".fr-body .muted").textContent = p.meta;
         b.addEventListener("click", function () {
-          var clip = { title: player + " — " + p.title, meta: p.meta, video: p.video, start: p.start };
+          var clip = { title: player + " — " + p.title, meta: p.meta, video: p.video, start: p.start, src: p.src };
           if (filmHref) { // Team Portal: open the play in the full Film Room page, same deep link the shot chart uses
             window.location.href = filmHref + "?shot=" + encodeURIComponent(p.id || "P") + "&title=" + encodeURIComponent(clip.title) +
-              "&meta=" + encodeURIComponent(clip.meta) + "&v=" + clip.video + "&t=" + clip.start;
+              "&meta=" + encodeURIComponent(clip.meta) + (clip.src ? "&src=" + encodeURIComponent(clip.src) : "&v=" + clip.video + "&t=" + clip.start);
           } else { openClipDialog(clip); }
         });
         resultsEl.appendChild(b);
@@ -573,82 +628,111 @@
       if (qEl) qEl.value = opts.q || "";
       render();
     };
+    // How many plays a filter would show (the Game Log only links a stat when there's film behind it)
+    lib.filmCount = function (opts) {
+      opts = opts || {};
+      var q = (opts.q || "").toLowerCase(), game = opts.game != null ? String(opts.game) : "";
+      return plays.filter(function (p) {
+        return typeMatches(opts.type || "", p) && (game === "" || String(p.gameIdx) === game) &&
+          (!opts.shot || p.shot === opts.shot) && (!q || (p.type + " " + p.title + " " + p.meta).toLowerCase().indexOf(q) !== -1);
+      }).length;
+    };
   });
 
   // Game Log (all three player pages): [data-gamelog] is filled with a Basketball-Reference-style game log built
   // from the same per-game JSON as the trend chart (one source, so the log, trend chart, shot chart and Film Room
-  // always agree). Columns mirror the Per Game table, plus Rk/Date/Opp/Result and Game Score; the footer row is the
-  // season per-game average, which matches the Per Game table's 2026 row. data-game-href = where Result links.
+  // always agree). Columns are only shown when the data has them (e.g. Result/GS/PF/PIE), a missing value
+  // (null, e.g. minutes SportsVisio didn't record) shows as an em dash, and the footer is the per-game average.
+  // A stat links into the Film Room only when the Film Room actually has plays for it (lib.filmCount).
   document.querySelectorAll("[data-gamelog]").forEach(function (host) {
     var src = document.querySelector('[data-trend-chart] script[type="application/json"]');
     if (!src) return;
     var games = [];
     try { games = JSON.parse(src.textContent).games || []; } catch (e) { return; }
     var gameHref = host.getAttribute("data-game-href");
+    var n = games.length;
+    function has(k) { return games.some(function (g) { return g[k] != null && g[k] !== ""; }); }
     function f1(v) { return (Math.round(v * 10) / 10).toFixed(1); }
     function pct(m, a) { if (!a) return ""; var s = (m / a).toFixed(3); return s.charAt(0) === "0" ? s.slice(1) : s; }
-    var COLS = [
-      ["G", "Game number"], ["Date", ""], ["Opp", "Opponent"], ["Result", "Final score (Knicks first)"], ["GS", "Game Started"], ["MP", "Minutes Played"], ["PTS", "Points"],
-      ["FG", "Field Goals"], ["FGA", "Field Goal Attempts"], ["FG%", "Field Goal Percentage"], ["3P", "3-Point Field Goals"], ["3PA", "3-Point Field Goal Attempts"],
-      ["3P%", "3-Point Field Goal Percentage"], ["2P", "2-Point Field Goals"], ["2PA", "2-Point Field Goal Attempts"], ["2P%", "2-Point Field Goal Percentage"],
-      ["eFG%", "Effective Field Goal Percentage (counts a 3 as 1.5 makes)"], ["FT", "Free Throws"], ["FTA", "Free Throw Attempts"], ["FT%", "Free Throw Percentage"],
-      ["ORB", "Offensive Rebounds"], ["DRB", "Defensive Rebounds"], ["TRB", "Total Rebounds"], ["AST", "Assists"], ["STL", "Steals"], ["BLK", "Blocks"],
-      ["TOV", "Turnovers"], ["PF", "Personal Fouls"], ["GmSc", "Game Score (John Hollinger's single-number summary of a box score)"]
-    ];
-    function line(g, avg) {
-      var n = avg ? games.length : 1, num = function (v) { return avg ? f1(v / n) : String(v); };
-      return [num(g.GS), num(g.MIN), num(g.PTS), num(g.FGM), num(g.FGA), pct(g.FGM, g.FGA), num(g.TPM), num(g.TPA), pct(g.TPM, g.TPA),
-        num(g.FGM - g.TPM), num(g.FGA - g.TPA), pct(g.FGM - g.TPM, g.FGA - g.TPA), pct(g.FGM + 0.5 * g.TPM, g.FGA),
-        num(g.FTM), num(g.FTA), pct(g.FTM, g.FTA), num(g.ORB), num(g.DRB), num(g.REB), num(g.AST), num(g.STL), num(g.BLK), num(g.TOV), num(g.PF),
-        avg ? f1(g.GMSC / n) : f1(g.GMSC)];
-    }
-    var head = "<tr>" + COLS.map(function (c, i) {
-      return "<th scope=\"col\"" + (i === 1 || i === 2 || i === 3 ? "" : " class=\"num\"") + (c[1] ? " title=\"" + c[1] + "\"" : "") + ">" + c[0] + "</th>";
-    }).join("") + "</tr>";
-    // Stat cells that link into the Film Room (index into line()'s output -> Film Room filter + wording for the tooltip)
-    var FILM = {
-      3: { type: "Made Shot", what: "made shots" }, 4: { type: "Shot", what: "shots" },
-      6: { type: "Made Shot", shot: "3PT", what: "made threes" }, 7: { type: "Shot", shot: "3PT", what: "three-point attempts" },
-      9: { type: "Made Shot", shot: "2PT", what: "made twos" }, 10: { type: "Shot", shot: "2PT", what: "two-point attempts" },
-      16: { type: "Rebound", q: "offensive", what: "offensive rebounds" }, 17: { type: "Rebound", q: "defensive", what: "defensive rebounds" },
-      18: { type: "Rebound", what: "rebounds" }, 19: { type: "Assist", what: "assists" }, 20: { type: "Steal", what: "steals" },
-      21: { type: "Block", what: "blocks" }, 22: { type: "Turnover", what: "turnovers" }, 23: { type: "Foul", what: "fouls" }
-    };
-    var hasFilm = !!document.querySelector("[data-film-library]");
+    function sum(k) { return games.reduce(function (a, g) { return a + (+g[k] || 0); }, 0); }
+    function cnt(k) { return games.length ? { v: function (g) { return g[k] == null ? "\u2014" : String(g[k]); },
+      a: function () { return games.every(function (g) { return g[k] != null; }) ? f1(sum(k) / n) : "\u2014"; } } : null; }
+    function ratio(mk, ak) { return { v: function (g) { return pct(mk(g), ak(g)); }, a: function () { return pct(sum2(mk), sum2(ak)); } }; }
+    function sum2(fn) { return games.reduce(function (a, g) { return a + fn(g); }, 0); }
+    function k(name) { return function (g) { return +g[name] || 0; }; }
+    function diff(a, b) { return function (g) { return (+g[a] || 0) - (+g[b] || 0); }; }
+    var C = [];
+    function col(h, title, def, film, show) { if (show === false) return; C.push({ h: h, title: title, def: def, film: film }); }
+    var c2 = function (fn) { return { v: function (g) { return String(fn(g)); }, a: function () { return f1(sum2(fn) / n); } }; };
+    col("GS", "Game Started", cnt("GS"), null, has("GS"));
+    col("MP", "Minutes Played", cnt("MIN"), null, has("MIN"));
+    col("PTS", "Points", cnt("PTS"));
+    col("FG", "Field Goals", cnt("FGM"), { type: "Made Shot", what: "made shots" });
+    col("FGA", "Field Goal Attempts", cnt("FGA"), { type: "Shot", what: "shots" });
+    col("FG%", "Field Goal Percentage", ratio(k("FGM"), k("FGA")));
+    col("3P", "3-Point Field Goals", cnt("TPM"), { type: "Made Shot", shot: "3PT", what: "made threes" });
+    col("3PA", "3-Point Field Goal Attempts", cnt("TPA"), { type: "Shot", shot: "3PT", what: "three-point attempts" });
+    col("3P%", "3-Point Field Goal Percentage", ratio(k("TPM"), k("TPA")));
+    col("2P", "2-Point Field Goals", c2(diff("FGM", "TPM")), { type: "Made Shot", shot: "2PT", what: "made twos" });
+    col("2PA", "2-Point Field Goal Attempts", c2(diff("FGA", "TPA")), { type: "Shot", shot: "2PT", what: "two-point attempts" });
+    col("2P%", "2-Point Field Goal Percentage", ratio(diff("FGM", "TPM"), diff("FGA", "TPA")));
+    col("eFG%", "Effective Field Goal Percentage (counts a 3 as 1.5 makes)", ratio(function (g) { return (+g.FGM || 0) + 0.5 * (+g.TPM || 0); }, k("FGA")));
+    col("FT", "Free Throws", cnt("FTM"));
+    col("FTA", "Free Throw Attempts", cnt("FTA"));
+    col("FT%", "Free Throw Percentage", ratio(k("FTM"), k("FTA")));
+    col("ORB", "Offensive Rebounds", cnt("ORB"), { type: "Rebound", q: "offensive", what: "offensive rebounds" });
+    col("DRB", "Defensive Rebounds", cnt("DRB"), { type: "Rebound", q: "defensive", what: "defensive rebounds" });
+    col("TRB", "Total Rebounds", cnt("REB"), { type: "Rebound", what: "rebounds" });
+    col("AST", "Assists", cnt("AST"), { type: "Assist", what: "assists" });
+    col("STL", "Steals", cnt("STL"), { type: "Steal", what: "steals" });
+    col("BLK", "Blocks", cnt("BLK"), { type: "Block", what: "blocks" });
+    col("TOV", "Turnovers", cnt("TOV"), { type: "Turnover", what: "turnovers" });
+    col("PF", "Personal Fouls", cnt("PF"), { type: "Foul", what: "fouls" }, has("PF"));
+    col("GmSc", "Game Score (John Hollinger's single-number summary of a box score)", { v: function (g) { return f1(+g.GMSC || 0); }, a: function () { return f1(sum("GMSC") / n); } }, null, has("GMSC"));
+    col("PIE", "Player Impact Estimate, as published by SportsVisio", { v: function (g) { return g.PIE == null ? "\u2014" : f1(+g.PIE); }, a: function () { return f1(sum("PIE") / n); } }, null, has("PIE"));
+    var hasResult = has("result");
+    var lib = document.querySelector("[data-film-library]");
+    function filmCount(f, gi) { return lib && lib.filmCount ? lib.filmCount({ type: f.type, shot: f.shot, q: f.q, game: gi }) : 0; }
+
+    var head = "<tr><th scope=\"col\" class=\"num\" title=\"Game number\">G</th><th scope=\"col\">Date</th><th scope=\"col\" title=\"Opponent\">Opp</th>" +
+      (hasResult ? "<th scope=\"col\" title=\"Final score\">Result</th>" : "") +
+      C.map(function (c) { return "<th scope=\"col\" class=\"num\" title=\"" + c.title + "\">" + c.h + "</th>"; }).join("") + "</tr>";
     var body = games.map(function (g, i) {
-      var r = String(g.result || ""), cls = r.charAt(0) === "W" ? "badge-success" : r.charAt(0) === "L" ? "badge-danger" : "";
-      var badge = "<span class=\"badge " + cls + "\">" + r + "</span>";
-      return "<tr><th scope=\"row\" class=\"num\">" + (i + 1) + "</th><td>" + g.date + "</td><td>" + g.opp + "</td><td>" +
-        (gameHref ? "<a href=\"" + gameHref + "\">" + badge + "</a>" : badge) + "</td>" +
-        line(g).map(function (v, ci) {
-          var f = FILM[ci];
-          if (!hasFilm || !f || !(+v > 0)) return "<td class=\"num\">" + v + "</td>";
-          return "<td class=\"num\"><a href=\"#film-room\" class=\"gl-film\" data-ci=\"" + ci + "\" data-game=\"" + i + "\" title=\"Watch his " + v + " " +
-            (+v === 1 ? f.what.replace(/s$/, "").replace(/attempt$/, "attempt") : f.what) + " from " + g.date + " in the Film Room\">" + v + "</a></td>";
-        }).join("") + "</tr>";
+      var cells = "";
+      if (hasResult) {
+        var r = String(g.result || ""), cls = r.charAt(0) === "W" ? "badge-success" : r.charAt(0) === "L" ? "badge-danger" : "";
+        var badge = "<span class=\"badge " + cls + "\">" + r + "</span>";
+        cells += "<td>" + (gameHref ? "<a href=\"" + gameHref + "\">" + badge + "</a>" : badge) + "</td>";
+      }
+      cells += C.map(function (c, ci) {
+        var v = c.def.v(g), f = c.film, nFilm = f && +v > 0 ? filmCount(f, i) : 0;
+        if (!nFilm) return "<td class=\"num\">" + v + "</td>";
+        var what = nFilm === 1 ? f.what.replace(/s$/, "") : f.what;
+        return "<td class=\"num\"><a href=\"#film-room\" class=\"gl-film\" data-ci=\"" + ci + "\" data-game=\"" + i + "\" title=\"Watch " +
+          (nFilm < +v ? "the " + nFilm + " of his " + v + " " + f.what + " on film" : "his " + v + " " + what) + " from " + g.date + " in the Film Room\">" + v + "</a></td>";
+      }).join("");
+      return "<tr><th scope=\"row\" class=\"num\">" + (i + 1) + "</th><td>" + g.date + "</td><td>" + g.opp + "</td>" + cells + "</tr>";
     }).join("");
-    var tot = {};
-    ["GS", "MIN", "PTS", "FGM", "FGA", "TPM", "TPA", "FTM", "FTA", "ORB", "DRB", "REB", "AST", "STL", "BLK", "TOV", "PF", "GMSC"].forEach(function (k) {
-      tot[k] = games.reduce(function (a, g) { return a + (+g[k] || 0); }, 0);
-    });
-    var w = games.filter(function (g) { return /^W/.test(g.result); }).length, l = games.filter(function (g) { return /^L/.test(g.result); }).length, t = games.length - w - l;
-    var foot = "<tr><th scope=\"row\" colspan=\"4\">Season per game <span class=\"gl-record\">(" + w + "-" + l + (t ? "-" + t : "") + ")</span></th>" +
-      line(tot, true).map(function (v) { return "<td class=\"num\">" + v + "</td>"; }).join("") + "</tr>";
+    var label = "Season per game";
+    if (hasResult) {
+      var w = games.filter(function (g) { return /^W/.test(g.result); }).length, l = games.filter(function (g) { return /^L/.test(g.result); }).length, t = n - w - l;
+      label += " <span class=\"gl-record\">(" + w + "-" + l + (t ? "-" + t : "") + ")</span>";
+    }
+    var foot = "<tr><th scope=\"row\" colspan=\"" + (hasResult ? 4 : 3) + "\">" + label + "</th>" +
+      C.map(function (c) { return "<td class=\"num\">" + c.def.a() + "</td>"; }).join("") + "</tr>";
     host.innerHTML = "<div class=\"pergame-scroll\"><table class=\"pergame-table gamelog-table\"><thead>" + head + "</thead><tbody>" + body + "</tbody><tfoot>" + foot + "</tfoot></table></div>";
 
     // Clicking a linked stat switches to the Film Room tab and filters it to that game + play type
     host.addEventListener("click", function (e) {
-      var a = e.target.closest("a.gl-film"); if (!a) return;
-      var lib = document.querySelector("[data-film-library]"); if (!lib || !lib.filmFilter) return;
+      var a = e.target.closest("a.gl-film"); if (!a || !lib || !lib.filmFilter) return;
       e.preventDefault();
-      var f = FILM[+a.getAttribute("data-ci")], panel = lib.closest("[role=tabpanel]");
+      var f = C[+a.getAttribute("data-ci")].film, panel = lib.closest("[role=tabpanel]");
       var tab = panel ? document.querySelector('[role=tab][aria-controls="' + panel.id + '"]') : null;
       if (tab) tab.click();
       lib.filmFilter({ type: f.type, shot: f.shot, q: f.q, game: +a.getAttribute("data-game") });
       lib.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
-
   // Buttons that open a tab elsewhere on the page, e.g. the player header's "Watch Film" -> Film Room tab
   document.querySelectorAll("[data-open-tab]").forEach(function (link) {
     link.addEventListener("click", function (e) {
@@ -664,12 +748,25 @@
   var shotSlot = document.querySelector("[data-shot-clip]");
   if (shotSlot && window.URLSearchParams) {
     var qp = new URLSearchParams(window.location.search);
-    var vid = qp.get("v") || "", start = parseInt(qp.get("t") || "0", 10);
-    if (qp.get("shot") && /^[A-Za-z0-9_-]{11}$/.test(vid)) {
+    var vid = qp.get("v") || "", start = parseInt(qp.get("t") || "0", 10), mp4 = qp.get("src") || "";
+    var realMp4 = REAL_CLIP_RE.test(mp4);
+    if (qp.get("shot") && (realMp4 || /^[A-Za-z0-9_-]{11}$/.test(vid))) {
       shotSlot.hidden = false;
       shotSlot.querySelector("[data-shot-title]").textContent = qp.get("title") || "Shot clip";
       shotSlot.querySelector("[data-shot-meta]").textContent = qp.get("meta") || "";
-      shotSlot.querySelector("iframe").src = "https://www.youtube.com/embed/" + vid + "?start=" + (isNaN(start) ? 0 : start);
+      var frame = shotSlot.querySelector("iframe");
+      if (realMp4) {
+        // Real SportsVisio game film: play the mp4 itself instead of the YouTube placeholder
+        var video = document.createElement("video");
+        video.controls = true; video.playsInline = true; video.preload = "metadata";
+        video.src = mp4; video.poster = mp4.replace(/clip\.mp4$/, "clip.0000001.jpg");
+        video.setAttribute("aria-label", qp.get("title") || "Shot clip");
+        if (frame) frame.replaceWith(video); else shotSlot.appendChild(video);
+        var note = shotSlot.querySelector("[data-shot-note]");
+        if (note) note.textContent = "Game film from SportsVisio.";
+      } else if (frame) {
+        frame.src = "https://www.youtube.com/embed/" + vid + "?start=" + (isNaN(start) ? 0 : start);
+      }
       shotSlot.scrollIntoView({ block: "start" });
     }
   }

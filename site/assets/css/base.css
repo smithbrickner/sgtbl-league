@@ -294,6 +294,7 @@ textarea.input { height: auto; padding: var(--space-3) var(--space-4); resize: v
 .spray-court .zone-label.on-strong { stroke: #0b1726; stroke-opacity: .35; }
 .spray-court .zone-label-sm { font-size: 13px; }
 .spray-court .shot { cursor: pointer; }
+.spray-court .shot.shot-nofilm { cursor: default; } /* real data: a shot with no SportsVisio clip (misses, uncut makes) */
 .spray-court .shot-hit { fill: transparent; }
 .spray-court .shot-make .shot-mark { fill: #fff; stroke: #0b1726; stroke-width: 1.4; }
 .spray-court .shot-miss .shot-halo { fill: none; stroke: #fff; stroke-width: 4; stroke-linecap: round; opacity: .85; }
@@ -317,13 +318,13 @@ textarea.input { height: auto; padding: var(--space-3) var(--space-4); resize: v
 .clip-dialog .clip-head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-3); padding: var(--space-4) var(--space-5); }
 .clip-dialog .clip-head .muted { font-size: var(--text-sm); margin-top: 2px; }
 .clip-dialog .clip-frame { position: relative; aspect-ratio: 16 / 9; background: #000; }
-.clip-dialog .clip-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.clip-dialog .clip-frame iframe, .clip-dialog .clip-frame video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
 .clip-dialog .clip-note { font-size: var(--text-xs); padding: var(--space-3) var(--space-5) var(--space-4); margin: 0; }
 
 /* Film Room "shot clip" panel (Team Portal deep link from the shot chart) */
 .shot-clip-card { margin-bottom: var(--space-6); border: 2px solid var(--accent-blue); }
 .shot-clip-frame { position: relative; aspect-ratio: 16 / 9; background: #000; border-radius: var(--radius-md); overflow: hidden; }
-.shot-clip-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.shot-clip-frame iframe, .shot-clip-frame video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
 
 /* ---------- Per Game table (player Overview, all three player pages) ----------
    Modeled on Basketball-Reference's "Per Game" table: dense rows, small tabular numbers,
@@ -363,3 +364,6 @@ textarea.input { height: auto; padding: var(--space-3) var(--space-4); resize: v
 .pergame-table th[aria-sort] { cursor: pointer; user-select: none; }
 .pergame-table th[aria-sort="ascending"]::after { content: " \25B2"; font-size: 9px; color: var(--accent-blue); }
 .pergame-table th[aria-sort="descending"]::after { content: " \25BC"; font-size: 9px; color: var(--accent-blue); }
+/* Source credit under the Per Game table (real stats pulled from Ultimate Hoops / SportsVisio) */
+.pergame-source { font-size: var(--text-xs); margin: var(--space-3) 0 0; }
+.pergame-source a { color: var(--accent-blue); text-decoration: underline; }

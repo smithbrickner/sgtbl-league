@@ -7,9 +7,9 @@
 <link rel="icon" href="assets/img/sgtbl-logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/tokens.css?v=20261115e">
-<link rel="stylesheet" href="assets/css/base.css?v=20261115e">
-<link rel="stylesheet" href="assets/css/site.css?v=20261115e">
+<link rel="stylesheet" href="assets/css/tokens.css?v=20261116c">
+<link rel="stylesheet" href="assets/css/base.css?v=20261116c">
+<link rel="stylesheet" href="assets/css/site.css?v=20261116c">
 <style>
 .player-layout { display: grid; grid-template-columns: minmax(260px, 340px) 1fr; gap: var(--space-6); align-items: stretch; }
 /* Bio and Percentile Rankings sit side by side at equal height (the trend chart runs full-width below):
@@ -91,78 +91,109 @@
         <div class="stack" style="gap:var(--space-5)">
           <div class="card card-pad pctl-card">
             <div class="row" style="justify-content:space-between;margin-bottom:var(--space-3)">
-              <h3>Percentile Rankings <span class="muted" style="font-weight:400;font-size:var(--text-sm)">2026 vs. league</span></h3>
+              <h3>Percentile Rankings <span class="muted" style="font-weight:400;font-size:var(--text-sm)">Fall 2026 vs. Ultimate Hoops Frisco</span></h3>
             </div>
             <div class="pctl-rows">
-            <div class="percentile-row with-stat"><span class="p-label">MPG</span><span class="p-stat">32.4</span><div class="p-track" role="img" aria-label="MPG 32.4, 84 percentile"><span class="p-marker" style="left:84%"></span></div><span class="p-val">84<span class="p-ord">th</span></span></div>
-            <div class="percentile-row with-stat"><span class="p-label">PPG</span><span class="p-stat">18.4</span><div class="p-track" role="img" aria-label="PPG 18.4, 91 percentile"><span class="p-marker" style="left:91%"></span></div><span class="p-val">91<span class="p-ord">st</span></span></div>
-            <div class="percentile-row with-stat"><span class="p-label">APG</span><span class="p-stat">3.1</span><div class="p-track" role="img" aria-label="APG 3.1, 62 percentile"><span class="p-marker" style="left:62%"></span></div><span class="p-val">62<span class="p-ord">nd</span></span></div>
-            <div class="percentile-row with-stat"><span class="p-label">RPG</span><span class="p-stat">4.2</span><div class="p-track" role="img" aria-label="RPG 4.2, 55 percentile"><span class="p-marker" style="left:55%"></span></div><span class="p-val">55<span class="p-ord">th</span></span></div>
-            <div class="percentile-row with-stat"><span class="p-label">SPG</span><span class="p-stat">1.3</span><div class="p-track" role="img" aria-label="SPG 1.3, 73 percentile"><span class="p-marker" style="left:73%"></span></div><span class="p-val">73<span class="p-ord">rd</span></span></div>
-            <div class="percentile-row with-stat"><span class="p-label">TOPG</span><span class="p-stat">1.8</span><div class="p-track" role="img" aria-label="TOPG 1.8, 68 percentile"><span class="p-marker" style="left:68%"></span></div><span class="p-val">68<span class="p-ord">th</span></span></div>
-            <div class="percentile-row with-stat"><span class="p-label">eFG%</span><span class="p-stat">53.6%</span><div class="p-track" role="img" aria-label="eFG% 53.6%, 70 percentile"><span class="p-marker" style="left:70%"></span></div><span class="p-val">70<span class="p-ord">th</span></span></div>
-            <div class="percentile-row with-stat"><span class="p-label">Win Shares</span><span class="p-stat">1.9</span><div class="p-track" role="img" aria-label="Win Shares 1.9, 87 percentile"><span class="p-marker" style="left:87%"></span></div><span class="p-val">87<span class="p-ord">th</span></span></div>
+            <div class="percentile-row with-stat"><span class="p-label">PPG</span><span class="p-stat">21.0</span><div class="p-track" role="img" aria-label="PPG 21.0, 87 percentile"><span class="p-marker" style="left:87%"></span></div><span class="p-val">87<span class="p-ord">th</span></span></div>
+            <div class="percentile-row with-stat"><span class="p-label">RPG</span><span class="p-stat">7.8</span><div class="p-track" role="img" aria-label="RPG 7.8, 66 percentile"><span class="p-marker" style="left:66%"></span></div><span class="p-val">66<span class="p-ord">th</span></span></div>
+            <div class="percentile-row with-stat"><span class="p-label">APG</span><span class="p-stat">2.3</span><div class="p-track" role="img" aria-label="APG 2.3, 49 percentile"><span class="p-marker" style="left:49%"></span></div><span class="p-val">49<span class="p-ord">th</span></span></div>
+            <div class="percentile-row with-stat"><span class="p-label">SPG</span><span class="p-stat">1.3</span><div class="p-track" role="img" aria-label="SPG 1.3, 70 percentile"><span class="p-marker" style="left:70%"></span></div><span class="p-val">70<span class="p-ord">th</span></span></div>
+            <div class="percentile-row with-stat"><span class="p-label">BPG</span><span class="p-stat">0.5</span><div class="p-track" role="img" aria-label="BPG 0.5, 79 percentile"><span class="p-marker" style="left:79%"></span></div><span class="p-val">79<span class="p-ord">th</span></span></div>
+            <div class="percentile-row with-stat"><span class="p-label">FG%</span><span class="p-stat">47.9%</span><div class="p-track" role="img" aria-label="FG% 47.9%, 73 percentile"><span class="p-marker" style="left:73%"></span></div><span class="p-val">73<span class="p-ord">rd</span></span></div>
+            <div class="percentile-row with-stat"><span class="p-label">3P%</span><span class="p-stat">25.9%</span><div class="p-track" role="img" aria-label="3P% 25.9%, 54 percentile"><span class="p-marker" style="left:54%"></span></div><span class="p-val">54<span class="p-ord">th</span></span></div>
+            <div class="percentile-row with-stat"><span class="p-label">FT%</span><span class="p-stat">77.8%</span><div class="p-track" role="img" aria-label="FT% 77.8%, 84 percentile"><span class="p-marker" style="left:84%"></span></div><span class="p-val">84<span class="p-ord">th</span></span></div>
             </div>
-            <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-2)">His 2026 number, then where it ranks vs. the league (percentile &mdash; higher is always better). TOPG is inverted, so a high percentile means <em>fewer</em> turnovers. Sample values shown.</p>
+            <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-2)">His Fall 2026 average (SportsVisio game log, 4 games), then where it ranks among the 41 players in the <a href="https://uh.sportsvisio.com/league/texas-frisco/leaders" target="_blank" rel="noopener">Ultimate Hoops Texas-Frisco leaders table</a> (percentile &mdash; higher is better). 3P% and FT% rank only players with attempts.</p>
           </div>
         </div>
       </div>
 
       <div class="card card-pad pergame-card" style="margin-bottom:var(--space-6)">
         <div class="pergame-head">
-          <h3>Per Game <span class="muted" style="font-weight:400;font-size:var(--text-sm)">Regular Season</span></h3>
-          <span class="muted" style="font-size:var(--text-xs)">Scroll sideways for every column &middot; hover a heading for its full name</span>
+          <h3>Per Game <span class="muted" style="font-weight:400;font-size:var(--text-sm)">Ultimate Hoops &middot; Syosset</span></h3>
+          <span class="muted" style="font-size:var(--text-xs)">Hover a heading for its full name</span>
         </div>
         <div class="pergame-scroll">
           <table class="pergame-table">
-            <thead><tr><th scope="col">Season</th><th scope="col" class="num">Age</th><th scope="col">Team</th><th scope="col" class="num" title="Games">G</th><th scope="col" class="num" title="Games Started">GS</th><th scope="col" class="num" title="Minutes Played Per Game">MP</th><th scope="col" class="num" title="Points Per Game">PTS</th><th scope="col" class="num" title="Field Goals Per Game">FG</th><th scope="col" class="num" title="Field Goal Attempts Per Game">FGA</th><th scope="col" class="num" title="Field Goal Percentage">FG%</th><th scope="col" class="num" title="3-Point Field Goals Per Game">3P</th><th scope="col" class="num" title="3-Point Field Goal Attempts Per Game">3PA</th><th scope="col" class="num" title="3-Point Field Goal Percentage">3P%</th><th scope="col" class="num" title="2-Point Field Goals Per Game">2P</th><th scope="col" class="num" title="2-Point Field Goal Attempts Per Game">2PA</th><th scope="col" class="num" title="2-Point Field Goal Percentage">2P%</th><th scope="col" class="num" title="Effective Field Goal Percentage (counts a 3 as 1.5 makes)">eFG%</th><th scope="col" class="num" title="Free Throws Per Game">FT</th><th scope="col" class="num" title="Free Throw Attempts Per Game">FTA</th><th scope="col" class="num" title="Free Throw Percentage">FT%</th><th scope="col" class="num" title="Offensive Rebounds Per Game">ORB</th><th scope="col" class="num" title="Defensive Rebounds Per Game">DRB</th><th scope="col" class="num" title="Total Rebounds Per Game">TRB</th><th scope="col" class="num" title="Assists Per Game">AST</th><th scope="col" class="num" title="Steals Per Game">STL</th><th scope="col" class="num" title="Blocks Per Game">BLK</th><th scope="col" class="num" title="Turnovers Per Game">TOV</th><th scope="col" class="num" title="Personal Fouls Per Game">PF</th></tr></thead>
+            
+      <thead><tr><th scope="col">Season</th><th scope="col" title="Division">Div</th><th scope="col">Team</th><th scope="col" class="num" title="Games">G</th><th scope="col" class="num" title="Points Per Game">PTS</th><th scope="col" class="num" title="Total Rebounds Per Game">TRB</th><th scope="col" class="num" title="Assists Per Game">AST</th><th scope="col" class="num" title="Steals Per Game">STL</th><th scope="col" class="num" title="Blocks Per Game">BLK</th><th scope="col" class="num" title="Field Goal Percentage">FG%</th><th scope="col" class="num" title="3-Point Field Goal Percentage">3P%</th><th scope="col" class="num" title="Free Throw Percentage">FT%</th></tr></thead>
             <tbody>
-      <tr><th scope="row">2024</th><td class="num">22</td><td><a href="team.html">NYK</a></td><td class="num">13</td><td class="num">11</td><td class="num">26.5</td><td class="num pts">11.2</td><td class="num">4.2</td><td class="num">9.8</td><td class="num">.422</td><td class="num">1.2</td><td class="num">3.8</td><td class="num">.306</td><td class="num">3.0</td><td class="num">6.1</td><td class="num">.494</td><td class="num">.480</td><td class="num">1.8</td><td class="num">2.4</td><td class="num">.742</td><td class="num">0.8</td><td class="num">2.3</td><td class="num">3.1</td><td class="num">2.0</td><td class="num">0.9</td><td class="num">0.2</td><td class="num">2.4</td><td class="num">2.6</td></tr>
-      <tr><th scope="row">2025</th><td class="num">23</td><td><a href="team.html">NYK</a></td><td class="num">14</td><td class="num">14</td><td class="num">30.9</td><td class="num pts">16.8</td><td class="num">6.4</td><td class="num">13.9</td><td class="num">.459</td><td class="num">1.6</td><td class="num">4.7</td><td class="num">.348</td><td class="num">4.7</td><td class="num">9.1</td><td class="num">.516</td><td class="num">.518</td><td class="num">2.4</td><td class="num">3.1</td><td class="num">.791</td><td class="num">1.0</td><td class="num">2.9</td><td class="num">3.9</td><td class="num">2.9</td><td class="num">1.1</td><td class="num">0.3</td><td class="num">2.1</td><td class="num">2.3</td></tr>
-      <tr><th scope="row">2026</th><td class="num">24</td><td><a href="team.html">NYK</a></td><td class="num">14</td><td class="num">14</td><td class="num">32.4</td><td class="num pts">18.4</td><td class="num">7.1</td><td class="num">14.8</td><td class="num">.478</td><td class="num">1.7</td><td class="num">4.5</td><td class="num">.381</td><td class="num">5.4</td><td class="num">10.3</td><td class="num">.521</td><td class="num">.536</td><td class="num">2.5</td><td class="num">3.1</td><td class="num">.814</td><td class="num">1.1</td><td class="num">3.1</td><td class="num">4.2</td><td class="num">3.1</td><td class="num">1.3</td><td class="num">0.4</td><td class="num">1.8</td><td class="num">2.1</td></tr>
+              <tr><th scope="row">Spring 2025</th><td>Draft</td><td>RTG</td><td class="num">4</td><td class="num">15.3</td><td class="num">6.3</td><td class="num">3.0</td><td class="num">1.3</td><td class="num">0.5</td><td class="num">.393</td><td class="num">.290</td><td class="num">.500</td></tr>
+              <tr><th scope="row">Summer 2025</th><td>Draft</td><td>Backcourt Kings</td><td class="num">9</td><td class="num">19.0</td><td class="num">7.1</td><td class="num">2.9</td><td class="num">1.6</td><td class="num">0.6</td><td class="num">.442</td><td class="num">.299</td><td class="num">.568</td></tr>
+              <tr><th scope="row">Summer 2025</th><td>Vet 35</td><td>Let's Do This</td><td class="num">4</td><td class="num">23.0</td><td class="num">6.5</td><td class="num">1.3</td><td class="num">0.8</td><td class="num">0.0</td><td class="num">.651</td><td class="num">.364</td><td class="num">.750</td></tr>
+              <tr><th scope="row">Fall 2025</th><td>Draft</td><td>Backcourt Kings</td><td class="num">3</td><td class="num">25.7</td><td class="num">12.0</td><td class="num">4.3</td><td class="num">1.3</td><td class="num">0.3</td><td class="num">.479</td><td class="num">.429</td><td class="num">.905</td></tr>
+              <tr><th scope="row">Fall 2026</th><td>Open</td><td>Backcourt Kings</td><td class="num">3</td><td class="num">23.3</td><td class="num">7.3</td><td class="num">1.3</td><td class="num">0.7</td><td class="num">0.3</td><td class="num">.526</td><td class="num">.250</td><td class="num">1.000</td></tr>
+              <tr><th scope="row">Fall 2026</th><td>Open</td><td>Imaan</td><td class="num">2</td><td class="num">7.0</td><td class="num">4.5</td><td class="num">2.5</td><td class="num">1.5</td><td class="num">0.5</td><td class="num">.313</td><td class="num">.286</td><td class="num">.500</td></tr>
+              <tr><th scope="row">Fall 2026</th><td>Vet 35</td><td>Lets Do This</td><td class="num">3</td><td class="num">24.0</td><td class="num">15.3</td><td class="num">2.3</td><td class="num">2.0</td><td class="num">0.3</td><td class="num">.342</td><td class="num">.268</td><td class="num">.818</td></tr>
             </tbody>
             <tfoot>
-      <tr><th scope="row">Career</th><td></td><td></td><td class="num">41</td><td class="num">39</td><td class="num">30.0</td><td class="num pts">15.6</td><td class="num">5.9</td><td class="num">12.9</td><td class="num">.457</td><td class="num">1.5</td><td class="num">4.3</td><td class="num">.348</td><td class="num">4.4</td><td class="num">8.6</td><td class="num">.513</td><td class="num">.516</td><td class="num">2.2</td><td class="num">2.9</td><td class="num">.786</td><td class="num">1.0</td><td class="num">2.8</td><td class="num">3.8</td><td class="num">2.7</td><td class="num">1.1</td><td class="num">0.3</td><td class="num">2.1</td><td class="num">2.3</td></tr>
+              
+      <tr><th scope="row">Career</th><td></td><td></td><td class="num">28</td><td class="num">19.9</td><td class="num">8.1</td><td class="num">2.6</td><td class="num">1.3</td><td class="num">0.4</td><td class="num">.457</td><td class="num">.307</td><td class="num">.702</td></tr>
             </tfoot>
           </table>
         </div>
+        <p class="muted pergame-source">Source: <a href="
+      https://uh.sportsvisio.com/league/new-york-syosset/player/2d3dcf53-301f-4c86-be79-3e01b91b9e4f
+      " target="_blank" rel="noopener">Ultimate Hoops / SportsVisio</a> career statistics, pulled Nov 16, 2026. Columns are limited to what the source publishes for every season.</p>
       </div>
 
       <div class="card card-pad" data-trend-chart style="margin-bottom:var(--space-6)">
         <div class="trend-head">
-          <h3>Season Trend <span class="muted" style="font-weight:400;font-size:var(--text-sm)">5-game rolling avg</span></h3>
+          <h3>Season Trend <span class="muted" style="font-weight:400;font-size:var(--text-sm)">5-game rolling avg &middot; Fall 2026</span></h3>
           <select class="input" data-trend-stat aria-label="Statistic to chart"></select>
         </div>
         <script type="application/json">
           { "window": 5,
+            "source": "SportsVisio game log, Fall 2026 (4 games); league averages from the Ultimate Hoops Texas-Frisco leaders table",
             "stats": [
-              { "key": "PTS",  "label": "Points",            "dp": 0, "adp": 1, "lg": 11.0 },
-              { "key": "REB",  "label": "Rebounds",          "dp": 0, "adp": 1, "lg": 4.0 },
-              { "key": "AST",  "label": "Assists",           "dp": 0, "adp": 1, "lg": 2.6 },
-              { "key": "STL",  "label": "Steals",            "dp": 0, "adp": 1, "lg": 1.0 },
-              { "key": "TOV",  "label": "Turnovers",         "dp": 0, "adp": 1, "lg": 2.0 },
-              { "key": "MIN",  "label": "Minutes",           "dp": 0, "adp": 1, "lg": 26.0 },
-              { "key": "EFG",  "label": "eFG%",              "dp": 0, "adp": 1, "suffix": "%", "lg": 50.0 },
-              { "key": "TS",   "label": "True Shooting %",   "dp": 0, "adp": 1, "suffix": "%", "lg": 54.0 },
-              { "key": "USG",  "label": "Usage Rate",        "dp": 0, "adp": 1, "suffix": "%", "lg": 20.0 },
-              { "key": "GMSC", "label": "Game Score",        "dp": 1, "adp": 1, "lg": 9.5 },
-              { "key": "WS",   "label": "Win Shares",        "dp": 2, "adp": 2, "lg": 0.08 }
+              { "key": "PTS",  "label": "Points",          "dp": 0, "adp": 1, "lg": 12.1 },
+              { "key": "REB",  "label": "Rebounds",        "dp": 0, "adp": 1, "lg": 7.2 },
+              { "key": "AST",  "label": "Assists",         "dp": 0, "adp": 1, "lg": 2.8 },
+              { "key": "STL",  "label": "Steals",          "dp": 0, "adp": 1, "lg": 1 },
+              { "key": "BLK",  "label": "Blocks",          "dp": 0, "adp": 1, "lg": 0.2 },
+              { "key": "TOV",  "label": "Turnovers",       "dp": 0, "adp": 1 },
+              { "key": "EFG",  "label": "eFG%",            "dp": 1, "adp": 1, "suffix": "%" },
+              { "key": "TS",   "label": "True Shooting %", "dp": 1, "adp": 1, "suffix": "%" },
+              { "key": "GMSC", "label": "Game Score",      "dp": 1, "adp": 1 },
+              { "key": "PIE",  "label": "PIE (SportsVisio)", "dp": 1, "adp": 1 }
             ],
             "games": [
-              { "date": "May 16", "opp": "vs Eagles", "result": "L 19-25", "GS": 1, "MIN": 30, "PTS": 11, "FGM": 5, "FGA": 8, "TPM": 0, "TPA": 1, "FTM": 1, "FTA": 1, "ORB": 1, "DRB": 2, "REB": 3, "AST": 2, "STL": 1, "BLK": 0, "TOV": 3, "PF": 0, "EFG": 62, "TS": 65, "USG": 21, "GMSC": 8.1, "WS": 0.08 },
-              { "date": "May 23", "opp": "@ Sharks", "result": "W 21-14", "GS": 1, "MIN": 31, "PTS": 15, "FGM": 6, "FGA": 14, "TPM": 3, "TPA": 7, "FTM": 0, "FTA": 0, "ORB": 0, "DRB": 4, "REB": 4, "AST": 3, "STL": 0, "BLK": 1, "TOV": 2, "PF": 2, "EFG": 54, "TS": 54, "USG": 22, "GMSC": 8.8, "WS": 0.10 },
-              { "date": "May 30", "opp": "vs Wolves", "result": "L 24-27", "GS": 1, "MIN": 33, "PTS": 14, "FGM": 7, "FGA": 11, "TPM": 0, "TPA": 0, "FTM": 0, "FTA": 1, "ORB": 1, "DRB": 4, "REB": 5, "AST": 4, "STL": 2, "BLK": 0, "TOV": 2, "PF": 1, "EFG": 64, "TS": 61, "USG": 23, "GMSC": 13.0, "WS": 0.11 },
-              { "date": "Jun 6", "opp": "@ Tigers", "result": "W 27-26", "GS": 1, "MIN": 29, "PTS": 20, "FGM": 6, "FGA": 12, "TPM": 2, "TPA": 6, "FTM": 6, "FTA": 7, "ORB": 2, "DRB": 1, "REB": 3, "AST": 2, "STL": 1, "BLK": 0, "TOV": 1, "PF": 1, "EFG": 58, "TS": 66, "USG": 24, "GMSC": 16.3, "WS": 0.14 },
-              { "date": "Jun 13", "opp": "vs Rams", "result": "W 22-18", "GS": 1, "MIN": 32, "PTS": 16, "FGM": 7, "FGA": 12, "TPM": 2, "TPA": 2, "FTM": 0, "FTA": 0, "ORB": 0, "DRB": 4, "REB": 4, "AST": 3, "STL": 2, "BLK": 1, "TOV": 2, "PF": 2, "EFG": 67, "TS": 67, "USG": 23, "GMSC": 13.6, "WS": 0.11 },
-              { "date": "Jun 20", "opp": "@ Eagles", "result": "W 29-27", "GS": 1, "MIN": 34, "PTS": 21, "FGM": 7, "FGA": 14, "TPM": 3, "TPA": 7, "FTM": 4, "FTA": 5, "ORB": 2, "DRB": 4, "REB": 6, "AST": 3, "STL": 1, "BLK": 0, "TOV": 1, "PF": 1, "EFG": 61, "TS": 65, "USG": 25, "GMSC": 17.9, "WS": 0.16 },
-              { "date": "Jun 27", "opp": "vs Sharks", "result": "T 24-24", "GS": 1, "MIN": 31, "PTS": 18, "FGM": 7, "FGA": 22, "TPM": 0, "TPA": 3, "FTM": 4, "FTA": 4, "ORB": 0, "DRB": 4, "REB": 4, "AST": 4, "STL": 1, "BLK": 1, "TOV": 2, "PF": 2, "EFG": 32, "TS": 38, "USG": 24, "GMSC": 8.3, "WS": 0.12 },
-              { "date": "Jul 4", "opp": "@ Rams", "result": "W 35-27", "GS": 1, "MIN": 33, "PTS": 23, "FGM": 10, "FGA": 20, "TPM": 2, "TPA": 4, "FTM": 1, "FTA": 1, "ORB": 2, "DRB": 3, "REB": 5, "AST": 3, "STL": 2, "BLK": 0, "TOV": 1, "PF": 2, "EFG": 55, "TS": 56, "USG": 26, "GMSC": 17.6, "WS": 0.17 },
-              { "date": "Jul 11", "opp": "vs Tigers", "result": "W 33-28", "GS": 1, "MIN": 35, "PTS": 24, "FGM": 11, "FGA": 22, "TPM": 2, "TPA": 5, "FTM": 0, "FTA": 0, "ORB": 3, "DRB": 1, "REB": 4, "AST": 4, "STL": 1, "BLK": 0, "TOV": 2, "PF": 3, "EFG": 55, "TS": 55, "USG": 26, "GMSC": 16.0, "WS": 0.18 },
-              { "date": "Jul 18", "opp": "@ Wolves", "result": "W 34-30", "GS": 1, "MIN": 32, "PTS": 22, "FGM": 9, "FGA": 18, "TPM": 3, "TPA": 7, "FTM": 1, "FTA": 1, "ORB": 0, "DRB": 4, "REB": 4, "AST": 3, "STL": 2, "BLK": 0, "TOV": 1, "PF": 2, "EFG": 58, "TS": 60, "USG": 25, "GMSC": 16.5, "WS": 0.15 },
-              { "date": "Jul 25", "opp": "@ Wolves", "result": "W 26-23", "GS": 1, "MIN": 33, "PTS": 17, "FGM": 5, "FGA": 13, "TPM": 1, "TPA": 4, "FTM": 6, "FTA": 7, "ORB": 0, "DRB": 5, "REB": 5, "AST": 3, "STL": 1, "BLK": 2, "TOV": 2, "PF": 3, "EFG": 42, "TS": 53, "USG": 24, "GMSC": 12.3, "WS": 0.14 },
-              { "date": "Aug 1", "opp": "vs Tigers", "result": "W 29-22", "GS": 1, "MIN": 32, "PTS": 19, "FGM": 6, "FGA": 13, "TPM": 2, "TPA": 6, "FTM": 5, "FTA": 7, "ORB": 3, "DRB": 1, "REB": 4, "AST": 3, "STL": 1, "BLK": 0, "TOV": 1, "PF": 2, "EFG": 54, "TS": 59, "USG": 24, "GMSC": 15.2, "WS": 0.13 },
-              { "date": "Aug 15", "opp": "@ Sharks", "result": "L 21-25", "GS": 1, "MIN": 31, "PTS": 15, "FGM": 4, "FGA": 12, "TPM": 2, "TPA": 7, "FTM": 5, "FTA": 7, "ORB": 1, "DRB": 2, "REB": 3, "AST": 2, "STL": 2, "BLK": 1, "TOV": 3, "PF": 4, "EFG": 42, "TS": 50, "USG": 23, "GMSC": 8.2, "WS": 0.07 },
-              { "date": "Aug 22", "opp": "vs Eagles", "result": "W 27-24", "GS": 1, "MIN": 38, "PTS": 22, "FGM": 9, "FGA": 16, "TPM": 2, "TPA": 4, "FTM": 2, "FTA": 2, "ORB": 0, "DRB": 5, "REB": 5, "AST": 4, "STL": 1, "BLK": 0, "TOV": 2, "PF": 4, "EFG": 62, "TS": 65, "USG": 27, "GMSC": 16.1, "WS": 0.19 }
+              { "date": "Oct 28", "opp": "vs Orange & Blue Skies", "sv": "7eee19f6-d62a-49e2-ab57-f268166296b2", "MIN": 29, "PTS": 12, "FGM": 4, "FGA": 15, "TPM": 4, "TPA": 13, "FTM": 0, "FTA": 0, "ORB": 0, "DRB": 3, "AST": 3, "STL": 1, "BLK": 0, "TOV": 1, "PIE": 7, "REB": 3, "EFG": 40, "TS": 40, "GMSC": 6.1 },
+              { "date": "Oct 28", "opp": "vs Level Up", "sv": "ebb449a4-5775-4b38-b81e-fbd23713e0af", "MIN": 25, "PTS": 3, "FGM": 1, "FGA": 6, "TPM": 0, "TPA": 2, "FTM": 1, "FTA": 2, "ORB": 2, "DRB": 1, "AST": 2, "STL": 1, "BLK": 1, "TOV": 1, "PIE": -1.5, "REB": 3, "EFG": 16.7, "TS": 21.8, "GMSC": 2.6 },
+              { "date": "Nov 4", "opp": "vs Imaan", "sv": "43f80f55-b60f-4843-bf36-22298075003d", "MIN": null, "PTS": 46, "FGM": 19, "FGA": 33, "TPM": 3, "TPA": 10, "FTM": 5, "FTA": 6, "ORB": 9, "DRB": 10, "AST": 4, "STL": 3, "BLK": 0, "TOV": 2, "PIE": 43.5, "REB": 19, "EFG": 62.1, "TS": 64.5, "GMSC": 43.2 },
+              { "date": "Nov 11", "opp": "vs Level Up", "sv": "5863a2bd-3b5c-4381-b83a-52769c9e9b18", "MIN": null, "PTS": 23, "FGM": 11, "FGA": 19, "TPM": 0, "TPA": 2, "FTM": 1, "FTA": 1, "ORB": 2, "DRB": 4, "AST": 0, "STL": 0, "BLK": 1, "TOV": 2, "PIE": 18.5, "REB": 6, "EFG": 57.9, "TS": 59.2, "GMSC": 15.4 }
+            ],
+            "clips": [
+              { "game": 0, "kind": "3PT", "t": "00:20:08:02", "src": "https://api.sportsvisio-api.com/media/7eee19f6-d62a-49e2-ab57-f268166296b2/73c8f19d-19a1-4933-9191-7f85fb008dd1/f15979fa-5375-4b8a-a055-510e842347df/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/7eee19f6-d62a-49e2-ab57-f268166296b2/73c8f19d-19a1-4933-9191-7f85fb008dd1/f15979fa-5375-4b8a-a055-510e842347df/clip.0000001.jpg" },
+              { "game": 0, "kind": "3PT", "t": "00:21:30:19", "src": "https://api.sportsvisio-api.com/media/7eee19f6-d62a-49e2-ab57-f268166296b2/73c8f19d-19a1-4933-9191-7f85fb008dd1/58e7f377-79f9-4326-9826-d896c0e7f832/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/7eee19f6-d62a-49e2-ab57-f268166296b2/73c8f19d-19a1-4933-9191-7f85fb008dd1/58e7f377-79f9-4326-9826-d896c0e7f832/clip.0000001.jpg" },
+              { "game": 0, "kind": "3PT", "t": "00:24:19:02", "src": "https://api.sportsvisio-api.com/media/7eee19f6-d62a-49e2-ab57-f268166296b2/73c8f19d-19a1-4933-9191-7f85fb008dd1/7ea8a47c-0e62-4bb3-87b0-200b4a9bf538/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/7eee19f6-d62a-49e2-ab57-f268166296b2/73c8f19d-19a1-4933-9191-7f85fb008dd1/7ea8a47c-0e62-4bb3-87b0-200b4a9bf538/clip.0000001.jpg" },
+              { "game": 0, "kind": "3PT", "t": "00:50:58:17", "src": "https://api.sportsvisio-api.com/media/7eee19f6-d62a-49e2-ab57-f268166296b2/adba41f2-9f21-476a-8e2b-e6aa12a40594/5cd553fe-436f-4e4b-ad91-c40279b8cd1d/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/7eee19f6-d62a-49e2-ab57-f268166296b2/adba41f2-9f21-476a-8e2b-e6aa12a40594/5cd553fe-436f-4e4b-ad91-c40279b8cd1d/clip.0000001.jpg" },
+              { "game": 2, "kind": "2PT", "t": "00:05:42:03", "src": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/73c8f19d-19a1-4933-9191-7f85fb008dd1/cbdb4a9c-c644-47df-9794-2cc937bb2a54/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/73c8f19d-19a1-4933-9191-7f85fb008dd1/cbdb4a9c-c644-47df-9794-2cc937bb2a54/clip.0000001.jpg" },
+              { "game": 2, "kind": "2PT", "t": "00:06:32:20", "src": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/73c8f19d-19a1-4933-9191-7f85fb008dd1/1500478d-0c16-4c41-9e6d-458e0843c62a/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/73c8f19d-19a1-4933-9191-7f85fb008dd1/1500478d-0c16-4c41-9e6d-458e0843c62a/clip.0000001.jpg" },
+              { "game": 2, "kind": "2PT", "t": "00:17:02:20", "src": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/73c8f19d-19a1-4933-9191-7f85fb008dd1/40302a97-aed7-4989-955e-98039efe5ff7/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/73c8f19d-19a1-4933-9191-7f85fb008dd1/40302a97-aed7-4989-955e-98039efe5ff7/clip.0000001.jpg" },
+              { "game": 2, "kind": "2PT", "t": "00:18:43:26", "src": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/73c8f19d-19a1-4933-9191-7f85fb008dd1/0c50e1bc-8aa5-40da-821d-050ef8f123f0/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/73c8f19d-19a1-4933-9191-7f85fb008dd1/0c50e1bc-8aa5-40da-821d-050ef8f123f0/clip.0000001.jpg" },
+              { "game": 2, "kind": "2PT", "t": "00:23:14:26", "src": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/73c8f19d-19a1-4933-9191-7f85fb008dd1/63ce44fb-297f-43cb-8ff9-16723e278703/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/73c8f19d-19a1-4933-9191-7f85fb008dd1/63ce44fb-297f-43cb-8ff9-16723e278703/clip.0000001.jpg" },
+              { "game": 2, "kind": "2PT", "t": "00:27:45:00", "src": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/c1b234c6-9093-4099-a31a-1ba4df910976/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/c1b234c6-9093-4099-a31a-1ba4df910976/clip.0000001.jpg" },
+              { "game": 2, "kind": "2PT", "t": "00:30:17:12", "src": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/3ecfd6ce-490f-4694-91f7-b337e14da5fe/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/3ecfd6ce-490f-4694-91f7-b337e14da5fe/clip.0000001.jpg" },
+              { "game": 2, "kind": "2PT", "t": "00:36:04:00", "src": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/f7f54923-54b2-4cc9-b566-87b296724f25/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/f7f54923-54b2-4cc9-b566-87b296724f25/clip.0000001.jpg" },
+              { "game": 2, "kind": "2PT", "t": "00:36:21:19", "src": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/3ca37e4a-64e9-4b64-b505-590e5516d46c/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/3ca37e4a-64e9-4b64-b505-590e5516d46c/clip.0000001.jpg" },
+              { "game": 2, "kind": "2PT", "t": "00:36:51:00", "src": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/dfb47759-b82e-46ed-9d59-ccc47fffda9b/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/dfb47759-b82e-46ed-9d59-ccc47fffda9b/clip.0000001.jpg" },
+              { "game": 2, "kind": "2PT", "t": "00:37:56:15", "src": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/e0fe5da8-ee74-4359-ad50-d58dbf88d29c/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/e0fe5da8-ee74-4359-ad50-d58dbf88d29c/clip.0000001.jpg" },
+              { "game": 2, "kind": "2PT", "t": "00:46:41:27", "src": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/ce66d891-5955-476c-a523-6b4c44f1c979/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/ce66d891-5955-476c-a523-6b4c44f1c979/clip.0000001.jpg" },
+              { "game": 2, "kind": "2PT", "t": "00:47:00:03", "src": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/4c64cc91-4bc4-4754-9e2c-b8abad2850d7/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/4c64cc91-4bc4-4754-9e2c-b8abad2850d7/clip.0000001.jpg" },
+              { "game": 2, "kind": "3PT", "t": "00:48:36:08", "src": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/f65dd916-2436-47f5-a361-9ee23e7787d5/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/f65dd916-2436-47f5-a361-9ee23e7787d5/clip.0000001.jpg" },
+              { "game": 2, "kind": "2PT", "t": "00:50:38:26", "src": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/85eb3725-61b4-4862-bc46-5db35547c023/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/43f80f55-b60f-4843-bf36-22298075003d/adba41f2-9f21-476a-8e2b-e6aa12a40594/85eb3725-61b4-4862-bc46-5db35547c023/clip.0000001.jpg" },
+              { "game": 3, "kind": "2PT", "t": "00:05:57:11", "src": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/73c8f19d-19a1-4933-9191-7f85fb008dd1/63b81054-b712-4623-b942-bfa31d6092b2/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/73c8f19d-19a1-4933-9191-7f85fb008dd1/63b81054-b712-4623-b942-bfa31d6092b2/clip.0000001.jpg" },
+              { "game": 3, "kind": "2PT", "t": "00:06:32:17", "src": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/73c8f19d-19a1-4933-9191-7f85fb008dd1/69d69332-e95b-469d-a8b6-c125eda3d518/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/73c8f19d-19a1-4933-9191-7f85fb008dd1/69d69332-e95b-469d-a8b6-c125eda3d518/clip.0000001.jpg" },
+              { "game": 3, "kind": "2PT", "t": "00:07:56:10", "src": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/73c8f19d-19a1-4933-9191-7f85fb008dd1/01ca27c6-6641-4d64-b825-a96a0f5d52ba/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/73c8f19d-19a1-4933-9191-7f85fb008dd1/01ca27c6-6641-4d64-b825-a96a0f5d52ba/clip.0000001.jpg" },
+              { "game": 3, "kind": "2PT", "t": "00:09:13:28", "src": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/73c8f19d-19a1-4933-9191-7f85fb008dd1/3fc233e8-165f-45f2-967f-6b75819482c6/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/73c8f19d-19a1-4933-9191-7f85fb008dd1/3fc233e8-165f-45f2-967f-6b75819482c6/clip.0000001.jpg" },
+              { "game": 3, "kind": "2PT", "t": "00:11:19:25", "src": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/73c8f19d-19a1-4933-9191-7f85fb008dd1/3f009926-a641-4bc7-b645-bc2a62568653/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/73c8f19d-19a1-4933-9191-7f85fb008dd1/3f009926-a641-4bc7-b645-bc2a62568653/clip.0000001.jpg" },
+              { "game": 3, "kind": "2PT", "t": "00:13:43:20", "src": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/73c8f19d-19a1-4933-9191-7f85fb008dd1/cd914df8-cdda-4c4a-9828-756bbc5cf27f/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/73c8f19d-19a1-4933-9191-7f85fb008dd1/cd914df8-cdda-4c4a-9828-756bbc5cf27f/clip.0000001.jpg" },
+              { "game": 3, "kind": "2PT", "t": "00:17:29:03", "src": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/73c8f19d-19a1-4933-9191-7f85fb008dd1/d668824f-7b56-4173-b0ee-a6c78850c47c/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/73c8f19d-19a1-4933-9191-7f85fb008dd1/d668824f-7b56-4173-b0ee-a6c78850c47c/clip.0000001.jpg" },
+              { "game": 3, "kind": "2PT", "t": "00:33:06:19", "src": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/adba41f2-9f21-476a-8e2b-e6aa12a40594/2bbe2848-a7a5-46bb-ad20-ade849200335/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/adba41f2-9f21-476a-8e2b-e6aa12a40594/2bbe2848-a7a5-46bb-ad20-ade849200335/clip.0000001.jpg" },
+              { "game": 3, "kind": "2PT", "t": "00:37:04:26", "src": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/adba41f2-9f21-476a-8e2b-e6aa12a40594/50c3767e-3c54-446a-8261-7aa2b65ad32e/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/adba41f2-9f21-476a-8e2b-e6aa12a40594/50c3767e-3c54-446a-8261-7aa2b65ad32e/clip.0000001.jpg" },
+              { "game": 3, "kind": "2PT", "t": "00:40:38:07", "src": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/adba41f2-9f21-476a-8e2b-e6aa12a40594/63ce9bb3-8d5a-43d1-9a6b-3cfda2b20dc3/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/adba41f2-9f21-476a-8e2b-e6aa12a40594/63ce9bb3-8d5a-43d1-9a6b-3cfda2b20dc3/clip.0000001.jpg" },
+              { "game": 3, "kind": "2PT", "t": "00:49:14:17", "src": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/adba41f2-9f21-476a-8e2b-e6aa12a40594/69af7fb3-ff28-4d88-b291-0cd5594227b9/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/5863a2bd-3b5c-4381-b83a-52769c9e9b18/adba41f2-9f21-476a-8e2b-e6aa12a40594/69af7fb3-ff28-4d88-b291-0cd5594227b9/clip.0000001.jpg" }
             ] }
         </script>
         <div class="trend-plot" data-trend-plot></div>
@@ -172,25 +203,25 @@
       <div class="card card-pad" data-spray-chart data-player="Marcus Bello" style="margin-bottom:var(--space-8)">
         <div class="row" style="justify-content:space-between;align-items:flex-start;margin-bottom:var(--space-4)">
           <div>
-            <h3>Shot Chart — 2026</h3>
-            <p class="muted" style="font-size:var(--text-xs);margin-top:4px;max-width:60ch">FG% from each zone vs. league average from that zone &mdash; red zones are hot, blue zones are cold, and the deeper the shade, the further he is from average. Every shot is plotted: <b>&#9679;</b> make, <b>&#10005;</b> miss &mdash; click any shot to watch it. <span data-spray-totals></span></p>
+            <h3>Shot Chart &mdash; Fall 2026</h3>
+            <p class="muted" style="font-size:var(--text-xs);margin-top:4px;max-width:60ch">His real Fall 2026 makes and attempts (FG 35-73, 3P 7-27), placed in zones by estimate &mdash; SportsVisio doesn't publish shot locations. FG% from each zone vs. league average from that zone &mdash; red zones are hot, blue zones are cold, and the deeper the shade, the further he is from average. Every shot is plotted: <b>&#9679;</b> make, <b>&#10005;</b> miss &mdash; click any shot to watch it. <span data-spray-totals></span></p>
           </div>
           <select class="input spray-filter" data-spray-filter aria-label="Shots to show"><option value="all">All shots</option><option value="makes">Makes only</option><option value="misses">Misses only</option><option value="none">Zones only</option></select>
         </div>
         <script type="application/json">
           { "zones": {
-            "ra":        { "fgm": 34, "fga": 52, "lg": 62.0 },
-            "paint":     { "fgm": 15, "fga": 27, "lg": 40.0 },
-            "midLBase":  { "fgm": 5,  "fga": 11, "lg": 38.0 },
-            "midLElb":   { "fgm": 4,  "fga": 14, "lg": 39.0 },
-            "midTop":    { "fgm": 7,  "fga": 14, "lg": 40.0 },
-            "midRElb":   { "fgm": 7,  "fga": 18, "lg": 40.0 },
-            "midRBase":  { "fgm": 3,  "fga": 8,  "lg": 38.0 },
-            "c3L":       { "fgm": 5,  "fga": 11, "lg": 36.0 },
-            "w3L":       { "fgm": 4,  "fga": 14, "lg": 33.0 },
-            "t3":        { "fgm": 7,  "fga": 20, "lg": 33.0 },
-            "w3R":       { "fgm": 7,  "fga": 13, "lg": 33.0 },
-            "c3R":       { "fgm": 1,  "fga": 5,  "lg": 36.0 }
+            "ra":        { "fgm": 14, "fga": 19, "lg": 62.0 },
+            "paint":     { "fgm": 6, "fga": 10, "lg": 40.0 },
+            "midLBase":  { "fgm": 1,  "fga": 3, "lg": 38.0 },
+            "midLElb":   { "fgm": 2,  "fga": 4, "lg": 39.0 },
+            "midTop":    { "fgm": 2,  "fga": 4, "lg": 40.0 },
+            "midRElb":   { "fgm": 2,  "fga": 4, "lg": 40.0 },
+            "midRBase":  { "fgm": 1,  "fga": 2,  "lg": 38.0 },
+            "c3L":       { "fgm": 1,  "fga": 4, "lg": 36.0 },
+            "w3L":       { "fgm": 2,  "fga": 7, "lg": 33.0 },
+            "t3":        { "fgm": 2,  "fga": 8, "lg": 33.0 },
+            "w3R":       { "fgm": 2,  "fga": 6, "lg": 33.0 },
+            "c3R":       { "fgm": 0,  "fga": 2,  "lg": 36.0 }
           } }
         </script>
         <div class="spray-layout">
@@ -217,12 +248,12 @@
     <div id="p-gamelog" class="tabpanel" role="tabpanel" aria-labelledby="t-gamelog" hidden>
       <div class="card card-pad gamelog-card" style="margin-bottom:var(--space-8)">
         <div class="pergame-head">
-          <h3>Game Log <span class="muted" style="font-weight:400;font-size:var(--text-sm)">2026 Regular Season</span></h3>
+          <h3>Game Log <span class="muted" style="font-weight:400;font-size:var(--text-sm)">Fall 2026 &middot; SportsVisio</span></h3>
           <span class="muted" style="font-size:var(--text-xs)">Scroll sideways for every column &middot; hover a heading for its full name</span>
         </div>
         <div data-gamelog data-game-href="game.html"></div>
         <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">
-      Every game he played this season, oldest first. The bottom row is his season average, which matches the Per Game table.
+      His Fall 2026 games from the SportsVisio game log, oldest first; the bottom row is his per-game average. Minutes weren't recorded for the Nov 4 and Nov 11 games (&mdash;). Underlined numbers open those plays in the Film Room.
       </p>
       </div>
     </div>
@@ -230,12 +261,12 @@
     <div id="p-video" class="tabpanel" role="tabpanel" aria-labelledby="t-video" hidden>
       <div class="card card-pad film-library" id="film-room" data-film-library data-player="Marcus Bello" style="margin-bottom:var(--space-8)">
         <div class="film-lib-head">
-          <h3>Film Room <span class="muted" style="font-weight:400;font-size:var(--text-sm)">2026 season</span></h3>
-          <p class="muted">Every tagged play from his season. Pick a play type to search, narrow it by game or keyword, then click any result to watch it.</p>
+          <h3>Film Room <span class="muted" style="font-weight:400;font-size:var(--text-sm)">Fall 2026 &middot; SportsVisio</span></h3>
+          <p class="muted">His real game film from SportsVisio &mdash; so far that's made shots only. Pick a play type to search, narrow it by game or keyword, then click any result to watch it.</p>
         </div>
-        <!-- Season totals for the non-shot play types (2026: REB 59 incl. 15 offensive, AST 43, STL 18, BLK 6, TOV 25, PF 29).
-             Made/missed shots come straight from the shot chart, so they always match it. -->
-        <script type="application/json">{ "plays": { "Rebound": 59, "Assist": 43, "Steal": 18, "Block": 6, "Turnover": 25, "Foul": 29 }, "offensiveRebounds": 15 }</script>
+        <!-- Real data: the 30 SportsVisio made-shot clips live in the trend chart's JSON ("clips") and replace this placeholder library.
+             Other play types have no film yet, so their counts stay empty. -->
+        <script type="application/json">{ "plays": {} }</script>
         <div class="film-type-chips" role="group" aria-label="Play type" data-film-types></div>
         <div class="film-lib-controls">
           <div class="field"><label for="film-game">Game</label><select id="film-game" class="input" data-film-game></select></div>
@@ -245,7 +276,7 @@
         <p class="film-lib-status" data-film-status aria-live="polite"></p>
         <div class="film-results" data-film-results></div>
         <div class="film-more"><button type="button" class="btn btn-outline" data-film-more>Show more</button></div>
-        <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-4)">Clips are auto-tagged by the AI video agent once a game's stats sync is published. Placeholder film shown for the prototype.</p>
+        <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-4)">Clips are SportsVisio's auto-tagged made baskets from each game's film.</p>
       </div>
     </div>
 
@@ -271,6 +302,6 @@
   </div>
   <div class="footer-bottom"><span>© 2026 Smithtown Gospel Tabernacle Basketball League</span></div>
 </footer>
-<script src="assets/js/interactions.js?v=20261115e"></script>
+<script src="assets/js/interactions.js?v=20261116c"></script>
 </body>
 </html>
