@@ -38,6 +38,17 @@ $extraCss = @'
 .fr-cams button[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
 .pbp-row.pbp-note { color: var(--text-muted); font-style: italic; }
 .gc-home .gc-winner::before { content: "\25B8"; font-size: .5em; vertical-align: middle; margin-right: 6px; }
+/* Shot chart (placeholder locations) */
+.sc-tag { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px; background: var(--surface-alt); border: 1px solid var(--border-strong); color: var(--text-muted); font-family: var(--font-body, inherit); font-size: 10px; font-weight: 700; letter-spacing: .3px; vertical-align: middle; text-transform: uppercase; }
+.sc-filters { display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center; }
+.sc-select { width: auto; padding-top: 4px; padding-bottom: 4px; font-size: var(--text-xs); }
+.sc-court svg { display: block; width: 100%; height: auto; }
+.sc-court .court { fill: var(--surface-alt); stroke: var(--border-strong); stroke-width: 2; }
+.sc-court .ln { fill: none; stroke: var(--border-strong); stroke-width: 2; }
+.sc-court .shot { cursor: default; }
+.sc-court .shot.has-film { cursor: pointer; }
+.sc-court .shot.dim { opacity: .12; }
+.sc-court .shot.hot circle.ring { stroke: var(--text-primary); stroke-width: 3; }
 .gc-note { font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-2); }
 '@
 $css = $baseCss.TrimEnd() + $nl + (N $extraCss).TrimEnd()
@@ -210,6 +221,32 @@ $(TeamSide $homeT $homeScore $false (-not $awayWon))
   if ($ftNote) { $evJson = $evJson.TrimEnd(']') + ",`n" + '{"t":null,"tm":null,"p":null,"d":"Free throws weren''t tagged on film for this game: ' + "$($TJ.code) +$($g.score[0] - $replay[0]), $($O.code) +$($g.score[1] - $replay[1])" + ' to the final","v":0,"s":[' + $g.score[0] + ',' + $g.score[1] + '],"src":null}]' }
   $camJson = ($cams | ForEach-Object { '{"label":"' + $_.label + '","id":"' + $_.id + '","url":"' + $_.url + '"}' }) -join ','
   $meta = '{"tj":{"code":"TJ","name":"Team Jeremy","color":"' + $TJ.color + '"},"opp":{"code":"' + $O.code + '","name":"' + $O.name + '","color":"' + $O.color + '"},"final":[' + $g.score[0] + ',' + $g.score[1] + '],"cams":[' + $camJson + '],"defaultCam":' + $g.defaultCam + ',"fullLen":"' + $fullLen + '","title":"' + $title + '","dateDay":"' + $g.dateDay + '"' + $(if ($ftNote) { ',"ftNote":"' + $ftNote.Replace("'", '\u0027') + '"' }) + '}'
+  # ---- shot chart data: every field-goal attempt from the box score, by player; tagged shots carry their clip ----
+  $shotRows = @()
+  foreach ($side in 'TJ', 'OPP') {
+    $code = if ($side -eq 'TJ') { 'TJ' } else { $O.code }
+    $agg = [ordered]@{}
+    foreach ($r in $g.box.$side) {
+      $nm = $r[0] -replace ' \(2nd listing\)$', ''
+      if (-not $agg.Contains($nm)) { $agg[$nm] = @(0, 0, 0, 0) }   # made 2, missed 2, made 3, missed 3
+      $fgx = MA $r[9]; $t3x = MA $r[10]
+      $agg[$nm][0] += $fgx[0] - $t3x[0]; $agg[$nm][1] += ($fgx[1] - $t3x[1]) - ($fgx[0] - $t3x[0]); $agg[$nm][2] += $t3x[0]; $agg[$nm][3] += $t3x[1] - $t3x[0]
+    }
+    foreach ($nm in $agg.Keys) {
+      $evs = @($events | Where-Object { $_.tm -eq $code -and $_.p -eq $nm })
+      foreach ($kind in @(@(2, 1, 0, 'makes 2-point'), @(2, 0, 1, 'misses 2-point'), @(3, 1, 2, 'makes 3-pointer'), @(3, 0, 3, 'misses 3-pointer'))) {
+        $tagged = @($evs | Where-Object { $_.d -like "$($kind[3])*" })
+        $need = $agg[$nm][$kind[2]]
+        for ($si = 0; $si -lt $need; $si++) {
+          $sj = '{"tm":"' + $code + '","p":"' + $nm + '","k":' + $kind[0] + ',"m":' + $kind[1]
+          if ($si -lt $tagged.Count) { $sj += ',"t":"' + $tagged[$si].t + '","src":"' + $tagged[$si].src + '"' }
+          $shotRows += $sj + '}'
+        }
+      }
+    }
+  }
+  $shotsJson = '[' + ($shotRows -join ",`n") + ']'
+  $nShots = $shotRows.Count; $nShotClips = @($shotRows | Where-Object { $_ -match '"src"' }).Count
   $nEvents = @($events).Count; $nScore = @($events | Where-Object { $_.v -gt 0 }).Count
   $pbpNote = if ($ftNote) { "Every field goal is here, but <b>free throws weren't tagged on film for this game</b> &mdash; the running score counts field goals only until the last row adds them to reach the $($g.score[0])&ndash;$($g.score[1]) final. Misses, rebounds and other plays are only partly tagged." } else { "Every basket and free throw is here (the running score reaches the $($g.score[0])&ndash;$($g.score[1]) final), plus the misses, rebounds, fouls, steals and other plays SportsVisio tagged on film &mdash; most misses and rebounds aren't tagged." }
   $wpNote = "<b>Game Flow</b> is the real running score from SportsVisio's tagged scoring plays$(if ($ftNote) { " (field goals only &mdash; this game's free throws weren't tagged, so it reaches the final only at the end)" }). <b>Win probability is an estimate</b> from the score margin and how much of the game film has played (no game clock is recorded), using a standard margin-and-time model."
@@ -273,6 +310,22 @@ $($lr -join $nl)
             <a class="btn btn-outline btn-sm gc-more" href="#p-pbp" data-open-tab="t-pbp">Full Play-by-Play</a>
           </section>
 
+          <section class="card gc-card" aria-labelledby="gc-sc-h" data-sc>
+            <div class="wp-top">
+              <h2 class="gc-h" id="gc-sc-h" style="margin:0">Shot Chart <span class="sc-tag">Placeholder</span></h2>
+              <div class="sc-filters">
+                <div class="wp-toggle" role="group" aria-label="Team">
+                  <button type="button" aria-pressed="true" data-sc-team="">Both</button><button type="button" aria-pressed="false" data-sc-team="TJ">TJ</button><button type="button" aria-pressed="false" data-sc-team="$($O.code)">$($O.code)</button>
+                </div>
+                <select class="input sc-select" data-sc-result aria-label="Shot result"><option value="">Makes &amp; misses</option><option value="1">Makes</option><option value="0">Misses</option></select>
+                <select class="input sc-select" data-sc-player aria-label="Player"><option value="">All players</option></select>
+              </div>
+            </div>
+            <div class="wp-legend" data-sc-legend></div>
+            <div class="sc-court" data-sc-court></div>
+            <p class="wp-readout" data-sc-readout aria-live="polite">Hover a shot for details &middot; click a shot with film to watch it.</p>
+            <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-2)"><b>Shot locations are placeholders.</b> All $nShots field-goal attempts from the box score are plotted &mdash; the right players, makes, misses, 2s and 3s &mdash; but where each one was taken is estimated, because SportsVisio doesn't record shot locations. $nShotClips of them have film (solid outline); Team Jeremy shoots at the left basket.</p>
+          </section>
           <section class="card gc-card" aria-labelledby="gc-ts-h">
             <h2 class="gc-h" id="gc-ts-h">Team Stats</h2>
             <div class="gc-stat-head"><span><i class="gc-dot" style="background:$($TJ.color)"></i>TJ</span><span><i class="gc-dot" style="background:$($O.color)"></i>$($O.code)</span></div>
@@ -384,6 +437,9 @@ $(($core + $more) -join $nl)
     </div>
 
     <script type="application/json" id="game-meta">$meta</script>
+    <script type="application/json" id="shots-data">
+$shotsJson
+    </script>
     <script type="application/json" id="pbp-data">
 $evJson
     </script>

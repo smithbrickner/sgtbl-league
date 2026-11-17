@@ -208,6 +208,17 @@
 .fr-cams button[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
 .pbp-row.pbp-note { color: var(--text-muted); font-style: italic; }
 .gc-home .gc-winner::before { content: "\25B8"; font-size: .5em; vertical-align: middle; margin-right: 6px; }
+/* Shot chart (placeholder locations) */
+.sc-tag { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px; background: var(--surface-alt); border: 1px solid var(--border-strong); color: var(--text-muted); font-family: var(--font-body, inherit); font-size: 10px; font-weight: 700; letter-spacing: .3px; vertical-align: middle; text-transform: uppercase; }
+.sc-filters { display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center; }
+.sc-select { width: auto; padding-top: 4px; padding-bottom: 4px; font-size: var(--text-xs); }
+.sc-court svg { display: block; width: 100%; height: auto; }
+.sc-court .court { fill: var(--surface-alt); stroke: var(--border-strong); stroke-width: 2; }
+.sc-court .ln { fill: none; stroke: var(--border-strong); stroke-width: 2; }
+.sc-court .shot { cursor: default; }
+.sc-court .shot.has-film { cursor: pointer; }
+.sc-court .shot.dim { opacity: .12; }
+.sc-court .shot.hot circle.ring { stroke: var(--text-primary); stroke-width: 3; }
 .gc-note { font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-2); }
 /* portal: the nav sidebar takes ~260px, so stack the Gamecast sidebar, film room and score header sooner */
 @media (max-width: 1240px) {
@@ -353,6 +364,22 @@
               <a class="btn btn-outline btn-sm gc-more" href="#p-pbp" data-open-tab="t-pbp">Full Play-by-Play</a>
             </section>
 
+            <section class="card gc-card" aria-labelledby="gc-sc-h" data-sc>
+              <div class="wp-top">
+                <h2 class="gc-h" id="gc-sc-h" style="margin:0">Shot Chart <span class="sc-tag">Placeholder</span></h2>
+                <div class="sc-filters">
+                  <div class="wp-toggle" role="group" aria-label="Team">
+                    <button type="button" aria-pressed="true" data-sc-team="">Both</button><button type="button" aria-pressed="false" data-sc-team="TJ">TJ</button><button type="button" aria-pressed="false" data-sc-team="TP">TP</button>
+                  </div>
+                  <select class="input sc-select" data-sc-result aria-label="Shot result"><option value="">Makes &amp; misses</option><option value="1">Makes</option><option value="0">Misses</option></select>
+                  <select class="input sc-select" data-sc-player aria-label="Player"><option value="">All players</option></select>
+                </div>
+              </div>
+              <div class="wp-legend" data-sc-legend></div>
+              <div class="sc-court" data-sc-court></div>
+              <p class="wp-readout" data-sc-readout aria-live="polite">Hover a shot for details &middot; click a shot with film to watch it.</p>
+              <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-2)"><b>Shot locations are placeholders.</b> All 125 field-goal attempts from the box score are plotted &mdash; the right players, makes, misses, 2s and 3s &mdash; but where each one was taken is estimated, because SportsVisio doesn't record shot locations. 54 of them have film (solid outline); Team Jeremy shoots at the left basket.</p>
+            </section>
             <section class="card gc-card" aria-labelledby="gc-ts-h">
               <h2 class="gc-h" id="gc-ts-h">Team Stats</h2>
               <div class="gc-stat-head"><span><i class="gc-dot" style="background:var(--team-knicks-bg)"></i>TJ</span><span><i class="gc-dot" style="background:var(--team-wolves-bg)"></i>TP</span></div>
@@ -521,6 +548,133 @@
       </div>
 
       <script type="application/json" id="game-meta">{"tj":{"code":"TJ","name":"Team Jeremy","color":"var(--team-knicks-bg)"},"opp":{"code":"TP","name":"Team Paul","color":"var(--team-wolves-bg)"},"final":[64,71],"cams":[{"label":"Camera 1","id":"84b3330d-e3c2-4933-a437-61b03a6da27f","url":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/transcoded/full.mp4"},{"label":"Camera 2","id":"e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd","url":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/transcoded/full.mp4"}],"defaultCam":0,"fullLen":"1:02:42","title":"Team Jeremy at Team Paul","dateDay":"Thu, Oct 29","ftNote":"free throws weren\u0027t tagged on film for this game (TJ 6, TP 8)"}</script>
+      <script type="application/json" id="shots-data">
+  [{"tm":"TJ","p":"Bryson Brown","k":2,"m":1,"t":"00:08:19:18","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/b8276ecf-11d0-4258-ab42-79d8b69b9900/clip.mp4"},
+  {"tm":"TJ","p":"Bryson Brown","k":2,"m":1,"t":"00:20:13:21","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/dc778d02-e0a4-4564-8439-2e6316d5fb43/clip.mp4"},
+  {"tm":"TJ","p":"Bryson Brown","k":2,"m":1,"t":"00:23:47:01","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/66a21d2d-d552-4863-a31f-1e3d845ead38/clip.mp4"},
+  {"tm":"TJ","p":"Bryson Brown","k":2,"m":1,"t":"00:32:07:21","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/84e49599-327e-46ff-af7a-31a597ef4904/clip.mp4"},
+  {"tm":"TJ","p":"Bryson Brown","k":2,"m":1,"t":"00:54:59:22","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/741aa366-b3e4-4981-b3f0-bb2729bac88f/clip.mp4"},
+  {"tm":"TJ","p":"Bryson Brown","k":2,"m":0},
+  {"tm":"TJ","p":"Bryson Brown","k":2,"m":0},
+  {"tm":"TJ","p":"Bryson Brown","k":2,"m":0},
+  {"tm":"TJ","p":"Bryson Brown","k":2,"m":0},
+  {"tm":"TJ","p":"Bryson Brown","k":3,"m":1,"t":"00:08:51:05","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/8e724ac3-c2c2-4c5a-8c53-5fb3f19e0ecb/clip.mp4"},
+  {"tm":"TJ","p":"Bryson Brown","k":3,"m":1,"t":"00:48:19:22","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/072e3c50-ed29-41f9-81bd-97887d3d2a44/clip.mp4"},
+  {"tm":"TJ","p":"Bryson Brown","k":3,"m":1,"t":"00:51:54:04","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/c5d958a7-319d-4c50-9a3a-e6db970367ca/clip.mp4"},
+  {"tm":"TJ","p":"Bryson Brown","k":3,"m":0},
+  {"tm":"TJ","p":"Bryson Brown","k":3,"m":0},
+  {"tm":"TJ","p":"Bryson Brown","k":3,"m":0},
+  {"tm":"TJ","p":"Bryson Brown","k":3,"m":0},
+  {"tm":"TJ","p":"Bryson Brown","k":3,"m":0},
+  {"tm":"TJ","p":"Bryson Brown","k":3,"m":0},
+  {"tm":"TJ","p":"Bryson Brown","k":3,"m":0},
+  {"tm":"TJ","p":"Jeremy Jones","k":2,"m":1,"t":"00:25:51:02","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/77bdfa66-5875-4697-82cb-5f99dd7c5ee0/clip.mp4"},
+  {"tm":"TJ","p":"Jeremy Jones","k":2,"m":1,"t":"00:50:03:17","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/fe66b694-d1e7-4e9b-961e-fba36e743e83/clip.mp4"},
+  {"tm":"TJ","p":"Jeremy Jones","k":2,"m":0},
+  {"tm":"TJ","p":"Jeremy Jones","k":2,"m":0},
+  {"tm":"TJ","p":"Jeremy Jones","k":2,"m":0},
+  {"tm":"TJ","p":"Jeremy Jones","k":2,"m":0},
+  {"tm":"TJ","p":"Jeremy Jones","k":3,"m":1,"t":"00:12:27:29","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/a1f44aea-7575-47b4-8302-6070c8ce5ea1/clip.mp4"},
+  {"tm":"TJ","p":"Jeremy Jones","k":3,"m":1,"t":"00:53:00:17","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/971c97cd-8703-44d1-ba2b-8c7a8c4c74fe/clip.mp4"},
+  {"tm":"TJ","p":"Jeremy Jones","k":3,"m":1,"t":"00:53:58:09","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/33481e4e-42ed-46c2-910c-eaab9278c5dc/clip.mp4"},
+  {"tm":"TJ","p":"Jeremy Jones","k":3,"m":0},
+  {"tm":"TJ","p":"Jeremy Jones","k":3,"m":0},
+  {"tm":"TJ","p":"Jeremy Jones","k":3,"m":0},
+  {"tm":"TJ","p":"Jeremy Jones","k":3,"m":0},
+  {"tm":"TJ","p":"Teron Bolton","k":2,"m":1,"t":"00:05:21:03","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/a6adf9be-4f6a-49db-8cee-e3a36c0a9fe7/clip.mp4"},
+  {"tm":"TJ","p":"Teron Bolton","k":2,"m":0},
+  {"tm":"TJ","p":"Teron Bolton","k":2,"m":0},
+  {"tm":"TJ","p":"Teron Bolton","k":3,"m":1,"t":"00:19:52:14","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/0aeb4804-4b08-4292-8cd6-1cf968cc7c7f/clip.mp4"},
+  {"tm":"TJ","p":"Teron Bolton","k":3,"m":1,"t":"00:23:11:27","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/8bb7088d-d244-4262-8429-4b6d8a59db22/clip.mp4"},
+  {"tm":"TJ","p":"Teron Bolton","k":3,"m":1,"t":"01:00:22:10","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/35c5ce70-5334-4606-955a-b8981afb8665/clip.mp4"},
+  {"tm":"TJ","p":"Teron Bolton","k":3,"m":0},
+  {"tm":"TJ","p":"Santonio Martin","k":2,"m":1,"t":"00:04:53:07","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/e7a79150-70dc-4d16-8a32-3d90486aa1b7/clip.mp4"},
+  {"tm":"TJ","p":"Santonio Martin","k":2,"m":1,"t":"00:39:22:22","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/148bfa68-3b6a-450f-a7ad-e655246f7254/clip.mp4"},
+  {"tm":"TJ","p":"Santonio Martin","k":2,"m":1,"t":"00:47:49:16","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/c11c9b34-0e1d-4cf3-821b-fc928ce33952/clip.mp4"},
+  {"tm":"TJ","p":"Santonio Martin","k":2,"m":0},
+  {"tm":"TJ","p":"Santonio Martin","k":2,"m":0},
+  {"tm":"TJ","p":"Santonio Martin","k":2,"m":0},
+  {"tm":"TJ","p":"Santonio Martin","k":3,"m":0},
+  {"tm":"TJ","p":"Player #22","k":2,"m":0},
+  {"tm":"TJ","p":"Player #22","k":2,"m":0},
+  {"tm":"TJ","p":"Player #22","k":2,"m":0},
+  {"tm":"TJ","p":"Player #22","k":3,"m":1,"t":"00:22:40:23","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/4ca83049-e79a-498e-a5df-68b4780a1ad3/clip.mp4"},
+  {"tm":"TJ","p":"Player #22","k":3,"m":1,"t":"00:25:06:19","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/e69f443f-327b-4540-8c74-834731a3e89f/clip.mp4"},
+  {"tm":"TJ","p":"Player #22","k":3,"m":0},
+  {"tm":"TJ","p":"Player #22","k":3,"m":0},
+  {"tm":"TJ","p":"Player #22","k":3,"m":0},
+  {"tm":"TJ","p":"Jeff Pritchard","k":3,"m":1,"t":"00:34:09:09","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/c17a0376-0dc9-4edc-92fd-ec8f56eacab6/clip.mp4"},
+  {"tm":"TJ","p":"Jeff Pritchard","k":3,"m":0},
+  {"tm":"TJ","p":"Jeff Pritchard","k":3,"m":0},
+  {"tm":"TJ","p":"Jeff Pritchard","k":3,"m":0},
+  {"tm":"TJ","p":"Jeff Pritchard","k":3,"m":0},
+  {"tm":"TJ","p":"Jermiah Johnson","k":3,"m":0},
+  {"tm":"TJ","p":"Jermiah Johnson","k":3,"m":0},
+  {"tm":"TJ","p":"Jermiah Johnson","k":3,"m":0},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":1,"t":"00:18:14:07","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/ae2d7646-11dc-4067-b1a9-415ac04612ad/clip.mp4"},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":1,"t":"00:38:43:11","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/1bf3342a-94cc-498e-9380-8e5950f3da52/clip.mp4"},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":1,"t":"00:42:01:11","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/8cc74f7b-706b-4fba-b238-1cf6f98a57d8/clip.mp4"},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":1,"t":"00:42:28:09","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/803d3e8d-5019-4975-b6b3-1f70691c862c/clip.mp4"},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":1,"t":"00:52:24:23","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/91a617ec-3b5a-4a23-8c60-1e72bff3aaaf/clip.mp4"},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":1,"t":"00:52:51:22","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/aca89176-f9eb-440f-a241-64ed139e0066/clip.mp4"},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":1,"t":"00:54:33:20","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/6a129ad6-0261-46ae-91d9-c027ba28adae/clip.mp4"},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":1,"t":"00:55:24:18","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/456f947e-6911-413b-84b2-e47a2173157d/clip.mp4"},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":0},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":0},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":0},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":0},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":0},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":0},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":0},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":0},
+  {"tm":"TP","p":"Champ Grayson","k":2,"m":0},
+  {"tm":"TP","p":"Champ Grayson","k":3,"m":1,"t":"00:22:24:17","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/aed44cb0-720c-45de-a364-460694078174/clip.mp4"},
+  {"tm":"TP","p":"Champ Grayson","k":3,"m":0},
+  {"tm":"TP","p":"Champ Grayson","k":3,"m":0},
+  {"tm":"TP","p":"Champ Grayson","k":3,"m":0},
+  {"tm":"TP","p":"Paul Starr","k":2,"m":1,"t":"00:07:31:20","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/1e3072c2-2309-4f13-aa00-518d6413c169/clip.mp4"},
+  {"tm":"TP","p":"Paul Starr","k":2,"m":1,"t":"00:23:30:13","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/18573ff4-505f-4a03-ad05-5834a7ab5d9f/clip.mp4"},
+  {"tm":"TP","p":"Paul Starr","k":2,"m":1,"t":"00:34:51:19","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/37d7e990-f86a-4edf-b9fa-bc0bb97f9c2d/clip.mp4"},
+  {"tm":"TP","p":"Paul Starr","k":2,"m":1,"t":"00:38:13:08","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/8cc8d228-a17c-4433-9cac-6cf001aedeb4/clip.mp4"},
+  {"tm":"TP","p":"Paul Starr","k":2,"m":0},
+  {"tm":"TP","p":"Paul Starr","k":2,"m":0},
+  {"tm":"TP","p":"Paul Starr","k":2,"m":0},
+  {"tm":"TP","p":"Paul Starr","k":2,"m":0},
+  {"tm":"TP","p":"Paul Starr","k":3,"m":1,"t":"00:05:02:09","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/f02caec2-2180-4aaa-b99a-1870bcddcabc/clip.mp4"},
+  {"tm":"TP","p":"Paul Starr","k":3,"m":1,"t":"00:06:45:15","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/0cf1617a-0b19-4197-8393-66cd8e8afa76/clip.mp4"},
+  {"tm":"TP","p":"Paul Starr","k":3,"m":1,"t":"00:14:33:15","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/76de29ce-5931-4503-8eae-f16a3934b095/clip.mp4"},
+  {"tm":"TP","p":"Paul Starr","k":3,"m":1,"t":"00:16:02:22","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/d5254283-6025-4aeb-9ed2-7e5de78009e7/clip.mp4"},
+  {"tm":"TP","p":"Paul Starr","k":3,"m":0},
+  {"tm":"TP","p":"Paul Starr","k":3,"m":0},
+  {"tm":"TP","p":"Paul Starr","k":3,"m":0},
+  {"tm":"TP","p":"Player #7","k":2,"m":1,"t":"00:33:33:08","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/bfb48e36-48ca-41f6-aa68-23eb7ddc2152/clip.mp4"},
+  {"tm":"TP","p":"Player #7","k":2,"m":0},
+  {"tm":"TP","p":"Player #7","k":3,"m":1,"t":"00:09:09:01","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/3b015563-80f0-4021-9a94-c8734aa5f90f/clip.mp4"},
+  {"tm":"TP","p":"Player #7","k":3,"m":1,"t":"00:12:10:03","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/ba3a4b38-0056-4f93-ab04-d9240ae218e1/clip.mp4"},
+  {"tm":"TP","p":"Player #7","k":3,"m":1,"t":"00:12:43:28","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/4f9e56c7-0d05-4c58-8e93-36a590d5eb20/clip.mp4"},
+  {"tm":"TP","p":"Player #7","k":3,"m":1,"t":"00:38:56:19","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/01610a03-8ae8-4e28-9359-ebaf7e46e7c4/clip.mp4"},
+  {"tm":"TP","p":"Player #7","k":3,"m":0},
+  {"tm":"TP","p":"Player #7","k":3,"m":0},
+  {"tm":"TP","p":"Player #7","k":3,"m":0},
+  {"tm":"TP","p":"Player #7","k":3,"m":0},
+  {"tm":"TP","p":"Player #98","k":2,"m":1,"t":"00:08:02:19","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/0498faea-464a-4672-9ff1-15ec20d6e9ec/clip.mp4"},
+  {"tm":"TP","p":"Player #98","k":2,"m":1,"t":"00:19:12:09","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/ada74c1e-f7d1-47ac-b6d8-60148113ecad/clip.mp4"},
+  {"tm":"TP","p":"Player #98","k":2,"m":1,"t":"00:53:18:20","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/76985219-fcc0-428b-8709-e6cebf1eb48f/clip.mp4"},
+  {"tm":"TP","p":"Player #98","k":2,"m":0},
+  {"tm":"TP","p":"Player #98","k":2,"m":0},
+  {"tm":"TP","p":"Player #98","k":2,"m":0},
+  {"tm":"TP","p":"Player #98","k":2,"m":0},
+  {"tm":"TP","p":"Player #98","k":2,"m":0},
+  {"tm":"TP","p":"Player #98","k":3,"m":0},
+  {"tm":"TP","p":"Player #25","k":2,"m":1,"t":"00:05:37:15","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/45d51b38-47bb-4bef-9b4e-68475f4a0392/clip.mp4"},
+  {"tm":"TP","p":"Player #25","k":2,"m":0},
+  {"tm":"TP","p":"Player #25","k":2,"m":0},
+  {"tm":"TP","p":"Seon J","k":2,"m":1,"t":"00:09:41:01","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/10535303-f4c6-4750-95e9-40bdd4273f1d/clip.mp4"},
+  {"tm":"TP","p":"Seon J","k":2,"m":0,"t":"00:15:46:06","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/3fd90633-85a9-4876-8958-2b0e2b65c102/clip.mp4"},
+  {"tm":"TP","p":"Seon J","k":2,"m":0,"t":"00:20:06:14","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/a97e9e66-8a9f-44b7-a57d-059dca9474ee/clip.mp4"},
+  {"tm":"TP","p":"Seon J","k":2,"m":0,"t":"00:21:44:01","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/1a1502f2-e689-4285-bcdd-4aa43948c080/clip.mp4"},
+  {"tm":"TP","p":"Seon J","k":3,"m":0,"t":"00:56:29:02","src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/9e7a2f49-7934-458f-94d9-7e0c1517443a/clip.mp4"}]
+      </script>
       <script type="application/json" id="pbp-data">
   [{"t":"00:04:53:07","tm":"TJ","p":"Santonio Martin","d":"makes 2-point shot","v":2,"s":[2,0],"src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/e7a79150-70dc-4d16-8a32-3d90486aa1b7/clip.mp4"},
   {"t":"00:05:02:09","tm":"TP","p":"Paul Starr","d":"makes 3-pointer","v":3,"s":[2,3],"src":"https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/f02caec2-2180-4aaa-b99a-1870bcddcabc/clip.mp4"},
@@ -823,6 +977,68 @@
     });
     fPlayer.addEventListener("change", render);
     fullTitle(); render();
+  }
+// --- Shot chart (placeholder locations): every FGA from the box score on a full court; Team Jeremy shoots at the left basket ---
+  var sc = document.querySelector("[data-sc]"), shotsEl = document.getElementById("shots-data");
+  if (sc && shotsEl) {
+    var shots = JSON.parse(shotsEl.textContent), court = sc.querySelector("[data-sc-court]"), sRead = sc.querySelector("[data-sc-readout]");
+    var sTeam = "", sRes = sc.querySelector("[data-sc-result]"), sPl = sc.querySelector("[data-sc-player]");
+    // deterministic placement (seeded by game + shot index): 2s inside the arc weighted toward the rim, 3s just beyond the line
+    var seed = 0; (M.title + M.dateDay).split("").forEach(function (ch) { seed = (seed * 31 + ch.charCodeAt(0)) >>> 0; });
+    function rng(n) { var t = (seed + n * 0x9E3779B9) >>> 0; return function () { t = (t + 0x6D2B79F5) >>> 0; var r = Math.imul(t ^ (t >>> 15), 1 | t); r = (r + Math.imul(r ^ (r >>> 7), 61 | r)) ^ r; return ((r ^ (r >>> 14)) >>> 0) / 4294967296; }; }
+    function isThree(dx, dy) { return dx <= 8.75 ? Math.abs(dy) >= 22 : Math.sqrt(dx * dx + dy * dy) >= 23.75; }
+    shots.forEach(function (s, i) {
+      var r = rng(i + 1), dx = 0, dy = 0;
+      for (var tries = 0; tries < 200; tries++) {
+        var th = (r() * 2 - 1) * (s.k === 3 ? 1.54 : 1.48), u = r(), dist;
+        if (s.k === 3) dist = 23.9 + r() * 3.2; else dist = u < 0.5 ? r() * 6 : u < 0.78 ? 6 + r() * 8 : 14 + r() * 8.5;
+        dx = dist * Math.cos(th); dy = dist * Math.sin(th);
+        if (Math.abs(dy) < 24.2 && dx > -3.5 && (s.k === 3 ? isThree(dx, dy) && dx < 30 : !isThree(dx, dy))) break;
+      }
+      var left = s.tm === A; s.cx = left ? 52.5 + dx * 10 : 887.5 - dx * 10; s.cy = 250 + dy * 10;
+    });
+    var pl = {}; shots.forEach(function (s) { pl[s.tm + "|" + s.p] = true; });
+    Object.keys(pl).sort().forEach(function (k) { var o = document.createElement("option"); o.value = k; o.textContent = k.split("|")[1] + " (" + k.split("|")[0] + ")"; sPl.appendChild(o); });
+    function half(flip) {
+      var X = function (x) { return flip ? 940 - x : x; }, sweep = flip ? 0 : 1;
+      return '<rect class="ln" x="' + Math.min(X(0), X(190)) + '" y="170" width="190" height="160"/>' +
+        '<circle class="ln" cx="' + X(190) + '" cy="250" r="60"/>' +
+        '<path class="ln" d="M' + X(0) + ' 30 H' + X(140) + ' A237.5 237.5 0 0 ' + sweep + ' ' + X(140) + ' 470 H' + X(0) + '"/>' +
+        '<path class="ln" d="M' + X(52.5) + ' 210 A40 40 0 0 ' + sweep + ' ' + X(52.5) + ' 290"/>' +
+        '<line class="ln" x1="' + X(40) + '" x2="' + X(40) + '" y1="220" y2="280"/><circle class="ln" cx="' + X(52.5) + '" cy="250" r="7.5"/>';
+    }
+    function shotTxt(s) { return s.p + " (" + s.tm + ") " + (s.m ? "made" : "missed") + " " + (s.k === 3 ? "3-pointer" : "2-pointer") + (s.t ? " \u00b7 Film " + film(s.t) + " \u00b7 click to watch" : " \u00b7 no film for this shot"); }
+    function drawCourt() {
+      var res = sRes.value, who = sPl.value, s = '<svg viewBox="0 0 940 500" role="img" aria-label="Shot chart with estimated locations">';
+      s += '<rect class="court" x="1" y="1" width="938" height="498" rx="6"/><line class="ln" x1="470" x2="470" y1="0" y2="500"/><circle class="ln" cx="470" cy="250" r="60"/>' + half(false) + half(true);
+      s += '<text x="20" y="490" fill="var(--text-muted)" font-size="18" font-weight="700">' + A + ' shoots \u2190</text><text x="920" y="490" text-anchor="end" fill="var(--text-muted)" font-size="18" font-weight="700">\u2192 ' + B + ' shoots</text>';
+      var n = { a: [0, 0], b: [0, 0] };
+      shots.forEach(function (sh, i) {
+        var on = (!sTeam || sh.tm === sTeam) && (res === "" || String(sh.m) === res) && (!who || who === sh.tm + "|" + sh.p);
+        if (on) { var key = sh.tm === A ? "a" : "b"; n[key][1]++; if (sh.m) n[key][0]++; }
+        var col = TEAM[sh.tm].color, cls = "shot" + (sh.src ? " has-film" : "") + (on ? "" : " dim");
+        s += '<g class="' + cls + '" data-i="' + i + '"><title>' + shotTxt(sh) + '</title>';
+        if (sh.m) s += '<circle class="ring" cx="' + sh.cx.toFixed(1) + '" cy="' + sh.cy.toFixed(1) + '" r="8" fill="' + col + '" stroke="' + (sh.src ? "#fff" : col) + '" stroke-width="' + (sh.src ? 2 : 1) + '"/>';
+        else s += '<circle class="ring" cx="' + sh.cx.toFixed(1) + '" cy="' + sh.cy.toFixed(1) + '" r="9" fill="transparent" stroke="transparent"/><path d="M' + (sh.cx - 6).toFixed(1) + ' ' + (sh.cy - 6).toFixed(1) + ' l12 12 m0 -12 l-12 12" stroke="' + col + '" stroke-width="' + (sh.src ? 3.5 : 2.2) + '" stroke-linecap="round" opacity="' + (sh.src ? 1 : .75) + '"/>';
+        s += "</g>";
+      });
+      court.innerHTML = s + "</svg>";
+      function line(code, v) { return '<span><i class="gc-dot" style="background:' + TEAM[code].color + '"></i>' + code + " " + v[0] + "-" + v[1] + (v[1] ? " (" + Math.round(100 * v[0] / v[1]) + "%)" : "") + "</span>"; }
+      sc.querySelector("[data-sc-legend]").innerHTML = (sTeam !== B ? line(A, n.a) : "") + (sTeam !== A ? line(B, n.b) : "") + '<span>\u25CF made &middot; \u2715 missed &middot; white outline / bold = has film</span>';
+    }
+    court.addEventListener("mouseover", function (e) { var g = e.target.closest(".shot"); if (g && !g.classList.contains("dim")) sRead.textContent = shotTxt(shots[+g.getAttribute("data-i")]); });
+    court.addEventListener("click", function (e) {
+      var g = e.target.closest(".shot.has-film"); if (!g || g.classList.contains("dim")) return;
+      var sh = shots[+g.getAttribute("data-i")];
+      document.querySelectorAll(".recap-clip").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+      load(gv, sh.src, true); gcap.textContent = sh.p + " (" + TEAM[sh.tm].name + ") " + (sh.m ? "makes" : "misses") + " a " + (sh.k === 3 ? "3-pointer" : "2-pointer") + " \u00b7 Film " + film(sh.t);
+      gv.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+    sc.querySelectorAll("[data-sc-team]").forEach(function (b) {
+      b.addEventListener("click", function () { sTeam = b.getAttribute("data-sc-team"); sc.querySelectorAll("[data-sc-team]").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); drawCourt(); });
+    });
+    sRes.addEventListener("change", drawCourt); sPl.addEventListener("change", drawCourt);
+    drawCourt();
   }
 })();
 </script>

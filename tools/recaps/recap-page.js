@@ -232,5 +232,67 @@
     fPlayer.addEventListener("change", render);
     fullTitle(); render();
   }
+// --- Shot chart (placeholder locations): every FGA from the box score on a full court; Team Jeremy shoots at the left basket ---
+  var sc = document.querySelector("[data-sc]"), shotsEl = document.getElementById("shots-data");
+  if (sc && shotsEl) {
+    var shots = JSON.parse(shotsEl.textContent), court = sc.querySelector("[data-sc-court]"), sRead = sc.querySelector("[data-sc-readout]");
+    var sTeam = "", sRes = sc.querySelector("[data-sc-result]"), sPl = sc.querySelector("[data-sc-player]");
+    // deterministic placement (seeded by game + shot index): 2s inside the arc weighted toward the rim, 3s just beyond the line
+    var seed = 0; (M.title + M.dateDay).split("").forEach(function (ch) { seed = (seed * 31 + ch.charCodeAt(0)) >>> 0; });
+    function rng(n) { var t = (seed + n * 0x9E3779B9) >>> 0; return function () { t = (t + 0x6D2B79F5) >>> 0; var r = Math.imul(t ^ (t >>> 15), 1 | t); r = (r + Math.imul(r ^ (r >>> 7), 61 | r)) ^ r; return ((r ^ (r >>> 14)) >>> 0) / 4294967296; }; }
+    function isThree(dx, dy) { return dx <= 8.75 ? Math.abs(dy) >= 22 : Math.sqrt(dx * dx + dy * dy) >= 23.75; }
+    shots.forEach(function (s, i) {
+      var r = rng(i + 1), dx = 0, dy = 0;
+      for (var tries = 0; tries < 200; tries++) {
+        var th = (r() * 2 - 1) * (s.k === 3 ? 1.54 : 1.48), u = r(), dist;
+        if (s.k === 3) dist = 23.9 + r() * 3.2; else dist = u < 0.5 ? r() * 6 : u < 0.78 ? 6 + r() * 8 : 14 + r() * 8.5;
+        dx = dist * Math.cos(th); dy = dist * Math.sin(th);
+        if (Math.abs(dy) < 24.2 && dx > -3.5 && (s.k === 3 ? isThree(dx, dy) && dx < 30 : !isThree(dx, dy))) break;
+      }
+      var left = s.tm === A; s.cx = left ? 52.5 + dx * 10 : 887.5 - dx * 10; s.cy = 250 + dy * 10;
+    });
+    var pl = {}; shots.forEach(function (s) { pl[s.tm + "|" + s.p] = true; });
+    Object.keys(pl).sort().forEach(function (k) { var o = document.createElement("option"); o.value = k; o.textContent = k.split("|")[1] + " (" + k.split("|")[0] + ")"; sPl.appendChild(o); });
+    function half(flip) {
+      var X = function (x) { return flip ? 940 - x : x; }, sweep = flip ? 0 : 1;
+      return '<rect class="ln" x="' + Math.min(X(0), X(190)) + '" y="170" width="190" height="160"/>' +
+        '<circle class="ln" cx="' + X(190) + '" cy="250" r="60"/>' +
+        '<path class="ln" d="M' + X(0) + ' 30 H' + X(140) + ' A237.5 237.5 0 0 ' + sweep + ' ' + X(140) + ' 470 H' + X(0) + '"/>' +
+        '<path class="ln" d="M' + X(52.5) + ' 210 A40 40 0 0 ' + sweep + ' ' + X(52.5) + ' 290"/>' +
+        '<line class="ln" x1="' + X(40) + '" x2="' + X(40) + '" y1="220" y2="280"/><circle class="ln" cx="' + X(52.5) + '" cy="250" r="7.5"/>';
+    }
+    function shotTxt(s) { return s.p + " (" + s.tm + ") " + (s.m ? "made" : "missed") + " " + (s.k === 3 ? "3-pointer" : "2-pointer") + (s.t ? " \u00b7 Film " + film(s.t) + " \u00b7 click to watch" : " \u00b7 no film for this shot"); }
+    function drawCourt() {
+      var res = sRes.value, who = sPl.value, s = '<svg viewBox="0 0 940 500" role="img" aria-label="Shot chart with estimated locations">';
+      s += '<rect class="court" x="1" y="1" width="938" height="498" rx="6"/><line class="ln" x1="470" x2="470" y1="0" y2="500"/><circle class="ln" cx="470" cy="250" r="60"/>' + half(false) + half(true);
+      s += '<text x="20" y="490" fill="var(--text-muted)" font-size="18" font-weight="700">' + A + ' shoots \u2190</text><text x="920" y="490" text-anchor="end" fill="var(--text-muted)" font-size="18" font-weight="700">\u2192 ' + B + ' shoots</text>';
+      var n = { a: [0, 0], b: [0, 0] };
+      shots.forEach(function (sh, i) {
+        var on = (!sTeam || sh.tm === sTeam) && (res === "" || String(sh.m) === res) && (!who || who === sh.tm + "|" + sh.p);
+        if (on) { var key = sh.tm === A ? "a" : "b"; n[key][1]++; if (sh.m) n[key][0]++; }
+        var col = TEAM[sh.tm].color, cls = "shot" + (sh.src ? " has-film" : "") + (on ? "" : " dim");
+        s += '<g class="' + cls + '" data-i="' + i + '"><title>' + shotTxt(sh) + '</title>';
+        if (sh.m) s += '<circle class="ring" cx="' + sh.cx.toFixed(1) + '" cy="' + sh.cy.toFixed(1) + '" r="8" fill="' + col + '" stroke="' + (sh.src ? "#fff" : col) + '" stroke-width="' + (sh.src ? 2 : 1) + '"/>';
+        else s += '<circle class="ring" cx="' + sh.cx.toFixed(1) + '" cy="' + sh.cy.toFixed(1) + '" r="9" fill="transparent" stroke="transparent"/><path d="M' + (sh.cx - 6).toFixed(1) + ' ' + (sh.cy - 6).toFixed(1) + ' l12 12 m0 -12 l-12 12" stroke="' + col + '" stroke-width="' + (sh.src ? 3.5 : 2.2) + '" stroke-linecap="round" opacity="' + (sh.src ? 1 : .75) + '"/>';
+        s += "</g>";
+      });
+      court.innerHTML = s + "</svg>";
+      function line(code, v) { return '<span><i class="gc-dot" style="background:' + TEAM[code].color + '"></i>' + code + " " + v[0] + "-" + v[1] + (v[1] ? " (" + Math.round(100 * v[0] / v[1]) + "%)" : "") + "</span>"; }
+      sc.querySelector("[data-sc-legend]").innerHTML = (sTeam !== B ? line(A, n.a) : "") + (sTeam !== A ? line(B, n.b) : "") + '<span>\u25CF made &middot; \u2715 missed &middot; white outline / bold = has film</span>';
+    }
+    court.addEventListener("mouseover", function (e) { var g = e.target.closest(".shot"); if (g && !g.classList.contains("dim")) sRead.textContent = shotTxt(shots[+g.getAttribute("data-i")]); });
+    court.addEventListener("click", function (e) {
+      var g = e.target.closest(".shot.has-film"); if (!g || g.classList.contains("dim")) return;
+      var sh = shots[+g.getAttribute("data-i")];
+      document.querySelectorAll(".recap-clip").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+      load(gv, sh.src, true); gcap.textContent = sh.p + " (" + TEAM[sh.tm].name + ") " + (sh.m ? "makes" : "misses") + " a " + (sh.k === 3 ? "3-pointer" : "2-pointer") + " \u00b7 Film " + film(sh.t);
+      gv.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+    sc.querySelectorAll("[data-sc-team]").forEach(function (b) {
+      b.addEventListener("click", function () { sTeam = b.getAttribute("data-sc-team"); sc.querySelectorAll("[data-sc-team]").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); drawCourt(); });
+    });
+    sRes.addEventListener("change", drawCourt); sPl.addEventListener("change", drawCourt);
+    drawCourt();
+  }
 })();
 </script>
