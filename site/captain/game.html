@@ -7,16 +7,15 @@
 <link rel="icon" href="../assets/img/sgtbl-logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/tokens.css?v=20261116h">
-<link rel="stylesheet" href="../assets/css/base.css?v=20261116h">
-<link rel="stylesheet" href="../assets/css/site.css?v=20261116h">
-<link rel="stylesheet" href="../assets/css/admin.css?v=20261116h">
-<link rel="stylesheet" href="../assets/css/captain.css?v=20261116h">
+<link rel="stylesheet" href="../assets/css/tokens.css?v=20261116i">
+<link rel="stylesheet" href="../assets/css/base.css?v=20261116i">
+<link rel="stylesheet" href="../assets/css/site.css?v=20261116i">
+<link rel="stylesheet" href="../assets/css/admin.css?v=20261116i">
+<link rel="stylesheet" href="../assets/css/captain.css?v=20261116i">
 <style>
 /* Gamecast-style recap (layout inspired by major sports-site game pages) */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.gc-head { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--space-5); padding: var(--space-5) var(--space-6); border-radius: var(--radius-lg); color: #fff;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--team-knicks-bg) 55%, var(--navy-900)) 0%, var(--navy-900) 38%, var(--navy-900) 62%, color-mix(in srgb, var(--team-eagles-bg) 55%, var(--navy-900)) 100%); }
+.gc-head { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--space-5); padding: var(--space-5) var(--space-6); border-radius: var(--radius-lg); color: #fff; }
 .gc-team { display: flex; align-items: center; gap: var(--space-4); min-width: 0; }
 .gc-home { justify-content: flex-end; }
 .gc-team-name { display: flex; flex-direction: column; min-width: 0; }
@@ -50,7 +49,7 @@
 .gc-hl-thumb { position: relative; display: block; aspect-ratio: 16/9; border-radius: var(--radius-md); overflow: hidden; background: #000; border: 2px solid transparent; }
 .gc-hl[aria-pressed="true"] .gc-hl-thumb, .gc-hl:hover .gc-hl-thumb, .gc-hl:focus-visible .gc-hl-thumb { border-color: var(--accent-blue); }
 .gc-hl-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.gc-hl-full { display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--team-knicks-bg), var(--team-eagles-bg)); color: #fff; font-family: var(--font-display); font-size: var(--text-lg); font-weight: 800; }
+.gc-hl-full { display: flex; align-items: center; justify-content: center; color: #fff; font-family: var(--font-display); font-size: var(--text-lg); font-weight: 800; }
 .gc-hl-thumb i { position: absolute; left: 6px; bottom: 6px; padding: 1px 6px; border-radius: 4px; background: rgba(0,0,0,.75); color: #fff; font-style: normal; font-size: 11px; font-weight: 700; }
 .gc-hl-title { font-size: var(--text-xs); font-weight: 600; line-height: 1.3; }
 .gc-story h2 { font-size: var(--text-xl); margin-bottom: var(--space-3); }
@@ -76,8 +75,8 @@
 .gc-stat-vals small { font-size: var(--text-xs); font-weight: 400; color: var(--text-muted); }
 .gc-stat-bars { display: flex; gap: 4px; height: 8px; }
 .gc-stat-bars span { display: block; height: 100%; border-radius: 4px; }
-.gc-bar-a { background: var(--team-knicks-bg); }
-.gc-bar-b { background: var(--team-eagles-bg); }
+.gc-bar-a { background: var(--gc-a); }
+.gc-bar-b { background: var(--gc-b); }
 .gc-info { display: grid; gap: var(--space-2); }
 .gc-info div { display: flex; justify-content: space-between; gap: var(--space-4); padding: var(--space-2) 0; border-bottom: 1px solid var(--border); font-size: var(--text-sm); }
 .gc-info dt { color: var(--text-muted); }
@@ -182,7 +181,7 @@
 .fr-thumb { position: relative; display: block; aspect-ratio: 16/9; border-radius: 6px; overflow: hidden; background: #000; }
 .fr-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .fr-thumb i { position: absolute; right: 4px; bottom: 4px; padding: 0 5px; border-radius: 3px; background: rgba(0,0,0,.75); color: #fff; font-style: normal; font-size: 10px; font-weight: 700; }
-.fr-thumb.fr-full { display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--team-knicks-bg), var(--team-eagles-bg)); color: #fff; font-family: var(--font-display); font-weight: 800; }
+.fr-thumb.fr-full { display: flex; align-items: center; justify-content: center; color: #fff; font-family: var(--font-display); font-weight: 800; }
 .fr-item-text { display: flex; flex-direction: column; min-width: 0; font-size: var(--text-xs); }
 .fr-item-text b { font-size: var(--text-sm); line-height: 1.25; }
 .fr-item-text .muted { margin-top: 2px; }
@@ -195,7 +194,23 @@
   .fr-stage { padding: var(--space-3); }
   .fr-item { grid-template-columns: 96px minmax(0, 1fr); }
 }
-/* portal: the nav sidebar takes ~260px, so stack the Gamecast sidebar below 1240px */
+/* Team Jeremy's games strip (top of every recap) */
+.gstrip { display: flex; gap: var(--space-2); overflow-x: auto; margin-bottom: var(--space-4); padding-bottom: 2px; }
+.gstrip > a, .gstrip > span { flex: none; display: flex; flex-direction: column; gap: 2px; padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); color: var(--text-primary); font-size: var(--text-xs); text-decoration: none; min-width: 132px; }
+.gstrip > a:hover { border-color: var(--accent-blue); }
+.gstrip [aria-current="page"] { border-color: var(--brand); box-shadow: inset 0 -3px 0 var(--brand); }
+.gstrip b { font-size: var(--text-sm); }
+.gstrip .gs-w { color: var(--success); font-weight: 800; }
+.gstrip .gs-l { color: var(--danger); font-weight: 800; }
+.gstrip .gs-next { color: var(--text-muted); border-style: dashed; }
+/* Film room camera switch */
+.fr-cams { display: inline-flex; gap: 6px; margin-left: var(--space-3); }
+.fr-cams button { padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border-strong); background: none; color: var(--text-muted); font: inherit; font-size: var(--text-xs); font-weight: 700; cursor: pointer; }
+.fr-cams button[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
+.pbp-row.pbp-note { color: var(--text-muted); font-style: italic; }
+.gc-home .gc-winner::before { content: "\25B8"; font-size: .5em; vertical-align: middle; margin-right: 6px; }
+.gc-note { font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-2); }
+/* portal: the nav sidebar takes ~260px, so stack the Gamecast sidebar, film room and score header sooner */
 @media (max-width: 1240px) {
   .gc-layout { grid-template-columns: minmax(0, 1fr); }
   .fr { grid-template-columns: minmax(0, 1fr); }
@@ -258,8 +273,14 @@
 
     <div class="admin-content">
       <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-4)"><a href="player.html" class="muted">Bryson Brown</a> / Game Recap</p>
+      <nav class="gstrip" aria-label="Team Jeremy's games">
+        <a href="game-oct22.html"><span class="muted">Oct 22 &middot; vs Team Turbo</span><b><span class="gs-w">W</span> 94-60</b></a>
+        <a href="game-oct29.html"><span class="muted">Oct 29 &middot; @ Team Paul</span><b><span class="gs-l">L</span> 64-71</b></a>
+        <span aria-current="page"><span class="muted">Nov 5 &middot; @ Team Evan</span><b><span class="gs-w">W</span> 100-88</b></span>
+        <span class="gs-next"><span>Next &middot; Thu, Nov 19</span><b>vs Team Martin</b></span>
+      </nav>
 
-      <section class="gc-head" aria-label="Final score">
+      <section class="gc-head" aria-label="Final score" style="background:linear-gradient(90deg, color-mix(in srgb, var(--team-knicks-bg) 55%, var(--navy-900)) 0%, var(--navy-900) 38%, var(--navy-900) 62%, color-mix(in srgb, var(--team-eagles-bg) 55%, var(--navy-900)) 100%)">
         <div class="gc-team gc-away">
           <span class="crest crest-lg" style="background:var(--team-knicks-bg)">TJ</span>
           <div class="gc-team-name"><a href="my-team.html">Team Jeremy</a><span>2-1, 1-1 Away</span></div>
@@ -288,14 +309,14 @@
         <button role="tab" aria-selected="false" aria-controls="p-film" id="t-film">Film</button>
       </div>
 
-      <div id="p-gamecast" class="tabpanel" role="tabpanel" aria-labelledby="t-gamecast">
+      <div id="p-gamecast" class="tabpanel" role="tabpanel" aria-labelledby="t-gamecast" style="--gc-a:var(--team-knicks-bg);--gc-b:var(--team-eagles-bg)">
         <div class="gc-layout">
           <div class="gc-main">
             <section class="card gc-card gc-video" aria-label="Game film">
               <div class="video-frame"><video controls playsinline preload="metadata" data-recap-video src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/transcoded/full.mp4" aria-label="Team Jeremy at Team Evan game film"></video></div>
               <p class="gc-video-cap" data-recap-caption>Full game &mdash; Team Jeremy at Team Evan</p>
               <div class="gc-hl-strip recap-plays" aria-label="Highlights">
-              <button type="button" class="gc-hl recap-clip" aria-pressed="true" data-src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/transcoded/full.mp4" data-full data-title="Full game &mdash; Team Jeremy at Team Evan"><span class="gc-hl-thumb gc-hl-full"><span>Full game</span><i>1:06:19</i></span><span class="gc-hl-title">Team Jeremy at Team Evan: full game</span></button>
+              <button type="button" class="gc-hl recap-clip" aria-pressed="true" data-src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/transcoded/full.mp4" data-full data-title="Full game &mdash; Team Jeremy at Team Evan"><span class="gc-hl-thumb gc-hl-full" style="background:linear-gradient(135deg, var(--team-knicks-bg), var(--team-eagles-bg))"><span>Full game</span><i>1:06:19</i></span><span class="gc-hl-title">Team Jeremy at Team Evan: full game</span></button>
               <button type="button" class="gc-hl recap-clip" data-src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/79f0d084-e471-44e3-8bc2-b3750a93a8c3/clip.mp4" data-title="Bryson Brown 3-pointer (1 of 5) &middot; Film 12:49"><span class="gc-hl-thumb"><img src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/79f0d084-e471-44e3-8bc2-b3750a93a8c3/clip.0000001.jpg" alt="" loading="lazy"><i>0:07</i></span><span class="gc-hl-title">Bryson Brown 3-pointer (1 of 5)</span></button>
               <button type="button" class="gc-hl recap-clip" data-src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/99255487-da6c-402a-83ec-e2e41b441b5c/clip.mp4" data-title="Bryson Brown 3-pointer (2 of 5) &middot; Film 23:35"><span class="gc-hl-thumb"><img src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/99255487-da6c-402a-83ec-e2e41b441b5c/clip.0000001.jpg" alt="" loading="lazy"><i>0:07</i></span><span class="gc-hl-title">Bryson Brown 3-pointer (2 of 5)</span></button>
               <button type="button" class="gc-hl recap-clip" data-src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/55977490-fe42-4e27-a896-fb4d42c19d95/clip.mp4" data-title="Bryson Brown 3-pointer (3 of 5) &middot; Film 33:50"><span class="gc-hl-thumb"><img src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/55977490-fe42-4e27-a896-fb4d42c19d95/clip.0000001.jpg" alt="" loading="lazy"><i>0:07</i></span><span class="gc-hl-title">Bryson Brown 3-pointer (3 of 5)</span></button>
@@ -306,17 +327,17 @@
 
             <article class="card gc-card gc-story">
               <h2>Brown scores 39 as Team Jeremy wins 100&ndash;88 at Team Evan</h2>
-              <p><strong>&mdash;</strong> Bryson Brown poured in 39 points on 13-of-27 shooting, including 5 of 14 from three and a perfect 8 of 8 at the line, to lead Team Jeremy past Team Evan 100&ndash;88 on the road. He added 9 rebounds, 4 assists and 2 steals, and the win moved Team Jeremy to 2-1.</p>
-              <p>Jeremy Jones added 25 points on 10-of-19 shooting, and Player #99 controlled the glass with 19 rebounds to go with 17 points. Team Jeremy hit 14 of 15 free throws and committed only 8 turnovers to Team Evan's 11. Evan Pastorelle led Team Evan with 29 points, 11 rebounds and 5 assists, and Player #99 had 27 points and 11 rebounds.</p>
+              <p><strong>&mdash;</strong> Bryson Brown scored 39 points on 13-of-27 shooting, including 5 of 14 from three and a perfect 8 of 8 at the line, to lead Team Jeremy past Team Evan 100&ndash;88 on the road. Brown also had 9 rebounds and 4 assists, and the win moved Team Jeremy to 2-1.</p>
+              <p>Jeremy Jones added 25 points for Team Jeremy on 10-of-19 shooting, and Player #99 grabbed 19 rebounds. Team Jeremy shot 44.6% from the field to Team Evan's 40.4% and had 8 turnovers to Team Evan's 11. Evan Pastorelle led Team Evan with 29 points, 11 rebounds and 5 assists, and Player #99 added 27.</p>
               <p class="gc-byline">Auto-generated recap &middot; Nov 5, 2026 &middot; from the <a href="https://uh.sportsvisio.com/league/texas-frisco/game/2edf694a-6fe5-4d06-a2e4-ef2ffac82313" target="_blank" rel="noopener">SportsVisio game page</a></p>
             </article>
 
             <section class="card gc-card" aria-labelledby="gc-leaders-h">
               <h2 class="gc-h" id="gc-leaders-h">Game Leaders</h2>
               <div class="gc-ldr-head"><span></span><span><i class="gc-dot" style="background:var(--team-knicks-bg)"></i>TJ</span><span><i class="gc-dot" style="background:var(--team-eagles-bg)"></i>TE</span></div>
-              <div class="gc-ldr-row"><div class="gc-ldr-cat">Points</div><div class="gc-ldr"><span class="avatar avatar-photo gc-ldr-pic"><img src="../assets/img/headshot-placeholder.webp" alt=""></span><div><span class="gc-ldr-val">39</span><span class="gc-ldr-name"><a href="player.html">B. Brown</a> <span class="muted">#5</span></span><span class="gc-ldr-sub">13/27 FG, 8/8 FT</span></div></div><div class="gc-ldr"><span class="avatar gc-ldr-pic av-1">EP</span><div><span class="gc-ldr-val">29</span><span class="gc-ldr-name">E. Pastorelle <span class="muted">#23</span></span><span class="gc-ldr-sub">11/21 FG, 2/2 FT</span></div></div></div>
-              <div class="gc-ldr-row"><div class="gc-ldr-cat">Rebounds</div><div class="gc-ldr"><span class="avatar gc-ldr-pic av-6">99</span><div><span class="gc-ldr-val">19</span><span class="gc-ldr-name">Player #99</span><span class="gc-ldr-sub">17 PTS, 8/14 FG</span></div></div><div class="gc-ldr"><span class="avatar gc-ldr-pic av-1">EP</span><div><span class="gc-ldr-val">11</span><span class="gc-ldr-name">E. Pastorelle <span class="muted">#23</span></span><span class="gc-ldr-sub">29 PTS, 5 AST</span></div></div></div>
-              <div class="gc-ldr-row"><div class="gc-ldr-cat">Assists</div><div class="gc-ldr"><span class="avatar gc-ldr-pic av-7">22</span><div><span class="gc-ldr-val">5</span><span class="gc-ldr-name">Player #22</span><span class="gc-ldr-sub">1 TO, 14 PTS</span></div></div><div class="gc-ldr"><span class="avatar gc-ldr-pic av-4">MC</span><div><span class="gc-ldr-val">8</span><span class="gc-ldr-name">M. Collins <span class="muted"></span></span><span class="gc-ldr-sub">1 TO, 4 STL</span></div></div></div>
+              <div class="gc-ldr-row"><div class="gc-ldr-cat">Points</div><div class="gc-ldr"><span class="avatar avatar-photo gc-ldr-pic"><img src="../assets/img/headshot-placeholder.webp" alt=""></span><div><span class="gc-ldr-val">39</span><span class="gc-ldr-name"><a href="player.html">B. Brown</a></span><span class="gc-ldr-sub">13/27 FG, 8/8 FT</span></div></div><div class="gc-ldr"><span class="avatar gc-ldr-pic" style="background:var(--team-eagles-bg);color:#fff">EP</span><div><span class="gc-ldr-val">29</span><span class="gc-ldr-name">E. Pastorelle</span><span class="gc-ldr-sub">11/21 FG, 2/2 FT</span></div></div></div>
+              <div class="gc-ldr-row"><div class="gc-ldr-cat">Rebounds</div><div class="gc-ldr"><span class="avatar gc-ldr-pic" style="background:var(--team-knicks-bg);color:#fff">99</span><div><span class="gc-ldr-val">19</span><span class="gc-ldr-name">Player #99</span><span class="gc-ldr-sub">17 PTS, 8/14 FG</span></div></div><div class="gc-ldr"><span class="avatar gc-ldr-pic" style="background:var(--team-eagles-bg);color:#fff">EP</span><div><span class="gc-ldr-val">11</span><span class="gc-ldr-name">E. Pastorelle</span><span class="gc-ldr-sub">29 PTS, 11/21 FG</span></div></div></div>
+              <div class="gc-ldr-row"><div class="gc-ldr-cat">Assists</div><div class="gc-ldr"><span class="avatar gc-ldr-pic" style="background:var(--team-knicks-bg);color:#fff">22</span><div><span class="gc-ldr-val">5</span><span class="gc-ldr-name">Player #22</span><span class="gc-ldr-sub">1 TO, 14 PTS</span></div></div><div class="gc-ldr"><span class="avatar gc-ldr-pic" style="background:var(--team-eagles-bg);color:#fff">MC</span><div><span class="gc-ldr-val">8</span><span class="gc-ldr-name">M. Collins</span><span class="gc-ldr-sub">1 TO, 14 PTS</span></div></div></div>
               <a class="btn btn-outline btn-sm gc-more" href="#p-box" data-open-tab="t-box">Full Box Score</a>
             </section>
 
@@ -333,6 +354,7 @@
               <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-2)"><b>Game Flow</b> is the real running score from SportsVisio's tagged scoring plays. <b>Win probability is an estimate</b> from the score margin and how much of the game film has played (no game clock is recorded), using a standard margin-and-time model.</p>
               <a class="btn btn-outline btn-sm gc-more" href="#p-pbp" data-open-tab="t-pbp">Full Play-by-Play</a>
             </section>
+
             <section class="card gc-card" aria-labelledby="gc-ts-h">
               <h2 class="gc-h" id="gc-ts-h">Team Stats</h2>
               <div class="gc-stat-head"><span><i class="gc-dot" style="background:var(--team-knicks-bg)"></i>TJ</span><span><i class="gc-dot" style="background:var(--team-eagles-bg)"></i>TE</span></div>
@@ -351,7 +373,8 @@
                 <div><dt>Tip-off</dt><dd>8:30 PM, November 5, 2026</dd></div>
                 <div><dt>League</dt><dd>Ultimate Hoops Texas - Frisco &middot; Draft Division</dd></div>
                 <div><dt>Home team</dt><dd>Team Evan</dd></div>
-                <div><dt>Film &amp; stats</dt><dd><a href="https://uh.sportsvisio.com/league/texas-frisco/game/2edf694a-6fe5-4d06-a2e4-ef2ffac82313" target="_blank" rel="noopener">SportsVisio</a></dd></div>
+                <div><dt>Film</dt><dd>1 camera &middot; 1:06:19</dd></div>
+                <div><dt>Stats &amp; film source</dt><dd><a href="https://uh.sportsvisio.com/league/texas-frisco/game/2edf694a-6fe5-4d06-a2e4-ef2ffac82313" target="_blank" rel="noopener">SportsVisio</a></dd></div>
               </dl>
               <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">Scoring by quarter, minutes, shot locations and officials aren't recorded for this game.</p>
             </section>
@@ -444,7 +467,8 @@
           <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">Every basket and free throw is here (the running score reaches the 100&ndash;88 final), plus the misses, rebounds, fouls, steals and other plays SportsVisio tagged on film &mdash; most misses and rebounds aren't tagged. Times are positions in the game film, not the game clock.</p>
         </section>
       </div>
-      <div id="p-teamstats" class="tabpanel" role="tabpanel" aria-labelledby="t-teamstats" hidden>
+
+      <div id="p-teamstats" class="tabpanel" role="tabpanel" aria-labelledby="t-teamstats" hidden style="--gc-a:var(--team-knicks-bg);--gc-b:var(--team-eagles-bg)">
         <section class="card gc-card gc-wide" aria-label="Team stats comparison">
           <div class="gc-stat-head"><span><i class="gc-dot" style="background:var(--team-knicks-bg)"></i>Team Jeremy</span><span><i class="gc-dot" style="background:var(--team-eagles-bg)"></i>Team Evan</span></div>
               <div class="gc-stat"><div class="gc-stat-vals"><span class="lead">44.6% <small>(37-83)</small></span><b>Field Goal %</b><span class="">40.4% <small>(36-89)</small></span></div><div class="gc-stat-bars" aria-hidden="true"><span class="gc-bar-a" style="width:52%"></span><span class="gc-bar-b" style="width:48%"></span></div></div>
@@ -460,19 +484,19 @@
               <div class="gc-stat"><div class="gc-stat-vals"><span class="lead">8.2%</span><b>Turnover Rate</b><span class="">10.6%</span></div><div class="gc-stat-bars" aria-hidden="true"><span class="gc-bar-a" style="width:44%"></span><span class="gc-bar-b" style="width:56%"></span></div></div>
               <div class="gc-stat"><div class="gc-stat-vals"><span class="">28.9%</span><b>Offensive Rebound %</b><span class="lead">34.5%</span></div><div class="gc-stat-bars" aria-hidden="true"><span class="gc-bar-a" style="width:46%"></span><span class="gc-bar-b" style="width:54%"></span></div></div>
               <div class="gc-stat"><div class="gc-stat-vals"><span class="lead">16.9%</span><b>Free Throw Rate</b><span class="">5.6%</span></div><div class="gc-stat-bars" aria-hidden="true"><span class="gc-bar-a" style="width:75%"></span><span class="gc-bar-b" style="width:25%"></span></div></div>
-          <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-4)">Team totals and Four Factors (Effective FG %, Turnover Rate, Offensive Rebound %, Free Throw Rate) as published by SportsVisio. The bolder number is the better one for each stat.</p>
+          <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-4)">Team totals from the box score; Four Factors (Effective FG %, Turnover Rate, Offensive Rebound %, Free Throw Rate) as published by SportsVisio. The bolder number is the better one for each stat.</p>
         </section>
       </div>
 
       <div id="p-film" class="tabpanel" role="tabpanel" aria-labelledby="t-film" hidden>
-        <section class="card fr" aria-label="Film room" data-fr data-full="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/transcoded/full.mp4">
+        <section class="card fr" aria-label="Film room" data-fr>
           <div class="fr-stage">
             <div class="video-frame"><video controls playsinline preload="metadata" src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/transcoded/full.mp4" data-fr-video aria-label="Game film"></video></div>
             <div class="fr-now">
               <div class="fr-now-text">
                 <span class="fr-now-kicker" data-fr-kicker>Full game</span>
                 <h3 class="fr-now-title" data-fr-title>Team Jeremy at Team Evan</h3>
-                <span class="fr-now-meta" data-fr-meta>Thu, Nov 5 &middot; 1:06:19 &middot; Final: TJ 100, TE 88</span>
+                <span class="fr-now-meta" data-fr-meta></span>
               </div>
               <div class="fr-now-actions">
                 <button type="button" class="btn btn-outline btn-sm" data-fr-prev aria-label="Previous play">&#9664; Prev</button>
@@ -496,6 +520,7 @@
         <p class="muted" style="font-size:var(--text-xs);margin:var(--space-3) 0 var(--space-8)">Full game film and every play SportsVisio tagged on it. Times are positions in the game film; &ldquo;Watch in full game&rdquo; jumps the full film to that moment. See <a href="film-room.html">Film Room</a> for the full team library.</p>
       </div>
 
+      <script type="application/json" id="game-meta">{"tj":{"code":"TJ","name":"Team Jeremy","color":"var(--team-knicks-bg)"},"opp":{"code":"TE","name":"Team Evan","color":"var(--team-eagles-bg)"},"final":[100,88],"cams":[{"label":"Camera 1","id":"a94d724c-ca78-422e-8d6f-4be0ab7a5aae","url":"https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/transcoded/full.mp4"}],"defaultCam":0,"fullLen":"1:06:19","title":"Team Jeremy at Team Evan","dateDay":"Thu, Nov 5"}</script>
       <script type="application/json" id="pbp-data">
   [{"t":"00:11:25:20","tm":"TE","p":"Manney Collins","d":"makes 3-pointer","v":3,"s":[0,3],"src":"https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/b201212b-36e3-4c83-b601-f742b3f01d6f/clip.mp4"},
   {"t":"00:11:58:11","tm":"TE","p":"Player #10","d":"misses 3-pointer","v":0,"s":[0,3],"src":"https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/5ff81def-87f6-4dd8-971f-d6eef1e0e6a3/clip.mp4"},
@@ -618,86 +643,89 @@
     </div>
   </div>
 </div>
-<script src="../assets/js/interactions.js?v=20261116h"></script>
+<script src="../assets/js/interactions.js?v=20261116i"></script>
 <script>
-// Highlight strip: play a clip (or the full game) in the Gamecast film player
-document.querySelectorAll(".recap-clip").forEach(function (b) {
-  b.addEventListener("click", function () {
-    var v = document.querySelector("[data-recap-video]"), cap = document.querySelector("[data-recap-caption]");
-    document.querySelectorAll(".recap-clip").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
-    v.src = b.getAttribute("data-src");
-    cap.innerHTML = b.getAttribute("data-title");
-    if (!b.hasAttribute("data-full")) v.play().catch(function () {});
-  });
-});
-
-// Play-by-play data (SportsVisio tagged events, film order, running score) -> Win Probability / Game Flow + Play-by-Play tab
+// Game recap page script. Reads two JSON blocks: #game-meta (teams, final score, cameras) and #pbp-data (tagged plays in film order with the running score [Team Jeremy, opponent]).
 (function () {
-  var el = document.getElementById("pbp-data"); if (!el) return;
-  var plays = JSON.parse(el.textContent);
-  var CLIP = /^https:\/\/api\.sportsvisio-api\.com\/media\/[0-9a-f\/-]+\/clip\.mp4$/;
-  var TEAM = { TJ: { name: "Team Jeremy", color: "var(--team-knicks-bg)" }, TE: { name: "Team Evan", color: "var(--team-eagles-bg)" } };
+  var metaEl = document.getElementById("game-meta"), el = document.getElementById("pbp-data");
+  if (!metaEl || !el) return;
+  var M = JSON.parse(metaEl.textContent), plays = JSON.parse(el.textContent);
+  var CLIP = /^https:\/\/api\.sportsvisio-api\.com\/media\/[0-9a-f\/-]+\/(clip|transcoded\/full)\.mp4$/;
+  var TEAM = {}; TEAM[M.tj.code] = M.tj; TEAM[M.opp.code] = M.opp;
+  var A = M.tj.code, B = M.opp.code;
   function secs(tc) { var p = tc.split(":"); return (+p[0]) * 3600 + (+p[1]) * 60 + (+p[2]) + (+p[3] || 0) / 30; }
   function film(tc) { var p = tc.split(":"), h = +p[0]; return h ? h + ":" + p[1] + ":" + p[2] : (+p[1]) + ":" + p[2]; }
   function mmss(s) { s = Math.round(s); var h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60); return (h ? h + ":" + ("0" + m).slice(-2) : m) + ":" + ("0" + s % 60).slice(-2); }
-  function play(video, cap, p) {
-    if (!CLIP.test(p.src)) return;
-    video.src = p.src; video.play().catch(function () {});
-    cap.textContent = p.p + " (" + TEAM[p.tm].name + ") " + p.d + " \u00b7 Film " + film(p.t) + " \u00b7 TJ " + p.s[0] + "\u2013" + p.s[1] + " TE";
+  function scoreTxt(s) { return A + " " + s[0] + "–" + s[1] + " " + B; }
+  function camOf(src) { var id = (src.split("/")[5] || ""); for (var i = 0; i < M.cams.length; i++) if (M.cams[i].id === id) return i; return M.defaultCam; }
+  function load(video, src, autoplay, at) {
+    if (!CLIP.test(src)) return;
+    video.src = src;
+    if (at != null) video.addEventListener("loadedmetadata", function go() { video.removeEventListener("loadedmetadata", go); video.currentTime = at; if (autoplay) video.play().catch(function () {}); });
+    else if (autoplay) video.play().catch(function () {});
   }
-  plays.forEach(function (p) { p.x = secs(p.t); });
+  plays.forEach(function (p) { p.x = p.t ? secs(p.t) : null; });
+  var timed = plays.filter(function (p) { return p.x != null; });
+
+  // --- Highlight strip: play a clip (or the full game) in the Gamecast film player ---
+  var gv = document.querySelector("[data-recap-video]"), gcap = document.querySelector("[data-recap-caption]");
+  document.querySelectorAll(".recap-clip").forEach(function (b) {
+    b.addEventListener("click", function () {
+      document.querySelectorAll(".recap-clip").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      load(gv, b.getAttribute("data-src"), !b.hasAttribute("data-full"));
+      gcap.innerHTML = b.getAttribute("data-title");
+    });
+  });
 
   // --- Win probability & game flow ---
   var wpCard = document.querySelector("[data-wp]");
-  if (wpCard) {
+  if (wpCard && timed.length) {
     var chart = wpCard.querySelector("[data-wp-chart]"), legend = wpCard.querySelector("[data-wp-legend]"), readout = wpCard.querySelector("[data-wp-readout]");
-    var scoring = plays.filter(function (p) { return p.v > 0; });
-    var t0 = 0, t1 = plays[plays.length - 1].x + 30, first = scoring[0].x - 30;
-    var SIGMA = 12; // spread of final margins over a whole game (points)
+    var scoring = timed.filter(function (p) { return p.v > 0; });
+    var first = scoring[0].x - 30, t1 = timed[timed.length - 1].x + 30, SIGMA = 12;
     function erf(x) { var s = x < 0 ? -1 : 1; x = Math.abs(x); var t = 1 / (1 + 0.3275911 * x); return s * (1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x)); }
-    function wpAt(margin, x) { var r = Math.max(0, (t1 - x) / (t1 - first)); if (r <= 0.0001) return margin > 0 ? 1 : margin < 0 ? 0 : 0.5; return 0.5 * (1 + erf(margin / (SIGMA * Math.sqrt(Math.min(1, r))) / Math.SQRT2)); }
+    function wpAt(m, x) { var r = Math.max(0, (t1 - x) / (t1 - first)); if (r <= 0.0001) return m > 0 ? 1 : m < 0 ? 0 : 0.5; return 0.5 * (1 + erf(m / (SIGMA * Math.sqrt(Math.min(1, r))) / Math.SQRT2)); }
     var pts = [{ x: first, s: [0, 0], p: null }].concat(scoring.map(function (p) { return { x: p.x, s: p.s, p: p }; }));
     pts.forEach(function (q) { q.wp = wpAt(q.s[0] - q.s[1], q.x); });
-    pts.push({ x: t1, s: [100, 88], p: null, wp: 1, end: true });
-    var mode = "wp", W = 0, H = 230, PAD = { l: 44, r: 12, t: 10, b: 26 }, hover = -1;
+    pts.push({ x: t1, s: M.final, p: null, wp: M.final[0] > M.final[1] ? 1 : 0, end: true });
+    var maxS = Math.ceil((Math.max(M.final[0], M.final[1]) + 10) / 25) * 25;
+    var mode = "wp", W = 0, H = 230, PAD = { l: 50, r: 12, t: 10, b: 26 }, hover = -1;
     function X(x) { return PAD.l + (x - first) / (t1 - first) * (W - PAD.l - PAD.r); }
     function draw() {
       W = chart.clientWidth; if (!W) return;
-      var iw = W - PAD.l - PAD.r, ih = H - PAD.t - PAD.b, maxS = 110, s = "";
+      var iw = W - PAD.l - PAD.r, ih = H - PAD.t - PAD.b, s = "";
       function Y(v) { return mode === "wp" ? PAD.t + (1 - v) * ih : PAD.t + (1 - v / maxS) * ih; }
-      s += '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + (mode === "wp" ? "Estimated win probability for Team Jeremy over the game" : "Running score of both teams over the game") + '">';
-      var ticks = mode === "wp" ? [[1, "TJ 100%"], [0.75, "75%"], [0.5, "50%"], [0.25, "75%"], [0, "TE 100%"]] : [[0, "0"], [25, "25"], [50, "50"], [75, "75"], [100, "100"]];
+      s += '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + (mode === "wp" ? "Estimated win probability over the game" : "Running score of both teams over the game") + '">';
+      var ticks = mode === "wp" ? [[1, A + " 100%"], [0.75, "75%"], [0.5, "50%"], [0.25, "75%"], [0, B + " 100%"]] : [0, 0.25, 0.5, 0.75, 1].map(function (f) { return [f * maxS, String(f * maxS)]; });
       ticks.forEach(function (k) { var y = Y(k[0]); s += '<line class="' + (mode === "wp" && k[0] === 0.5 ? "mid" : "grid") + '" x1="' + PAD.l + '" x2="' + (W - PAD.r) + '" y1="' + y + '" y2="' + y + '"/><text x="' + (PAD.l - 6) + '" y="' + (y + 4) + '" text-anchor="end">' + k[1] + '</text>'; });
       for (var m = 600; m < t1; m += 600) { if (m < first) continue; var gx = X(m); if (gx > W - PAD.r - 70) continue; s += '<line class="grid" x1="' + gx + '" x2="' + gx + '" y1="' + PAD.t + '" y2="' + (H - PAD.b) + '" opacity=".5"/><text x="' + gx + '" y="' + (H - 8) + '" text-anchor="middle">' + mmss(m) + '</text>'; }
       s += '<text x="' + (W - PAD.r) + '" y="' + (H - 8) + '" text-anchor="end" font-weight="700">film time</text>';
       function stepPath(get) { var d = ""; pts.forEach(function (q, i) { var x = X(q.x), y = get(q); d += (i ? " H" + x.toFixed(1) + " V" + y.toFixed(1) : "M" + x.toFixed(1) + " " + y.toFixed(1)); }); return d; }
       if (mode === "wp") {
-        var mid = Y(0.5), line = stepPath(function (q) { return Y(q.wp); });
+        var mid = Y(0.5), line = stepPath(function (q) { return Y(q.wp); }), area = line + " V" + mid + " H" + X(first) + " Z";
         s += '<defs><clipPath id="wpTop"><rect x="0" y="0" width="' + W + '" height="' + mid + '"/></clipPath><clipPath id="wpBot"><rect x="0" y="' + mid + '" width="' + W + '" height="' + (H - mid) + '"/></clipPath></defs>';
-        var area = line + " V" + mid + " H" + X(first) + " Z";
-        s += '<path d="' + area + '" fill="' + TEAM.TJ.color + '" opacity=".28" clip-path="url(#wpTop)"/><path d="' + area + '" fill="' + TEAM.TE.color + '" opacity=".28" clip-path="url(#wpBot)"/>';
+        s += '<path d="' + area + '" fill="' + M.tj.color + '" opacity=".28" clip-path="url(#wpTop)"/><path d="' + area + '" fill="' + M.opp.color + '" opacity=".28" clip-path="url(#wpBot)"/>';
         s += '<path class="line" d="' + line + '" stroke="var(--text-primary)"/>';
       } else {
-        s += '<path class="line" d="' + stepPath(function (q) { return Y(q.s[1]); }) + '" stroke="' + TEAM.TE.color + '"/>';
-        s += '<path class="line" d="' + stepPath(function (q) { return Y(q.s[0]); }) + '" stroke="' + TEAM.TJ.color + '"/>';
+        s += '<path class="line" d="' + stepPath(function (q) { return Y(q.s[1]); }) + '" stroke="' + M.opp.color + '"/>';
+        s += '<path class="line" d="' + stepPath(function (q) { return Y(q.s[0]); }) + '" stroke="' + M.tj.color + '"/>';
       }
       if (hover >= 0) {
         var q = pts[hover], hx = X(q.x);
         s += '<line class="guide" x1="' + hx + '" x2="' + hx + '" y1="' + PAD.t + '" y2="' + (H - PAD.b) + '"/>';
         if (mode === "wp") s += '<circle cx="' + hx + '" cy="' + Y(q.wp) + '" r="5" fill="var(--surface)" stroke="var(--text-primary)" stroke-width="2"/>';
-        else { s += '<circle cx="' + hx + '" cy="' + Y(q.s[0]) + '" r="4.5" fill="' + TEAM.TJ.color + '"/><circle cx="' + hx + '" cy="' + Y(q.s[1]) + '" r="4.5" fill="' + TEAM.TE.color + '"/>'; }
+        else s += '<circle cx="' + hx + '" cy="' + Y(q.s[0]) + '" r="4.5" fill="' + M.tj.color + '"/><circle cx="' + hx + '" cy="' + Y(q.s[1]) + '" r="4.5" fill="' + M.opp.color + '"/>';
       }
-      s += '<rect x="' + PAD.l + '" y="0" width="' + iw + '" height="' + H + '" fill="transparent" data-hit/></svg>';
+      s += '<rect x="' + PAD.l + '" y="0" width="' + iw + '" height="' + H + '" fill="transparent"/></svg>';
       chart.innerHTML = s;
-      legend.innerHTML = mode === "wp"
-        ? '<span><i class="gc-dot" style="background:' + TEAM.TJ.color + '"></i>Team Jeremy favored</span><span><i class="gc-dot" style="background:' + TEAM.TE.color + '"></i>Team Evan favored</span>'
-        : '<span><i class="gc-dot" style="background:' + TEAM.TJ.color + '"></i>Team Jeremy</span><span><i class="gc-dot" style="background:' + TEAM.TE.color + '"></i>Team Evan</span>';
+      legend.innerHTML = '<span><i class="gc-dot" style="background:' + M.tj.color + '"></i>' + M.tj.name + (mode === "wp" ? " favored" : "") + '</span><span><i class="gc-dot" style="background:' + M.opp.color + '"></i>' + M.opp.name + (mode === "wp" ? " favored" : "") + '</span>';
     }
     function describe(i) {
-      var q = pts[i], pct = Math.round(q.wp * 100), fav = pct >= 50 ? "Team Jeremy " + pct + "%" : "Team Evan " + (100 - pct) + "%";
-      if (q.end) return "<b>Final: Team Jeremy 100, Team Evan 88</b>";
-      if (!q.p) return "<b>Tip-off</b> \u00b7 0\u20130 \u00b7 win probability 50%";
-      return "<b>Film " + film(q.p.t) + "</b> \u00b7 " + q.p.p + " (" + q.p.tm + ") " + q.p.d + " \u00b7 <b>TJ " + q.s[0] + "\u2013" + q.s[1] + " TE</b> \u00b7 " + (mode === "wp" ? "win probability " + fav + " (est.)" : (q.s[0] === q.s[1] ? "tied" : (q.s[0] > q.s[1] ? "TJ" : "TE") + " by " + Math.abs(q.s[0] - q.s[1]))) + " \u00b7 click to watch";
+      var q = pts[i], pct = Math.round(q.wp * 100), fav = pct >= 50 ? M.tj.name + " " + pct + "%" : M.opp.name + " " + (100 - pct) + "%";
+      if (q.end) return "<b>Final: " + M.tj.name + " " + M.final[0] + ", " + M.opp.name + " " + M.final[1] + "</b>" + (M.ftNote ? " · " + M.ftNote : "");
+      if (!q.p) return "<b>Tip-off</b> · 0–0 · win probability 50%";
+      var lead = q.s[0] === q.s[1] ? "tied" : (q.s[0] > q.s[1] ? A : B) + " by " + Math.abs(q.s[0] - q.s[1]);
+      return "<b>Film " + film(q.p.t) + "</b> · " + q.p.p + " (" + q.p.tm + ") " + q.p.d + " · <b>" + scoreTxt(q.s) + "</b> · " + (mode === "wp" ? "win probability " + fav + " (est.)" : lead) + " · click to watch";
     }
     function nearest(evt) {
       var r = chart.getBoundingClientRect(), x = (evt.touches ? evt.touches[0].clientX : evt.clientX) - r.left, xs = first + (x - PAD.l) / (W - PAD.l - PAD.r) * (t1 - first), best = 0;
@@ -706,10 +734,10 @@ document.querySelectorAll(".recap-clip").forEach(function (b) {
     }
     chart.addEventListener("pointermove", function (e) { var i = nearest(e); if (i !== hover) { hover = i; draw(); readout.innerHTML = describe(i); } });
     chart.addEventListener("click", function (e) {
-      var q = pts[nearest(e)]; if (!q.p) return;
-      var v = document.querySelector("[data-recap-video]"), cap = document.querySelector("[data-recap-caption]");
+      var q = pts[nearest(e)]; if (!q.p || !q.p.src) return;
       document.querySelectorAll(".recap-clip").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
-      play(v, cap, q.p); v.scrollIntoView({ behavior: "smooth", block: "center" });
+      load(gv, q.p.src, true); gcap.textContent = q.p.p + " (" + TEAM[q.p.tm].name + ") " + q.p.d + " · Film " + film(q.p.t) + " · " + scoreTxt(q.p.s);
+      gv.scrollIntoView({ behavior: "smooth", block: "center" });
     });
     wpCard.querySelectorAll("[data-wp-mode]").forEach(function (b) {
       b.addEventListener("click", function () {
@@ -726,61 +754,71 @@ document.querySelectorAll(".recap-clip").forEach(function (b) {
   var list = document.querySelector("[data-pbp-list]");
   if (list) {
     var filter = document.querySelector("[data-pbp-filter]"), count = document.querySelector("[data-pbp-count]");
-    var video = document.querySelector("[data-pbp-video]"), cap = document.querySelector("[data-pbp-caption]");
-    plays.forEach(function (p, i) {
+    var pv = document.querySelector("[data-pbp-video]"), pcap = document.querySelector("[data-pbp-caption]");
+    plays.forEach(function (p) {
       var li = document.createElement("li");
-      li.className = "pbp-row" + (p.v ? " pbp-score" : ""); li.setAttribute("data-tm", p.tm);
-      var tm = document.createElement("span"); tm.className = "pbp-tm"; tm.innerHTML = '<i class="gc-dot" style="background:' + TEAM[p.tm].color + ';margin:0"></i>'; tm.appendChild(document.createTextNode(p.tm));
+      li.className = "pbp-row" + (p.v ? " pbp-score" : "") + (p.src ? "" : " pbp-note"); li.setAttribute("data-tm", p.tm || "");
+      var tTime = document.createElement("time"); tTime.textContent = p.t ? film(p.t) : "End";
+      var tm = document.createElement("span"); tm.className = "pbp-tm";
+      if (p.tm) { tm.innerHTML = '<i class="gc-dot" style="background:' + TEAM[p.tm].color + ';margin:0"></i>'; tm.appendChild(document.createTextNode(p.tm)); }
       var desc = document.createElement("span"); desc.className = "pbp-play";
-      var nm = document.createElement("b"); nm.textContent = p.p; desc.appendChild(nm); desc.appendChild(document.createTextNode(" " + p.d + (p.v ? " (+" + p.v + ")" : "")));
-      var tTime = document.createElement("time"); tTime.textContent = film(p.t);
-      var a = document.createElement("span"); a.className = "num" + (p.v && p.tm === "TJ" ? " hit" : ""); a.textContent = p.s[0];
-      var b = document.createElement("span"); b.className = "num" + (p.v && p.tm === "TE" ? " hit" : ""); b.textContent = p.s[1];
-      var btn = document.createElement("button"); btn.type = "button"; btn.className = "pbp-watch"; btn.innerHTML = "&#9654;";
-      btn.setAttribute("aria-label", "Watch: " + p.p + " " + p.d + ", film " + film(p.t));
-      btn.addEventListener("click", function () {
-        list.querySelectorAll(".is-playing").forEach(function (x) { x.classList.remove("is-playing"); });
-        li.classList.add("is-playing"); play(video, cap, p);
-        video.scrollIntoView({ behavior: "smooth", block: "center" });
-      });
-      [tTime, tm, desc, a, b, btn].forEach(function (n) { li.appendChild(n); });
+      if (p.p) { var nm = document.createElement("b"); nm.textContent = p.p; desc.appendChild(nm); desc.appendChild(document.createTextNode(" ")); }
+      desc.appendChild(document.createTextNode(p.d + (p.v ? " (+" + p.v + ")" : "")));
+      var a = document.createElement("span"); a.className = "num" + (p.v && p.tm === A ? " hit" : ""); a.textContent = p.s[0];
+      var b = document.createElement("span"); b.className = "num" + (p.v && p.tm === B ? " hit" : ""); b.textContent = p.s[1];
+      var cell = document.createElement("span");
+      if (p.src) {
+        var btn = document.createElement("button"); btn.type = "button"; btn.className = "pbp-watch"; btn.innerHTML = "&#9654;";
+        btn.setAttribute("aria-label", "Watch: " + p.p + " " + p.d + ", film " + film(p.t));
+        btn.addEventListener("click", function () {
+          list.querySelectorAll(".is-playing").forEach(function (x) { x.classList.remove("is-playing"); });
+          li.classList.add("is-playing"); load(pv, p.src, true);
+          pcap.textContent = p.p + " (" + TEAM[p.tm].name + ") " + p.d + " · Film " + film(p.t) + " · " + scoreTxt(p.s);
+          pv.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+        cell = btn;
+      }
+      [tTime, tm, desc, a, b, cell].forEach(function (n) { li.appendChild(n); });
       list.appendChild(li);
     });
     function apply() {
       var v = filter.value, n = 0;
       list.querySelectorAll(".pbp-row").forEach(function (li) {
-        var show = v === "all" || (v === "score" ? li.classList.contains("pbp-score") : li.getAttribute("data-tm") === v);
-        li.hidden = !show; if (show) n++;
+        var show = v === "all" || li.classList.contains("pbp-note") || (v === "score" ? li.classList.contains("pbp-score") : li.getAttribute("data-tm") === v);
+        li.hidden = !show; if (show && !li.classList.contains("pbp-note")) n++;
       });
       count.textContent = n + " plays";
     }
     filter.addEventListener("change", apply); apply();
   }
+
   // --- Film room (Film tab) ---
   var fr = document.querySelector("[data-fr]");
   if (fr) {
-    var FULL = fr.getAttribute("data-full");
     var fv = fr.querySelector("[data-fr-video]"), fList = fr.querySelector("[data-fr-list]"), fCount = fr.querySelector("[data-fr-count]");
     var fKicker = fr.querySelector("[data-fr-kicker]"), fTitle = fr.querySelector("[data-fr-title]"), fMeta = fr.querySelector("[data-fr-meta]");
     var fPrev = fr.querySelector("[data-fr-prev]"), fNext = fr.querySelector("[data-fr-next]"), fInGame = fr.querySelector("[data-fr-ingame]"), fAuto = fr.querySelector("[data-fr-auto]");
-    var fPlayer = fr.querySelector("[data-fr-player]"), chipK = "all", current = -1, visible = [];
-    var names = {}; plays.forEach(function (p) { names[p.tm + "|" + p.p] = true; });
-    Object.keys(names).sort(function (a, b) { return a < b ? -1 : 1; }).forEach(function (k) { var o = document.createElement("option"); o.value = k; o.textContent = k.split("|")[1] + " (" + k.split("|")[0] + ")"; fPlayer.appendChild(o); });
-    function thumb(src) { return src.replace(/clip\.mp4$/, "clip.0000001.jpg"); }
+    var fPlayer = fr.querySelector("[data-fr-player]"), camBtns = fr.querySelectorAll("[data-fr-cam]");
+    var chipK = "all", current = -1, visible = [], cam = M.defaultCam;
+    var clips = timed.filter(function (p) { return p.src; });
+    var names = {}; clips.forEach(function (p) { names[p.tm + "|" + p.p] = true; });
+    Object.keys(names).sort().forEach(function (k) { var o = document.createElement("option"); o.value = k; o.textContent = k.split("|")[1] + " (" + k.split("|")[0] + ")"; fPlayer.appendChild(o); });
+    function fullTitle() { fKicker.textContent = "Full game" + (M.cams.length > 1 ? " · " + M.cams[cam].label : ""); fTitle.textContent = M.title; fMeta.textContent = M.dateDay + " · " + M.fullLen + " · Final: " + A + " " + M.final[0] + ", " + B + " " + M.final[1]; }
+    function markCams() { camBtns.forEach(function (b) { b.setAttribute("aria-pressed", +b.getAttribute("data-fr-cam") === cam && current < 0 ? "true" : "false"); }); }
     function item(i) {
       var li = document.createElement("li"), b = document.createElement("button");
       b.type = "button"; b.className = "fr-item"; b.setAttribute("data-i", i);
       var th = document.createElement("span"), tx = document.createElement("span"), title = document.createElement("b"), meta = document.createElement("span");
       tx.className = "fr-item-text"; meta.className = "muted";
       if (i < 0) {
-        th.className = "fr-thumb fr-full"; th.innerHTML = "Full game<i>1:06:19</i>";
-        title.textContent = "Full game"; meta.textContent = "Team Jeremy at Team Evan \u00b7 Final 100\u201388";
+        th.className = "fr-thumb fr-full"; th.style.background = "linear-gradient(135deg, " + M.tj.color + ", " + M.opp.color + ")"; th.innerHTML = "Full game<i>" + M.fullLen + "</i>";
+        title.textContent = "Full game"; meta.textContent = M.title + " · Final " + M.final[0] + "–" + M.final[1];
       } else {
-        var p = plays[i]; th.className = "fr-thumb";
-        var img = document.createElement("img"); img.src = thumb(p.src); img.alt = ""; img.loading = "lazy"; th.appendChild(img);
+        var p = clips[i]; th.className = "fr-thumb";
+        var img = document.createElement("img"); img.src = p.src.replace(/clip\.mp4$/, "clip.0000001.jpg"); img.alt = ""; img.loading = "lazy"; th.appendChild(img);
         var d = document.createElement("i"); d.textContent = "0:07"; th.appendChild(d);
         title.textContent = p.p + " " + p.d;
-        meta.innerHTML = '<i class="gc-dot" style="background:' + TEAM[p.tm].color + '"></i>' + p.tm + " \u00b7 Film " + film(p.t) + ' \u00b7 <span class="fr-score">TJ ' + p.s[0] + "\u2013" + p.s[1] + " TE</span>";
+        meta.innerHTML = '<i class="gc-dot" style="background:' + TEAM[p.tm].color + '"></i>' + p.tm + " · Film " + film(p.t) + ' · <span class="fr-score">' + scoreTxt(p.s) + "</span>";
       }
       tx.appendChild(title); tx.appendChild(meta); b.appendChild(th); b.appendChild(tx); li.appendChild(b);
       b.addEventListener("click", function () { select(i, true); });
@@ -790,50 +828,55 @@ document.querySelectorAll(".recap-clip").forEach(function (b) {
       if (fPlayer.value && fPlayer.value !== p.tm + "|" + p.p) return false;
       if (chipK === "score") return p.v > 0;
       if (chipK === "three") return p.v === 3;
-      if (chipK === "TJ" || chipK === "TE") return p.tm === chipK;
+      if (chipK === A || chipK === B) return p.tm === chipK;
       return true;
     }
     function render() {
       fList.innerHTML = ""; visible = [];
       fList.appendChild(item(-1));
-      plays.forEach(function (p, i) { if (matches(p)) { visible.push(i); fList.appendChild(item(i)); } });
-      fCount.textContent = visible.length + (visible.length === 1 ? " play" : " plays") + " \u00b7 newest last";
+      clips.forEach(function (p, i) { if (matches(p)) { visible.push(i); fList.appendChild(item(i)); } });
+      fCount.textContent = visible.length + (visible.length === 1 ? " play" : " plays") + " · in film order";
       mark();
     }
     function mark() {
       fList.querySelectorAll(".fr-item").forEach(function (b) { b.setAttribute("aria-current", +b.getAttribute("data-i") === current ? "true" : "false"); });
       var pos = visible.indexOf(current);
       fPrev.disabled = current < 0 || pos <= 0; fNext.disabled = current >= 0 ? pos < 0 || pos >= visible.length - 1 : !visible.length;
-      fInGame.hidden = current < 0;
+      fInGame.hidden = current < 0; markCams();
     }
     function select(i, autoplay) {
       current = i;
-      if (i < 0) {
-        fv.src = FULL; fKicker.textContent = "Full game"; fTitle.textContent = "Team Jeremy at Team Evan"; fMeta.textContent = "Thu, Nov 5 \u00b7 1:06:19 \u00b7 Final: TJ 100, TE 88";
-      } else {
-        var p = plays[i]; if (!CLIP.test(p.src)) return;
-        fv.src = p.src; fKicker.textContent = TEAM[p.tm].name + (p.v ? " \u00b7 +" + p.v : "");
-        fTitle.textContent = p.p + " " + p.d; fMeta.textContent = "Film " + film(p.t) + " \u00b7 TJ " + p.s[0] + "\u2013" + p.s[1] + " TE";
+      if (i < 0) { load(fv, M.cams[cam].url, false); fullTitle(); }
+      else {
+        var p = clips[i]; load(fv, p.src, autoplay);
+        fKicker.textContent = TEAM[p.tm].name + (p.v ? " · +" + p.v : ""); fTitle.textContent = p.p + " " + p.d;
+        fMeta.textContent = "Film " + film(p.t) + " · " + scoreTxt(p.s);
       }
-      if (autoplay) fv.play().catch(function () {});
       mark();
       var cur = fList.querySelector('[aria-current="true"]'); if (cur) cur.scrollIntoView({ block: "nearest" });
     }
-    function step(d) { var pos = visible.indexOf(current); var n = current < 0 ? (d > 0 ? 0 : -1) : pos + d; if (n >= 0 && n < visible.length) select(visible[n], true); }
+    function step(d) { var pos = visible.indexOf(current), n = current < 0 ? (d > 0 ? 0 : -1) : pos + d; if (n >= 0 && n < visible.length) select(visible[n], true); }
     fPrev.addEventListener("click", function () { step(-1); });
     fNext.addEventListener("click", function () { step(1); });
     fv.addEventListener("ended", function () { if (current >= 0 && fAuto.checked) step(1); });
     fInGame.addEventListener("click", function () {
-      if (current < 0) return; var at = Math.max(0, plays[current].x - 4);
-      fv.src = FULL; fKicker.textContent = "Full game"; fMeta.textContent = "Jumped to film " + film(plays[current].t) + " \u00b7 TJ " + plays[current].s[0] + "\u2013" + plays[current].s[1] + " TE";
-      fv.addEventListener("loadedmetadata", function go() { fv.removeEventListener("loadedmetadata", go); fv.currentTime = at; fv.play().catch(function () {}); });
-      current = -1; mark();
+      if (current < 0) return; var p = clips[current];
+      cam = camOf(p.src); current = -1;
+      load(fv, M.cams[cam].url, true, Math.max(0, p.x - 4)); fullTitle();
+      fMeta.textContent = "Jumped to film " + film(p.t) + " · " + scoreTxt(p.s); mark();
+    });
+    camBtns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        var at = current < 0 && !isNaN(fv.currentTime) ? fv.currentTime : 0, playing = current < 0 && !fv.paused;
+        cam = +b.getAttribute("data-fr-cam"); current = -1;
+        load(fv, M.cams[cam].url, playing, at); fullTitle(); mark();
+      });
     });
     fr.querySelectorAll("[data-fr-chips] button").forEach(function (c) {
       c.addEventListener("click", function () { chipK = c.getAttribute("data-k"); fr.querySelectorAll("[data-fr-chips] button").forEach(function (x) { x.setAttribute("aria-pressed", x === c ? "true" : "false"); }); render(); });
     });
     fPlayer.addEventListener("change", render);
-    render();
+    fullTitle(); render();
   }
 })();
 </script>
