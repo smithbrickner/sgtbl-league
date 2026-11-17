@@ -219,6 +219,13 @@
 .sc-court .shot.has-film { cursor: pointer; }
 .sc-court .shot.dim { opacity: .12; }
 .sc-court .shot.hot circle.ring { stroke: var(--text-primary); stroke-width: 3; }
+/* Recap article (AP style) */
+.gc-dateline { font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--text-muted); margin: -4px 0 var(--space-3) !important; }
+.gc-article { max-width: 760px; margin-bottom: var(--space-8); }
+.gc-article h2 { font-size: var(--text-2xl); line-height: 1.2; }
+.gc-article p { font-size: var(--text-base); line-height: 1.65; }
+.gc-upnext-h { font-size: var(--text-base); margin: var(--space-5) 0 var(--space-2); text-transform: uppercase; letter-spacing: .5px; }
+.gc-upnext { margin-bottom: 4px !important; }
 .gc-note { font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-2); }
 /* portal: the nav sidebar takes ~260px, so stack the Gamecast sidebar, film room and score header sooner */
 @media (max-width: 1240px) {
@@ -314,6 +321,7 @@
 
       <div class="tabbar" data-tabbar role="tablist" style="margin-top:var(--space-5)">
         <button role="tab" aria-selected="true" aria-controls="p-gamecast" id="t-gamecast">Gamecast</button>
+        <button role="tab" aria-selected="false" aria-controls="p-recap" id="t-recap">Recap</button>
         <button role="tab" aria-selected="false" aria-controls="p-box" id="t-box">Box Score</button>
         <button role="tab" aria-selected="false" aria-controls="p-pbp" id="t-pbp">Play-by-Play</button>
         <button role="tab" aria-selected="false" aria-controls="p-teamstats" id="t-teamstats">Team Stats</button>
@@ -337,10 +345,10 @@
             </section>
 
             <article class="card gc-card gc-story">
-              <h2>Brown scores 39 as Team Jeremy wins 100&ndash;88 at Team Evan</h2>
-              <p>Bryson Brown scored 39 points on 13-of-27 shooting, including 5 of 14 from three and a perfect 8 of 8 at the line, to lead Team Jeremy past Team Evan 100&ndash;88 on the road. Brown also had 9 rebounds and 4 assists, and the win moved Team Jeremy to 2-1.</p>
-              <p>Jeremy Jones added 25 points for Team Jeremy on 10-of-19 shooting, and Player #99 grabbed 19 rebounds. Team Jeremy shot 44.6% from the field to Team Evan's 40.4% and had 8 turnovers to Team Evan's 11. Evan Pastorelle led Team Evan with 29 points, 11 rebounds and 5 assists, and Player #99 added 27.</p>
-              <p class="gc-byline">Auto-generated recap &middot; Nov 5, 2026 &middot; from the <a href="https://uh.sportsvisio.com/league/texas-frisco/game/2edf694a-6fe5-4d06-a2e4-ef2ffac82313" target="_blank" rel="noopener">SportsVisio game page</a></p>
+              <h2>Brown scores 39 as Team Jeremy hands Team Evan first loss, 100-88</h2>
+              <p class="gc-dateline">Frisco, Texas &middot; Thursday, Nov. 5, 2026</p>
+              <p>Bryson Brown had 39 points, nine rebounds and four assists to lead Team Jeremy past Team Evan 100-88 on the road on Thursday night, handing Team Evan its first loss of the season.</p>
+              <a class="btn btn-outline btn-sm gc-more" href="#p-recap" data-open-tab="t-recap">Full Recap</a>
             </article>
 
             <section class="card gc-card" aria-labelledby="gc-leaders-h">
@@ -434,6 +442,24 @@
         </div>
       </div>
 
+      <div id="p-recap" class="tabpanel" role="tabpanel" aria-labelledby="t-recap" hidden>
+        <article class="card gc-card gc-story gc-article">
+          <h2>Brown scores 39 as Team Jeremy hands Team Evan first loss, 100-88</h2>
+          <p class="gc-dateline">Frisco, Texas &middot; Thursday, Nov. 5, 2026</p>
+              <p>Bryson Brown had 39 points, nine rebounds and four assists to lead Team Jeremy past Team Evan 100-88 on the road on Thursday night, handing Team Evan its first loss of the season.</p>
+              <p>Brown made 13 of 27 shots from the field, 5 of 14 from 3-point range and all eight free throws.</p>
+              <p>Jeremy Jones added 25 points, and Player #99 had 17 points and 19 rebounds.</p>
+              <p>Team Jeremy shot 44.6% (37 of 83) from the field and made 12 3-pointers, committing only eight turnovers.</p>
+              <p>Team Evan fell to 1-1. Evan Pastorelle led Team Evan with 29 points, 11 rebounds and five assists.</p>
+              <p>Player #99 added 27 points and Manney Collins had 14.</p>
+              <p>Team Evan led by as many as three early. A 14-0 Team Jeremy run, capped by Player #99's basket, made it 14-3. Team Jeremy was up 49-38 midway through the game.</p>
+              <p>Team Jeremy led by as many as 20.</p>
+          <h3 class="gc-upnext-h">Up next</h3>
+              <p class="gc-upnext"><b>Team Jeremy:</b> Host Team Martin on Thursday, Nov. 19.</p>
+              <p class="gc-upnext"><b>Team Evan:</b> Host Team Martin on Thursday, Nov. 12.</p>
+          <p class="gc-byline">Auto-generated recap from the <a href="https://uh.sportsvisio.com/league/texas-frisco/game/2edf694a-6fe5-4d06-a2e4-ef2ffac82313" target="_blank" rel="noopener">SportsVisio game page</a>, the league schedule and the tagged play-by-play.</p>
+        </article>
+      </div>
       <div id="p-box" class="tabpanel" role="tabpanel" aria-labelledby="t-box" hidden>
         <div class="stack" style="gap:var(--space-6);margin-bottom:var(--space-8)">
           <div class="card card-pad pergame-card">

@@ -1,0 +1,20 @@
+[
+  { "date": "2026-10-22", "time": "7:30 PM", "home": "Team Jeremy", "away": "Team Turbo", "hs": 94, "as": 60 },
+  { "date": "2026-10-22", "time": "8:30 PM", "home": "Team Paul",   "away": "Team Evan",  "hs": 61, "as": 64 },
+  { "date": "2026-10-29", "time": "7:30 PM", "home": "Team Paul",   "away": "Team Jeremy", "hs": 71, "as": 64 },
+  { "date": "2026-10-29", "time": "8:30 PM", "home": "Team Martin", "away": "Team Turbo", "hs": 93, "as": 57 },
+  { "date": "2026-11-05", "time": "7:30 PM", "home": "Team Martin", "away": "Team Paul",  "hs": 74, "as": 75 },
+  { "date": "2026-11-05", "time": "8:30 PM", "home": "Team Evan",   "away": "Team Jeremy", "hs": 88, "as": 100 },
+  { "date": "2026-11-12", "time": "7:30 PM", "home": "Team Turbo",  "away": "Team Paul",  "hs": 57, "as": 54 },
+  { "date": "2026-11-12", "time": "8:30 PM", "home": "Team Evan",   "away": "Team Martin", "hs": 89, "as": 96 },
+  { "date": "2026-11-19", "time": "7:30 PM", "home": "Team Jeremy", "away": "Team Martin" },
+  { "date": "2026-11-19", "time": "8:30 PM", "home": "Team Turbo",  "away": "Team Evan" },
+  { "date": "2026-12-03", "time": "7:30 PM", "home": "Team Jeremy", "away": "Team Paul" },
+  { "date": "2026-12-03", "time": "8:30 PM", "home": "Team Martin", "away": "Team Turbo" },
+  { "date": "2026-12-09", "time": "7:30 PM", "home": "Team Evan",   "away": "Team Paul" },
+  { "date": "2026-12-09", "time": "8:30 PM", "home": "Team Turbo",  "away": "Team Jeremy" },
+  { "date": "2026-12-10", "time": "7:30 PM", "home": "Team Paul",   "away": "Team Martin" },
+  { "date": "2026-12-10", "time": "8:30 PM", "home": "Team Jeremy", "away": "Team Evan" },
+  { "date": "2026-12-16", "time": "7:30 PM", "home": "Team Paul",   "away": "Team Turbo" },
+  { "date": "2026-12-16", "time": "8:30 PM", "home": "Team Martin", "away": "Team Evan" }
+]

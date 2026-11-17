@@ -15,6 +15,7 @@ function Last($n) { if ($n -match '^Player #') { $n } else { ($n -split ' ')[-1]
 function Init($n) { if ($n -match '^Player #(\d+)') { $Matches[1] } else { (($n -replace ' \(.*\)$', '') -split ' ' | ForEach-Object { $_.Substring(0, 1).ToUpper() }) -join '' } }
 
 $games = Get-Content (Join-Path $PSScriptRoot 'games.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+. (Join-Path $PSScriptRoot 'story.ps1')
 $camLen = @{ 'oct22' = 3324; 'oct29' = 3762; 'nov5' = 3979 }
 $TJ = @{ code = 'TJ'; name = 'Team Jeremy'; color = 'var(--team-knicks-bg)'; record = '2-1' }
 $baseCss = [regex]::Match([IO.File]::ReadAllText((Join-Path $root 'game.html')), '(?s)<style>\r?\n(.*?)\r?\n</style>').Groups[1].Value
@@ -49,6 +50,13 @@ $extraCss = @'
 .sc-court .shot.has-film { cursor: pointer; }
 .sc-court .shot.dim { opacity: .12; }
 .sc-court .shot.hot circle.ring { stroke: var(--text-primary); stroke-width: 3; }
+/* Recap article (AP style) */
+.gc-dateline { font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--text-muted); margin: -4px 0 var(--space-3) !important; }
+.gc-article { max-width: 760px; margin-bottom: var(--space-8); }
+.gc-article h2 { font-size: var(--text-2xl); line-height: 1.2; }
+.gc-article p { font-size: var(--text-base); line-height: 1.65; }
+.gc-upnext-h { font-size: var(--text-base); margin: var(--space-5) 0 var(--space-2); text-transform: uppercase; letter-spacing: .5px; }
+.gc-upnext { margin-bottom: 4px !important; }
 .gc-note { font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-2); }
 '@
 $css = $baseCss.TrimEnd() + $nl + (N $extraCss).TrimEnd()
@@ -129,27 +137,12 @@ $(TeamSide $homeT $homeScore $false (-not $awayWon))
   foreach ($e in $bbThrees) { $i++
     $hl += '            <button type="button" class="gc-hl recap-clip" data-src="' + $e.src + '" data-title="Bryson Brown 3-pointer (' + $i + ' of ' + $bbThrees.Count + ') &middot; Film ' + (FilmT $e.t) + '"><span class="gc-hl-thumb"><img src="' + ($e.src -replace 'clip\.mp4$', 'clip.0000001.jpg') + '" alt="" loading="lazy"><i>0:07</i></span><span class="gc-hl-title">Bryson Brown 3-pointer (' + $i + ' of ' + $bbThrees.Count + ')</span></button>' }
 
-  # ---- story (written from the box score only) ----
-  $a1 = $g.box.TJ[0]; $a2 = $g.box.TJ[1]; $b1 = $g.box.OPP[0]; $b2 = $g.box.OPP[1]
-  function Shoot($r) { $f = MA $r[9]; $t3 = MA $r[10]; $ft = MA $r[11]
-    $s = "$($f[0])-of-$($f[1]) shooting"
-    if ($t3[1]) { $s += ", including $($t3[0]) of $($t3[1]) from three" }
-    if ($ft[1]) { if ($ft[0] -eq $ft[1] -and $ft[1] -ge 4) { $s += " and a perfect $($ft[0]) of $($ft[1]) at the line" } else { $s += " and $($ft[0]) of $($ft[1]) at the line" } }
-    $s }
-  $loc = if ($g.tjHome) { 'at home' } else { 'on the road' }
-  $aReb = Lead $g.box.TJ 3
-  if ($tjW) {
-    $headline = if ($g.tjHome) { "$(Last $a1[0]) scores $($a1[2]) as Team Jeremy beats $($O.name) $($g.score[0])&ndash;$($g.score[1])" } else { "$(Last $a1[0]) scores $($a1[2]) as Team Jeremy wins $($g.score[0])&ndash;$($g.score[1]) at $($O.name)" }
-    $p1 = "$($a1[0]) scored $($a1[2]) points on $(Shoot $a1), to lead Team Jeremy past $($O.name) $($g.score[0])&ndash;$($g.score[1]) $loc. $(Last $a1[0]) also had $($a1[3]) rebounds and $($a1[4]) assists, and the win moved Team Jeremy to $($g.tjRecordThen)."
-  } else {
-    $headline = "$(Last $b1[0]) scores $($b1[2]) as $($O.name) beats Team Jeremy $($g.score[1])&ndash;$($g.score[0])"
-    $p1 = "$($b1[0]) scored $($b1[2]) points on $(Shoot $b1), and grabbed $($b1[3]) rebounds, as $($O.name) beat Team Jeremy $($g.score[1])&ndash;$($g.score[0])$(if ($g.tjHome) { ' on the road' } else { ' at home' }). $($a1[0]) led Team Jeremy with $($a1[2]) points on $(Shoot $a1), and the loss left Team Jeremy at $($g.tjRecordThen)."
-  }
-  $p2 = "$($a2[0]) added $($a2[2]) points for Team Jeremy on $((MA $a2[9])[0])-of-$((MA $a2[9])[1]) shooting"
-  if ($aReb[0] -ne $a1[0] -and $aReb[0] -ne $a2[0]) { $p2 += ", and $($aReb[0]) grabbed $($aReb[3]) rebounds" } elseif ($aReb[0] -eq $a1[0] -and -not $tjW) { $p2 += ", and $(Last $a1[0]) also had $($a1[3]) rebounds" }
-  $p2 += ". Team Jeremy shot $(F1 (100 * $tA.fgm / $tA.fga))% from the field to $($O.name)'s $(F1 (100 * $tB.fgm / $tB.fga))% and had $($tA.tov) turnovers to $($O.name)'s $($tB.tov). "
-  if ($tjW) { $p2 += "$($b1[0]) led $($O.name) with $($b1[2]) points, $($b1[3]) rebounds and $($b1[4]) assists, and $($b2[0]) added $($b2[2])." }
-  else { $p2 += "$($b2[0]) added $($b2[2]) points for $($O.name)." }
+  # ---- story: AP-style, from the box score, league schedule and (when complete) the play-by-play - see story.ps1 ----
+  $story = Build-Story $g $events $tA $tB $O $ftNote
+  $headline = $story.headline
+  $storyParas = ($story.paras | ForEach-Object { '            <p>' + $_ + '</p>' }) -join $nl
+  $upNext = ($story.upnext | ForEach-Object { $kv = $_.Split(':', 2); '            <p class="gc-upnext"><b>' + $kv[0] + ':</b>' + $kv[1] + '</p>' }) -join $nl
+  $leadPara = $story.paras[0]
 
   # ---- game leaders ----
   function Ldr($r, $val, $sub, $color) {
@@ -265,6 +258,7 @@ $head
 
     <div class="tabbar" data-tabbar role="tablist" style="margin-top:var(--space-5)">
       <button role="tab" aria-selected="true" aria-controls="p-gamecast" id="t-gamecast">Gamecast</button>
+      <button role="tab" aria-selected="false" aria-controls="p-recap" id="t-recap">Recap</button>
       <button role="tab" aria-selected="false" aria-controls="p-box" id="t-box">Box Score</button>
       <button role="tab" aria-selected="false" aria-controls="p-pbp" id="t-pbp">Play-by-Play</button>
       <button role="tab" aria-selected="false" aria-controls="p-teamstats" id="t-teamstats">Team Stats</button>
@@ -284,9 +278,9 @@ $($hl -join $nl)
 
           <article class="card gc-card gc-story">
             <h2>$headline</h2>
-            <p>$p1</p>
-            <p>$p2</p>
-            <p class="gc-byline">Auto-generated recap &middot; $($g.dateShort), 2026 &middot; from the <a href="$gameUrl" target="_blank" rel="noopener">SportsVisio game page</a></p>
+            <p class="gc-dateline">$($story.dateline)</p>
+            <p>$leadPara</p>
+            <a class="btn btn-outline btn-sm gc-more" href="#p-recap" data-open-tab="t-recap">Full Recap</a>
           </article>
 
           <section class="card gc-card" aria-labelledby="gc-leaders-h">
@@ -368,6 +362,16 @@ $($stand -join $nl)
       </div>
     </div>
 
+    <div id="p-recap" class="tabpanel" role="tabpanel" aria-labelledby="t-recap" hidden>
+      <article class="card gc-card gc-story gc-article">
+        <h2>$headline</h2>
+        <p class="gc-dateline">$($story.dateline)</p>
+$storyParas
+        <h3 class="gc-upnext-h">Up next</h3>
+$upNext
+        <p class="gc-byline">Auto-generated recap from the <a href="$gameUrl" target="_blank" rel="noopener">SportsVisio game page</a>, the league schedule and the tagged play-by-play.</p>
+      </article>
+    </div>
     <div id="p-box" class="tabpanel" role="tabpanel" aria-labelledby="t-box" hidden>
       <div class="stack" style="gap:var(--space-6);margin-bottom:var(--space-8)">
 $($boxes -join ($nl + $nl))

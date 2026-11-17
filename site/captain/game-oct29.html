@@ -220,6 +220,13 @@
 .sc-court .shot.has-film { cursor: pointer; }
 .sc-court .shot.dim { opacity: .12; }
 .sc-court .shot.hot circle.ring { stroke: var(--text-primary); stroke-width: 3; }
+/* Recap article (AP style) */
+.gc-dateline { font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--text-muted); margin: -4px 0 var(--space-3) !important; }
+.gc-article { max-width: 760px; margin-bottom: var(--space-8); }
+.gc-article h2 { font-size: var(--text-2xl); line-height: 1.2; }
+.gc-article p { font-size: var(--text-base); line-height: 1.65; }
+.gc-upnext-h { font-size: var(--text-base); margin: var(--space-5) 0 var(--space-2); text-transform: uppercase; letter-spacing: .5px; }
+.gc-upnext { margin-bottom: 4px !important; }
 .gc-note { font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-2); }
 /* portal: the nav sidebar takes ~260px, so stack the Gamecast sidebar, film room and score header sooner */
 @media (max-width: 1240px) {
@@ -314,6 +321,7 @@
 
       <div class="tabbar" data-tabbar role="tablist" style="margin-top:var(--space-5)">
         <button role="tab" aria-selected="true" aria-controls="p-gamecast" id="t-gamecast">Gamecast</button>
+        <button role="tab" aria-selected="false" aria-controls="p-recap" id="t-recap">Recap</button>
         <button role="tab" aria-selected="false" aria-controls="p-box" id="t-box">Box Score</button>
         <button role="tab" aria-selected="false" aria-controls="p-pbp" id="t-pbp">Play-by-Play</button>
         <button role="tab" aria-selected="false" aria-controls="p-teamstats" id="t-teamstats">Team Stats</button>
@@ -335,10 +343,10 @@
             </section>
 
             <article class="card gc-card gc-story">
-              <h2>Grayson scores 26 as Team Paul beats Team Jeremy 71&ndash;64</h2>
-              <p>Champ Grayson scored 26 points on 9-of-21 shooting, including 1 of 4 from three and 7 of 8 at the line, and grabbed 15 rebounds, as Team Paul beat Team Jeremy 71&ndash;64 at home. Bryson Brown led Team Jeremy with 22 points on 8-of-19 shooting, including 3 of 10 from three and 3 of 4 at the line, and the loss left Team Jeremy at 1-1.</p>
-              <p>Jeremy Jones added 15 points for Team Jeremy on 5-of-13 shooting, and Santonio Martin grabbed 10 rebounds. Team Jeremy shot 37.1% from the field to Team Paul's 42.9% and had 10 turnovers to Team Paul's 8. Paul Starr added 20 points for Team Paul.</p>
-              <p class="gc-byline">Auto-generated recap &middot; Oct 29, 2026 &middot; from the <a href="https://uh.sportsvisio.com/league/texas-frisco/game/f2e8078d-a8e6-4c0c-bdae-5ac521806559" target="_blank" rel="noopener">SportsVisio game page</a></p>
+              <h2>Grayson scores 26 as Team Paul hands Team Jeremy first loss, 71-64</h2>
+              <p class="gc-dateline">Frisco, Texas &middot; Thursday, Oct. 29, 2026</p>
+              <p>Champ Grayson had 26 points, 15 rebounds and two blocks to lead Team Paul past Team Jeremy 71-64 on Thursday night, handing Team Jeremy its first loss of the season.</p>
+              <a class="btn btn-outline btn-sm gc-more" href="#p-recap" data-open-tab="t-recap">Full Recap</a>
             </article>
 
             <section class="card gc-card" aria-labelledby="gc-leaders-h">
@@ -432,6 +440,22 @@
         </div>
       </div>
 
+      <div id="p-recap" class="tabpanel" role="tabpanel" aria-labelledby="t-recap" hidden>
+        <article class="card gc-card gc-story gc-article">
+          <h2>Grayson scores 26 as Team Paul hands Team Jeremy first loss, 71-64</h2>
+          <p class="gc-dateline">Frisco, Texas &middot; Thursday, Oct. 29, 2026</p>
+              <p>Champ Grayson had 26 points, 15 rebounds and two blocks to lead Team Paul past Team Jeremy 71-64 on Thursday night, handing Team Jeremy its first loss of the season.</p>
+              <p>Grayson made 9 of 21 shots from the field and 7 of 8 free throws.</p>
+              <p>Paul Starr added 20 points and five assists.</p>
+              <p>Team Paul shot 42.9% (27 of 63) from the field and made nine 3-pointers.</p>
+              <p>Team Jeremy fell to 1-1. Bryson Brown led Team Jeremy with 22 points, six rebounds and three steals.</p>
+              <p>Jeremy Jones added 15 points and Teron Bolton had 11.</p>
+          <h3 class="gc-upnext-h">Up next</h3>
+              <p class="gc-upnext"><b>Team Jeremy:</b> Visit Team Evan on Thursday, Nov. 5.</p>
+              <p class="gc-upnext"><b>Team Paul:</b> Visit Team Martin on Thursday, Nov. 5.</p>
+          <p class="gc-byline">Auto-generated recap from the <a href="https://uh.sportsvisio.com/league/texas-frisco/game/f2e8078d-a8e6-4c0c-bdae-5ac521806559" target="_blank" rel="noopener">SportsVisio game page</a>, the league schedule and the tagged play-by-play.</p>
+        </article>
+      </div>
       <div id="p-box" class="tabpanel" role="tabpanel" aria-labelledby="t-box" hidden>
         <div class="stack" style="gap:var(--space-6);margin-bottom:var(--space-8)">
           <div class="card card-pad pergame-card">

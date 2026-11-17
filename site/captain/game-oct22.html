@@ -220,6 +220,13 @@
 .sc-court .shot.has-film { cursor: pointer; }
 .sc-court .shot.dim { opacity: .12; }
 .sc-court .shot.hot circle.ring { stroke: var(--text-primary); stroke-width: 3; }
+/* Recap article (AP style) */
+.gc-dateline { font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--text-muted); margin: -4px 0 var(--space-3) !important; }
+.gc-article { max-width: 760px; margin-bottom: var(--space-8); }
+.gc-article h2 { font-size: var(--text-2xl); line-height: 1.2; }
+.gc-article p { font-size: var(--text-base); line-height: 1.65; }
+.gc-upnext-h { font-size: var(--text-base); margin: var(--space-5) 0 var(--space-2); text-transform: uppercase; letter-spacing: .5px; }
+.gc-upnext { margin-bottom: 4px !important; }
 .gc-note { font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-2); }
 /* portal: the nav sidebar takes ~260px, so stack the Gamecast sidebar, film room and score header sooner */
 @media (max-width: 1240px) {
@@ -314,6 +321,7 @@
 
       <div class="tabbar" data-tabbar role="tablist" style="margin-top:var(--space-5)">
         <button role="tab" aria-selected="true" aria-controls="p-gamecast" id="t-gamecast">Gamecast</button>
+        <button role="tab" aria-selected="false" aria-controls="p-recap" id="t-recap">Recap</button>
         <button role="tab" aria-selected="false" aria-controls="p-box" id="t-box">Box Score</button>
         <button role="tab" aria-selected="false" aria-controls="p-pbp" id="t-pbp">Play-by-Play</button>
         <button role="tab" aria-selected="false" aria-controls="p-teamstats" id="t-teamstats">Team Stats</button>
@@ -336,10 +344,10 @@
             </section>
 
             <article class="card gc-card gc-story">
-              <h2>Brown scores 30 as Team Jeremy beats Team Turbo 94&ndash;60</h2>
-              <p>Bryson Brown scored 30 points on 11-of-16 shooting, including 4 of 7 from three and 4 of 5 at the line, to lead Team Jeremy past Team Turbo 94&ndash;60 at home. Brown also had 8 rebounds and 7 assists, and the win moved Team Jeremy to 1-0.</p>
-              <p>Jeremy Jones added 20 points for Team Jeremy on 8-of-13 shooting, and Santonio Martin grabbed 13 rebounds. Team Jeremy shot 53.7% from the field to Team Turbo's 38.5% and had 2 turnovers to Team Turbo's 3. Lamar Sharper led Team Turbo with 16 points, 7 rebounds and 3 assists, and Devon Edwards added 11.</p>
-              <p class="gc-byline">Auto-generated recap &middot; Oct 22, 2026 &middot; from the <a href="https://uh.sportsvisio.com/league/texas-frisco/game/9013f4d9-49eb-46f3-aaf8-dba8b5bd1dad" target="_blank" rel="noopener">SportsVisio game page</a></p>
+              <h2>Brown scores 30, Team Jeremy beats Team Turbo 94-60 in season opener</h2>
+              <p class="gc-dateline">Frisco, Texas &middot; Thursday, Oct. 22, 2026</p>
+              <p>Bryson Brown had 30 points, eight rebounds and seven assists to lead Team Jeremy past Team Turbo 94-60 on Thursday night in the season opener for both teams.</p>
+              <a class="btn btn-outline btn-sm gc-more" href="#p-recap" data-open-tab="t-recap">Full Recap</a>
             </article>
 
             <section class="card gc-card" aria-labelledby="gc-leaders-h">
@@ -433,6 +441,24 @@
         </div>
       </div>
 
+      <div id="p-recap" class="tabpanel" role="tabpanel" aria-labelledby="t-recap" hidden>
+        <article class="card gc-card gc-story gc-article">
+          <h2>Brown scores 30, Team Jeremy beats Team Turbo 94-60 in season opener</h2>
+          <p class="gc-dateline">Frisco, Texas &middot; Thursday, Oct. 22, 2026</p>
+              <p>Bryson Brown had 30 points, eight rebounds and seven assists to lead Team Jeremy past Team Turbo 94-60 on Thursday night in the season opener for both teams.</p>
+              <p>Brown made 11 of 16 shots from the field, 4 of 7 from 3-point range and 4 of 5 free throws.</p>
+              <p>Jeremy Jones added 20 points and seven assists, and Santonio Martin had 13 points and 13 rebounds.</p>
+              <p>Team Jeremy shot 53.7% (36 of 67) from the field and made 16 3-pointers.</p>
+              <p>Team Turbo fell to 0-1. Lamar Sharper led Team Turbo with 16 points and seven rebounds.</p>
+              <p>Devon Edwards added 11 points.</p>
+              <p>Team Jeremy never trailed. A 14-0 Team Jeremy run, capped by Jeff Pritchard's 3-pointer, made it 27-9. Team Jeremy was up 53-25 midway through the game.</p>
+              <p>Team Jeremy led by as many as 38. Jeremy Jones and Jermiah Johnson scored Team Jeremy's final 6 points.</p>
+          <h3 class="gc-upnext-h">Up next</h3>
+              <p class="gc-upnext"><b>Team Jeremy:</b> Visit Team Paul on Thursday, Oct. 29.</p>
+              <p class="gc-upnext"><b>Team Turbo:</b> Visit Team Martin on Thursday, Oct. 29.</p>
+          <p class="gc-byline">Auto-generated recap from the <a href="https://uh.sportsvisio.com/league/texas-frisco/game/9013f4d9-49eb-46f3-aaf8-dba8b5bd1dad" target="_blank" rel="noopener">SportsVisio game page</a>, the league schedule and the tagged play-by-play.</p>
+        </article>
+      </div>
       <div id="p-box" class="tabpanel" role="tabpanel" aria-labelledby="t-box" hidden>
         <div class="stack" style="gap:var(--space-6);margin-bottom:var(--space-8)">
           <div class="card card-pad pergame-card">
