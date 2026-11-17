@@ -3,16 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Knicks — Team — SGTBL</title>
+<title>Team Jeremy — Team — SGTBL</title>
 <link rel="icon" href="assets/img/sgtbl-logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/tokens.css?v=20261116d">
-<link rel="stylesheet" href="assets/css/base.css?v=20261116d">
-<link rel="stylesheet" href="assets/css/site.css?v=20261116d">
+<link rel="stylesheet" href="assets/css/tokens.css?v=20261116g">
+<link rel="stylesheet" href="assets/css/base.css?v=20261116g">
+<link rel="stylesheet" href="assets/css/site.css?v=20261116g">
 <style>
 /* Roster player cell: avatar/headshot beside the name with a gap (same as the Team Portal roster) */
 .team-cell { display: flex; align-items: center; gap: var(--space-4); }
+/* Schedule: games not played yet are dimmed */
+.schedule-table tr.sched-upcoming td { color: var(--text-muted); }
 </style>
 </head>
 <body>
@@ -38,71 +40,77 @@
 
 <main id="main">
   <div class="wrap" style="padding-top:var(--space-6)">
-    <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-4)"><a href="teams.html" class="muted">Teams</a> / Knicks</p>
+    <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-4)"><a href="teams.html" class="muted">Teams</a> / Team Jeremy</p>
 
     <div class="profile-header">
       <div class="wrap-inner">
-        <span class="crest crest-logo" style="width:84px;height:94px;font-size:32px;box-shadow:var(--shadow-md)"><img src="assets/img/knicks-logo.webp" alt="Knicks"></span>
+        <span class="crest" style="width:84px;height:94px;font-size:32px;box-shadow:var(--shadow-md);background:var(--team-knicks-bg)" role="img" aria-label="Team Jeremy">TJ</span>
         <div>
-          <span class="eyebrow" style="color:var(--gold-400)">1st Place · Clinched Playoff Berth</span>
-          <h1>Knicks</h1>
-          <div class="profile-meta"><span><b>10-2-1</b> · 32 pts</span><span>Captain: <b>R. Alvarez</b></span><span>Assoc. Captain: <b>J. Kim</b></span><span>Home Gym: <b>Smithtown Gospel Tabernacle Gym</b></span></div>
+          <span class="eyebrow" style="color:var(--gold-400)">Draft Division · 1st of 5</span>
+          <h1>Team Jeremy</h1>
+          <div class="profile-meta"><span><b>2-1</b> · +39 point differential</span><span>Home Gym: <b>Smithtown Gospel Tabernacle Gym</b></span></div>
         </div>
-        <div class="profile-actions"><a class="btn btn-accent" href="games.html">Schedule</a></div>
+        <div class="profile-actions"><a class="btn btn-accent" href="#p-schedule" data-open-tab="t-schedule">Schedule</a></div>
       </div>
     </div>
 
     <div class="tabbar" data-tabbar role="tablist" style="margin-top:var(--space-6)">
       <button role="tab" aria-selected="true" aria-controls="p-roster" id="t-roster">Roster</button>
-      <button role="tab" aria-selected="false" aria-controls="p-stats" id="t-stats">Team Stats</button>
+      <button role="tab" aria-selected="false" aria-controls="p-schedule" id="t-schedule">Schedule</button>
       <button role="tab" aria-selected="false" aria-controls="p-transactions" id="t-transactions">Transactions</button>
     </div>
 
     <div id="p-roster" class="tabpanel" role="tabpanel" aria-labelledby="t-roster">
       <div class="card card-pad pergame-card" style="margin-bottom:var(--space-6)">
         <div class="pergame-head">
-          <h3>Roster <span class="muted" style="font-weight:400;font-size:var(--text-sm)">2026 per-game stats</span></h3>
+          <h3>Roster <span class="muted" style="font-weight:400;font-size:var(--text-sm)">Fall 2026 per-game stats</span></h3>
           <span class="muted" style="font-size:var(--text-xs)">Click a column to sort &middot; hover a heading for its full name</span>
         </div>
         <div class="pergame-scroll">
           <table class="pergame-table roster-table" data-sortable>
             <thead><tr>
-      <th scope="col" aria-sort="none">Player</th><th scope="col" class="num" title="Jersey number" aria-sort="none">No.</th><th scope="col" title="Position" aria-sort="none">Pos</th><th scope="col" class="num" title="Games" aria-sort="none">G</th><th scope="col" class="num" title="Minutes Played Per Game" aria-sort="none">MP</th><th scope="col" class="num" title="Points Per Game" aria-sort="none">PTS</th><th scope="col" class="num" title="Total Rebounds Per Game" aria-sort="none">TRB</th><th scope="col" class="num" title="Assists Per Game" aria-sort="none">AST</th><th scope="col" class="num" title="Steals Per Game" aria-sort="none">STL</th><th scope="col" class="num" title="Blocks Per Game" aria-sort="none">BLK</th><th scope="col" class="num" title="Field Goal Percentage" aria-sort="none">FG%</th><th scope="col" class="num" title="3-Point Field Goal Percentage" aria-sort="none">3P%</th><th scope="col" class="num" title="Effective Field Goal Percentage (counts a 3 as 1.5 makes)" aria-sort="none">eFG%</th><th scope="col" class="num" title="Free Throw Percentage" aria-sort="none">FT%</th>
+      <th scope="col" aria-sort="none">Player</th><th scope="col" class="num" title="Jersey number" aria-sort="none">No.</th><th scope="col" title="Position" aria-sort="none">Pos</th><th scope="col" class="num" title="Height" aria-sort="none">Ht</th><th scope="col" class="num" title="Weight (lbs)" aria-sort="none">Wt</th><th scope="col" title="Shooting hand" aria-sort="none">Shoots</th><th scope="col" class="num" title="Games" aria-sort="none">G</th><th scope="col" class="num" title="Points Per Game" aria-sort="none">PTS</th><th scope="col" class="num" title="Total Rebounds Per Game" aria-sort="none">TRB</th><th scope="col" class="num" title="Assists Per Game" aria-sort="none">AST</th><th scope="col" class="num" title="Steals Per Game" aria-sort="none">STL</th><th scope="col" class="num" title="Blocks Per Game" aria-sort="none">BLK</th><th scope="col" class="num" title="Field Goal Percentage" aria-sort="none">FG%</th><th scope="col" class="num" title="3-Point Field Goal Percentage" aria-sort="none">3P%</th><th scope="col" class="num" title="Effective Field Goal Percentage (counts a 3 as 1.5 makes)" aria-sort="none">eFG%</th><th scope="col" class="num" title="Free Throw Percentage" aria-sort="none">FT%</th>
       </tr></thead>
             <tbody>
-              <tr><th scope="row" class="team-cell" data-sort-value="Bello"><span class="headshot-cutout"><img src="assets/img/headshot-placeholder.webp" alt="Marcus Bello"></span><a href="player.html">Marcus Bello</a></th><td class="num">9</td><td>Small Forward</td><td class="num">14</td><td class="num">32.4</td><td class="num">18.4</td><td class="num">4.2</td><td class="num">3.1</td><td class="num">1.3</td><td class="num">0.4</td><td class="num">.478</td><td class="num" data-sort-value="38.1">.381</td><td class="num">.536</td><td class="num">.814</td></tr>
-              <tr><th scope="row" class="team-cell" data-sort-value="Kim"><span class="avatar avatar-sm av-3">JK</span>Jonah Kim</th><td class="num">4</td><td>Point Guard</td><td class="num">14</td><td class="num">29.8</td><td class="num">12.1</td><td class="num">3.0</td><td class="num">7.8</td><td class="num">1.6</td><td class="num">0.1</td><td class="num">.445</td><td class="num" data-sort-value="35.0">.350</td><td class="num">.498</td><td class="num">.780</td></tr>
-              <tr><th scope="row" class="team-cell" data-sort-value="Reyes"><span class="avatar avatar-sm av-6">AR</span>Ana Reyes</th><td class="num">1</td><td>Center</td><td class="num">14</td><td class="num">27.3</td><td class="num">9.6</td><td class="num">10.4</td><td class="num">1.2</td><td class="num">0.7</td><td class="num">1.8</td><td class="num">.562</td><td class="num" data-sort-value="-1"></td><td class="num">.562</td><td class="num">.685</td></tr>
-              <tr><th scope="row" class="team-cell" data-sort-value="Whitfield"><span class="avatar avatar-sm av-5">DW</span>David Whitfield</th><td class="num">22</td><td>Shooting Guard</td><td class="num">14</td><td class="num">28.6</td><td class="num">14.2</td><td class="num">2.9</td><td class="num">1.9</td><td class="num">1.1</td><td class="num">0.2</td><td class="num">.460</td><td class="num" data-sort-value="36.5">.365</td><td class="num">.515</td><td class="num">.830</td></tr>
-              <tr><th scope="row" class="team-cell" data-sort-value="Turner"><span class="avatar avatar-sm av-4">CT</span>Chloe Turner</th><td class="num">7</td><td>Power Forward</td><td class="num">14</td><td class="num">25.1</td><td class="num">10.8</td><td class="num">6.1</td><td class="num">1.2</td><td class="num">0.8</td><td class="num">0.6</td><td class="num">.495</td><td class="num" data-sort-value="31.0">.310</td><td class="num">.542</td><td class="num">.750</td></tr>
-              <tr><th scope="row" class="team-cell" data-sort-value="Osei"><span class="avatar avatar-sm av-2">SO</span>Sam Osei</th><td class="num">18</td><td>Point Guard</td><td class="num">14</td><td class="num">19.4</td><td class="num">8.4</td><td class="num">2.1</td><td class="num">4.3</td><td class="num">1.4</td><td class="num">0.1</td><td class="num">.418</td><td class="num" data-sort-value="33.0">.330</td><td class="num">.468</td><td class="num">.765</td></tr>
-              <tr><th scope="row" class="team-cell" data-sort-value="Patel"><span class="avatar avatar-sm av-7">MP</span>Maya Patel</th><td class="num">11</td><td>Shooting Guard</td><td class="num">14</td><td class="num">16.8</td><td class="num">6.9</td><td class="num">1.8</td><td class="num">1.0</td><td class="num">0.6</td><td class="num">0.1</td><td class="num">.430</td><td class="num" data-sort-value="34.5">.345</td><td class="num">.482</td><td class="num">.790</td></tr>
-              <tr><th scope="row" class="team-cell" data-sort-value="Grant"><span class="avatar avatar-sm av-8">LG</span>Luca Grant</th><td class="num">3</td><td>Center</td><td class="num">14</td><td class="num">12.5</td><td class="num">3.2</td><td class="num">5.0</td><td class="num">0.4</td><td class="num">0.3</td><td class="num">1.1</td><td class="num">.520</td><td class="num" data-sort-value="-1"></td><td class="num">.520</td><td class="num">.620</td></tr>
-              <tr><th scope="row" class="team-cell" data-sort-value="Cho"><span class="avatar avatar-sm av-3">RC</span>Rafael Cho</th><td class="num">15</td><td>Point Guard</td><td class="num">14</td><td class="num">15.2</td><td class="num">5.1</td><td class="num">1.6</td><td class="num">2.8</td><td class="num">0.9</td><td class="num">0.1</td><td class="num">.405</td><td class="num" data-sort-value="32.0">.320</td><td class="num">.453</td><td class="num">.720</td></tr>
+              <tr><th scope="row" class="team-cell" data-sort-value="Brown"><span class="headshot-cutout"><img src="assets/img/headshot-placeholder.webp" alt="Bryson Brown"></span><a href="player.html">Bryson Brown</a></th><td class="num">5</td><td>Small Forward</td><td class="num" data-sort-value="77">6-5</td><td class="num">205</td><td>Right</td><td class="num">3</td><td class="num">30.3</td><td class="num">7.7</td><td class="num">4.7</td><td class="num">1.7</td><td class="num">0.0</td><td class="num" data-sort-value="51.6">.516</td><td class="num" data-sort-value="38.7">.387</td><td class="num" data-sort-value="61.3">.613</td><td class="num" data-sort-value="88.2">.882</td></tr>
+              <tr><th scope="row" class="team-cell" data-sort-value="Jones"><span class="avatar avatar-sm av-5">JJ</span>Jeremy Jones</th><td class="num">86</td><td>Shooting Guard</td><td class="num" data-sort-value="75">6-3</td><td class="num">190</td><td>Right</td><td class="num">3</td><td class="num">20.0</td><td class="num">4.3</td><td class="num">3.7</td><td class="num">0.7</td><td class="num">0.0</td><td class="num" data-sort-value="51.1">.511</td><td class="num" data-sort-value="43.5">.435</td><td class="num" data-sort-value="62.2">.622</td><td class="num" data-sort-value="100.0">1.000</td></tr>
+              <tr><th scope="row" class="team-cell" data-sort-value="#99"><span class="avatar avatar-sm av-6">99</span>Player #99</th><td class="num">99</td><td>Power Forward</td><td class="num" data-sort-value="79">6-7</td><td class="num">225</td><td>Right</td><td class="num">2</td><td class="num">13.5</td><td class="num">13.0</td><td class="num">5.5</td><td class="num">1.0</td><td class="num">0.5</td><td class="num" data-sort-value="54.5">.545</td><td class="num" data-sort-value="20.0">.200</td><td class="num" data-sort-value="56.8">.568</td><td class="num" data-sort-value="50.0">.500</td></tr>
+              <tr><th scope="row" class="team-cell" data-sort-value="Bolton"><span class="avatar avatar-sm av-2">TB</span>Teron Bolton</th><td class="num">49</td><td>Small Forward</td><td class="num" data-sort-value="76">6-4</td><td class="num">195</td><td>Left</td><td class="num">3</td><td class="num">8.3</td><td class="num">4.0</td><td class="num">1.0</td><td class="num">1.7</td><td class="num">0.0</td><td class="num" data-sort-value="39.1">.391</td><td class="num" data-sort-value="38.9">.389</td><td class="num" data-sort-value="54.3">.543</td><td class="num" data-sort-value="-1"></td></tr>
+              <tr><th scope="row" class="team-cell" data-sort-value="Martin"><span class="avatar avatar-sm av-4">SM</span>Santonio Martin</th><td class="num">7</td><td>Center</td><td class="num" data-sort-value="80">6-8</td><td class="num">240</td><td>Right</td><td class="num">2</td><td class="num">10.0</td><td class="num">11.5</td><td class="num">2.5</td><td class="num">0.0</td><td class="num">0.0</td><td class="num" data-sort-value="56.3">.563</td><td class="num" data-sort-value="33.3">.333</td><td class="num" data-sort-value="59.4">.594</td><td class="num" data-sort-value="25.0">.250</td></tr>
+              <tr><th scope="row" class="team-cell" data-sort-value="#22"><span class="avatar avatar-sm av-7">22</span>Player #22</th><td class="num">22</td><td>Shooting Guard</td><td class="num" data-sort-value="74">6-2</td><td class="num">185</td><td>Right</td><td class="num">2</td><td class="num">10.0</td><td class="num">3.0</td><td class="num">3.0</td><td class="num">0.5</td><td class="num">0.0</td><td class="num" data-sort-value="30.0">.300</td><td class="num" data-sort-value="33.3">.333</td><td class="num" data-sort-value="42.5">.425</td><td class="num" data-sort-value="100.0">1.000</td></tr>
+              <tr><th scope="row" class="team-cell" data-sort-value="Pritchard"><span class="avatar avatar-sm av-8">JP</span>Jeff Pritchard</th><td class="num">11</td><td>Point Guard</td><td class="num" data-sort-value="72">6-0</td><td class="num">175</td><td>Left</td><td class="num">2</td><td class="num">5.5</td><td class="num">4.0</td><td class="num">3.5</td><td class="num">0.5</td><td class="num">1.0</td><td class="num" data-sort-value="26.7">.267</td><td class="num" data-sort-value="23.1">.231</td><td class="num" data-sort-value="36.7">.367</td><td class="num" data-sort-value="-1"></td></tr>
+              <tr><th scope="row" class="team-cell" data-sort-value="Johnson"><span class="avatar avatar-sm av-3">JJ</span>Jermiah Johnson</th><td class="num">10</td><td>Point Guard</td><td class="num" data-sort-value="71">5-11</td><td class="num">170</td><td>Right</td><td class="num">3</td><td class="num">1.3</td><td class="num">2.7</td><td class="num">1.7</td><td class="num">0.0</td><td class="num">0.3</td><td class="num" data-sort-value="11.1">.111</td><td class="num" data-sort-value="12.5">.125</td><td class="num" data-sort-value="16.7">.167</td><td class="num" data-sort-value="50.0">.500</td></tr>
             </tbody>
           </table>
         </div>
+        <p class="muted pergame-source">Players and stats: Team Jeremy on <a href="https://uh.sportsvisio.com/league/texas-frisco/team/a7d895a8-2c44-49a6-9675-95cceee5ab0e?eventId=0072b22a-6df1-4aa6-97fd-add0bb721e1b&amp;divisionId=d02806ab-9015-48e3-b2ae-d103b58407a7" target="_blank" rel="noopener">Ultimate Hoops / SportsVisio</a> (Texas - Frisco, Fall 2026), pulled Nov 16, 2026. Positions, heights, weights and shooting hands are placeholders.</p>
       </div>
       <div class="card card-pad" style="margin-bottom:var(--space-8)">
-        <div class="pergame-head"><h3>Reserve List <span class="muted" style="font-weight:400;font-size:var(--text-sm)">2 of 3 spots used</span></h3></div>
-        <div class="pergame-scroll">
-          <table class="pergame-table roster-table">
-            <thead><tr><th scope="col">Player</th><th scope="col">Pos</th></tr></thead>
-            <tbody>
-              <tr><th scope="row" class="team-cell"><span class="avatar avatar-sm av-6">GB</span>Grace Bennett</th><td>Center</td></tr>
-              <tr><th scope="row" class="team-cell"><span class="avatar avatar-sm av-7">NP</span>Nate Price</th><td>Shooting Guard</td></tr>
-            </tbody>
-          </table>
-        </div>
+        <div class="pergame-head"><h3>Reserve List <span class="muted" style="font-weight:400;font-size:var(--text-sm)">0 of 3 spots used</span></h3></div>
+        <p class="muted" style="font-size:var(--text-sm)">No players on the reserve list.</p>
       </div>
     </div>
 
-    <div id="p-stats" class="tabpanel" role="tabpanel" aria-labelledby="t-stats" hidden>
-      <div class="grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:var(--space-8)">
-        <div class="stat-tile"><div class="value">26.0</div><div class="label">Points Per Game</div></div>
-        <div class="stat-tile"><div class="value">22.0</div><div class="label">Points Allowed Per Game</div></div>
-        <div class="stat-tile"><div class="value">10-2-1</div><div class="label">Record</div></div>
-        <div class="stat-tile"><div class="value">+52</div><div class="label">Point Differential</div></div>
+    <div id="p-schedule" class="tabpanel" role="tabpanel" aria-labelledby="t-schedule" hidden>
+      <div class="card card-pad pergame-card" style="margin-bottom:var(--space-8)">
+        <div class="pergame-head">
+          <h3>Schedule &amp; Results <span class="muted" style="font-weight:400;font-size:var(--text-sm)">Fall 2026 &middot; 2-1</span></h3>
+        </div>
+        <div class="pergame-scroll">
+          <table class="pergame-table schedule-table">
+            <thead><tr><th scope="col" class="num" title="Game number">G</th><th scope="col">Date</th><th scope="col">Time</th><th scope="col">Opponent</th><th scope="col">Result</th><th scope="col" class="num" title="Team Jeremy's score first">Score</th><th scope="col" class="num" title="Win-loss record after the game">W-L</th></tr></thead>
+            <tbody>
+              <tr><th scope="row" class="num">1</th><td>Thu, Oct 22</td><td>7:30 PM</td><td>vs Team Turbo</td><td><span class="badge badge-success">W</span></td><td class="num">94-60</td><td class="num">1-0</td></tr>
+              <tr><th scope="row" class="num">2</th><td>Thu, Oct 29</td><td>7:30 PM</td><td>@ Team Paul</td><td><span class="badge badge-danger">L</span></td><td class="num">64-71</td><td class="num">1-1</td></tr>
+              <tr><th scope="row" class="num">3</th><td>Thu, Nov 5</td><td>8:30 PM</td><td>@ Team Evan</td><td><span class="badge badge-success">W</span></td><td class="num">100-88</td><td class="num">2-1</td></tr>
+              <tr class="sched-upcoming"><th scope="row" class="num">4</th><td>Thu, Nov 19</td><td>7:30 PM</td><td>vs Team Martin</td><td><span class="muted">Upcoming</span></td><td class="num"></td><td class="num"></td></tr>
+              <tr class="sched-upcoming"><th scope="row" class="num">5</th><td>Thu, Dec 3</td><td>7:30 PM</td><td>vs Team Paul</td><td><span class="muted">Upcoming</span></td><td class="num"></td><td class="num"></td></tr>
+              <tr class="sched-upcoming"><th scope="row" class="num">6</th><td>Wed, Dec 9</td><td>8:30 PM</td><td>@ Team Turbo</td><td><span class="muted">Upcoming</span></td><td class="num"></td><td class="num"></td></tr>
+              <tr class="sched-upcoming"><th scope="row" class="num">7</th><td>Thu, Dec 10</td><td>8:30 PM</td><td>vs Team Evan</td><td><span class="muted">Upcoming</span></td><td class="num"></td><td class="num"></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="muted pergame-source">Schedule and results from Ultimate Hoops / SportsVisio (Texas - Frisco). Scores are Team Jeremy's first; &ldquo;@&rdquo; marks away games.</p>
       </div>
     </div>
 
@@ -111,7 +119,7 @@
         <table class="table">
           <thead><tr><th>Date</th><th>Type</th><th>Details</th></tr></thead>
           <tbody>
-            <tr><td class="muted tnum">Jun 14</td><td><span class="badge badge-accent">Draft</span></td><td>Won Marcus Bello in the Season 1 auction draft</td></tr>
+            <tr><td class="muted tnum">Jun 14</td><td><span class="badge badge-accent">Draft</span></td><td>Won Bryson Brown in the Season 1 auction draft</td></tr>
           </tbody>
         </table>
       </div>
@@ -128,6 +136,6 @@
   </div>
   <div class="footer-bottom"><span>© 2026 Smithtown Gospel Tabernacle Basketball League</span></div>
 </footer>
-<script src="assets/js/interactions.js?v=20261116d"></script>
+<script src="assets/js/interactions.js?v=20261116g"></script>
 </body>
 </html>

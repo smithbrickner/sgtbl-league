@@ -3,18 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Knicks 27, Eagles 24 — Recap — SGTBL</title>
+<title>Team Jeremy 100, Team Evan 88 — Recap — SGTBL</title>
 <link rel="icon" href="assets/img/sgtbl-logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/tokens.css?v=20261116d">
-<link rel="stylesheet" href="assets/css/base.css?v=20261116d">
-<link rel="stylesheet" href="assets/css/site.css?v=20261116d">
+<link rel="stylesheet" href="assets/css/tokens.css?v=20261116g">
+<link rel="stylesheet" href="assets/css/base.css?v=20261116g">
+<link rel="stylesheet" href="assets/css/site.css?v=20261116g">
 <style>
 .recap-layout { display: grid; grid-template-columns: 1fr 320px; gap: var(--space-6); align-items: start; margin-top: var(--space-6); }
 @media (max-width: 900px) { .recap-layout { grid-template-columns: 1fr; } }
+.recap-layout > * { min-width: 0; } /* lets the wide box-score tables scroll inside their cards instead of stretching the page */
 .top-performer { display: flex; gap: 12px; align-items: center; padding: var(--space-3) 0; border-bottom: 1px solid var(--border); }
 .top-performer:last-child { border: none; }
+/* Notable plays are buttons that load their clip into the film player */
+.recap-plays .recap-clip { width: 100%; font: inherit; color: inherit; text-align: left; background: none; border: 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+.recap-plays .recap-clip:last-child { border-bottom: 0; }
+.recap-plays .recap-clip:hover, .recap-plays .recap-clip[aria-pressed="true"] { background: var(--surface-alt); }
+.box-table tbody th, .box-table tfoot th { white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -40,40 +46,74 @@
 
 <main id="main">
   <div class="wrap" style="padding-top:var(--space-6)">
-    <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-4)"><a href="games.html" class="muted">Games</a> / Week 14 Recap</p>
-    <span class="badge">Final · Fri, Aug 22 · Smithtown Gospel Tabernacle Gym (Anchor Game)</span>
+    <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-4)"><a href="games.html" class="muted">Games</a> / Team Jeremy at Team Evan</p>
+    <span class="badge">Final · Thu, Nov 5, 2026 · 8:30 PM</span>
 
     <div class="score-strip" style="margin-top:var(--space-4)">
-      <div class="side"><span class="crest crest-lg crest-logo"><img src="assets/img/knicks-logo.webp" alt="Knicks"></span><strong>Knicks</strong><span class="score" style="color:var(--gold-400)">27</span></div>
+      <div class="side"><span class="crest crest-lg" style="background:var(--team-knicks-bg)">TJ</span><strong><a href="team.html" style="color:inherit">Team Jeremy</a></strong><span class="score" style="color:var(--gold-400)">100</span></div>
       <span class="vs">FINAL</span>
-      <div class="side"><span class="crest crest-lg" style="background:var(--team-eagles-bg)">E</span><strong>Eagles</strong><span class="score">24</span></div>
+      <div class="side"><span class="crest crest-lg" style="background:var(--team-eagles-bg)">TE</span><strong>Team Evan</strong><span class="score">88</span></div>
     </div>
 
     <div class="recap-layout">
       <div class="stack" style="gap:var(--space-6)">
         <div class="card card-pad">
           <span class="badge badge-info" style="margin-bottom:var(--space-3)">Auto-generated recap</span>
-          <h2 style="margin-bottom:var(--space-3)">Knicks edge Eagles 27–24 to stay atop the table</h2>
-          <p style="margin-bottom:var(--space-3)">The Knicks held off a late Eagles push to win 27–24 in Friday's anchor game at Smithtown Gospel Tabernacle Gym, keeping pace atop the standings with two weeks left in the regular season. Marcus Bello's spinning left-side shot with 12 seconds left in the second half proved to be the difference after Priya Nandan had pulled the Eagles within two.</p>
-          <p>Jonah Kim controlled tempo all night with a season-high 8 assists, while Ana Reyes turned in a 41% save rate down the stretch. The Eagles got 12 goals from Nandan but couldn't overcome 6 second-half turnovers.</p>
-          <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">Built automatically from the synced stats feed. Reviewed and published by league admins per Publishing Controls.</p>
+          <h2 style="margin-bottom:var(--space-3)">Brown scores 39 as Team Jeremy wins 100&ndash;88 at Team Evan</h2>
+          <p style="margin-bottom:var(--space-3)">Bryson Brown poured in 39 points on 13-of-27 shooting, including 5 of 14 from three and a perfect 8 of 8 at the line, to lead Team Jeremy past Team Evan 100&ndash;88 on the road. He added 9 rebounds, 4 assists and 2 steals, and the win moved Team Jeremy to 2-1.</p>
+          <p>Jeremy Jones added 25 points on 10-of-19 shooting, and Player #99 controlled the glass with 19 rebounds to go with 17 points. Team Jeremy hit 14 of 15 free throws and committed only 8 turnovers to Team Evan's 11. Evan Pastorelle led Team Evan with 29 points, 11 rebounds and 5 assists, and Player #99 had 27 points and 11 rebounds.</p>
+          <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">Built from the <a href="https://uh.sportsvisio.com/league/texas-frisco/game/2edf694a-6fe5-4d06-a2e4-ef2ffac82313" target="_blank" rel="noopener">Ultimate Hoops / SportsVisio game page</a> (Texas - Frisco). Minutes and scoring by half aren't recorded.</p>
         </div>
 
         <div>
-          <h3 style="margin-bottom:var(--space-3)">Notable Plays</h3>
-          <div class="table-wrap">
-            <div class="play-item"><time>2H 0:12</time><span>Bello spinning shot, top corner — game winner</span><span class="badge badge-success">+2</span></div>
-            <div class="play-item"><time>2H 1:40</time><span>Nandan cuts the lead to two</span><span class="badge badge-info">Scored</span></div>
-            <div class="play-item"><time>2H 3:05</time><span>Reyes penalty save on fast break</span><span class="badge badge-accent">Save</span></div>
-            <div class="play-item"><time>1H 18:20</time><span>Kim to Turner, fast-break assist</span><span class="badge">Assist</span></div>
+          <h3 style="margin-bottom:var(--space-3)">Game Film</h3>
+          <div class="video-card">
+            <div class="video-frame"><video controls playsinline preload="metadata" data-recap-video src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/transcoded/full.mp4" aria-label="Team Jeremy at Team Evan game film"></video></div>
+            <div class="caption" data-recap-caption>Full game &mdash; Team Jeremy at Team Evan, Nov 5</div>
+          </div>
+          <h3 style="margin:var(--space-5) 0 var(--space-3)">Notable Plays <span class="muted" style="font-weight:400;font-size:var(--text-sm)">click to watch</span></h3>
+          <div class="table-wrap recap-plays">
+            <button type="button" class="play-item recap-clip" data-src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/79f0d084-e471-44e3-8bc2-b3750a93a8c3/clip.mp4"><time>Film 12:49</time><span>Bryson Brown 3-pointer (1 of 5)</span><span class="badge badge-success">+3</span></button>
+            <button type="button" class="play-item recap-clip" data-src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/99255487-da6c-402a-83ec-e2e41b441b5c/clip.mp4"><time>Film 23:35</time><span>Bryson Brown 3-pointer (2 of 5)</span><span class="badge badge-success">+3</span></button>
+            <button type="button" class="play-item recap-clip" data-src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/55977490-fe42-4e27-a896-fb4d42c19d95/clip.mp4"><time>Film 33:50</time><span>Bryson Brown 3-pointer (3 of 5)</span><span class="badge badge-success">+3</span></button>
+            <button type="button" class="play-item recap-clip" data-src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/bbfbfcf7-ebaf-44d6-903d-e2912766fb65/clip.mp4"><time>Film 40:40</time><span>Bryson Brown 3-pointer (4 of 5)</span><span class="badge badge-success">+3</span></button>
+            <button type="button" class="play-item recap-clip" data-src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/c7e099ab-e7f3-47af-b93e-4c0ce12f8539/clip.mp4"><time>Film 49:19</time><span>Bryson Brown 3-pointer (5 of 5)</span><span class="badge badge-success">+3</span></button>
+            <button type="button" class="play-item recap-clip" data-src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/transcoded/full.mp4" data-full><time>Full game</time><span>Back to the full game film</span><span class="badge">Film</span></button>
           </div>
         </div>
 
-        <div>
-          <h3 style="margin-bottom:var(--space-3)">Highlights</h3>
-          <div class="video-card">
-            <div class="video-frame"><iframe src="https://www.youtube.com/embed/mQPbdoRZYY8" title="Game highlight reel" allowfullscreen loading="lazy"></iframe></div>
-            <div class="caption">Top plays — Knicks vs. Eagles, Week 14</div>
+        <div class="card card-pad pergame-card">
+          <div class="pergame-head"><h3>Team Jeremy <span class="muted" style="font-weight:400;font-size:var(--text-sm)">100 points</span></h3></div>
+          <div class="pergame-scroll">
+          <table class="pergame-table box-table">
+            <thead><tr><th scope="col">Player</th><th scope="col" class="num" title="Points">PTS</th><th scope="col" class="num" title="Total Rebounds">TRB</th><th scope="col" class="num" title="Assists">AST</th><th scope="col" class="num" title="Steals">STL</th><th scope="col" class="num" title="Blocks">BLK</th><th scope="col" class="num" title="Turnovers">TOV</th><th scope="col" class="num" title="Personal Fouls">PF</th><th scope="col" class="num" title="Field Goals made-attempted">FG</th><th scope="col" class="num" title="Field Goal Percentage">FG%</th><th scope="col" class="num" title="3-Pointers made-attempted">3P</th><th scope="col" class="num" title="3-Point Percentage">3P%</th><th scope="col" class="num" title="Free Throws made-attempted">FT</th><th scope="col" class="num" title="Free Throw Percentage">FT%</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><a href="player.html">Bryson Brown</a></th><td class="num">39</td><td class="num">9</td><td class="num">4</td><td class="num">2</td><td class="num">0</td><td class="num">1</td><td class="num">0</td><td class="num">13-27</td><td class="num">.481</td><td class="num">5-14</td><td class="num">.357</td><td class="num">8-8</td><td class="num">1.000</td></tr>
+              <tr><th scope="row">Jeremy Jones</th><td class="num">25</td><td class="num">3</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">10-19</td><td class="num">.526</td><td class="num">3-9</td><td class="num">.333</td><td class="num">2-2</td><td class="num">1.000</td></tr>
+              <tr><th scope="row">Player #99</th><td class="num">17</td><td class="num">19</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">2</td><td class="num">0</td><td class="num">8-14</td><td class="num">.571</td><td class="num">0-0</td><td class="num"></td><td class="num">1-2</td><td class="num">.500</td></tr>
+              <tr><th scope="row">Player #22</th><td class="num">14</td><td class="num">4</td><td class="num">5</td><td class="num">1</td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">4-12</td><td class="num">.333</td><td class="num">3-10</td><td class="num">.300</td><td class="num">3-3</td><td class="num">1.000</td></tr>
+              <tr><th scope="row">Teron Bolton</th><td class="num">5</td><td class="num">5</td><td class="num">2</td><td class="num">3</td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">2-7</td><td class="num">.286</td><td class="num">1-5</td><td class="num">.200</td><td class="num">0-0</td><td class="num"></td></tr>
+              <tr><th scope="row">Jermiah Johnson</th><td class="num">0</td><td class="num">7</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">2</td><td class="num">1</td><td class="num">0-4</td><td class="num">.000</td><td class="num">0-3</td><td class="num">.000</td><td class="num">0-0</td><td class="num"></td></tr>
+            </tbody>
+            <tfoot><tr><th scope="row">Team</th><td class="num">100</td><td class="num">47</td><td class="num">14</td><td class="num">8</td><td class="num">1</td><td class="num">8</td><td class="num">4</td><td class="num">37-83</td><td class="num">.446</td><td class="num">12-41</td><td class="num">.293</td><td class="num">14-15</td><td class="num">.933</td></tr></tfoot>
+          </table>
+          </div>
+        </div>
+
+        <div class="card card-pad pergame-card">
+          <div class="pergame-head"><h3>Team Evan <span class="muted" style="font-weight:400;font-size:var(--text-sm)">88 points</span></h3></div>
+          <div class="pergame-scroll">
+          <table class="pergame-table box-table">
+            <thead><tr><th scope="col">Player</th><th scope="col" class="num" title="Points">PTS</th><th scope="col" class="num" title="Total Rebounds">TRB</th><th scope="col" class="num" title="Assists">AST</th><th scope="col" class="num" title="Steals">STL</th><th scope="col" class="num" title="Blocks">BLK</th><th scope="col" class="num" title="Turnovers">TOV</th><th scope="col" class="num" title="Personal Fouls">PF</th><th scope="col" class="num" title="Field Goals made-attempted">FG</th><th scope="col" class="num" title="Field Goal Percentage">FG%</th><th scope="col" class="num" title="3-Pointers made-attempted">3P</th><th scope="col" class="num" title="3-Point Percentage">3P%</th><th scope="col" class="num" title="Free Throws made-attempted">FT</th><th scope="col" class="num" title="Free Throw Percentage">FT%</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Evan Pastorelle</th><td class="num">29</td><td class="num">11</td><td class="num">5</td><td class="num">1</td><td class="num">0</td><td class="num">4</td><td class="num">1</td><td class="num">11-21</td><td class="num">.524</td><td class="num">5-13</td><td class="num">.385</td><td class="num">2-2</td><td class="num">1.000</td></tr>
+              <tr><th scope="row">Player #99</th><td class="num">27</td><td class="num">11</td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">4</td><td class="num">12-25</td><td class="num">.480</td><td class="num">2-5</td><td class="num">.400</td><td class="num">1-2</td><td class="num">.500</td></tr>
+              <tr><th scope="row">Manney Collins</th><td class="num">14</td><td class="num">7</td><td class="num">8</td><td class="num">4</td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">5-19</td><td class="num">.263</td><td class="num">3-14</td><td class="num">.214</td><td class="num">1-2</td><td class="num">.500</td></tr>
+              <tr><th scope="row">Player #10</th><td class="num">10</td><td class="num">7</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">3</td><td class="num">5-13</td><td class="num">.385</td><td class="num">0-4</td><td class="num">.000</td><td class="num">0-0</td><td class="num"></td></tr>
+              <tr><th scope="row">Marco Najera</th><td class="num">8</td><td class="num">10</td><td class="num">3</td><td class="num">0</td><td class="num">0</td><td class="num">4</td><td class="num">0</td><td class="num">3-11</td><td class="num">.273</td><td class="num">1-2</td><td class="num">.500</td><td class="num">1-2</td><td class="num">.500</td></tr>
+            </tbody>
+            <tfoot><tr><th scope="row">Team</th><td class="num">88</td><td class="num">46</td><td class="num">19</td><td class="num">6</td><td class="num">1</td><td class="num">11</td><td class="num">9</td><td class="num">36-89</td><td class="num">.404</td><td class="num">11-38</td><td class="num">.289</td><td class="num">5-8</td><td class="num">.625</td></tr></tfoot>
+          </table>
           </div>
         </div>
       </div>
@@ -81,17 +121,38 @@
       <aside class="stack" style="gap:var(--space-5)">
         <div class="card card-pad">
           <h3 style="margin-bottom:var(--space-2)">Top Performers</h3>
-          <div class="top-performer"><span class="avatar avatar-sm av-1">MB</span><div><strong>M. Bello</strong> <span class="muted" style="font-size:var(--text-xs)">Knicks</span><div class="muted" style="font-size:var(--text-xs)">9 g · 3 ast</div></div></div>
-          <div class="top-performer"><span class="avatar avatar-sm av-3">JK</span><div><strong>J. Kim</strong> <span class="muted" style="font-size:var(--text-xs)">Knicks</span><div class="muted" style="font-size:var(--text-xs)">6 g · 8 ast</div></div></div>
-          <div class="top-performer"><span class="avatar avatar-sm av-3">PN</span><div><strong>P. Nandan</strong> <span class="muted" style="font-size:var(--text-xs)">Eagles</span><div class="muted" style="font-size:var(--text-xs)">12 g · 2 ast</div></div></div>
+          <div class="top-performer"><span class="avatar avatar-sm avatar-photo"><img src="assets/img/headshot-placeholder.webp" alt=""></span><div><strong><a href="player.html">B. Brown</a></strong> <span class="muted" style="font-size:var(--text-xs)">Team Jeremy</span><div class="muted" style="font-size:var(--text-xs)">39 pts · 9 reb · 4 ast</div></div></div>
+          <div class="top-performer"><span class="avatar avatar-sm av-1">EP</span><div><strong>E. Pastorelle</strong> <span class="muted" style="font-size:var(--text-xs)">Team Evan</span><div class="muted" style="font-size:var(--text-xs)">29 pts · 11 reb · 5 ast</div></div></div>
+          <div class="top-performer"><span class="avatar avatar-sm av-6">99</span><div><strong>Player #99</strong> <span class="muted" style="font-size:var(--text-xs)">Team Jeremy</span><div class="muted" style="font-size:var(--text-xs)">17 pts · 19 reb · 2 ast</div></div></div>
         </div>
         <div class="card card-pad">
-          <h3 style="margin-bottom:var(--space-2)">Box Score</h3>
-          <table class="table" style="min-width:0"><tbody>
-            <tr><td>Shooting %</td><td class="num tnum">Knicks 58% — Eagles 51%</td></tr>
-            <tr><td>Turnovers</td><td class="num tnum">Knicks 9 — Eagles 14</td></tr>
-            <tr><td>Fast-break Goals</td><td class="num tnum">Knicks 8 — Eagles 5</td></tr>
-          </tbody></table>
+          <h3 style="margin-bottom:var(--space-2)">Team Comparison</h3>
+          <table class="table" style="min-width:0">
+            <thead><tr><th></th><th class="num">TJ</th><th class="num">TE</th></tr></thead>
+            <tbody>
+              <tr><td>FG%</td><td class="num tnum">44.6%</td><td class="num tnum">40.4%</td></tr>
+              <tr><td>3P%</td><td class="num tnum">29.3%</td><td class="num tnum">28.9%</td></tr>
+              <tr><td>FT%</td><td class="num tnum">93.3%</td><td class="num tnum">62.5%</td></tr>
+              <tr><td>Rebounds</td><td class="num tnum">47</td><td class="num tnum">46</td></tr>
+              <tr><td>Assists</td><td class="num tnum">14</td><td class="num tnum">19</td></tr>
+              <tr><td>Steals</td><td class="num tnum">8</td><td class="num tnum">6</td></tr>
+              <tr><td>Blocks</td><td class="num tnum">1</td><td class="num tnum">1</td></tr>
+              <tr><td>Turnovers</td><td class="num tnum">8</td><td class="num tnum">11</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card card-pad">
+          <h3 style="margin-bottom:var(--space-2)">Four Factors</h3>
+          <table class="table" style="min-width:0">
+            <thead><tr><th></th><th class="num">TJ</th><th class="num">TE</th></tr></thead>
+            <tbody>
+              <tr><td title="Effective Field Goal Percentage">eFG%</td><td class="num tnum">51.8%</td><td class="num tnum">46.6%</td></tr>
+              <tr><td title="Turnovers per 100 possessions">TOV%</td><td class="num tnum">8.2%</td><td class="num tnum">10.6%</td></tr>
+              <tr><td title="Share of available offensive rebounds grabbed">OREB%</td><td class="num tnum">28.9%</td><td class="num tnum">34.5%</td></tr>
+              <tr><td title="Free throws made per field goal attempt">FT Rate</td><td class="num tnum">16.9%</td><td class="num tnum">5.6%</td></tr>
+            </tbody>
+          </table>
+          <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-2)">As published by SportsVisio.</p>
         </div>
       </aside>
     </div>
@@ -107,6 +168,18 @@
   </div>
   <div class="footer-bottom"><span>© 2026 Smithtown Gospel Tabernacle Basketball League</span></div>
 </footer>
-<script src="assets/js/interactions.js?v=20261116d"></script>
+<script src="assets/js/interactions.js?v=20261116g"></script>
+<script>
+document.querySelectorAll(".recap-clip").forEach(function (b) {
+  b.addEventListener("click", function () {
+    var v = document.querySelector("[data-recap-video]"), cap = document.querySelector("[data-recap-caption]");
+    document.querySelectorAll(".recap-clip").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+    v.src = b.getAttribute("data-src");
+    cap.textContent = b.hasAttribute("data-full") ? "Full game \u2014 Team Jeremy at Team Evan, Nov 5" : b.querySelector("span").textContent + " \u00b7 " + b.querySelector("time").textContent;
+    if (!b.hasAttribute("data-full")) v.play().catch(function () {});
+    v.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+});
+</script>
 </body>
 </html>

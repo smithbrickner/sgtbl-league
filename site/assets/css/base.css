@@ -338,6 +338,9 @@ textarea.input { height: auto; padding: var(--space-3) var(--space-4); resize: v
 .pergame-table thead th { position: sticky; top: 0; background: var(--surface-alt); color: var(--text-primary); font-weight: 700; font-size: 12px; border-bottom: 2px solid var(--border-strong); cursor: help; }
 .pergame-table tbody tr:hover td, .pergame-table tbody tr:hover th { background: var(--surface-sunken); }
 .pergame-table tbody th, .pergame-table tfoot th { font-weight: 700; color: var(--accent-blue); }
+/* Game box scores: only linked player names are blue */
+.box-table tbody th, .box-table tfoot th { color: var(--text-primary); }
+.box-table tbody th a { color: var(--accent-blue); }
 .pergame-table th[scope="row"], .pergame-table thead th:first-child { position: sticky; left: 0; z-index: 1; background: var(--surface); box-shadow: 1px 0 0 var(--border); }
 .pergame-table thead th:first-child { background: var(--surface-alt); z-index: 2; }
 .pergame-table td a { color: var(--accent-blue); font-weight: 600; }
@@ -358,7 +361,7 @@ textarea.input { height: auto; padding: var(--space-3) var(--space-4); resize: v
    The player cell is the row header (pinned while scrolling sideways), so it must stay a table cell. */
 .roster-table th.team-cell { display: table-cell; white-space: nowrap; font-weight: 700; }
 .roster-table th.team-cell .avatar, .roster-table th.team-cell .headshot-cutout { vertical-align: middle; margin-right: 10px; }
-.roster-table th.team-cell .headshot-cutout { margin: -6px 4px -6px -6px; }
+.roster-table th.team-cell .headshot-cutout { margin: -6px 10px -6px -6px; }
 .roster-table th.team-cell a { color: var(--accent-blue); }
 .roster-table tbody th[scope="row"] { color: var(--text-primary); }
 .pergame-table th[aria-sort] { cursor: pointer; user-select: none; }

@@ -7,11 +7,11 @@
 <link rel="icon" href="../assets/img/sgtbl-logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/tokens.css?v=20261116d">
-<link rel="stylesheet" href="../assets/css/base.css?v=20261116d">
-<link rel="stylesheet" href="../assets/css/site.css?v=20261116d">
-<link rel="stylesheet" href="../assets/css/admin.css?v=20261116d">
-<link rel="stylesheet" href="../assets/css/captain.css?v=20261116d">
+<link rel="stylesheet" href="../assets/css/tokens.css?v=20261116g">
+<link rel="stylesheet" href="../assets/css/base.css?v=20261116g">
+<link rel="stylesheet" href="../assets/css/site.css?v=20261116g">
+<link rel="stylesheet" href="../assets/css/admin.css?v=20261116g">
+<link rel="stylesheet" href="../assets/css/captain.css?v=20261116g">
 <style>
 /* .team-cell only gets display:flex when nested under .standings-table elsewhere on the site —
    none of this page's tables have that ancestor, so give it real flex layout here too,
@@ -75,40 +75,31 @@
       <div id="p-roster" class="tabpanel" role="tabpanel" aria-labelledby="t-roster">
         <div class="card card-pad pergame-card" style="margin-bottom:var(--space-6)">
           <div class="pergame-head">
-            <h3>Active Roster <span class="muted" style="font-weight:400;font-size:var(--text-sm)">9 of 9 spots filled &middot; 2026 per-game stats</span></h3>
+            <h3>Active Roster <span class="muted" style="font-weight:400;font-size:var(--text-sm)">8 of 9 spots filled &middot; Fall 2026 per-game stats</span></h3>
             <span class="muted" style="font-size:var(--text-xs)">Click a column to sort &middot; hover a heading for its full name</span>
           </div>
           <div class="pergame-scroll">
             <table class="pergame-table roster-table" data-sortable>
               <thead><tr>
-        <th scope="col" aria-sort="none">Player</th><th scope="col" class="num" title="Jersey number" aria-sort="none">No.</th><th scope="col" title="Position" aria-sort="none">Pos</th><th scope="col" class="num" title="Games" aria-sort="none">G</th><th scope="col" class="num" title="Minutes Played Per Game" aria-sort="none">MP</th><th scope="col" class="num" title="Points Per Game" aria-sort="none">PTS</th><th scope="col" class="num" title="Total Rebounds Per Game" aria-sort="none">TRB</th><th scope="col" class="num" title="Assists Per Game" aria-sort="none">AST</th><th scope="col" class="num" title="Steals Per Game" aria-sort="none">STL</th><th scope="col" class="num" title="Blocks Per Game" aria-sort="none">BLK</th><th scope="col" class="num" title="Field Goal Percentage" aria-sort="none">FG%</th><th scope="col" class="num" title="3-Point Field Goal Percentage" aria-sort="none">3P%</th><th scope="col" class="num" title="Effective Field Goal Percentage (counts a 3 as 1.5 makes)" aria-sort="none">eFG%</th><th scope="col" class="num" title="Free Throw Percentage" aria-sort="none">FT%</th><th scope="col" class="num" title="Percentage of games this player has been available to play this season (Team Portal only)" aria-sort="none">AVAIL%</th>
+        <th scope="col" aria-sort="none">Player</th><th scope="col" class="num" title="Jersey number" aria-sort="none">No.</th><th scope="col" title="Position" aria-sort="none">Pos</th><th scope="col" class="num" title="Height" aria-sort="none">Ht</th><th scope="col" class="num" title="Weight (lbs)" aria-sort="none">Wt</th><th scope="col" title="Shooting hand" aria-sort="none">Shoots</th><th scope="col" class="num" title="Games" aria-sort="none">G</th><th scope="col" class="num" title="Points Per Game" aria-sort="none">PTS</th><th scope="col" class="num" title="Total Rebounds Per Game" aria-sort="none">TRB</th><th scope="col" class="num" title="Assists Per Game" aria-sort="none">AST</th><th scope="col" class="num" title="Steals Per Game" aria-sort="none">STL</th><th scope="col" class="num" title="Blocks Per Game" aria-sort="none">BLK</th><th scope="col" class="num" title="Field Goal Percentage" aria-sort="none">FG%</th><th scope="col" class="num" title="3-Point Field Goal Percentage" aria-sort="none">3P%</th><th scope="col" class="num" title="Effective Field Goal Percentage (counts a 3 as 1.5 makes)" aria-sort="none">eFG%</th><th scope="col" class="num" title="Free Throw Percentage" aria-sort="none">FT%</th><th scope="col" class="num" title="Percentage of this season's games the player has been available for (Team Portal only)" aria-sort="none">AVAIL%</th>
         </tr></thead>
               <tbody>
-                <tr><th scope="row" class="team-cell" data-sort-value="Bello"><span class="headshot-cutout"><img src="../assets/img/headshot-placeholder.webp" alt="Marcus Bello"></span><a href="player.html">Marcus Bello</a></th><td class="num">9</td><td>Small Forward</td><td class="num">14</td><td class="num">32.4</td><td class="num">18.4</td><td class="num">4.2</td><td class="num">3.1</td><td class="num">1.3</td><td class="num">0.4</td><td class="num">.478</td><td class="num" data-sort-value="38.1">.381</td><td class="num">.536</td><td class="num">.814</td><td class="num">93</td></tr>
-                <tr><th scope="row" class="team-cell" data-sort-value="Kim"><span class="avatar avatar-sm av-3">JK</span><a href="player.html">Jonah Kim</a></th><td class="num">4</td><td>Point Guard</td><td class="num">14</td><td class="num">29.8</td><td class="num">12.1</td><td class="num">3.0</td><td class="num">7.8</td><td class="num">1.6</td><td class="num">0.1</td><td class="num">.445</td><td class="num" data-sort-value="35.0">.350</td><td class="num">.498</td><td class="num">.780</td><td class="num">100</td></tr>
-                <tr><th scope="row" class="team-cell" data-sort-value="Reyes"><span class="avatar avatar-sm av-6">AR</span><a href="player.html">Ana Reyes</a></th><td class="num">1</td><td>Center</td><td class="num">14</td><td class="num">27.3</td><td class="num">9.6</td><td class="num">10.4</td><td class="num">1.2</td><td class="num">0.7</td><td class="num">1.8</td><td class="num">.562</td><td class="num" data-sort-value="-1"></td><td class="num">.562</td><td class="num">.685</td><td class="num">100</td></tr>
-                <tr><th scope="row" class="team-cell" data-sort-value="Whitfield"><span class="avatar avatar-sm av-5">DW</span><a href="player.html">David Whitfield</a></th><td class="num">22</td><td>Shooting Guard</td><td class="num">14</td><td class="num">28.6</td><td class="num">14.2</td><td class="num">2.9</td><td class="num">1.9</td><td class="num">1.1</td><td class="num">0.2</td><td class="num">.460</td><td class="num" data-sort-value="36.5">.365</td><td class="num">.515</td><td class="num">.830</td><td class="num">100</td></tr>
-                <tr><th scope="row" class="team-cell" data-sort-value="Turner"><span class="avatar avatar-sm av-4">CT</span><a href="player.html">Chloe Turner</a></th><td class="num">7</td><td>Power Forward</td><td class="num">14</td><td class="num">25.1</td><td class="num">10.8</td><td class="num">6.1</td><td class="num">1.2</td><td class="num">0.8</td><td class="num">0.6</td><td class="num">.495</td><td class="num" data-sort-value="31.0">.310</td><td class="num">.542</td><td class="num">.750</td><td class="num">100</td></tr>
-                <tr><th scope="row" class="team-cell" data-sort-value="Osei"><span class="avatar avatar-sm av-2">SO</span><a href="player.html">Sam Osei</a></th><td class="num">18</td><td>Point Guard</td><td class="num">14</td><td class="num">19.4</td><td class="num">8.4</td><td class="num">2.1</td><td class="num">4.3</td><td class="num">1.4</td><td class="num">0.1</td><td class="num">.418</td><td class="num" data-sort-value="33.0">.330</td><td class="num">.468</td><td class="num">.765</td><td class="num">100</td></tr>
-                <tr><th scope="row" class="team-cell" data-sort-value="Patel"><span class="avatar avatar-sm av-7">MP</span><a href="player.html">Maya Patel</a></th><td class="num">11</td><td>Shooting Guard</td><td class="num">14</td><td class="num">16.8</td><td class="num">6.9</td><td class="num">1.8</td><td class="num">1.0</td><td class="num">0.6</td><td class="num">0.1</td><td class="num">.430</td><td class="num" data-sort-value="34.5">.345</td><td class="num">.482</td><td class="num">.790</td><td class="num">100</td></tr>
-                <tr><th scope="row" class="team-cell" data-sort-value="Grant"><span class="avatar avatar-sm av-8">LG</span><a href="player.html">Luca Grant</a></th><td class="num">3</td><td>Center</td><td class="num">14</td><td class="num">12.5</td><td class="num">3.2</td><td class="num">5.0</td><td class="num">0.4</td><td class="num">0.3</td><td class="num">1.1</td><td class="num">.520</td><td class="num" data-sort-value="-1"></td><td class="num">.520</td><td class="num">.620</td><td class="num">100</td></tr>
-                <tr><th scope="row" class="team-cell" data-sort-value="Cho"><span class="avatar avatar-sm av-3">RC</span><a href="player.html">Rafael Cho</a></th><td class="num">15</td><td>Point Guard</td><td class="num">14</td><td class="num">15.2</td><td class="num">5.1</td><td class="num">1.6</td><td class="num">2.8</td><td class="num">0.9</td><td class="num">0.1</td><td class="num">.405</td><td class="num" data-sort-value="32.0">.320</td><td class="num">.453</td><td class="num">.720</td><td class="num">100</td></tr>
+                <tr><th scope="row" class="team-cell" data-sort-value="Brown"><span class="headshot-cutout"><img src="../assets/img/headshot-placeholder.webp" alt="Bryson Brown"></span><a href="player.html">Bryson Brown</a></th><td class="num">5</td><td>Small Forward</td><td class="num" data-sort-value="77">6-5</td><td class="num">205</td><td>Right</td><td class="num">3</td><td class="num">30.3</td><td class="num">7.7</td><td class="num">4.7</td><td class="num">1.7</td><td class="num">0.0</td><td class="num" data-sort-value="51.6">.516</td><td class="num" data-sort-value="38.7">.387</td><td class="num" data-sort-value="61.3">.613</td><td class="num" data-sort-value="88.2">.882</td><td class="num">100</td></tr>
+                <tr><th scope="row" class="team-cell" data-sort-value="Jones"><span class="avatar avatar-sm av-5">JJ</span><a href="player.html">Jeremy Jones</a></th><td class="num">86</td><td>Shooting Guard</td><td class="num" data-sort-value="75">6-3</td><td class="num">190</td><td>Right</td><td class="num">3</td><td class="num">20.0</td><td class="num">4.3</td><td class="num">3.7</td><td class="num">0.7</td><td class="num">0.0</td><td class="num" data-sort-value="51.1">.511</td><td class="num" data-sort-value="43.5">.435</td><td class="num" data-sort-value="62.2">.622</td><td class="num" data-sort-value="100.0">1.000</td><td class="num">100</td></tr>
+                <tr><th scope="row" class="team-cell" data-sort-value="#99"><span class="avatar avatar-sm av-6">99</span><a href="player.html">Player #99</a></th><td class="num">99</td><td>Power Forward</td><td class="num" data-sort-value="79">6-7</td><td class="num">225</td><td>Right</td><td class="num">2</td><td class="num">13.5</td><td class="num">13.0</td><td class="num">5.5</td><td class="num">1.0</td><td class="num">0.5</td><td class="num" data-sort-value="54.5">.545</td><td class="num" data-sort-value="20.0">.200</td><td class="num" data-sort-value="56.8">.568</td><td class="num" data-sort-value="50.0">.500</td><td class="num">67</td></tr>
+                <tr><th scope="row" class="team-cell" data-sort-value="Bolton"><span class="avatar avatar-sm av-2">TB</span><a href="player.html">Teron Bolton</a></th><td class="num">49</td><td>Small Forward</td><td class="num" data-sort-value="76">6-4</td><td class="num">195</td><td>Left</td><td class="num">3</td><td class="num">8.3</td><td class="num">4.0</td><td class="num">1.0</td><td class="num">1.7</td><td class="num">0.0</td><td class="num" data-sort-value="39.1">.391</td><td class="num" data-sort-value="38.9">.389</td><td class="num" data-sort-value="54.3">.543</td><td class="num" data-sort-value="-1"></td><td class="num">100</td></tr>
+                <tr><th scope="row" class="team-cell" data-sort-value="Martin"><span class="avatar avatar-sm av-4">SM</span><a href="player.html">Santonio Martin</a></th><td class="num">7</td><td>Center</td><td class="num" data-sort-value="80">6-8</td><td class="num">240</td><td>Right</td><td class="num">2</td><td class="num">10.0</td><td class="num">11.5</td><td class="num">2.5</td><td class="num">0.0</td><td class="num">0.0</td><td class="num" data-sort-value="56.3">.563</td><td class="num" data-sort-value="33.3">.333</td><td class="num" data-sort-value="59.4">.594</td><td class="num" data-sort-value="25.0">.250</td><td class="num">67</td></tr>
+                <tr><th scope="row" class="team-cell" data-sort-value="#22"><span class="avatar avatar-sm av-7">22</span><a href="player.html">Player #22</a></th><td class="num">22</td><td>Shooting Guard</td><td class="num" data-sort-value="74">6-2</td><td class="num">185</td><td>Right</td><td class="num">2</td><td class="num">10.0</td><td class="num">3.0</td><td class="num">3.0</td><td class="num">0.5</td><td class="num">0.0</td><td class="num" data-sort-value="30.0">.300</td><td class="num" data-sort-value="33.3">.333</td><td class="num" data-sort-value="42.5">.425</td><td class="num" data-sort-value="100.0">1.000</td><td class="num">67</td></tr>
+                <tr><th scope="row" class="team-cell" data-sort-value="Pritchard"><span class="avatar avatar-sm av-8">JP</span><a href="player.html">Jeff Pritchard</a></th><td class="num">11</td><td>Point Guard</td><td class="num" data-sort-value="72">6-0</td><td class="num">175</td><td>Left</td><td class="num">2</td><td class="num">5.5</td><td class="num">4.0</td><td class="num">3.5</td><td class="num">0.5</td><td class="num">1.0</td><td class="num" data-sort-value="26.7">.267</td><td class="num" data-sort-value="23.1">.231</td><td class="num" data-sort-value="36.7">.367</td><td class="num" data-sort-value="-1"></td><td class="num">67</td></tr>
+                <tr><th scope="row" class="team-cell" data-sort-value="Johnson"><span class="avatar avatar-sm av-3">JJ</span><a href="player.html">Jermiah Johnson</a></th><td class="num">10</td><td>Point Guard</td><td class="num" data-sort-value="71">5-11</td><td class="num">170</td><td>Right</td><td class="num">3</td><td class="num">1.3</td><td class="num">2.7</td><td class="num">1.7</td><td class="num">0.0</td><td class="num">0.3</td><td class="num" data-sort-value="11.1">.111</td><td class="num" data-sort-value="12.5">.125</td><td class="num" data-sort-value="16.7">.167</td><td class="num" data-sort-value="50.0">.500</td><td class="num">100</td></tr>
               </tbody>
             </table>
           </div>
+          <p class="muted pergame-source">Players and stats: Team Jeremy on <a href="https://uh.sportsvisio.com/league/texas-frisco/team/a7d895a8-2c44-49a6-9675-95cceee5ab0e?eventId=0072b22a-6df1-4aa6-97fd-add0bb721e1b&amp;divisionId=d02806ab-9015-48e3-b2ae-d103b58407a7" target="_blank" rel="noopener">Ultimate Hoops / SportsVisio</a> (Texas - Frisco, Fall 2026). Positions, heights, weights and shooting hands are placeholders; AVAIL% is games played out of the team's 3.</p>
         </div>
         <div class="card card-pad">
-          <div class="pergame-head"><h3>Reserve List <span class="muted" style="font-weight:400;font-size:var(--text-sm)">2 of 3 spots used</span></h3></div>
-          <div class="pergame-scroll">
-            <table class="pergame-table roster-table">
-              <thead><tr><th scope="col">Player</th><th scope="col">Pos</th><th scope="col">Reason</th><th scope="col">Actions</th></tr></thead>
-              <tbody>
-                <tr><th scope="row" class="team-cell"><span class="avatar avatar-sm av-6">GB</span><a href="player.html">Grace Bennett</a></th><td>Center</td><td class="muted gl-wrap">Moved out of area, spring return possible</td><td><button class="btn btn-outline btn-sm" disabled title="Cannot request an activation until an active roster spot is freed up">Request Activation</button></td></tr>
-                <tr><th scope="row" class="team-cell"><span class="avatar avatar-sm av-7">NP</span><a href="player.html">Nate Price</a></th><td>Shooting Guard</td><td class="muted gl-wrap">Work travel — inactive since Week 9</td><td><button class="btn btn-outline btn-sm" disabled title="Cannot request an activation until an active roster spot is freed up">Request Activation</button></td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">Reactivating a reserve player requires an open active-roster spot &mdash; the active roster is currently full (9/9).</p>
+          <div class="pergame-head"><h3>Reserve List <span class="muted" style="font-weight:400;font-size:var(--text-sm)">0 of 3 spots used</span></h3></div>
+          <p class="muted" style="font-size:var(--text-sm)">No players on the reserve list. The active roster has 1 open spot (8/9).</p>
         </div>
       </div>
 
@@ -116,7 +107,7 @@
       <div id="p-lineup" class="tabpanel" role="tabpanel" aria-labelledby="t-lineup" hidden>
         <div class="on-clock" style="text-align:left;display:flex;align-items:center;justify-content:space-between;gap:var(--space-5);flex-wrap:wrap;margin-bottom:var(--space-5)">
           <div>
-            <span class="eyebrow" style="color:var(--gold-400)">Fri, Sep 4 · 8:00 PM vs Eagles</span>
+            <span class="eyebrow" style="color:var(--gold-400)">Thu, Nov 19 · 7:30 PM vs Team Martin</span>
             <div style="font-size:var(--text-lg);margin-top:4px">Availability locks 1 hour before tip-off</div>
             <div class="muted" style="color:rgba(255,255,255,.65);font-size:var(--text-sm);margin-top:4px">Unavailable players must be marked before the lock — a team needs 5 available players present at start time to avoid a forfeit.</div>
           </div>
@@ -127,59 +118,54 @@
         </div>
 
         <div class="avail-count-banner ok">
-          <span>7 of 9 active players marked available — above the 5-player minimum</span>
+          <span>6 of 8 active players marked available — above the 5-player minimum</span>
           <button class="btn btn-primary btn-sm">Submit Availability</button>
         </div>
 
         <div class="avail-row">
-          <span class="headshot-cutout"><img src="../assets/img/headshot-placeholder.webp" alt="Marcus Bello"></span>
-          <div><strong><a href="player.html">Marcus Bello</a></strong><div class="muted" style="font-size:var(--text-xs)">Small Forward · #9</div></div>
+          <span class="headshot-cutout"><img src="../assets/img/headshot-placeholder.webp" alt="Bryson Brown"></span>
+          <div><strong><a href="player.html">Bryson Brown</a></strong><div class="muted" style="font-size:var(--text-xs)">Small Forward · #5</div></div>
           <div class="avail-toggle"><button class="is-active opt-available">Available</button><button class="opt-unavailable">Unavailable</button></div>
         </div>
         <div class="avail-row">
-          <span class="avatar avatar-sm av-3">JK</span>
-          <div><strong><a href="player.html">Jonah Kim</a></strong><div class="muted" style="font-size:var(--text-xs)">Point Guard · #4</div></div>
+          <span class="avatar avatar-sm av-5">JJ</span>
+          <div><strong><a href="player.html">Jeremy Jones</a></strong><div class="muted" style="font-size:var(--text-xs)">Shooting Guard · #86</div></div>
           <div class="avail-toggle"><button class="is-active opt-available">Available</button><button class="opt-unavailable">Unavailable</button></div>
         </div>
         <div class="avail-row">
-          <span class="avatar avatar-sm av-6">AR</span>
-          <div><strong><a href="player.html">Ana Reyes</a></strong><div class="muted" style="font-size:var(--text-xs)">Center · #1</div></div>
+          <span class="avatar avatar-sm av-6">99</span>
+          <div><strong><a href="player.html">Player #99</a></strong><div class="muted" style="font-size:var(--text-xs)">Power Forward · #99</div></div>
           <div class="avail-toggle"><button class="is-active opt-available">Available</button><button class="opt-unavailable">Unavailable</button></div>
         </div>
         <div class="avail-row">
-          <span class="avatar avatar-sm av-5">DW</span>
-          <div><strong><a href="player.html">David Whitfield</a></strong><div class="muted" style="font-size:var(--text-xs)">Shooting Guard · #22</div></div>
+          <span class="avatar avatar-sm av-2">TB</span>
+          <div><strong><a href="player.html">Teron Bolton</a></strong><div class="muted" style="font-size:var(--text-xs)">Small Forward · #49</div></div>
+          <div class="avail-toggle"><button class="is-active opt-available">Available</button><button class="opt-unavailable">Unavailable</button></div>
+        </div>
+        <div class="avail-row">
+          <span class="avatar avatar-sm av-4">SM</span>
+          <div><strong><a href="player.html">Santonio Martin</a></strong><div class="muted" style="font-size:var(--text-xs)">Center · #7</div></div>
+          <div class="avail-toggle"><button class="is-active opt-available">Available</button><button class="opt-unavailable">Unavailable</button></div>
+        </div>
+        <div class="avail-row">
+          <span class="avatar avatar-sm av-7">22</span>
+          <div><strong><a href="player.html">Player #22</a></strong><div class="muted" style="font-size:var(--text-xs)">Shooting Guard · #22</div></div>
           <div class="avail-toggle"><button class="opt-available">Available</button><button class="is-active opt-unavailable">Unavailable</button></div>
         </div>
         <div class="avail-row">
-          <span class="avatar avatar-sm av-4">CT</span>
-          <div><strong><a href="player.html">Chloe Turner</a></strong><div class="muted" style="font-size:var(--text-xs)">Power Forward · #7</div></div>
+          <span class="avatar avatar-sm av-8">JP</span>
+          <div><strong><a href="player.html">Jeff Pritchard</a></strong><div class="muted" style="font-size:var(--text-xs)">Point Guard · #11</div></div>
           <div class="avail-toggle"><button class="opt-available">Available</button><button class="is-active opt-unavailable">Unavailable</button></div>
         </div>
         <div class="avail-row">
-          <span class="avatar avatar-sm av-2">SO</span>
-          <div><strong><a href="player.html">Sam Osei</a></strong><div class="muted" style="font-size:var(--text-xs)">Point Guard · #18</div></div>
-          <div class="avail-toggle"><button class="is-active opt-available">Available</button><button class="opt-unavailable">Unavailable</button></div>
-        </div>
-        <div class="avail-row">
-          <span class="avatar avatar-sm av-7">MP</span>
-          <div><strong><a href="player.html">Maya Patel</a></strong><div class="muted" style="font-size:var(--text-xs)">Shooting Guard · #11</div></div>
-          <div class="avail-toggle"><button class="is-active opt-available">Available</button><button class="opt-unavailable">Unavailable</button></div>
-        </div>
-        <div class="avail-row">
-          <span class="avatar avatar-sm av-8">LG</span>
-          <div><strong><a href="player.html">Luca Grant</a></strong><div class="muted" style="font-size:var(--text-xs)">Center · #3</div></div>
-          <div class="avail-toggle"><button class="is-active opt-available">Available</button><button class="opt-unavailable">Unavailable</button></div>
-        </div>
-        <div class="avail-row">
-          <span class="avatar avatar-sm av-3">RC</span>
-          <div><strong><a href="player.html">Rafael Cho</a></strong><div class="muted" style="font-size:var(--text-xs)">Point Guard · #15</div></div>
+          <span class="avatar avatar-sm av-3">JJ</span>
+          <div><strong><a href="player.html">Jermiah Johnson</a></strong><div class="muted" style="font-size:var(--text-xs)">Point Guard · #10</div></div>
           <div class="avail-toggle"><button class="is-active opt-available">Available</button><button class="opt-unavailable">Unavailable</button></div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<script src="../assets/js/interactions.js?v=20261116d"></script>
+<script src="../assets/js/interactions.js?v=20261116g"></script>
 </body>
 </html>
