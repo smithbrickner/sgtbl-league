@@ -284,7 +284,7 @@ $($hl -join $nl)
 
           <article class="card gc-card gc-story">
             <h2>$headline</h2>
-            <p><strong>&mdash;</strong> $p1</p>
+            <p>$p1</p>
             <p>$p2</p>
             <p class="gc-byline">Auto-generated recap &middot; $($g.dateShort), 2026 &middot; from the <a href="$gameUrl" target="_blank" rel="noopener">SportsVisio game page</a></p>
           </article>
