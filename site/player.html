@@ -7,9 +7,9 @@
 <link rel="icon" href="assets/img/sgtbl-logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/tokens.css?v=20261116g">
-<link rel="stylesheet" href="assets/css/base.css?v=20261116g">
-<link rel="stylesheet" href="assets/css/site.css?v=20261116g">
+<link rel="stylesheet" href="assets/css/tokens.css?v=20261116h">
+<link rel="stylesheet" href="assets/css/base.css?v=20261116h">
+<link rel="stylesheet" href="assets/css/site.css?v=20261116h">
 <style>
 .player-layout { display: grid; grid-template-columns: minmax(260px, 340px) 1fr; gap: var(--space-6); align-items: stretch; }
 /* Bio and Percentile Rankings sit side by side at equal height (the trend chart runs full-width below):
@@ -163,9 +163,9 @@
               { "key": "PIE",  "label": "PIE (SportsVisio)", "dp": 1, "adp": 1 }
             ],
             "games": [
-              { "date": "Oct 22", "opp": "vs Team Turbo", "sv": "9013f4d9-49eb-46f3-aaf8-dba8b5bd1dad", "MIN": 29, "PTS": 30, "FGM": 11, "FGA": 16, "TPM": 4, "TPA": 7, "FTM": 4, "FTA": 5, "ORB": 0, "DRB": 8, "AST": 7, "STL": 0, "BLK": 0, "TOV": 0, "PF": 0, "PIE": 39, "REB": 8, "EFG": 81.3, "TS": 82.4, "GMSC": 30.1 },
-              { "date": "Oct 29", "opp": "vs Team Paul", "sv": "f2e8078d-a8e6-4c0c-bdae-5ac521806559", "MIN": null, "PTS": 22, "FGM": 8, "FGA": 19, "TPM": 3, "TPA": 10, "FTM": 3, "FTA": 4, "ORB": 0, "DRB": 6, "AST": 3, "STL": 3, "BLK": 0, "TOV": 1, "PF": 3, "PIE": 18, "REB": 6, "EFG": 50, "TS": 53, "GMSC": 16.2 },
-              { "date": "Nov 5", "opp": "vs Team Evan", "sv": "2edf694a-6fe5-4d06-a2e4-ef2ffac82313", "MIN": null, "PTS": 39, "FGM": 13, "FGA": 27, "TPM": 5, "TPA": 14, "FTM": 8, "FTA": 8, "ORB": 0, "DRB": 9, "AST": 4, "STL": 2, "BLK": 0, "TOV": 1, "PF": 0, "PIE": 39, "REB": 9, "EFG": 57.4, "TS": 63.9, "GMSC": 31.8 }
+              { "date": "Oct 22", "opp": "vs Team Turbo", "result": "W 94-60", "sv": "9013f4d9-49eb-46f3-aaf8-dba8b5bd1dad", "MIN": 29, "PTS": 30, "FGM": 11, "FGA": 16, "TPM": 4, "TPA": 7, "FTM": 4, "FTA": 5, "ORB": 0, "DRB": 8, "AST": 7, "STL": 0, "BLK": 0, "TOV": 0, "PF": 0, "PIE": 39, "REB": 8, "EFG": 81.3, "TS": 82.4, "GMSC": 30.1 },
+              { "date": "Oct 29", "opp": "@ Team Paul", "result": "L 64-71", "sv": "f2e8078d-a8e6-4c0c-bdae-5ac521806559", "MIN": null, "PTS": 22, "FGM": 8, "FGA": 19, "TPM": 3, "TPA": 10, "FTM": 3, "FTA": 4, "ORB": 0, "DRB": 6, "AST": 3, "STL": 3, "BLK": 0, "TOV": 1, "PF": 3, "PIE": 18, "REB": 6, "EFG": 50, "TS": 53, "GMSC": 16.2 },
+              { "date": "Nov 5", "opp": "@ Team Evan", "result": "W 100-88", "recap": true, "sv": "2edf694a-6fe5-4d06-a2e4-ef2ffac82313", "MIN": null, "PTS": 39, "FGM": 13, "FGA": 27, "TPM": 5, "TPA": 14, "FTM": 8, "FTA": 8, "ORB": 0, "DRB": 9, "AST": 4, "STL": 2, "BLK": 0, "TOV": 1, "PF": 0, "PIE": 39, "REB": 9, "EFG": 57.4, "TS": 63.9, "GMSC": 31.8 }
             ],
             "clips": [
               { "game": 0, "kind": "2PT", "made": true, "t": "00:12:36:04", "src": "https://api.sportsvisio-api.com/media/9013f4d9-49eb-46f3-aaf8-dba8b5bd1dad/84b3330d-e3c2-4933-a437-61b03a6da27f/7ef59d0a-4d88-4e0d-a10f-3ff43e7f239c/clip.mp4", "thumb": "https://api.sportsvisio-api.com/media/9013f4d9-49eb-46f3-aaf8-dba8b5bd1dad/84b3330d-e3c2-4933-a437-61b03a6da27f/7ef59d0a-4d88-4e0d-a10f-3ff43e7f239c/clip.0000001.jpg" },
@@ -277,7 +277,7 @@
         </div>
         <div data-gamelog data-game-href="game.html"></div>
         <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-3)">
-      His Fall 2026 games from the SportsVisio game log, oldest first; the bottom row is his per-game average. Minutes weren't recorded for the Oct 29 and Nov 5 games (&mdash;). Underlined numbers open those plays in the Film Room.
+      His Fall 2026 games from the SportsVisio game log, oldest first; the bottom row is his per-game average. Minutes weren't recorded for the Oct 29 and Nov 5 games (&mdash;). Underlined numbers open those plays in the Film Room; &ldquo;Recap&rdquo; opens the full game recap.
       </p>
       </div>
     </div>
@@ -326,6 +326,6 @@
   </div>
   <div class="footer-bottom"><span>© 2026 Smithtown Gospel Tabernacle Basketball League</span></div>
 </footer>
-<script src="assets/js/interactions.js?v=20261116g"></script>
+<script src="assets/js/interactions.js?v=20261116h"></script>
 </body>
 </html>

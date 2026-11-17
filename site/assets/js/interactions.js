@@ -695,6 +695,10 @@
     col("GmSc", "Game Score (John Hollinger's single-number summary of a box score)", { v: function (g) { return f1(+g.GMSC || 0); }, a: function () { return f1(sum("GMSC") / n); } }, null, has("GMSC"));
     col("PIE", "Player Impact Estimate, as published by SportsVisio", { v: function (g) { return g.PIE == null ? "\u2014" : f1(+g.PIE); }, a: function () { return f1(sum("PIE") / n); } }, null, has("PIE"));
     var hasResult = has("result");
+    // Games with a recap page: when any game carries a "recap" flag, only those games link to the recap
+    // (real data has one recap page); otherwise every result links to the single demo recap page.
+    var recapFlags = games.some(function (g) { return "recap" in g; });
+    function recapLink(g) { return gameHref && (!recapFlags || g.recap); }
     var lib = document.querySelector("[data-film-library]");
     function filmCount(f, gi) { return lib && lib.filmCount ? lib.filmCount({ type: f.type, shot: f.shot, q: f.q, game: gi }) : 0; }
 
@@ -706,7 +710,7 @@
       if (hasResult) {
         var r = String(g.result || ""), cls = r.charAt(0) === "W" ? "badge-success" : r.charAt(0) === "L" ? "badge-danger" : "";
         var badge = "<span class=\"badge " + cls + "\">" + r + "</span>";
-        cells += "<td>" + (gameHref ? "<a href=\"" + gameHref + "\">" + badge + "</a>" : badge) + "</td>";
+        cells += "<td>" + (recapLink(g) ? "<a href=\"" + gameHref + "\" class=\"gl-recap\" title=\"Game recap: " + g.date + " " + g.opp + "\">" + badge + " <span class=\"gl-recap-label\">Recap</span></a>" : badge) + "</td>";
       }
       cells += C.map(function (c, ci) {
         var v = c.def.v(g), f = c.film, nFilm = f && +v > 0 ? filmCount(f, i) : 0;
@@ -715,7 +719,8 @@
         return "<td class=\"num\"><a href=\"#film-room\" class=\"gl-film\" data-ci=\"" + ci + "\" data-game=\"" + i + "\" title=\"Watch " +
           (nFilm < +v ? "the " + nFilm + " of his " + v + " " + f.what + " on film" : "his " + v + " " + what) + " from " + g.date + " in the Film Room\">" + v + "</a></td>";
       }).join("");
-      return "<tr><th scope=\"row\" class=\"num\">" + (i + 1) + "</th><td>" + g.date + "</td><td>" + g.opp + "</td>" + cells + "</tr>";
+      var dateCell = recapFlags && recapLink(g) ? "<a href=\"" + gameHref + "\" title=\"Game recap\">" + g.date + "</a>" : g.date;
+      return "<tr><th scope=\"row\" class=\"num\">" + (i + 1) + "</th><td>" + dateCell + "</td><td>" + g.opp + "</td>" + cells + "</tr>";
     }).join("");
     var label = "Season per game";
     if (hasResult) {

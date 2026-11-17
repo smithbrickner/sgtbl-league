@@ -341,6 +341,10 @@ textarea.input { height: auto; padding: var(--space-3) var(--space-4); resize: v
 /* Game box scores: only linked player names are blue */
 .box-table tbody th, .box-table tfoot th { color: var(--text-primary); }
 .box-table tbody th a { color: var(--accent-blue); }
+/* Game Log: link from a game's result to its recap */
+.gl-recap { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; text-decoration: none; }
+.gl-recap-label { font-size: var(--text-xs); font-weight: 700; color: var(--accent-blue); }
+.gl-recap:hover .gl-recap-label, .gl-recap:focus-visible .gl-recap-label { text-decoration: underline; }
 .pergame-table th[scope="row"], .pergame-table thead th:first-child { position: sticky; left: 0; z-index: 1; background: var(--surface); box-shadow: 1px 0 0 var(--border); }
 .pergame-table thead th:first-child { background: var(--surface-alt); z-index: 2; }
 .pergame-table td a { color: var(--accent-blue); font-weight: 600; }
