@@ -13,7 +13,7 @@ body.admin { background: var(--surface-alt); }
 
 /* ---------- Sidebar ---------- */
 .admin-side {
-  background: var(--ink); color: rgba(255,255,255,.78); position: sticky; top: 0; height: 100vh;
+  background: var(--chrome-bg); color: rgba(255,255,255,.78); position: sticky; top: 0; height: 100vh;   /* the league logo's background, like the public header/footer */
   display: flex; flex-direction: column; z-index: var(--z-nav);
 }
 .admin-side .brand { padding: var(--space-5) var(--space-5) var(--space-4); gap: 10px; }

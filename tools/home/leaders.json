@@ -1,0 +1,8 @@
+{
+  "source": "https://uh.sportsvisio.com/league/texas-frisco/leaders",
+  "asOf": "2026-11-20",
+  "note": "Top three per stat among players with 2+ games, as published by SportsVisio (Draft division, Fall 2026). Names capitalized.",
+  "PPG": [ ["Bryson Brown", "TJ", 3, 30.3], ["Evan Pastorelle", "TE", 4, 29.3], ["Kreston Martin", "TM", 3, 28.0] ],
+  "RPG": [ ["Tristan Nickelson", "TM", 3, 18.7], ["Champ Grayson", "TP", 3, 14.7], ["Adam Miller", "TE", 3, 14.7] ],
+  "APG": [ ["Kreston Martin", "TM", 3, 8.0], ["Nino Mansour", "TE", 3, 7.3], ["Manney Collins", "TE", 4, 5.8] ]
+}

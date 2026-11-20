@@ -5,6 +5,7 @@
   /* Brand core */
   --ink:        #081527;
   --navy-900:   #0d2140;
+  --chrome-bg:  #23282f;   /* site header + footer: the league logo's own background (average of the logo tile's edge), so the logo blends in */
   --navy-800:   #14294a;
   --teal-900:   #0a1930;
   --teal-800:   #102544;   /* crest field */

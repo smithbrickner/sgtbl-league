@@ -203,11 +203,15 @@ $(TeamSide $homeT $homeScore $false (-not $awayWon))
   $series = foreach ($s in $g.series) {
     $res = if ($s[4] -and $s[4] -ne $g.file) { '<a href="' + $s[4] + '">' + $s[3] + '</a>' } else { $s[3] }
     '              <li><span class="muted">' + $s[0] + ' &middot; ' + $s[1] + '</span><span>' + $s[2] + '</span><b>' + $res + '</b></li>' }
-  $standings = @(@('Team Jeremy', 2, 1, '.667', '&ndash;', '+13.0'), @('Team Martin', 2, 1, '.667', '&ndash;', '+14.0'), @('Team Paul', 2, 2, '.500', '0.5', '+0.5'), @('Team Turbo', 1, 2, '.333', '1', '&minus;22.3'), @('Team Evan', 1, 2, '.333', '1', '&minus;5.3'))
-  $stand = foreach ($s in $standings) {
-    $hi = $s[0] -eq 'Team Jeremy' -or $s[0] -eq $O.name
-    $nm = if ($s[0] -eq 'Team Jeremy') { '<a href="team.html">Team Jeremy</a>' } else { $s[0] }
-    '              <tr' + $(if ($hi) { ' class="gc-hilite"' }) + '><th scope="row">' + $nm + '</th><td class="num">' + $s[1] + '</td><td class="num">' + $s[2] + '</td><td class="num">' + $s[3] + '</td><td class="num">' + $s[4] + '</td><td class="num">' + $s[5] + '</td></tr>' }
+  # current Draft-division standings (league points: W 3, T 1, L 0) from tools/standings/standings.json,
+  # written by tools/standings/build_standings.py from the shared schedule - run that first
+  $stJson = Get-Content (Join-Path $PSScriptRoot '..\standings\standings.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+  $stand = foreach ($s in $stJson.rows) {
+    $hi = $s.team -eq 'Team Jeremy' -or $s.team -eq $O.name
+    $nm = if ($s.team -eq 'Team Jeremy') { '<a href="team.html">Team Jeremy</a>' } else { $s.team }
+    $dv = [double]$s.diff; $dTxt = if ($dv -gt 0) { '+' + $dv.ToString('0.0', $ic) } elseif ($dv -lt 0) { '&minus;' + (-$dv).ToString('0.0', $ic) } else { '0.0' }
+    '              <tr' + $(if ($hi) { ' class="gc-hilite"' }) + '><th scope="row">' + $nm + '</th><td class="num">' + $s.w + '</td><td class="num">' + $s.l + '</td><td class="num">' + $s.t + '</td><td class="num"><b>' + $s.pts + '</b></td><td class="num">' + $dTxt + '</td></tr>' }
+  $stThrough = ([datetime]::ParseExact($stJson.through, 'yyyy-MM-dd', $null)).ToString('MMM d', $ic)
 
   # ---- data blocks ----
   $evJson = [IO.File]::ReadAllText((Join-Path $PSScriptRoot "events-$($g.key).json")).Trim()
@@ -318,7 +322,7 @@ $($lr -join $nl)
             <div class="wp-legend" data-sc-legend></div>
             <div class="sc-court" data-sc-court></div>
             <p class="wp-readout" data-sc-readout aria-live="polite">Hover a shot for details &middot; click a shot with film to watch it.</p>
-            <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-2)"><b>Shot locations are placeholders.</b> All $nShots field-goal attempts from the box score are plotted &mdash; the right players, makes, misses, 2s and 3s &mdash; but where each one was taken is estimated, because SportsVisio doesn't record shot locations. $nShotClips of them have film (solid outline); Team Jeremy shoots at the left basket.</p>
+            <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-2)"><b>Shot locations are placeholders.</b> All $nShots field-goal attempts from the box score are plotted &mdash; the right players, makes, misses, 2s and 3s &mdash; but where each one was taken is estimated, because SportsVisio doesn't record shot locations. $nShotClips of them have film (solid outline); Team Jeremy shoots at the right basket, $($O.name) at the left.</p>
           </section>
           <section class="card gc-card" aria-labelledby="gc-ts-h">
             <h2 class="gc-h" id="gc-ts-h">Team Stats</h2>
@@ -350,9 +354,9 @@ $($series -join $nl)
           </section>
           <section class="card gc-card" aria-labelledby="gc-st-h">
             <h2 class="gc-h" id="gc-st-h">Standings</h2>
-            <p class="muted" style="font-size:var(--text-xs);margin-bottom:var(--space-2)">Draft Division &middot; Fall 2026</p>
+            <p class="muted" style="font-size:var(--text-xs);margin-bottom:var(--space-2)">Draft Division &middot; Fall 2026 &middot; through $stThrough &middot; 3 points for a win, 1 for a tie</p>
             <table class="gc-standings">
-              <thead><tr><th scope="col">Team</th><th scope="col" class="num">W</th><th scope="col" class="num">L</th><th scope="col" class="num">PCT</th><th scope="col" class="num">GB</th><th scope="col" class="num" title="Average point differential per game">+/&minus;</th></tr></thead>
+              <thead><tr><th scope="col">Team</th><th scope="col" class="num">W</th><th scope="col" class="num">L</th><th scope="col" class="num">T</th><th scope="col" class="num" title="League points: 3 for a win, 1 for a tie">PTS</th><th scope="col" class="num" title="Average point differential per game">+/&minus;</th></tr></thead>
               <tbody>
 $($stand -join $nl)
               </tbody>

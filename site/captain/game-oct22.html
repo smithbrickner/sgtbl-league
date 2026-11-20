@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Team Jeremy 94, Team Turbo 60 — Recap — SGTBL Team Portal</title>
-<link rel="icon" href="../assets/img/sgtbl-logo.jpg">
+<link rel="icon" type="image/svg+xml" href="../assets/img/sgtbl-logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/tokens.css?v=20261116i">
-<link rel="stylesheet" href="../assets/css/base.css?v=20261116i">
-<link rel="stylesheet" href="../assets/css/site.css?v=20261116i">
-<link rel="stylesheet" href="../assets/css/admin.css?v=20261116i">
-<link rel="stylesheet" href="../assets/css/captain.css?v=20261116i">
+<link rel="stylesheet" href="../assets/css/tokens.css?v=20261120b">
+<link rel="stylesheet" href="../assets/css/base.css?v=20261120b">
+<link rel="stylesheet" href="../assets/css/site.css?v=20261120b">
+<link rel="stylesheet" href="../assets/css/admin.css?v=20261120b">
+<link rel="stylesheet" href="../assets/css/captain.css?v=20261120b">
 <style>
 /* Gamecast-style recap (layout inspired by major sports-site game pages) */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -246,7 +246,7 @@
 <div class="admin-shell">
   <div class="admin-scrim"></div>
   <aside class="admin-side">
-    <a class="brand" href="dashboard.html"><img src="../assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>Team Portal</span></span></a>
+    <a class="brand" href="dashboard.html"><img src="../assets/img/sgtbl-logo.svg" alt="SGTBL logo"><span class="brand-word">SGTBL<span>Team Portal</span></span></a>
     <ul class="admin-nav">
       <li class="nav-group-label">Team</li>
       <li><a href="dashboard.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Dashboard</a></li>
@@ -387,7 +387,7 @@
               <div class="wp-legend" data-sc-legend></div>
               <div class="sc-court" data-sc-court></div>
               <p class="wp-readout" data-sc-readout aria-live="polite">Hover a shot for details &middot; click a shot with film to watch it.</p>
-              <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-2)"><b>Shot locations are placeholders.</b> All 132 field-goal attempts from the box score are plotted &mdash; the right players, makes, misses, 2s and 3s &mdash; but where each one was taken is estimated, because SportsVisio doesn't record shot locations. 74 of them have film (solid outline); Team Jeremy shoots at the left basket.</p>
+              <p class="muted" style="font-size:var(--text-xs);margin-top:var(--space-2)"><b>Shot locations are placeholders.</b> All 132 field-goal attempts from the box score are plotted &mdash; the right players, makes, misses, 2s and 3s &mdash; but where each one was taken is estimated, because SportsVisio doesn't record shot locations. 74 of them have film (solid outline); Team Jeremy shoots at the right basket, Team Turbo at the left.</p>
             </section>
             <section class="card gc-card" aria-labelledby="gc-ts-h">
               <h2 class="gc-h" id="gc-ts-h">Team Stats</h2>
@@ -425,15 +425,15 @@
             </section>
             <section class="card gc-card" aria-labelledby="gc-st-h">
               <h2 class="gc-h" id="gc-st-h">Standings</h2>
-              <p class="muted" style="font-size:var(--text-xs);margin-bottom:var(--space-2)">Draft Division &middot; Fall 2026</p>
+              <p class="muted" style="font-size:var(--text-xs);margin-bottom:var(--space-2)">Draft Division &middot; Fall 2026 &middot; through Nov 19 &middot; 3 points for a win, 1 for a tie</p>
               <table class="gc-standings">
-                <thead><tr><th scope="col">Team</th><th scope="col" class="num">W</th><th scope="col" class="num">L</th><th scope="col" class="num">PCT</th><th scope="col" class="num">GB</th><th scope="col" class="num" title="Average point differential per game">+/&minus;</th></tr></thead>
+                <thead><tr><th scope="col">Team</th><th scope="col" class="num">W</th><th scope="col" class="num">L</th><th scope="col" class="num">T</th><th scope="col" class="num" title="League points: 3 for a win, 1 for a tie">PTS</th><th scope="col" class="num" title="Average point differential per game">+/&minus;</th></tr></thead>
                 <tbody>
-                <tr class="gc-hilite"><th scope="row"><a href="my-team.html">Team Jeremy</a></th><td class="num">2</td><td class="num">1</td><td class="num">.667</td><td class="num">&ndash;</td><td class="num">+13.0</td></tr>
-                <tr><th scope="row">Team Martin</th><td class="num">2</td><td class="num">1</td><td class="num">.667</td><td class="num">&ndash;</td><td class="num">+14.0</td></tr>
-                <tr><th scope="row">Team Paul</th><td class="num">2</td><td class="num">2</td><td class="num">.500</td><td class="num">0.5</td><td class="num">+0.5</td></tr>
-                <tr class="gc-hilite"><th scope="row">Team Turbo</th><td class="num">1</td><td class="num">2</td><td class="num">.333</td><td class="num">1</td><td class="num">&minus;22.3</td></tr>
-                <tr><th scope="row">Team Evan</th><td class="num">1</td><td class="num">2</td><td class="num">.333</td><td class="num">1</td><td class="num">&minus;5.3</td></tr>
+                <tr><th scope="row">Team Martin</th><td class="num">2</td><td class="num">1</td><td class="num">0</td><td class="num"><b>6</b></td><td class="num">+14.0</td></tr>
+                <tr class="gc-hilite"><th scope="row"><a href="my-team.html">Team Jeremy</a></th><td class="num">2</td><td class="num">1</td><td class="num">0</td><td class="num"><b>6</b></td><td class="num">+13.0</td></tr>
+                <tr><th scope="row">Team Evan</th><td class="num">2</td><td class="num">2</td><td class="num">0</td><td class="num"><b>6</b></td><td class="num">+4.5</td></tr>
+                <tr><th scope="row">Team Paul</th><td class="num">2</td><td class="num">2</td><td class="num">0</td><td class="num"><b>6</b></td><td class="num">+0.5</td></tr>
+                <tr class="gc-hilite"><th scope="row">Team Turbo</th><td class="num">1</td><td class="num">3</td><td class="num">0</td><td class="num"><b>3</b></td><td class="num">&minus;25.3</td></tr>
                 </tbody>
               </table>
             </section>
@@ -834,7 +834,7 @@
     </div>
   </div>
 </div>
-<script src="../assets/js/interactions.js?v=20261116i"></script>
+<script src="../assets/js/interactions.js?v=20261120b"></script>
 <script>
 // Game recap page script. Reads two JSON blocks: #game-meta (teams, final score, cameras) and #pbp-data (tagged plays in film order with the running score [Team Jeremy, opponent]).
 (function () {
@@ -1069,7 +1069,7 @@
     fPlayer.addEventListener("change", render);
     fullTitle(); render();
   }
-// --- Shot chart (placeholder locations): every FGA from the box score on a full court; Team Jeremy shoots at the left basket ---
+// --- Shot chart (placeholder locations): every FGA from the box score on a full court; Team Jeremy shoots at the right basket, the opponent at the left ---
   var sc = document.querySelector("[data-sc]"), shotsEl = document.getElementById("shots-data");
   if (sc && shotsEl) {
     var shots = JSON.parse(shotsEl.textContent), court = sc.querySelector("[data-sc-court]"), sRead = sc.querySelector("[data-sc-readout]");
@@ -1086,7 +1086,7 @@
         dx = dist * Math.cos(th); dy = dist * Math.sin(th);
         if (Math.abs(dy) < 24.2 && dx > -3.5 && (s.k === 3 ? isThree(dx, dy) && dx < 30 : !isThree(dx, dy))) break;
       }
-      var left = s.tm === A; s.cx = left ? 52.5 + dx * 10 : 887.5 - dx * 10; s.cy = 250 + dy * 10;
+      var left = s.tm !== A; s.cx = left ? 52.5 + dx * 10 : 887.5 - dx * 10; s.cy = 250 + dy * 10;
     });
     var pl = {}; shots.forEach(function (s) { pl[s.tm + "|" + s.p] = true; });
     Object.keys(pl).sort().forEach(function (k) { var o = document.createElement("option"); o.value = k; o.textContent = k.split("|")[1] + " (" + k.split("|")[0] + ")"; sPl.appendChild(o); });
@@ -1102,7 +1102,7 @@
     function drawCourt() {
       var res = sRes.value, who = sPl.value, s = '<svg viewBox="0 0 940 500" role="img" aria-label="Shot chart with estimated locations">';
       s += '<rect class="court" x="1" y="1" width="938" height="498" rx="6"/><line class="ln" x1="470" x2="470" y1="0" y2="500"/><circle class="ln" cx="470" cy="250" r="60"/>' + half(false) + half(true);
-      s += '<text x="20" y="490" fill="var(--text-muted)" font-size="18" font-weight="700">' + A + ' shoots \u2190</text><text x="920" y="490" text-anchor="end" fill="var(--text-muted)" font-size="18" font-weight="700">\u2192 ' + B + ' shoots</text>';
+      s += '<text x="20" y="490" fill="var(--text-muted)" font-size="18" font-weight="700">' + B + ' shoots \u2190</text><text x="920" y="490" text-anchor="end" fill="var(--text-muted)" font-size="18" font-weight="700">\u2192 ' + A + ' shoots</text>';
       var n = { a: [0, 0], b: [0, 0] };
       shots.forEach(function (sh, i) {
         var on = (!sTeam || sh.tm === sTeam) && (res === "" || String(sh.m) === res) && (!who || who === sh.tm + "|" + sh.p);

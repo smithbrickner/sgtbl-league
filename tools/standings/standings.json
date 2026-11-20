@@ -1,0 +1,51 @@
+{
+ "through": "2026-11-19",
+ "rule": "W 3, T 1, L 0; then point differential, points scored, head-to-head",
+ "rows": [
+  {
+   "team": "Team Martin",
+   "code": "TM",
+   "w": 2,
+   "l": 1,
+   "t": 0,
+   "pts": 6,
+   "diff": 14.0
+  },
+  {
+   "team": "Team Jeremy",
+   "code": "TJ",
+   "w": 2,
+   "l": 1,
+   "t": 0,
+   "pts": 6,
+   "diff": 13.0
+  },
+  {
+   "team": "Team Evan",
+   "code": "TE",
+   "w": 2,
+   "l": 2,
+   "t": 0,
+   "pts": 6,
+   "diff": 4.5
+  },
+  {
+   "team": "Team Paul",
+   "code": "TP",
+   "w": 2,
+   "l": 2,
+   "t": 0,
+   "pts": 6,
+   "diff": 0.5
+  },
+  {
+   "team": "Team Turbo",
+   "code": "TT",
+   "w": 1,
+   "l": 3,
+   "t": 0,
+   "pts": 3,
+   "diff": -25.3
+  }
+ ]
+}

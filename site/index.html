@@ -5,36 +5,155 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SGTBL — Smithtown Gospel Tabernacle Basketball League</title>
 <meta name="description" content="Official home of the SGTBL: standings, schedules, stats, and recaps for the Smithtown Gospel Tabernacle Basketball League.">
-<link rel="icon" href="assets/img/sgtbl-logo.jpg">
+<link rel="icon" type="image/svg+xml" href="assets/img/sgtbl-logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/tokens.css?v=20261116i">
-<link rel="stylesheet" href="assets/css/base.css?v=20261116i">
-<link rel="stylesheet" href="assets/css/site.css?v=20261116i">
+<link rel="stylesheet" href="assets/css/tokens.css?v=20261120b">
+<link rel="stylesheet" href="assets/css/base.css?v=20261120b">
+<link rel="stylesheet" href="assets/css/site.css?v=20261120b">
+<style>
+/* Homepage: sports-network league page layout (score strip, lead story, rails) */
+.hp-scores { background: var(--surface); border-bottom: 1px solid var(--border); }
+.hp-scores-inner { display: flex; align-items: stretch; max-width: 1440px; margin: 0 auto; }
+.hp-scores-label { flex: none; display: flex; align-items: center; padding: 0 14px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: var(--text-muted); border-right: 1px solid var(--border); line-height: 1.3; }
+.hp-scores-strip { display: flex; overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+.hp-sc { flex: none; width: 150px; display: flex; flex-direction: column; gap: 3px; padding: 8px 12px; border-right: 1px solid var(--border); color: var(--text-primary); text-decoration: none; font-size: var(--text-xs); }
+a.hp-sc:hover { background: var(--surface-alt); }
+.hp-sc-status { font-weight: 700; color: var(--text-muted); font-size: 11px; }
+.hp-sc-row { display: flex; align-items: center; gap: 6px; color: var(--text-muted); }
+.hp-sc-row.win { color: var(--text-primary); font-weight: 800; }
+.hp-sc-team { flex: 1; }
+.hp-sc-pts { font-variant-numeric: tabular-nums; font-weight: 800; }
+.hp-sc-up .hp-sc-row { color: var(--text-primary); }
+.hp-sc-link { font-size: 11px; font-weight: 700; color: var(--accent-blue); }
+.hp-dot { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; color: #fff; font-size: 0; flex: none; }
+.hp-crest { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; color: #fff; font-family: var(--font-display); font-weight: 800; font-size: 15px; flex: none; }
+.hp-wrap { padding-top: var(--space-5); padding-bottom: var(--space-8); }
+.hp-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: var(--space-5); align-items: start; }
+.hp-main, .hp-rail { display: flex; flex-direction: column; gap: var(--space-5); min-width: 0; }
+.hp-card { padding: var(--space-4) var(--space-5) var(--space-5); }
+.hp-card-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-3); padding-bottom: var(--space-2); border-bottom: 1px solid var(--border); }
+.hp-card-head h2 { font-family: var(--font-display); font-size: var(--text-lg); text-transform: uppercase; letter-spacing: .5px; }
+.hp-sub { font-size: var(--text-xs); color: var(--text-muted); }
+.hp-kicker { display: block; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; color: var(--text-muted); }
+.hp-note { font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-3); }
+/* lead story */
+.hp-lead { overflow: hidden; padding: 0; }
+.hp-lead-img { position: relative; display: block; aspect-ratio: 16 / 8; background: #000; overflow: hidden; }
+.hp-lead-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+.hp-lead-img:hover img { transform: scale(1.02); }
+.hp-lead-tag { position: absolute; left: 16px; top: 16px; padding: 3px 10px; border-radius: 4px; background: var(--brand); color: #fff; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; }
+.hp-lead-body { padding: var(--space-5); }
+.hp-lead h1 { font-size: clamp(1.6rem, 3vw, 2.3rem); line-height: 1.15; margin: 6px 0 var(--space-3); }
+.hp-lead h1 a { color: var(--text-primary); text-decoration: none; }
+.hp-lead h1 a:hover { text-decoration: underline; }
+.hp-lead-body p { color: var(--text-muted); font-size: var(--text-base); line-height: 1.6; max-width: 70ch; }
+.hp-lead-actions { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-4); }
+/* top plays */
+.hp-vids { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); }
+.hp-vid { display: flex; flex-direction: column; gap: 6px; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.hp-vid-thumb { position: relative; display: block; aspect-ratio: 16 / 9; border-radius: var(--radius-md); overflow: hidden; background: #000; }
+.hp-vid-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.hp-vid-thumb i { position: absolute; left: 6px; bottom: 6px; padding: 1px 6px; border-radius: 3px; background: rgba(0,0,0,.75); color: #fff; font-style: normal; font-size: 11px; font-weight: 700; }
+.hp-vid-thumb b { position: absolute; inset: 0; margin: auto; width: 38px; height: 38px; border-radius: 50%; background: rgba(0,0,0,.6); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.hp-vid:hover .hp-vid-title, .hp-vid:focus-visible .hp-vid-title { text-decoration: underline; }
+.hp-vid-title { font-size: var(--text-sm); font-weight: 700; line-height: 1.3; }
+.hp-vid-meta { font-size: 11px; color: var(--text-muted); }
+/* story cards */
+.hp-stories { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
+.hp-story { display: flex; flex-direction: column; overflow: hidden; padding: 0; color: var(--text-primary); text-decoration: none; }
+.hp-story-img { display: block; aspect-ratio: 16 / 9; background: #000; overflow: hidden; }
+.hp-story-img img { width: 100%; height: 100%; object-fit: cover; }
+.hp-story-body { display: flex; flex-direction: column; gap: 6px; padding: var(--space-4); }
+.hp-story-body b, .hp-spot-body b { font-family: var(--font-display); font-size: var(--text-xl); line-height: 1.15; }
+.hp-story:hover b, .hp-spot:hover b { text-decoration: underline; }
+.hp-dek { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.5; }
+/* player spotlight */
+.hp-spot { display: grid; grid-template-columns: 170px minmax(0, 1fr); align-items: center; overflow: hidden; padding: 0; color: var(--text-primary); text-decoration: none; }
+.hp-spot-img { align-self: stretch; display: flex; align-items: flex-end; justify-content: center; background: linear-gradient(160deg, var(--team-knicks-bg), var(--navy-900)); }
+.hp-spot-img img { width: 100%; max-width: 170px; display: block; }
+.hp-spot-body { display: flex; flex-direction: column; gap: 6px; padding: var(--space-4) var(--space-5); }
+.hp-spot-stats { display: flex; gap: var(--space-4); margin-top: 4px; }
+.hp-spot-stats span { display: flex; flex-direction: column; font-size: 11px; font-weight: 700; color: var(--text-muted); }
+.hp-spot-stats span b { font-size: var(--text-xl); color: var(--text-primary); }
+/* rail */
+.hp-headlines { list-style: none; margin: 0; padding: 0; }
+.hp-headlines li { display: flex; flex-direction: column; gap: 2px; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: var(--text-sm); line-height: 1.35; }
+.hp-headlines li:last-child { border-bottom: 0; }
+.hp-headlines a { color: var(--text-primary); font-weight: 600; text-decoration: none; }
+.hp-headlines a:hover { text-decoration: underline; color: var(--accent-blue); }
+.hp-hl-nolink { font-weight: 600; }
+.hp-headlines a.hp-hl-tag { color: var(--accent-blue); font-weight: 700; font-size: 11px; }
+.hp-headlines li > span:last-child { font-size: 11px; color: var(--text-muted); }
+.hp-standings { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+.hp-standings th, .hp-standings td { padding: 7px 3px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+.hp-standings .num { text-align: right; font-variant-numeric: tabular-nums; }
+.hp-standings thead th { font-size: 11px; color: var(--text-muted); font-weight: 700; }
+.hp-standings tbody th { display: flex; align-items: center; gap: 8px; font-weight: 700; }
+.hp-standings tbody th a { color: var(--accent-blue); }
+.hp-standings tr.hp-hi { background: var(--surface-alt); }
+.hp-standings .hp-pts { font-weight: 800; }
+.hp-ld + .hp-ld { margin-top: var(--space-3); }
+.hp-ld h4 { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+.hp-ld h4 span { font-weight: 500; color: var(--text-muted); text-transform: none; letter-spacing: 0; }
+.hp-ld ol { list-style: none; margin: 0; padding: 0; }
+.hp-ld li { display: flex; align-items: center; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--border); font-size: var(--text-sm); }
+.hp-ld li:last-child { border-bottom: 0; }
+.hp-rank { width: 14px; color: var(--text-muted); font-weight: 700; font-size: var(--text-xs); }
+.hp-ld-name { flex: 1; display: flex; flex-direction: column; font-weight: 600; line-height: 1.2; }
+.hp-ld-name a { color: var(--accent-blue); }
+.hp-ld-name small { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+.hp-ld li b { font-variant-numeric: tabular-nums; }
+.hp-pending { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: var(--space-3); }
+.hp-next-game { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); text-align: center; }
+.hp-next-game > div { display: flex; flex-direction: column; gap: 2px; }
+.hp-next-game > div span { font-size: var(--text-xs); color: var(--text-muted); }
+.hp-next-links { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--border); font-size: var(--text-sm); font-weight: 600; }
+.hp-next-links a { color: var(--accent-blue); }
+.hp-promo { padding: var(--space-5); }
+/* video pop-up */
+.hp-dialog { width: min(920px, 94vw); padding: 0; border: 0; border-radius: var(--radius-lg); background: #000; color: #fff; }
+.hp-dialog::backdrop { background: rgba(0,0,0,.7); }
+.hp-dialog-head { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); padding: 8px 8px 8px 16px; font-size: var(--text-sm); }
+.hp-dialog-head .btn { color: #fff; }
+.hp-dialog-frame { aspect-ratio: 16 / 9; }
+.hp-dialog-frame video { width: 100%; height: 100%; display: block; background: #000; }
+@media (max-width: 1080px) { .hp-grid { grid-template-columns: minmax(0, 1fr); } .hp-rail { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; } }
+@media (max-width: 760px) { .hp-vids { grid-template-columns: repeat(2, minmax(0, 1fr)); } .hp-stories { grid-template-columns: minmax(0, 1fr); } .hp-rail { display: flex; } .hp-spot { grid-template-columns: 110px minmax(0, 1fr); } .hp-spot-stats { gap: var(--space-3); } .hp-lead-img { aspect-ratio: 16 / 10; } }
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 
-<div class="ticker" aria-label="Live and upcoming scores">
-  <div class="wrap">
-    <span class="ticker-label">THIS WEEK</span>
-    <div class="ticker-items">
-      <span class="ticker-item"><span class="badge badge-live">Live</span> <b>Sharks 14</b> · Wolves 11 — 2nd Half</span>
-      <span class="ticker-item">Sat 11:30 AM — Tigers vs Rams</span>
-      <span class="ticker-item">Fri 8:00 PM — Knicks vs Eagles (Anchor Game)</span>
-      <span class="ticker-item">Final — Knicks 27, Eagles 24</span>
-      <span class="ticker-item"><span class="badge badge-live">Live</span> <b>Sharks 14</b> · Wolves 11 — 2nd Half</span>
-      <span class="ticker-item">Sat 11:30 AM — Tigers vs Rams</span>
-      <span class="ticker-item">Fri 8:00 PM — Knicks vs Eagles (Anchor Game)</span>
-      <span class="ticker-item">Final — Knicks 27, Eagles 24</span>
+  <section class="hp-scores" aria-label="Draft Division scores">
+    <div class="hp-scores-inner">
+      <span class="hp-scores-label">Draft<br>Fall 2026</span>
+      <div class="hp-scores-strip" data-hp-strip>
+      <a class="hp-sc" href="game-oct22.html"><span class="hp-sc-status">Thu, Oct 22 &middot; Final</span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-tigers-bg)">TT</span><span class="hp-sc-team">TT</span><span class="hp-sc-pts">60</span></span><span class="hp-sc-row win"><span class="hp-dot" style="background:var(--team-knicks-bg)">TJ</span><span class="hp-sc-team">TJ</span><span class="hp-sc-pts">94</span></span><span class=hp-sc-link>Recap</span></a>
+      <div class="hp-sc"><span class="hp-sc-status">Thu, Oct 22 &middot; Final</span><span class="hp-sc-row win"><span class="hp-dot" style="background:var(--team-eagles-bg)">TE</span><span class="hp-sc-team">TE</span><span class="hp-sc-pts">64</span></span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-wolves-bg)">TP</span><span class="hp-sc-team">TP</span><span class="hp-sc-pts">61</span></span></div>
+      <a class="hp-sc" href="game-oct29.html"><span class="hp-sc-status">Thu, Oct 29 &middot; Final</span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-knicks-bg)">TJ</span><span class="hp-sc-team">TJ</span><span class="hp-sc-pts">64</span></span><span class="hp-sc-row win"><span class="hp-dot" style="background:var(--team-wolves-bg)">TP</span><span class="hp-sc-team">TP</span><span class="hp-sc-pts">71</span></span><span class=hp-sc-link>Recap</span></a>
+      <div class="hp-sc"><span class="hp-sc-status">Thu, Oct 29 &middot; Final</span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-tigers-bg)">TT</span><span class="hp-sc-team">TT</span><span class="hp-sc-pts">57</span></span><span class="hp-sc-row win"><span class="hp-dot" style="background:var(--team-rams-bg)">TM</span><span class="hp-sc-team">TM</span><span class="hp-sc-pts">93</span></span></div>
+      <div class="hp-sc"><span class="hp-sc-status">Thu, Nov 5 &middot; Final</span><span class="hp-sc-row win"><span class="hp-dot" style="background:var(--team-wolves-bg)">TP</span><span class="hp-sc-team">TP</span><span class="hp-sc-pts">75</span></span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-rams-bg)">TM</span><span class="hp-sc-team">TM</span><span class="hp-sc-pts">74</span></span></div>
+      <a class="hp-sc" href="game.html"><span class="hp-sc-status">Thu, Nov 5 &middot; Final</span><span class="hp-sc-row win"><span class="hp-dot" style="background:var(--team-knicks-bg)">TJ</span><span class="hp-sc-team">TJ</span><span class="hp-sc-pts">100</span></span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-eagles-bg)">TE</span><span class="hp-sc-team">TE</span><span class="hp-sc-pts">88</span></span><span class=hp-sc-link>Recap</span></a>
+      <div class="hp-sc"><span class="hp-sc-status">Thu, Nov 12 &middot; Final</span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-wolves-bg)">TP</span><span class="hp-sc-team">TP</span><span class="hp-sc-pts">54</span></span><span class="hp-sc-row win"><span class="hp-dot" style="background:var(--team-tigers-bg)">TT</span><span class="hp-sc-team">TT</span><span class="hp-sc-pts">57</span></span></div>
+      <div class="hp-sc"><span class="hp-sc-status">Thu, Nov 12 &middot; Final</span><span class="hp-sc-row win"><span class="hp-dot" style="background:var(--team-rams-bg)">TM</span><span class="hp-sc-team">TM</span><span class="hp-sc-pts">96</span></span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-eagles-bg)">TE</span><span class="hp-sc-team">TE</span><span class="hp-sc-pts">89</span></span></div>
+      <div class="hp-sc hp-sc-up"><span class="hp-sc-status">Thu, Nov 19 &middot; Pending</span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-rams-bg)">TM</span><span class="hp-sc-team">TM</span><span class="hp-sc-pts"></span></span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-knicks-bg)">TJ</span><span class="hp-sc-team">TJ</span><span class="hp-sc-pts"></span></span></div>
+      <div class="hp-sc" data-current><span class="hp-sc-status">Thu, Nov 19 &middot; Final</span><span class="hp-sc-row win"><span class="hp-dot" style="background:var(--team-eagles-bg)">TE</span><span class="hp-sc-team">TE</span><span class="hp-sc-pts">108</span></span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-tigers-bg)">TT</span><span class="hp-sc-team">TT</span><span class="hp-sc-pts">74</span></span></div>
+      <div class="hp-sc hp-sc-up"><span class="hp-sc-status">Thu, Dec 3 &middot; 7:30 PM</span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-wolves-bg)">TP</span><span class="hp-sc-team">TP</span><span class="hp-sc-pts"></span></span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-knicks-bg)">TJ</span><span class="hp-sc-team">TJ</span><span class="hp-sc-pts"></span></span></div>
+      <div class="hp-sc hp-sc-up"><span class="hp-sc-status">Thu, Dec 3 &middot; 8:30 PM</span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-tigers-bg)">TT</span><span class="hp-sc-team">TT</span><span class="hp-sc-pts"></span></span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-rams-bg)">TM</span><span class="hp-sc-team">TM</span><span class="hp-sc-pts"></span></span></div>
+      <div class="hp-sc hp-sc-up"><span class="hp-sc-status">Wed, Dec 9 &middot; 7:30 PM</span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-wolves-bg)">TP</span><span class="hp-sc-team">TP</span><span class="hp-sc-pts"></span></span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-eagles-bg)">TE</span><span class="hp-sc-team">TE</span><span class="hp-sc-pts"></span></span></div>
+      <div class="hp-sc hp-sc-up"><span class="hp-sc-status">Wed, Dec 9 &middot; 8:30 PM</span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-knicks-bg)">TJ</span><span class="hp-sc-team">TJ</span><span class="hp-sc-pts"></span></span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-tigers-bg)">TT</span><span class="hp-sc-team">TT</span><span class="hp-sc-pts"></span></span></div>
+      <div class="hp-sc hp-sc-up"><span class="hp-sc-status">Thu, Dec 10 &middot; 7:30 PM</span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-rams-bg)">TM</span><span class="hp-sc-team">TM</span><span class="hp-sc-pts"></span></span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-wolves-bg)">TP</span><span class="hp-sc-team">TP</span><span class="hp-sc-pts"></span></span></div>
+      <div class="hp-sc hp-sc-up"><span class="hp-sc-status">Thu, Dec 10 &middot; 8:30 PM</span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-eagles-bg)">TE</span><span class="hp-sc-team">TE</span><span class="hp-sc-pts"></span></span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-knicks-bg)">TJ</span><span class="hp-sc-team">TJ</span><span class="hp-sc-pts"></span></span></div>
+      <div class="hp-sc hp-sc-up"><span class="hp-sc-status">Wed, Dec 16 &middot; 7:30 PM</span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-tigers-bg)">TT</span><span class="hp-sc-team">TT</span><span class="hp-sc-pts"></span></span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-wolves-bg)">TP</span><span class="hp-sc-team">TP</span><span class="hp-sc-pts"></span></span></div>
+      <div class="hp-sc hp-sc-up"><span class="hp-sc-status">Wed, Dec 16 &middot; 8:30 PM</span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-eagles-bg)">TE</span><span class="hp-sc-team">TE</span><span class="hp-sc-pts"></span></span><span class="hp-sc-row"><span class="hp-dot" style="background:var(--team-rams-bg)">TM</span><span class="hp-sc-team">TM</span><span class="hp-sc-pts"></span></span></div>
+      </div>
     </div>
-  </div>
-</div>
-
+  </section>
 <header class="site-nav">
   <div class="wrap">
     <a class="brand" href="index.html">
-      <img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest">
+      <img src="assets/img/sgtbl-logo.svg" alt="SGTBL logo">
       <span class="brand-word">SGTBL<span>Smithtown Gospel Tabernacle Basketball League</span></span>
     </a>
     <nav aria-label="Primary">
@@ -60,158 +179,110 @@
   </div>
 </header>
 
-<main id="main">
+<main id="main" class="hp">
+  <div class="wrap hp-wrap">
+    <div class="hp-grid">
+      <div class="hp-main">
+        <article class="card hp-lead">
+          <a class="hp-lead-img" href="game.html"><img src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/c7e099ab-e7f3-47af-b93e-4c0ce12f8539/clip.0000001.jpg" alt="Game film: Bryson Brown shoots a 3-pointer against Team Evan"><span class="hp-lead-tag">Recap</span></a>
+          <div class="hp-lead-body">
+            <span class="hp-kicker">Thursday, Nov. 5 &middot; Draft Division</span>
+            <h1><a href="game.html">Brown scores 39 as Team Jeremy hands Team Evan first loss, 100-88</a></h1>
+            <p>Bryson Brown had 39 points, nine rebounds and four assists to lead Team Jeremy past Team Evan 100-88 on the road on Thursday night, handing Team Evan its first loss of the season.</p>
+            <div class="hp-lead-actions"><a class="btn btn-accent btn-sm" href="game.html">Read the recap</a><button type="button" class="btn btn-outline btn-sm hp-vid-btn" data-src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/c7e099ab-e7f3-47af-b93e-4c0ce12f8539/clip.mp4" data-title="Bryson Brown 3-pointer vs. Team Evan">&#9654; Watch the play</button></div>
+          </div>
+        </article>
 
-  <section class="hero">
-    <img class="hero-bg" src="assets/img/hero/hero-1.jpg" alt="">
-    <div class="wrap hero-inner">
-      <div class="hero-copy">
-        <span class="eyebrow">Week 14 Recap</span>
-        <h1>Knicks edge Eagles 27–24 to stay atop the table</h1>
-        <p>Marcus Bello's late spin shot sealed a 27–24 win over the Eagles, keeping the Knicks in the driver's seat for the No. 1 playoff seed with two games left in the regular season. The top 3 teams advance — the playoffs, not regular-season record, decide the champion.</p>
-        <div class="hero-actions">
-          <a class="btn btn-accent btn-lg" href="game.html">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7V5z" fill="currentColor" stroke="none"/></svg>
-            Watch the Recap
-          </a>
-          <a class="btn btn-outline btn-lg" href="standings.html" style="color:#fff;border-color:rgba(255,255,255,.4)">View Standings</a>
-        </div>
-      </div>
-      <div class="hero-card">
-        <div class="row" style="justify-content:space-between;margin-bottom:10px">
-          <strong style="color:#fff">Final — Week 14</strong>
-          <span class="badge badge-accent">Box Score</span>
-        </div>
-        <div class="matchup" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)">
-          <div class="matchup-row win" style="color:#fff">
-            <span class="crest crest-logo"><img src="assets/img/knicks-logo.webp" alt="Knicks"></span>
-            <span class="team-name">Knicks</span>
-            <span class="score" style="color:var(--gold-400)">27</span>
+        <section class="card hp-card" aria-labelledby="hp-plays-h">
+          <div class="hp-card-head"><h2 id="hp-plays-h">Top Plays</h2><span class="hp-sub">Real game film from SportsVisio</span></div>
+          <div class="hp-vids">
+          <button type="button" class="hp-vid" data-src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/c7e099ab-e7f3-47af-b93e-4c0ce12f8539/clip.mp4" data-title="Bryson Brown buries his fifth 3-pointer in a 39-point night"><span class="hp-vid-thumb"><img src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/c7e099ab-e7f3-47af-b93e-4c0ce12f8539/clip.0000001.jpg" alt="" loading="lazy"><i>0:07</i><b aria-hidden="true">&#9654;</b></span><span class="hp-vid-title">Bryson Brown buries his fifth 3-pointer in a 39-point night</span><span class="hp-vid-meta">Thu, Nov 5 &middot; film 49:19</span></button>
+          <button type="button" class="hp-vid" data-src="https://api.sportsvisio-api.com/media/9013f4d9-49eb-46f3-aaf8-dba8b5bd1dad/84b3330d-e3c2-4933-a437-61b03a6da27f/d119638c-6a76-406f-b11e-2a90f01d405f/clip.mp4" data-title="Jeremy Jones drills a 3 in the season opener"><span class="hp-vid-thumb"><img src="https://api.sportsvisio-api.com/media/9013f4d9-49eb-46f3-aaf8-dba8b5bd1dad/84b3330d-e3c2-4933-a437-61b03a6da27f/d119638c-6a76-406f-b11e-2a90f01d405f/clip.0000001.jpg" alt="" loading="lazy"><i>0:07</i><b aria-hidden="true">&#9654;</b></span><span class="hp-vid-title">Jeremy Jones drills a 3 in the season opener</span><span class="hp-vid-meta">Thu, Oct 22 &middot; film 20:49</span></button>
+          <button type="button" class="hp-vid" data-src="https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/ae2d7646-11dc-4067-b1a9-415ac04612ad/clip.mp4" data-title="Champ Grayson scores inside for Team Paul"><span class="hp-vid-thumb"><img src="https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/e23c1d81-79b0-4a7f-8f52-0c0c7360b8cd/ae2d7646-11dc-4067-b1a9-415ac04612ad/clip.0000001.jpg" alt="" loading="lazy"><i>0:07</i><b aria-hidden="true">&#9654;</b></span><span class="hp-vid-title">Champ Grayson scores inside for Team Paul</span><span class="hp-vid-meta">Thu, Oct 29 &middot; film 18:14</span></button>
+          <button type="button" class="hp-vid" data-src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/d37a60ef-034b-457d-aeff-cedec9258764/clip.mp4" data-title="Evan Pastorelle connects from deep for Team Evan"><span class="hp-vid-thumb"><img src="https://api.sportsvisio-api.com/media/2edf694a-6fe5-4d06-a2e4-ef2ffac82313/a94d724c-ca78-422e-8d6f-4be0ab7a5aae/d37a60ef-034b-457d-aeff-cedec9258764/clip.0000001.jpg" alt="" loading="lazy"><i>0:07</i><b aria-hidden="true">&#9654;</b></span><span class="hp-vid-title">Evan Pastorelle connects from deep for Team Evan</span><span class="hp-vid-meta">Thu, Nov 5 &middot; film 27:30</span></button>
           </div>
-          <div class="matchup-row" style="color:rgba(255,255,255,.75)">
-            <span class="crest" style="background:var(--team-eagles-bg)">E</span>
-            <span class="team-name">Eagles</span>
-            <span class="score">24</span>
-          </div>
-        </div>
-        <p class="muted" style="color:rgba(255,255,255,.65);font-size:var(--text-xs);margin-top:10px">Final · Smithtown Gospel Tabernacle Gym · 142 attended</p>
-      </div>
-    </div>
-  </section>
+        </section>
 
-  <div class="wrap section">
-    <div class="home-grid">
-      <div class="stack" style="gap:var(--space-6)">
-
-        <div>
-          <div class="section-head">
-            <div>
-              <span class="eyebrow">Week 15</span>
-              <h2>This Week's Schedule</h2>
-            </div>
-            <a class="card-link" href="games.html">Full schedule →</a>
-          </div>
-          <div class="scroller">
-            <div class="matchup">
-              <div class="row" style="justify-content:space-between">
-                <span class="badge badge-live">Live · 2nd Half</span>
-                <span class="muted" style="font-size:var(--text-xs)">Saturday</span>
-              </div>
-              <div class="matchup-row win"><span class="crest" style="background:var(--team-sharks-bg)">S</span><span class="team-name">Sharks</span><span class="score">14</span></div>
-              <div class="matchup-row"><span class="crest" style="background:var(--team-wolves-bg)">W</span><span class="team-name">Wolves</span><span class="score">11</span></div>
-            </div>
-            <div class="matchup">
-              <div class="matchup-meta"><span>Sat, Aug 29 · 11:30 AM</span><span>Saturday</span></div>
-              <div class="matchup-row"><span class="crest" style="background:var(--team-tigers-bg)">T</span><span class="team-name">Tigers</span><span class="muted">—</span></div>
-              <div class="matchup-row"><span class="crest" style="background:var(--team-rams-bg)">R</span><span class="team-name">Rams</span><span class="muted">—</span></div>
-            </div>
-            <div class="matchup">
-              <div class="matchup-meta"><span>Fri, Sep 4 · 8:00 PM</span><span class="badge badge-accent" style="font-size:10px">Anchor Game</span></div>
-              <div class="matchup-row"><span class="crest crest-logo"><img src="assets/img/knicks-logo.webp" alt="Knicks"></span><span class="team-name">Knicks</span><span class="muted">—</span></div>
-              <div class="matchup-row"><span class="crest" style="background:var(--team-eagles-bg)">E</span><span class="team-name">Eagles</span><span class="muted">—</span></div>
-            </div>
-          </div>
+        <div class="hp-stories">
+          <a class="card hp-story" href="game-oct29.html"><span class="hp-story-img"><img src="https://api.sportsvisio-api.com/media/f2e8078d-a8e6-4c0c-bdae-5ac521806559/84b3330d-e3c2-4933-a437-61b03a6da27f/8e724ac3-c2c2-4c5a-8c53-5fb3f19e0ecb/clip.0000001.jpg" alt="" loading="lazy"></span><span class="hp-story-body"><span class="hp-kicker">Recap &middot; Thu, Oct 29</span><b>Grayson scores 26 as Team Paul hands Team Jeremy first loss, 71-64</b><span class="hp-dek">Champ Grayson had 26 points, 15 rebounds and two blocks to lead Team Paul past Team Jeremy 71-64 on Thursday night, handing Team Jeremy its first loss of the season.</span></span></a>
+          <a class="card hp-story" href="game-oct22.html"><span class="hp-story-img"><img src="https://api.sportsvisio-api.com/media/9013f4d9-49eb-46f3-aaf8-dba8b5bd1dad/84b3330d-e3c2-4933-a437-61b03a6da27f/ed1b8ce2-d086-4137-a0e7-7a2eff84a4d0/clip.0000001.jpg" alt="" loading="lazy"></span><span class="hp-story-body"><span class="hp-kicker">Recap &middot; Thu, Oct 22</span><b>Brown scores 30, Team Jeremy beats Team Turbo 94-60 in season opener</b><span class="hp-dek">Bryson Brown had 30 points, eight rebounds and seven assists to lead Team Jeremy past Team Turbo 94-60 on Thursday night in the season opener for both teams.</span></span></a>
         </div>
 
-        <div>
-          <div class="section-head">
-            <div><span class="eyebrow">Featured</span><h2>Latest Highlights</h2></div>
-            <a class="card-link" href="games.html">All recaps →</a>
-          </div>
-          <div class="video-card">
-            <div class="video-frame">
-              <iframe src="https://www.youtube.com/embed/mQPbdoRZYY8" title="Week 14 highlight reel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <div class="caption">Top 5 Plays — Knicks vs. Eagles, Week 14</div>
-          </div>
-        </div>
-
-        <div>
-          <div class="section-head">
-            <div><span class="eyebrow">Season Stats</span><h2>League Leaders</h2></div>
-            <a class="card-link" href="leaderboards.html">Full leaderboards →</a>
-          </div>
-          <div class="table-wrap">
-            <table class="table">
-              <thead><tr><th>Rank</th><th>Player</th><th>Team</th><th class="num">G/G</th><th class="num">Assists/G</th><th class="num">Sh%</th></tr></thead>
-              <tbody>
-                <tr><td class="rank-cell">1</td><td><a href="player.html" style="font-weight:700">Marcus Bello</a></td><td>Knicks</td><td class="num">7.8</td><td class="num">3.1</td><td class="num">61%</td></tr>
-                <tr><td class="rank-cell">2</td><td>Devon Okafor</td><td>Sharks</td><td class="num">7.1</td><td class="num">2.4</td><td class="num">58%</td></tr>
-                <tr><td class="rank-cell">3</td><td>Priya Nandan</td><td>Eagles</td><td class="num">6.9</td><td class="num">4.0</td><td class="num">55%</td></tr>
-                <tr><td class="rank-cell">4</td><td>Tomas Reyes</td><td>Wolves</td><td class="num">6.4</td><td class="num">2.0</td><td class="num">57%</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
+        <a class="card hp-spot" href="player.html">
+          <span class="hp-spot-img"><img src="assets/img/headshot-placeholder.webp" alt=""></span>
+          <span class="hp-spot-body"><span class="hp-kicker">Player spotlight</span><b>Bryson Brown leads the league at 30.3 points per game</b>
+            <span class="hp-dek">The Team Jeremy guard is shooting 51.6% from the field and 38.7% from 3-point range through three games, with a 39-point night at Team Evan.</span>
+            <span class="hp-spot-stats"><span><b>30.3</b>PPG</span><span><b>7.7</b>RPG</span><span><b>4.7</b>APG</span><span><b>.516</b>FG%</span></span></span>
+        </a>
       </div>
 
-      <aside class="stack" style="gap:var(--space-6)">
-        <div class="card">
-          <div class="card-head"><h3>Standings Snapshot</h3><a class="card-link" href="standings.html">Full table →</a></div>
-          <div class="card-pad" style="padding-top:var(--space-4)">
-            <table class="table standings-table" style="min-width:0">
-              <thead><tr><th>#</th><th>Team</th><th class="num">W-T-L</th><th class="num">Pts</th></tr></thead>
-              <tbody>
-                <tr><td>1</td><td class="team-cell"><span class="crest crest-logo" style="width:26px;height:29px;font-size:11px"><img src="assets/img/knicks-logo.webp" alt="Knicks"></span>Knicks</td><td class="num tnum">10-2-1</td><td class="num tnum">32</td></tr>
-                <tr><td>2</td><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-eagles-bg)">E</span>Eagles</td><td class="num tnum">9-1-3</td><td class="num tnum">28</td></tr>
-                <tr class="playoff-line"><td>3</td><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-sharks-bg)">S</span>Sharks</td><td class="num tnum">8-2-3</td><td class="num tnum">26</td></tr>
-                <tr><td>4</td><td class="team-cell"><span class="crest" style="width:26px;height:29px;font-size:11px;background:var(--team-wolves-bg)">W</span>Wolves</td><td class="num tnum">5-3-5</td><td class="num tnum">18</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+      <aside class="hp-rail">
+        <section class="card hp-card" aria-labelledby="hp-hl-h">
+          <div class="hp-card-head"><h2 id="hp-hl-h">Top Headlines</h2></div>
+          <ul class="hp-headlines">
+            <li><span class="hp-hl-nolink">Team Jeremy vs. Team Martin: film received, result pending</span><span>Thu, Nov 19</span></li>
+            <li><span class="hp-hl-nolink">Team Evan routs Team Turbo 108-74 on the road</span><span>Thu, Nov 19</span></li>
+            <li><span class="hp-hl-nolink">Team Martin beats Team Evan 96-89 on the road</span><span>Thu, Nov 12</span></li>
+            <li><span class="hp-hl-nolink">Team Turbo edges Team Paul 57-54</span><span>Thu, Nov 12</span></li>
+            <li><a href="game.html">Brown scores 39 as Team Jeremy hands Team Evan first loss, 100-88</a><span>Thu, Nov 5 &middot; <a class="hp-hl-tag" href="game.html">Recap &rsaquo;</a></span></li>
+            <li><span class="hp-hl-nolink">Team Paul edges Team Martin 75-74 on the road</span><span>Thu, Nov 5</span></li>
+            <li><span class="hp-hl-nolink">Team Martin routs Team Turbo 93-57</span><span>Thu, Oct 29</span></li>
+            <li><a href="game-oct29.html">Grayson scores 26 as Team Paul hands Team Jeremy first loss, 71-64</a><span>Thu, Oct 29 &middot; <a class="hp-hl-tag" href="game-oct29.html">Recap &rsaquo;</a></span></li>
+            <li><span class="hp-hl-nolink">Team Evan edges Team Paul 64-61 on the road</span><span>Thu, Oct 22</span></li>
+            <li><a href="game-oct22.html">Brown scores 30, Team Jeremy beats Team Turbo 94-60 in season opener</a><span>Thu, Oct 22 &middot; <a class="hp-hl-tag" href="game-oct22.html">Recap &rsaquo;</a></span></li>
+          </ul>
+        </section>
 
-        <div class="card">
-          <div class="card-head"><h3>Recent Transactions</h3><a class="card-link" href="transactions.html">View log →</a></div>
-          <div class="card-pad" style="padding-top:var(--space-2)">
-            <div class="activity-item">
-              <span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg></span>
-              <div><div><strong>Sharks</strong> traded E. Marsh to <strong>Wolves</strong> for D. Okafor</div><time>2 hours ago</time></div>
-            </div>
-            <div class="activity-item">
-              <span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span>
-              <div><div><strong>Rams</strong> signed free agent T. Nguyen</div><time>Yesterday</time></div>
-            </div>
-          </div>
-        </div>
+        <section class="card hp-card" aria-labelledby="hp-st-h">
+          <div class="hp-card-head"><h2 id="hp-st-h">Standings</h2><span class="hp-sub">Draft Division</span></div>
+          <table class="hp-standings">
+            <thead><tr><th scope="col">Team</th><th scope="col" class="num">W</th><th scope="col" class="num">L</th><th scope="col" class="num">T</th><th scope="col" class="num" title="League points: 3 for a win, 1 for a tie">PTS</th><th scope="col" class="num" title="Average point differential per game">+/&minus;</th><th scope="col" class="num" title="Current streak">STRK</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><span class="hp-dot" style="background:var(--team-rams-bg)">TM</span>Team Martin</th><td class="num">2</td><td class="num">1</td><td class="num">0</td><td class="num hp-pts">6</td><td class="num">+14.0</td><td class="num">W1</td></tr>
+              <tr class=hp-hi><th scope="row"><span class="hp-dot" style="background:var(--team-knicks-bg)">TJ</span><a href="team.html">Team Jeremy</a></th><td class="num">2</td><td class="num">1</td><td class="num">0</td><td class="num hp-pts">6</td><td class="num">+13.0</td><td class="num">W1</td></tr>
+              <tr><th scope="row"><span class="hp-dot" style="background:var(--team-eagles-bg)">TE</span>Team Evan</th><td class="num">2</td><td class="num">2</td><td class="num">0</td><td class="num hp-pts">6</td><td class="num">+4.5</td><td class="num">W1</td></tr>
+              <tr><th scope="row"><span class="hp-dot" style="background:var(--team-wolves-bg)">TP</span>Team Paul</th><td class="num">2</td><td class="num">2</td><td class="num">0</td><td class="num hp-pts">6</td><td class="num">+0.5</td><td class="num">L1</td></tr>
+              <tr><th scope="row"><span class="hp-dot" style="background:var(--team-tigers-bg)">TT</span>Team Turbo</th><td class="num">1</td><td class="num">3</td><td class="num">0</td><td class="num hp-pts">3</td><td class="num">&minus;25.3</td><td class="num">L1</td></tr>
+            </tbody>
+          </table>
+          <p class="hp-note">Ranked by league points: 3 for a win, 1 for a tie. Level teams are split by point differential. Through Thu, Nov 19.</p>
+        </section>
 
-        <div class="hero-card" style="background:var(--navy-900);border-color:var(--teal-800)">
+        <section class="card hp-card" aria-labelledby="hp-ld-h">
+          <div class="hp-card-head"><h2 id="hp-ld-h">League Leaders</h2><span class="hp-sub">2+ games</span></div>
+            <div class="hp-ld"><h4>Points <span>per game</span></h4><ol><li><span class="hp-rank">1</span><span class="hp-dot" style="background:var(--team-knicks-bg)">TJ</span><span class="hp-ld-name"><a href="player.html">Bryson Brown</a><small>Team Jeremy &middot; 3 GP</small></span><b>30.3</b></li><li><span class="hp-rank">2</span><span class="hp-dot" style="background:var(--team-eagles-bg)">TE</span><span class="hp-ld-name">Evan Pastorelle<small>Team Evan &middot; 4 GP</small></span><b>29.3</b></li><li><span class="hp-rank">3</span><span class="hp-dot" style="background:var(--team-rams-bg)">TM</span><span class="hp-ld-name">Kreston Martin<small>Team Martin &middot; 3 GP</small></span><b>28.0</b></li></ol></div>
+            <div class="hp-ld"><h4>Rebounds <span>per game</span></h4><ol><li><span class="hp-rank">1</span><span class="hp-dot" style="background:var(--team-rams-bg)">TM</span><span class="hp-ld-name">Tristan Nickelson<small>Team Martin &middot; 3 GP</small></span><b>18.7</b></li><li><span class="hp-rank">2</span><span class="hp-dot" style="background:var(--team-wolves-bg)">TP</span><span class="hp-ld-name">Champ Grayson<small>Team Paul &middot; 3 GP</small></span><b>14.7</b></li><li><span class="hp-rank">3</span><span class="hp-dot" style="background:var(--team-eagles-bg)">TE</span><span class="hp-ld-name">Adam Miller<small>Team Evan &middot; 3 GP</small></span><b>14.7</b></li></ol></div>
+            <div class="hp-ld"><h4>Assists <span>per game</span></h4><ol><li><span class="hp-rank">1</span><span class="hp-dot" style="background:var(--team-rams-bg)">TM</span><span class="hp-ld-name">Kreston Martin<small>Team Martin &middot; 3 GP</small></span><b>8.0</b></li><li><span class="hp-rank">2</span><span class="hp-dot" style="background:var(--team-eagles-bg)">TE</span><span class="hp-ld-name">Nino Mansour<small>Team Evan &middot; 3 GP</small></span><b>7.3</b></li><li><span class="hp-rank">3</span><span class="hp-dot" style="background:var(--team-eagles-bg)">TE</span><span class="hp-ld-name">Manney Collins<small>Team Evan &middot; 4 GP</small></span><b>5.8</b></li></ol></div>
+          <p class="hp-note">From the <a href="https://uh.sportsvisio.com/league/texas-frisco/leaders" target="_blank" rel="noopener">SportsVisio leaders table</a>.</p>
+        </section>
+
+        <section class="card hp-card hp-next" aria-labelledby="hp-nx-h">
+          <div class="hp-card-head"><h2 id="hp-nx-h">Team Jeremy</h2><span class="hp-sub">2-1 &middot; 6 pts &middot; W1</span></div>
+          <p class="hp-pending"><b>Thu, Nov 19 vs. Team Martin:</b> film received by SportsVisio, result pending.</p>
+          <div class="hp-next-game"><span class="hp-crest" style="background:var(--team-knicks-bg)">TJ</span><div><span class="hp-kicker">Next game</span><b>vs. Team Paul</b><span>Thursday, Dec. 3 &middot; 7:30 PM</span></div><span class="hp-crest" style="background:var(--team-wolves-bg)">TP</span></div>
+          <div class="hp-next-links"><a href="team.html">Roster &amp; schedule</a><a href="player.html">Bryson Brown</a><a href="game.html">Latest recap</a></div>
+        </section>
+
+        <div class="hero-card hp-promo">
           <p class="eyebrow" style="color:var(--gold-400)">Registrations open</p>
-          <h3 style="color:#fff;margin-top:6px">2026–27 season sign-ups are live</h3>
-          <p style="color:rgba(255,255,255,.75);font-size:var(--text-sm);margin-top:6px">Open to any adult 18+. The season runs November through March — register early to be included in the tryout and auction draft.</p>
+          <h3 style="color:#fff;margin-top:6px">2026&ndash;27 season sign-ups are live</h3>
+          <p style="color:rgba(255,255,255,.75);font-size:var(--text-sm);margin-top:6px">Open to any adult 18+. The season runs November through March &mdash; register early to be included in the tryout and auction draft.</p>
         </div>
       </aside>
     </div>
   </div>
 
+  <dialog class="hp-dialog" data-hp-dialog aria-label="Video">
+    <div class="hp-dialog-head"><b data-hp-dialog-title></b><button type="button" class="btn btn-ghost btn-sm" data-hp-close aria-label="Close video">&#10005;</button></div>
+    <div class="hp-dialog-frame"><video controls playsinline data-hp-video></video></div>
+  </dialog>
 </main>
 
 <footer class="site-footer">
   <div class="wrap">
     <div>
       <a class="brand" href="index.html">
-        <img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest">
+        <img src="assets/img/sgtbl-logo.svg" alt="SGTBL logo">
         <span class="brand-word" style="color:#fff">SGTBL<span>Smithtown Gospel Tabernacle Basketball League</span></span>
       </a>
       <p class="muted" style="margin-top:var(--space-4);font-size:var(--text-sm);max-width:34ch">The official league site for Smithtown Gospel Tabernacle Basketball League — standings, stats, schedules, and recaps.</p>
@@ -226,6 +297,24 @@
   </div>
 </footer>
 
-<script src="assets/js/interactions.js?v=20261116i"></script>
+<script src="assets/js/interactions.js?v=20261120b"></script>
+<script>
+// Homepage: score strip starts at the latest result; Top Plays open their clip in a pop-up player
+(function () {
+  var strip = document.querySelector("[data-hp-strip]"), cur = strip && strip.querySelector("[data-current]");
+  if (cur) strip.scrollLeft = Math.max(0, cur.offsetLeft - strip.offsetLeft - strip.clientWidth / 2 + cur.offsetWidth);
+  var dlg = document.querySelector("[data-hp-dialog]"), v = dlg && dlg.querySelector("[data-hp-video]");
+  var CLIP = /^https:\/\/api\.sportsvisio-api\.com\/media\/[0-9a-f\/-]+\/clip\.mp4$/;
+  document.querySelectorAll(".hp-vid, .hp-vid-btn").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var src = b.getAttribute("data-src"); if (!dlg || !CLIP.test(src)) return;
+      dlg.querySelector("[data-hp-dialog-title]").textContent = b.getAttribute("data-title");
+      v.src = src; if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); v.play().catch(function () {});
+    });
+  });
+  function close() { if (!v) return; v.pause(); v.removeAttribute("src"); v.load(); if (dlg.close) dlg.close(); else dlg.removeAttribute("open"); }
+  if (dlg) { dlg.querySelector("[data-hp-close]").addEventListener("click", close); dlg.addEventListener("cancel", function () { v.pause(); }); dlg.addEventListener("click", function (ev) { if (ev.target === dlg) close(); }); }
+})();
+</script>
 </body>
 </html>

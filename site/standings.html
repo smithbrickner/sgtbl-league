@@ -4,18 +4,84 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Standings — SGTBL</title>
-<link rel="icon" href="assets/img/sgtbl-logo.jpg">
+<link rel="icon" type="image/svg+xml" href="assets/img/sgtbl-logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/tokens.css?v=20261116i">
-<link rel="stylesheet" href="assets/css/base.css?v=20261116i">
-<link rel="stylesheet" href="assets/css/site.css?v=20261116i">
+<link rel="stylesheet" href="assets/css/tokens.css?v=20261120b">
+<link rel="stylesheet" href="assets/css/base.css?v=20261120b">
+<link rel="stylesheet" href="assets/css/site.css?v=20261120b">
+<style>
+/* Standings: pro-league standings page layout */
+.st-wrap { padding-top: var(--space-6); padding-bottom: var(--space-8); }
+.st-card { padding: var(--space-5) var(--space-5) var(--space-6); }
+.st-head { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-4); }
+.st-head h1 { font-size: var(--text-3xl); }
+.st-head h1 span { font-weight: 600; color: var(--text-muted); }
+.st-filters { display: flex; gap: var(--space-2); align-items: center; flex-wrap: wrap; }
+.st-pill { padding: 6px 14px; border-radius: 999px; background: var(--brand); color: #fff; font-size: var(--text-sm); font-weight: 700; }
+.st-select { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border-strong); font-size: var(--text-sm); color: var(--text-primary); }
+.st-tabs { margin-bottom: var(--space-4); }
+.st-group { font-family: var(--font-body, inherit); font-size: var(--text-md); font-weight: 800; margin-bottom: var(--space-3); }
+.st-scroll { overflow-x: auto; border-top: 1px solid var(--border); }
+.st-table { width: 100%; min-width: 760px; border-collapse: separate; border-spacing: 0; font-size: var(--text-sm); }
+.st-table th, .st-table td { padding: 10px 10px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.st-table thead th { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .3px; }
+.st-table thead th[aria-sort] { cursor: pointer; user-select: none; }
+.st-table thead th[aria-sort]:hover { color: var(--text-primary); }
+.st-table thead th[aria-sort="descending"]::after { content: " \25BE"; }
+.st-table thead th[aria-sort="ascending"]::after { content: " \25B4"; }
+.st-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.st-table tbody tr:hover { background: var(--surface-alt); }
+.st-table .st-ptscol { font-weight: 800; }
+.st-table .st-sorted { background: color-mix(in srgb, var(--accent-blue) 8%, transparent); }
+.st-team-h { text-align: left; position: sticky; left: 0; background: var(--surface); z-index: 1; }
+.st-team { position: sticky; left: 0; z-index: 1; background: var(--surface); text-align: left; font-weight: 700; min-width: 190px; }
+.st-table tbody tr:hover .st-team { background: var(--surface-alt); }
+.st-team > * { vertical-align: middle; }
+.st-rank { display: inline-block; width: 18px; color: var(--text-muted); font-weight: 600; font-size: var(--text-xs); }
+.st-logo { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; margin-right: 10px; color: #fff; font-family: var(--font-display); font-size: 11px; font-weight: 800; }
+.st-name a { color: var(--accent-blue); }
+.st-abbr { display: none; }
+.st-pos { color: var(--success); font-weight: 700; }
+.st-formcell { text-align: left; }
+.st-forms { display: inline-flex; gap: 4px; vertical-align: middle; }
+.st-form { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; font-size: 12px; font-weight: 900; line-height: 1; cursor: default; }
+.st-form-w { color: #fff; background: var(--success); }
+.st-form-l { color: #fff; background: var(--danger); }
+.st-form-t { color: #3d2c00; background: #f2c230; }
+.st-neg { color: var(--danger); font-weight: 700; }
+.st-next { text-align: left; }
+tr.st-cut td, tr.st-cut th { border-bottom: 2px dashed var(--border-strong); }
+.st-table.is-resorted tr.st-cut td, .st-table.is-resorted tr.st-cut th { border-bottom: 1px solid var(--border); }
+.st-vs-code { display: block; margin-top: 2px; }
+#p-vs .st-table thead th.num { text-align: center; }
+#p-vs .st-table thead .st-logo { margin: 0 auto; }
+#p-vs td.num { text-align: center; }
+.st-self { text-align: center; color: var(--text-muted); background: var(--surface-alt); }
+.st-none { color: var(--text-muted); }
+.st-h2h-w { color: var(--success); font-weight: 800; }
+.st-h2h-l { color: var(--danger); font-weight: 700; }
+.st-note { font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-3); max-width: 90ch; }
+.st-glossary { margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--border); }
+.st-glossary h3 { font-size: var(--text-sm); text-transform: uppercase; letter-spacing: .5px; margin-bottom: var(--space-3); }
+.st-glossary dl { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px var(--space-5); margin: 0; }
+.st-glossary dl div { display: flex; gap: 8px; font-size: var(--text-xs); }
+.st-glossary dt { font-weight: 800; min-width: 62px; }
+.st-glossary dd { margin: 0; color: var(--text-muted); }
+@media (max-width: 640px) {
+  .st-card { padding: var(--space-4) var(--space-3) var(--space-5); }
+  .st-head h1 { font-size: var(--text-2xl); }
+  .st-team { min-width: 0; }
+  .st-name { display: none; }
+  .st-abbr { display: inline; }
+}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-nav">
   <div class="wrap">
-    <a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word">SGTBL<span>Smithtown Gospel Tabernacle Basketball League</span></span></a>
+    <a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.svg" alt="SGTBL logo"><span class="brand-word">SGTBL<span>Smithtown Gospel Tabernacle Basketball League</span></span></a>
     <nav aria-label="Primary"><ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="standings.html" aria-current="page">Standings</a></li>
@@ -33,56 +99,95 @@
 </header>
 
 <main id="main">
-  <div class="wrap section">
-    <div class="section-head">
-      <div><span class="eyebrow">2026 Season · Regular Season</span><h1>Standings</h1></div>
-      <div class="field" style="min-width:160px">
-        <label for="season" class="sr-only">Season</label>
-        <select id="season" class="input"><option>2026 Season</option><option>2025 Season</option><option>2024 Season</option></select>
+  <div class="wrap st-wrap">
+    <section class="card st-card">
+      <div class="st-head">
+        <h1>SGTBL Standings <span>Fall 2026</span></h1>
+        <div class="st-filters">
+          <span class="st-pill" aria-current="true">Draft Division</span>
+          <span class="st-select">Fall 2026 &middot; Regular Season</span>
+        </div>
       </div>
-    </div>
-
-    <div class="table-wrap" style="margin-bottom:var(--space-6)">
-      <table class="table standings-table" data-sortable>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th aria-sort="none">Team <span class="sort-caret">▾</span></th>
-            <th class="num" aria-sort="none">GP <span class="sort-caret">▾</span></th>
-            <th class="num" aria-sort="none">W <span class="sort-caret">▾</span></th>
-            <th class="num" aria-sort="none">T <span class="sort-caret">▾</span></th>
-            <th class="num" aria-sort="none">L <span class="sort-caret">▾</span></th>
-            <th class="num" aria-sort="descending">Pts <span class="sort-caret">▾</span></th>
-            <th class="num">GF</th>
-            <th class="num">GA</th>
-            <th class="num">Diff</th>
-            <th>Streak</th>
-            <th>Last 5</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td class="team-cell"><span class="crest crest-logo"><img src="assets/img/knicks-logo.webp" alt="Knicks"></span><a href="team.html">Knicks</a></td><td class="num tnum">13</td><td class="num tnum" data-sort-value="10">10</td><td class="num tnum" data-sort-value="2">2</td><td class="num tnum" data-sort-value="1">1</td><td class="num tnum" data-sort-value="32">32</td><td class="num tnum">338</td><td class="num tnum">286</td><td class="num tnum">+52</td><td class="streak-w">W3</td><td class="muted">W-W-W-T-L</td></tr>
-          <tr><td>2</td><td class="team-cell"><span class="crest" style="background:var(--team-eagles-bg)">E</span><a href="team.html">Eagles</a></td><td class="num tnum">13</td><td class="num tnum" data-sort-value="9">9</td><td class="num tnum" data-sort-value="1">1</td><td class="num tnum" data-sort-value="3">3</td><td class="num tnum" data-sort-value="28">28</td><td class="num tnum">310</td><td class="num tnum">272</td><td class="num tnum">+38</td><td class="streak-l">L1</td><td class="muted">W-W-W-L-L</td></tr>
-          <tr class="playoff-line"><td>3</td><td class="team-cell"><span class="crest" style="background:var(--team-sharks-bg)">S</span><a href="team.html">Sharks</a></td><td class="num tnum">13</td><td class="num tnum" data-sort-value="8">8</td><td class="num tnum" data-sort-value="2">2</td><td class="num tnum" data-sort-value="3">3</td><td class="num tnum" data-sort-value="26">26</td><td class="num tnum">295</td><td class="num tnum">274</td><td class="num tnum">+21</td><td class="streak-w">W2</td><td class="muted">L-W-W-T-L</td></tr>
-          <tr><td>4</td><td class="team-cell"><span class="crest" style="background:var(--team-wolves-bg)">W</span><a href="team.html">Wolves</a></td><td class="num tnum">13</td><td class="num tnum" data-sort-value="5">5</td><td class="num tnum" data-sort-value="3">3</td><td class="num tnum" data-sort-value="5">5</td><td class="num tnum" data-sort-value="18">18</td><td class="num tnum">270</td><td class="num tnum">274</td><td class="num tnum">-4</td><td class="streak-l">L2</td><td class="muted">W-T-L-W-L</td></tr>
-          <tr><td>5</td><td class="team-cell"><span class="crest" style="background:var(--team-tigers-bg)">T</span><a href="team.html">Tigers</a></td><td class="num tnum">13</td><td class="num tnum" data-sort-value="3">3</td><td class="num tnum" data-sort-value="2">2</td><td class="num tnum" data-sort-value="8">8</td><td class="num tnum" data-sort-value="11">11</td><td class="num tnum">240</td><td class="num tnum">271</td><td class="num tnum">-31</td><td class="streak-w">W1</td><td class="muted">L-L-T-W-L</td></tr>
-          <tr><td>6</td><td class="team-cell"><span class="crest" style="background:var(--team-rams-bg)">R</span><a href="team.html">Rams</a></td><td class="num tnum">13</td><td class="num tnum" data-sort-value="1">1</td><td class="num tnum" data-sort-value="1">1</td><td class="num tnum" data-sort-value="11">11</td><td class="num tnum" data-sort-value="4">4</td><td class="num tnum">210</td><td class="num tnum">286</td><td class="num tnum">-76</td><td class="streak-l">L6</td><td class="muted">L-L-L-L-L</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="muted" style="font-size:var(--text-xs)">Dashed line marks the playoff cutoff — the top 3 teams advance. Regular season is 15 games per team; the top half of the league makes the playoffs, and the playoffs (not regular-season record) decide the league champion. 3 points for a win, 1 for a tie, 0 for a loss. Tiebreakers, in order: point differential, points, head-to-head record among tied teams, then a coin flip.</p>
+      <div class="tabbar st-tabs" data-tabbar role="tablist">
+        <button role="tab" aria-selected="true" aria-controls="p-st" id="t-st">Standings</button>
+        <button role="tab" aria-selected="false" aria-controls="p-exp" id="t-exp">Expanded</button>
+        <button role="tab" aria-selected="false" aria-controls="p-vs" id="t-vs">Vs. Division</button>
+      </div>
+      <div id="p-st" class="tabpanel" role="tabpanel" aria-labelledby="t-st">
+        <h2 class="st-group">Draft Division</h2>
+        <div class="st-scroll"><table class="st-table" data-sortable aria-label="Draft Division standings">
+          <thead><tr><th scope="col" class="st-team-h" aria-sort="none">Team</th><th scope="col" class="num" title="Wins" aria-sort="none">W</th><th scope="col" class="num" title="Losses" aria-sort="none">L</th><th scope="col" class="num" title="Ties" aria-sort="none">T</th><th scope="col" class="num" title="League points: 3 for a win, 1 for a tie" aria-sort="none">PTS</th><th scope="col" class="num" title="League points behind first place" aria-sort="none">BACK</th><th scope="col" class="num" title="Home record" aria-sort="none">HOME</th><th scope="col" class="num" title="Away record" aria-sort="none">AWAY</th><th scope="col" class="num" title="Points per game" aria-sort="none">PPG</th><th scope="col" class="num" title="Opponent points per game" aria-sort="none">OPP PPG</th><th scope="col" class="num" title="Average point differential" aria-sort="none">DIFF</th><th scope="col" class="num" title="Current streak" aria-sort="none">STRK</th><th scope="col" class="st-formcell" title="Last five results, oldest to newest: check = win, dash = tie, X = loss" aria-sort="none">LAST 5</th></tr></thead>
+          <tbody>
+            <tr><th scope="row" class="st-team" data-sort-value="Team Martin"><span class="st-rank">1</span><span class="st-logo" style="background:var(--team-rams-bg)">TM</span><span class="st-name">Team Martin</span><span class="st-abbr">TM</span></th><td class="num">2</td><td class="num">1</td><td class="num">0</td><td class="num st-ptscol">6</td><td class="num" data-sort-value="0">&ndash;</td><td class="num" data-sort-value="0.500">1-1</td><td class="num" data-sort-value="1.000">1-0</td><td class="num">87.7</td><td class="num">73.7</td><td class="num st-pos" data-sort-value="14.000">+14.0</td><td class="num" data-sort-value="1">W1</td><td class="st-formcell" data-sort-value="0.667"><span class="st-forms" role="img" aria-label="Last 3, oldest first: win, loss, win"><span class="st-form st-form-w" title="W 93-57 vs TT, Thu, Oct 29" aria-hidden="true">&#10003;</span><span class="st-form st-form-l" title="L 74-75 vs TP, Thu, Nov 5" aria-hidden="true">&#10005;</span><span class="st-form st-form-w" title="W 96-89 @ TE, Thu, Nov 12" aria-hidden="true">&#10003;</span></span></td></tr>
+            <tr><th scope="row" class="st-team" data-sort-value="Team Jeremy"><span class="st-rank">2</span><span class="st-logo" style="background:var(--team-knicks-bg)">TJ</span><span class="st-name"><a href="team.html">Team Jeremy</a></span><span class="st-abbr">TJ</span></th><td class="num">2</td><td class="num">1</td><td class="num">0</td><td class="num st-ptscol">6</td><td class="num" data-sort-value="0">&ndash;</td><td class="num" data-sort-value="1.000">1-0</td><td class="num" data-sort-value="0.500">1-1</td><td class="num">86.0</td><td class="num">73.0</td><td class="num st-pos" data-sort-value="13.000">+13.0</td><td class="num" data-sort-value="1">W1</td><td class="st-formcell" data-sort-value="0.667"><span class="st-forms" role="img" aria-label="Last 3, oldest first: win, loss, win"><span class="st-form st-form-w" title="W 94-60 vs TT, Thu, Oct 22" aria-hidden="true">&#10003;</span><span class="st-form st-form-l" title="L 64-71 @ TP, Thu, Oct 29" aria-hidden="true">&#10005;</span><span class="st-form st-form-w" title="W 100-88 @ TE, Thu, Nov 5" aria-hidden="true">&#10003;</span></span></td></tr>
+            <tr class="st-cut"><th scope="row" class="st-team" data-sort-value="Team Evan"><span class="st-rank">3</span><span class="st-logo" style="background:var(--team-eagles-bg)">TE</span><span class="st-name">Team Evan</span><span class="st-abbr">TE</span></th><td class="num">2</td><td class="num">2</td><td class="num">0</td><td class="num st-ptscol">6</td><td class="num" data-sort-value="0">&ndash;</td><td class="num" data-sort-value="0.000">0-2</td><td class="num" data-sort-value="1.000">2-0</td><td class="num">87.2</td><td class="num">82.8</td><td class="num st-pos" data-sort-value="4.500">+4.5</td><td class="num" data-sort-value="1">W1</td><td class="st-formcell" data-sort-value="0.500"><span class="st-forms" role="img" aria-label="Last 4, oldest first: win, loss, loss, win"><span class="st-form st-form-w" title="W 64-61 @ TP, Thu, Oct 22" aria-hidden="true">&#10003;</span><span class="st-form st-form-l" title="L 88-100 vs TJ, Thu, Nov 5" aria-hidden="true">&#10005;</span><span class="st-form st-form-l" title="L 89-96 vs TM, Thu, Nov 12" aria-hidden="true">&#10005;</span><span class="st-form st-form-w" title="W 108-74 @ TT, Thu, Nov 19" aria-hidden="true">&#10003;</span></span></td></tr>
+            <tr><th scope="row" class="st-team" data-sort-value="Team Paul"><span class="st-rank">4</span><span class="st-logo" style="background:var(--team-wolves-bg)">TP</span><span class="st-name">Team Paul</span><span class="st-abbr">TP</span></th><td class="num">2</td><td class="num">2</td><td class="num">0</td><td class="num st-ptscol">6</td><td class="num" data-sort-value="0">&ndash;</td><td class="num" data-sort-value="0.500">1-1</td><td class="num" data-sort-value="0.500">1-1</td><td class="num">65.2</td><td class="num">64.8</td><td class="num st-pos" data-sort-value="0.500">+0.5</td><td class="num" data-sort-value="-1">L1</td><td class="st-formcell" data-sort-value="0.500"><span class="st-forms" role="img" aria-label="Last 4, oldest first: loss, win, win, loss"><span class="st-form st-form-l" title="L 61-64 vs TE, Thu, Oct 22" aria-hidden="true">&#10005;</span><span class="st-form st-form-w" title="W 71-64 vs TJ, Thu, Oct 29" aria-hidden="true">&#10003;</span><span class="st-form st-form-w" title="W 75-74 @ TM, Thu, Nov 5" aria-hidden="true">&#10003;</span><span class="st-form st-form-l" title="L 54-57 @ TT, Thu, Nov 12" aria-hidden="true">&#10005;</span></span></td></tr>
+            <tr><th scope="row" class="st-team" data-sort-value="Team Turbo"><span class="st-rank">5</span><span class="st-logo" style="background:var(--team-tigers-bg)">TT</span><span class="st-name">Team Turbo</span><span class="st-abbr">TT</span></th><td class="num">1</td><td class="num">3</td><td class="num">0</td><td class="num st-ptscol">3</td><td class="num" data-sort-value="3">3</td><td class="num" data-sort-value="0.500">1-1</td><td class="num" data-sort-value="0.000">0-2</td><td class="num">62.0</td><td class="num">87.2</td><td class="num st-neg" data-sort-value="-25.250">&minus;25.3</td><td class="num" data-sort-value="-1">L1</td><td class="st-formcell" data-sort-value="0.250"><span class="st-forms" role="img" aria-label="Last 4, oldest first: loss, loss, win, loss"><span class="st-form st-form-l" title="L 60-94 @ TJ, Thu, Oct 22" aria-hidden="true">&#10005;</span><span class="st-form st-form-l" title="L 57-93 @ TM, Thu, Oct 29" aria-hidden="true">&#10005;</span><span class="st-form st-form-w" title="W 57-54 vs TP, Thu, Nov 12" aria-hidden="true">&#10003;</span><span class="st-form st-form-l" title="L 74-108 vs TE, Thu, Nov 19" aria-hidden="true">&#10005;</span></span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div id="p-exp" class="tabpanel" role="tabpanel" aria-labelledby="t-exp" hidden>
+        <h2 class="st-group">Draft Division &middot; Expanded</h2>
+        <div class="st-scroll"><table class="st-table" data-sortable aria-label="Expanded standings">
+          <thead><tr><th scope="col" class="st-team-h" aria-sort="none">Team</th><th scope="col" class="num" title="Games played" aria-sort="none">GP</th><th scope="col" class="num" title="Total points scored" aria-sort="none">PF</th><th scope="col" class="num" title="Total points allowed" aria-sort="none">PA</th><th scope="col" class="num" title="Total point differential" aria-sort="none">DIFF</th><th scope="col" class="num" title="Record in games decided by 5 points or fewer" aria-sort="none">CLOSE</th><th scope="col" class="num" title="Record in games decided by 15 points or more" aria-sort="none">15+</th><th scope="col" class="num" title="Record against teams with more wins than losses" aria-sort="none">VS WIN%</th><th scope="col" class="num" title="Regular-season games remaining" aria-sort="none">LEFT</th><th scope="col" class="st-next" title="Next game" aria-sort="none">NEXT</th></tr></thead>
+          <tbody>
+            <tr><th scope="row" class="st-team" data-sort-value="Team Martin"><span class="st-rank">1</span><span class="st-logo" style="background:var(--team-rams-bg)">TM</span><span class="st-name">Team Martin</span><span class="st-abbr">TM</span></th><td class="num">3</td><td class="num">263</td><td class="num">221</td><td class="num st-pos" data-sort-value="42">+42</td><td class="num" data-sort-value="0.000">0-1</td><td class="num" data-sort-value="1.000">1-0</td><td class="num" data-sort-value="-1.000">0-0</td><td class="num">4</td><td class="st-next" data-sort-value="2026-12-03">Thu, Dec 3 vs TT</td></tr>
+            <tr><th scope="row" class="st-team" data-sort-value="Team Jeremy"><span class="st-rank">2</span><span class="st-logo" style="background:var(--team-knicks-bg)">TJ</span><span class="st-name"><a href="team.html">Team Jeremy</a></span><span class="st-abbr">TJ</span></th><td class="num">3</td><td class="num">258</td><td class="num">219</td><td class="num st-pos" data-sort-value="39">+39</td><td class="num" data-sort-value="-1.000">0-0</td><td class="num" data-sort-value="1.000">1-0</td><td class="num" data-sort-value="-1.000">0-0</td><td class="num">4</td><td class="st-next" data-sort-value="2026-12-03">Thu, Dec 3 vs TP</td></tr>
+            <tr class="st-cut"><th scope="row" class="st-team" data-sort-value="Team Evan"><span class="st-rank">3</span><span class="st-logo" style="background:var(--team-eagles-bg)">TE</span><span class="st-name">Team Evan</span><span class="st-abbr">TE</span></th><td class="num">4</td><td class="num">349</td><td class="num">331</td><td class="num st-pos" data-sort-value="18">+18</td><td class="num" data-sort-value="1.000">1-0</td><td class="num" data-sort-value="1.000">1-0</td><td class="num" data-sort-value="0.000">0-2</td><td class="num">3</td><td class="st-next" data-sort-value="2026-12-09">Wed, Dec 9 vs TP</td></tr>
+            <tr><th scope="row" class="st-team" data-sort-value="Team Paul"><span class="st-rank">4</span><span class="st-logo" style="background:var(--team-wolves-bg)">TP</span><span class="st-name">Team Paul</span><span class="st-abbr">TP</span></th><td class="num">4</td><td class="num">261</td><td class="num">259</td><td class="num st-pos" data-sort-value="2">+2</td><td class="num" data-sort-value="0.333">1-2</td><td class="num" data-sort-value="-1.000">0-0</td><td class="num" data-sort-value="1.000">2-0</td><td class="num">4</td><td class="st-next" data-sort-value="2026-12-03">Thu, Dec 3 @ TJ</td></tr>
+            <tr><th scope="row" class="st-team" data-sort-value="Team Turbo"><span class="st-rank">5</span><span class="st-logo" style="background:var(--team-tigers-bg)">TT</span><span class="st-name">Team Turbo</span><span class="st-abbr">TT</span></th><td class="num">4</td><td class="num">248</td><td class="num">349</td><td class="num st-neg" data-sort-value="-101">&minus;101</td><td class="num" data-sort-value="1.000">1-0</td><td class="num" data-sort-value="0.000">0-3</td><td class="num" data-sort-value="0.000">0-2</td><td class="num">3</td><td class="st-next" data-sort-value="2026-12-03">Thu, Dec 3 @ TM</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div id="p-vs" class="tabpanel" role="tabpanel" aria-labelledby="t-vs" hidden>
+        <h2 class="st-group">Draft Division &middot; Head-to-head</h2>
+        <div class="st-scroll"><table class="st-table" aria-label="Head-to-head records">
+          <thead><tr><th scope="col" class="st-team-h">Team</th><th scope="col" class="num" title="Team Martin"><span class="st-logo" style="background:var(--team-rams-bg)">TM</span><span class="st-vs-code">TM</span></th><th scope="col" class="num" title="Team Jeremy"><span class="st-logo" style="background:var(--team-knicks-bg)">TJ</span><span class="st-vs-code">TJ</span></th><th scope="col" class="num" title="Team Evan"><span class="st-logo" style="background:var(--team-eagles-bg)">TE</span><span class="st-vs-code">TE</span></th><th scope="col" class="num" title="Team Paul"><span class="st-logo" style="background:var(--team-wolves-bg)">TP</span><span class="st-vs-code">TP</span></th><th scope="col" class="num" title="Team Turbo"><span class="st-logo" style="background:var(--team-tigers-bg)">TT</span><span class="st-vs-code">TT</span></th><th scope="col" class="num" title="Overall record">W-L</th><th scope="col" class="num" title="League points">PTS</th></tr></thead>
+          <tbody>
+            <tr><th scope="row" class="st-team" data-sort-value="Team Martin"><span class="st-rank">1</span><span class="st-logo" style="background:var(--team-rams-bg)">TM</span><span class="st-name">Team Martin</span><span class="st-abbr">TM</span></th><td class="st-self" aria-label="same team">&mdash;</td><td class="num st-none">&middot;</td><td class="num st-h2h-w">1-0</td><td class="num st-h2h-l">0-1</td><td class="num st-h2h-w">1-0</td><td class="num">2-1</td><td class="num">6</td></tr>
+            <tr><th scope="row" class="st-team" data-sort-value="Team Jeremy"><span class="st-rank">2</span><span class="st-logo" style="background:var(--team-knicks-bg)">TJ</span><span class="st-name"><a href="team.html">Team Jeremy</a></span><span class="st-abbr">TJ</span></th><td class="num st-none">&middot;</td><td class="st-self" aria-label="same team">&mdash;</td><td class="num st-h2h-w">1-0</td><td class="num st-h2h-l">0-1</td><td class="num st-h2h-w">1-0</td><td class="num">2-1</td><td class="num">6</td></tr>
+            <tr><th scope="row" class="st-team" data-sort-value="Team Evan"><span class="st-rank">3</span><span class="st-logo" style="background:var(--team-eagles-bg)">TE</span><span class="st-name">Team Evan</span><span class="st-abbr">TE</span></th><td class="num st-h2h-l">0-1</td><td class="num st-h2h-l">0-1</td><td class="st-self" aria-label="same team">&mdash;</td><td class="num st-h2h-w">1-0</td><td class="num st-h2h-w">1-0</td><td class="num">2-2</td><td class="num">6</td></tr>
+            <tr><th scope="row" class="st-team" data-sort-value="Team Paul"><span class="st-rank">4</span><span class="st-logo" style="background:var(--team-wolves-bg)">TP</span><span class="st-name">Team Paul</span><span class="st-abbr">TP</span></th><td class="num st-h2h-w">1-0</td><td class="num st-h2h-w">1-0</td><td class="num st-h2h-l">0-1</td><td class="st-self" aria-label="same team">&mdash;</td><td class="num st-h2h-l">0-1</td><td class="num">2-2</td><td class="num">6</td></tr>
+            <tr><th scope="row" class="st-team" data-sort-value="Team Turbo"><span class="st-rank">5</span><span class="st-logo" style="background:var(--team-tigers-bg)">TT</span><span class="st-name">Team Turbo</span><span class="st-abbr">TT</span></th><td class="num st-h2h-l">0-1</td><td class="num st-h2h-l">0-1</td><td class="num st-h2h-l">0-1</td><td class="num st-h2h-w">1-0</td><td class="st-self" aria-label="same team">&mdash;</td><td class="num">1-3</td><td class="num">3</td></tr>
+          </tbody>
+        </table></div>
+        <p class="st-note">Each cell is the row team's record against the column team; &middot; = haven't played yet.</p>
+      </div>
+      <p class="st-note">Through Thu, Nov 19. Teams are ranked by league points &mdash; <b>3 for a win, 1 for a tie, 0 for a loss</b>. Teams level on points are separated by point differential, then total points scored, then head-to-head, then a coin flip. The dashed line marks the playoff cutoff &mdash; the top 3 teams make the playoffs. Team Jeremy vs. Team Martin (Thu, Nov 19) has film in but no score yet, so it isn't counted. Click a column heading to sort.</p>
+      <div class="st-glossary">
+        <h3>Glossary</h3>
+        <dl><div><dt>W</dt><dd>Wins</dd></div><div><dt>L</dt><dd>Losses</dd></div><div><dt>T</dt><dd>Ties</dd></div><div><dt>PTS</dt><dd>League points: 3 for a win, 1 for a tie, 0 for a loss</dd></div><div><dt>BACK</dt><dd>League points behind first place</dd></div><div><dt>HOME</dt><dd>Home record</dd></div><div><dt>AWAY</dt><dd>Away record</dd></div><div><dt>PPG</dt><dd>Points per game</dd></div><div><dt>OPP PPG</dt><dd>Opponent points per game</dd></div><div><dt>DIFF</dt><dd>Average point differential (Expanded: total)</dd></div><div><dt>STRK</dt><dd>Current streak</dd></div><div><dt>LAST 5</dt><dd>Last five results, oldest to newest: green check = win, yellow dash = tie, red X = loss</dd></div><div><dt>GP</dt><dd>Games played</dd></div><div><dt>PF / PA</dt><dd>Total points scored / allowed</dd></div><div><dt>CLOSE</dt><dd>Record in games decided by 5 or fewer</dd></div><div><dt>15+</dt><dd>Record in games decided by 15 or more</dd></div><div><dt>VS WIN%</dt><dd>Record against teams with more wins than losses</dd></div><div><dt>LEFT</dt><dd>Regular-season games left</dd></div></dl>
+      </div>
+      <p class="st-note">Results from <a href="https://uh.sportsvisio.com/league/texas-frisco/schedule" target="_blank" rel="noopener">Ultimate Hoops / SportsVisio</a> (Texas - Frisco, Draft Division).</p>
+    </section>
   </div>
 </main>
 
 <footer class="site-footer">
   <div class="wrap">
-    <div><a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.jpg" alt="SGTBL crest"><span class="brand-word" style="color:#fff">SGTBL<span>Smithtown Gospel Tabernacle Basketball League</span></span></a></div>
+    <div><a class="brand" href="index.html"><img src="assets/img/sgtbl-logo.svg" alt="SGTBL logo"><span class="brand-word" style="color:#fff">SGTBL<span>Smithtown Gospel Tabernacle Basketball League</span></span></a></div>
     <div><h4>League</h4><ul><li><a href="standings.html">Standings</a></li><li><a href="teams.html">Teams</a></li><li><a href="games.html">Schedule</a></li></ul></div>
     <div><h4>Stats</h4><ul><li><a href="players.html">Players</a></li><li><a href="leaderboards.html">Leaderboards</a></li><li><a href="transactions.html">Transactions</a></li></ul></div>
     <div><h4>League Office</h4><ul><li><a href="admin/login.html">Captain / Admin Login</a></li></ul></div>
   </div>
   <div class="footer-bottom"><span>© 2026 Smithtown Gospel Tabernacle Basketball League</span></div>
 </footer>
-<script src="assets/js/interactions.js?v=20261116i"></script>
+<script src="assets/js/interactions.js?v=20261120b"></script>
+<script>
+// Standings: highlight the sorted column; hide the playoff line once rows are re-sorted
+(function () {
+  document.querySelectorAll(".st-table[data-sortable]").forEach(function (table) {
+    function mark(idx) {
+      table.querySelectorAll(".st-sorted").forEach(function (c) { c.classList.remove("st-sorted"); });
+      if (idx < 1) return;
+      table.querySelectorAll("tr").forEach(function (tr) { var c = tr.children[idx]; if (c) c.classList.add("st-sorted"); });
+    }
+    var heads = table.querySelectorAll("thead th");
+    heads.forEach(function (h, i) { h.addEventListener("click", function () { if (!h.hasAttribute("aria-sort")) return; table.classList.add("is-resorted"); setTimeout(function () { mark(i); }, 0); }); });
+    var pctIdx = Array.prototype.findIndex.call(heads, function (h) { return h.textContent === "PTS"; });
+    if (pctIdx > 0) mark(pctIdx);
+  });
+})();
+</script>
 </body>
 </html>

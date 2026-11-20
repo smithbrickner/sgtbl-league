@@ -232,7 +232,7 @@
     fPlayer.addEventListener("change", render);
     fullTitle(); render();
   }
-// --- Shot chart (placeholder locations): every FGA from the box score on a full court; Team Jeremy shoots at the left basket ---
+// --- Shot chart (placeholder locations): every FGA from the box score on a full court; Team Jeremy shoots at the right basket, the opponent at the left ---
   var sc = document.querySelector("[data-sc]"), shotsEl = document.getElementById("shots-data");
   if (sc && shotsEl) {
     var shots = JSON.parse(shotsEl.textContent), court = sc.querySelector("[data-sc-court]"), sRead = sc.querySelector("[data-sc-readout]");
@@ -249,7 +249,7 @@
         dx = dist * Math.cos(th); dy = dist * Math.sin(th);
         if (Math.abs(dy) < 24.2 && dx > -3.5 && (s.k === 3 ? isThree(dx, dy) && dx < 30 : !isThree(dx, dy))) break;
       }
-      var left = s.tm === A; s.cx = left ? 52.5 + dx * 10 : 887.5 - dx * 10; s.cy = 250 + dy * 10;
+      var left = s.tm !== A; s.cx = left ? 52.5 + dx * 10 : 887.5 - dx * 10; s.cy = 250 + dy * 10;
     });
     var pl = {}; shots.forEach(function (s) { pl[s.tm + "|" + s.p] = true; });
     Object.keys(pl).sort().forEach(function (k) { var o = document.createElement("option"); o.value = k; o.textContent = k.split("|")[1] + " (" + k.split("|")[0] + ")"; sPl.appendChild(o); });
@@ -265,7 +265,7 @@
     function drawCourt() {
       var res = sRes.value, who = sPl.value, s = '<svg viewBox="0 0 940 500" role="img" aria-label="Shot chart with estimated locations">';
       s += '<rect class="court" x="1" y="1" width="938" height="498" rx="6"/><line class="ln" x1="470" x2="470" y1="0" y2="500"/><circle class="ln" cx="470" cy="250" r="60"/>' + half(false) + half(true);
-      s += '<text x="20" y="490" fill="var(--text-muted)" font-size="18" font-weight="700">' + A + ' shoots \u2190</text><text x="920" y="490" text-anchor="end" fill="var(--text-muted)" font-size="18" font-weight="700">\u2192 ' + B + ' shoots</text>';
+      s += '<text x="20" y="490" fill="var(--text-muted)" font-size="18" font-weight="700">' + B + ' shoots \u2190</text><text x="920" y="490" text-anchor="end" fill="var(--text-muted)" font-size="18" font-weight="700">\u2192 ' + A + ' shoots</text>';
       var n = { a: [0, 0], b: [0, 0] };
       shots.forEach(function (sh, i) {
         var on = (!sTeam || sh.tm === sTeam) && (res === "" || String(sh.m) === res) && (!who || who === sh.tm + "|" + sh.p);
