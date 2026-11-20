@@ -10,3 +10,5 @@ Builds `site/index.html` (sports-network league homepage layout) from real Ultim
 
 The page's head, nav and footer are kept from the current `site/index.html`. To refresh after new results:
 update `schedule.json` / `leaders.json`, then run `python tools/home/build_home.py` from the repo root.
+
+League Leaders show a player's headshot when one is listed in `HEADSHOTS` in `build_home.py` (otherwise the team dot).

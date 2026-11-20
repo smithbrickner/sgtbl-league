@@ -135,12 +135,18 @@ for t in table:
     st_rows.append(f'              <tr{" class=hp-hi" if t == "Team Jeremy" else ""}><th scope="row">{crest(t, "hp-dot")}{name}</th><td class="num">{r["w"]}</td><td class="num">{r["l"]}</td><td class="num">{r["t"]}</td><td class="num hp-pts">{r["pts"]}</td><td class="num">{"+" if dv > 0 else "&minus;" if dv < 0 else ""}{abs(dv) + 1e-9:.1f}</td><td class="num">{streak(r)}</td></tr>')
 
 # leaders
+# players with a headshot on file show it in the leader lists; everyone else keeps their team dot
+HEADSHOTS = {'Bryson Brown': 'assets/img/headshot-placeholder.webp'}
+def leader_pic(name, code):
+    if name in HEADSHOTS:
+        return f'<span class="hp-ld-pic"><span class="avatar avatar-photo hp-ld-face" style="background:{TEAMS[BY_CODE[code]][1]}"><img src="{e(HEADSHOTS[name])}" alt=""></span></span>'
+    return f'<span class="hp-ld-pic">{crest(BY_CODE[code], "hp-dot")}</span>'
 ld_blocks = []
 for key, label in (('PPG', 'Points'), ('RPG', 'Rebounds'), ('APG', 'Assists')):
     items = []
     for i, (name, code, gp, val) in enumerate(leaders[key]):
         nm = f'<a href="player.html">{e(name)}</a>' if name == 'Bryson Brown' else e(name)
-        items.append(f'<li><span class="hp-rank">{i + 1}</span>{crest(BY_CODE[code], "hp-dot")}<span class="hp-ld-name">{nm}<small>{e(BY_CODE[code])} &middot; {gp} GP</small></span><b>{val:.1f}</b></li>')
+        items.append(f'<li><span class="hp-rank">{i + 1}</span>{leader_pic(name, code)}<span class="hp-ld-name">{nm}<small>{e(BY_CODE[code])} &middot; {gp} GP</small></span><b>{val:.1f}</b></li>')
     ld_blocks.append(f'            <div class="hp-ld"><h4>{label} <span>per game</span></h4><ol>{"".join(items)}</ol></div>')
 
 # Team Jeremy: next game
@@ -334,6 +340,8 @@ a.hp-sc:hover { background: var(--surface-alt); }
 .hp-ld li { display: flex; align-items: center; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--border); font-size: var(--text-sm); }
 .hp-ld li:last-child { border-bottom: 0; }
 .hp-rank { width: 14px; color: var(--text-muted); font-weight: 700; font-size: var(--text-xs); }
+.hp-ld-pic { flex: none; width: 32px; display: flex; justify-content: center; }
+.hp-ld-face { width: 32px; height: 32px; }
 .hp-ld-name { flex: 1; display: flex; flex-direction: column; font-weight: 600; line-height: 1.2; }
 .hp-ld-name a { color: var(--accent-blue); }
 .hp-ld-name small { font-size: 11px; color: var(--text-muted); font-weight: 500; }

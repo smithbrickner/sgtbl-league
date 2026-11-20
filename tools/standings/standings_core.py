@@ -27,10 +27,11 @@ def load_schedule():
 def blank():
     return {'w': 0, 'l': 0, 't': 0, 'pts': 0, 'pf': 0, 'pa': 0, 'home': [0, 0, 0], 'away': [0, 0, 0], 'res': [], 'h2h': {}, 'games': []}
 
-def compute(games=None):
-    """Returns (records by team, ranked team list, any_ties, coin_flip_groups)."""
+def compute(games=None, teams=None):
+    """Returns (records by team, ranked team list, any_ties, coin_flip_groups). teams defaults to every team in the games."""
     games = games if games is not None else load_schedule()
-    S = {t: blank() for t in TEAMS}
+    if teams is None: teams = sorted({x for g in games for x in (g['home'], g['away'])} | (set(TEAMS) if games is None else set()))
+    S = {t: blank() for t in teams}
     for g in games:
         if g.get('hs') is None: continue
         for team, opp, us, them, home in ((g['home'], g['away'], g['hs'], g['as'], True), (g['away'], g['home'], g['as'], g['hs'], False)):
@@ -43,7 +44,7 @@ def compute(games=None):
     any_ties = any(r['t'] for r in S.values())
 
     def key(t): r = S[t]; return (r['pts'], r['pf'] - r['pa'], r['pf'])
-    order = sorted(TEAMS, key=lambda t: (tuple(-x for x in key(t)), t))
+    order = sorted(S, key=lambda t: (tuple(-x for x in key(t)), t))
     # head-to-head among teams still level on points, differential and points scored
     ranked, i, flips = [], 0, []
     while i < len(order):
