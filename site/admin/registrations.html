@@ -39,7 +39,7 @@
       <button class="btn btn-icon btn-ghost admin-topbar-toggle" aria-label="Toggle navigation"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
       <h1>Registrations</h1>
       <div class="spacer"></div>
-      <button class="btn btn-primary btn-sm"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Add Player</button>
+      <span class="badge badge-warning">Prototype &middot; sample data</span>
       <div class="notif-wrap">
         <button class="btn btn-icon btn-ghost" id="notifBtn" aria-haspopup="true" aria-expanded="false" aria-label="Notifications">
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
@@ -71,40 +71,202 @@
     </header>
 
     <div class="admin-content">
-      <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
-        <div class="kpi-card"><div class="value">7</div><div class="label">Pending Review</div></div>
-        <div class="kpi-card"><div class="value">4</div><div class="label">Requested a Team</div></div>
-        <div class="kpi-card"><div class="value">3</div><div class="label">Free Agent Pool</div></div>
+      <div class="rg-proto"><strong>Prototype:</strong> sample registrations saved in this browser only, standing in for the league database. Registrations submitted on the public form appear here too. <button type="button" class="link-btn" data-rg-reset>Reset sample data</button></div>
+
+      <section class="card card-pad rg-phase" aria-labelledby="phaseH">
+        <div>
+          <h2 id="phaseH">League phase</h2>
+          <p class="muted" data-rg-phase-note></p>
+        </div>
+        <div class="rg-seg" role="radiogroup" aria-labelledby="phaseH">
+          <button type="button" role="radio" data-phase="preseason">Preseason<span>Draft pool</span></button>
+          <button type="button" role="radio" data-phase="inseason">Draft complete<span>Free agency</span></button>
+        </div>
+      </section>
+
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="label">Awaiting review</div><div class="value" data-kpi="review">0</div><div class="delta muted" data-kpi-note="review"></div></div>
+        <div class="kpi-card"><div class="label" data-kpi-label="pool">Draft pool</div><div class="value" data-kpi="pool">0</div><div class="delta muted">Approved, not on a team</div></div>
+        <div class="kpi-card"><div class="label">Claims to approve</div><div class="value" data-kpi="claim">0</div><div class="delta muted">Free-agent bids from coaches</div></div>
+        <div class="kpi-card"><div class="label">Rostered</div><div class="value" data-kpi="rostered">0</div><div class="delta muted" data-kpi-note="sv"></div></div>
+      </div>
+
+      <div class="rg-tools">
+        <div class="rg-chips" role="tablist" aria-label="Filter registrations" data-rg-filters></div>
+        <div class="field rg-search"><label for="rgQ" class="sr-only">Search</label><input id="rgQ" class="input" type="search" placeholder="Search name or ID"></div>
       </div>
 
       <div class="table-wrap">
-        <table class="table">
-          <thead><tr><th></th><th>Name</th><th>Position</th><th>Requested Team</th><th>Submitted</th><th>Status</th><th>Actions</th></tr></thead>
-          <tbody>
-            <tr><td><span class="avatar avatar-sm av-4">TN</span></td><td><a href="player.html">Tam Nguyen</a></td><td>Right Back</td><td class="muted">Free Agent</td><td class="tnum muted">3 hrs ago</td><td><span class="badge badge-warning">Pending</span></td><td><select class="input btn-sm" style="height:34px"><option>Assign Team…</option><option>Knicks</option><option>Eagles</option><option>Sharks</option><option>Wolves</option><option>Tigers</option><option>Rams</option></select> <button class="btn btn-primary btn-sm">Approve</button></td></tr>
-            <tr><td><span class="avatar avatar-sm av-5">JC</span></td><td><a href="player.html">Julia Chen</a></td><td>Left Wing</td><td>Eagles</td><td class="tnum muted">Yesterday</td><td><span class="badge badge-warning">Pending</span></td><td><button class="btn btn-primary btn-sm">Approve</button> <button class="btn btn-outline btn-sm">Decline</button></td></tr>
-            <tr><td><span class="avatar avatar-sm av-7">OM</span></td><td><a href="player.html">Owen Marsh</a></td><td>Pivot</td><td>Rams</td><td class="tnum muted">2 days ago</td><td><span class="badge badge-warning">Pending</span></td><td><button class="btn btn-primary btn-sm">Approve</button> <button class="btn btn-outline btn-sm">Decline</button></td></tr>
-            <tr><td><span class="avatar avatar-sm av-2">SK</span></td><td><a href="player.html">Sofia Kessler</a></td><td>Goalkeeper</td><td>Tigers</td><td class="tnum muted">3 days ago</td><td><span class="badge badge-success">Assigned</span></td><td><span class="muted" style="font-size:var(--text-xs)">Added to roster</span></td></tr>
-            <tr><td><span class="avatar avatar-sm av-3">BP</span></td><td><a href="player.html">Ben Porter</a></td><td>Center Back</td><td class="muted">Free Agent</td><td class="tnum muted">4 days ago</td><td><span class="badge badge-success">Assigned</span></td><td><span class="muted" style="font-size:var(--text-xs)">Added to roster</span></td></tr>
-          </tbody>
+        <table class="table rg-table">
+          <thead><tr><th>Player</th><th>Positions</th><th>Ht</th><th>Submitted</th><th>Fee</th><th>Status</th><th>SportsVisio</th><th><span class="sr-only">Actions</span></th></tr></thead>
+          <tbody data-rg-rows></tbody>
         </table>
       </div>
-
-      <h3 style="margin:var(--space-6) 0 var(--space-4)">Manually Add a Player</h3>
-      <div class="card card-pad" style="max-width:640px">
-        <div class="field-row" style="margin-bottom:var(--space-4)">
-          <div class="field"><label for="fname">Full Name</label><input id="fname" class="input" placeholder="Jane Doe"></div>
-          <div class="field"><label for="pos2">Position</label><select id="pos2" class="input"><option>Goalkeeper</option><option>Wing</option><option>Back</option><option>Center Back</option><option>Pivot</option></select></div>
-        </div>
-        <div class="field-row" style="margin-bottom:var(--space-4)">
-          <div class="field"><label for="parish">Church / Contact</label><input id="parish" class="input" placeholder="Smithtown Gospel Tabernacle"></div>
-          <div class="field"><label for="team2">Assign Team</label><select id="team2" class="input"><option>Free Agent Pool</option><option>Knicks</option><option>Eagles</option><option>Sharks</option><option>Wolves</option><option>Tigers</option><option>Rams</option></select></div>
-        </div>
-        <button class="btn btn-primary">Register Player</button>
-      </div>
+      <p class="muted rg-foot">Coaches see only basketball details (positions, height, shooting hand, experience, dates they'll miss). Contact details, emergency contact, medical notes, faith answers and fee assistance stay with the League Admin.</p>
     </div>
   </div>
 </div>
+
+<dialog class="rg-panel" id="rgPanel" aria-labelledby="rgName">
+  <div class="rg-panel-head">
+    <div><span class="eyebrow" data-p="id"></span><h2 id="rgName" data-p="name"></h2><div data-p="badges" class="rg-badges"></div></div>
+    <button type="button" class="btn btn-icon btn-ghost" data-rg-close aria-label="Close">&#10005;</button>
+  </div>
+  <div class="rg-panel-body">
+    <div class="rg-actions" data-p="actions"></div>
+
+    <h3>Basketball <span class="rg-vis">Coaches can see</span></h3>
+    <dl class="rg-dl" data-p="game"></dl>
+
+    <h3>SportsVisio profile</h3>
+    <div data-p="sv"></div>
+
+    <h3>Contact <span class="rg-vis rg-vis-private">Admin only</span></h3>
+    <dl class="rg-dl" data-p="contact"></dl>
+
+    <h3>Emergency &amp; medical <span class="rg-vis rg-vis-private">Admin only</span></h3>
+    <dl class="rg-dl" data-p="medical"></dl>
+
+    <h3>Faith <span class="rg-vis rg-vis-private">Admin only</span></h3>
+    <dl class="rg-dl" data-p="faith"></dl>
+
+    <h3>Activity</h3>
+    <ol class="rg-log" data-p="log"></ol>
+  </div>
+</dialog>
+<div class="rg-toast" role="status" aria-live="polite" data-rg-toast hidden></div>
+
 <script src="../assets/js/interactions.js?v=20261120c"></script>
+<script src="../assets/js/registrations.js?v=20261120c"></script>
+<script>
+(function () {
+  var R = window.SGTBLReg, esc = R.esc, filter = "review", q = "", openId = null;
+  var rows = document.querySelector("[data-rg-rows]"), panel = document.getElementById("rgPanel"), toastEl = document.querySelector("[data-rg-toast]");
+  var FEE = { "paid": ["Paid", "badge-success"], "unpaid": ["Not paid", "badge-danger"], "assistance-requested": ["Assistance requested", "badge-warning"], "assistance-granted": ["Assistance granted", "badge-info"] };
+
+  function statusOf(r, ph) {
+    if (r.status === "submitted") return ["Awaiting review", "badge-warning"];
+    if (r.status === "declined") return ["Declined", "badge-danger"];
+    if (r.status === "rostered") return [r.team, "badge-success"];
+    if (r.status === "claim") return ["Claim: " + r.team + " $" + r.bid, "badge-accent"];
+    return [R.pool(r, ph) === "draft" ? "Draft pool" : "Free agent", "badge-info"];
+  }
+  function feeOk(r) { return r.payment === "paid" || r.payment === "assistance-granted"; }
+  function inFilter(r) {
+    if (filter === "all") return true;
+    if (filter === "review") return r.status === "submitted";
+    if (filter === "pool") return r.status === "approved";
+    if (filter === "claim") return r.status === "claim";
+    return r.status === filter;
+  }
+  function toast(msg) {
+    toastEl.textContent = msg; toastEl.hidden = false;
+    clearTimeout(toast.t); toast.t = setTimeout(function () { toastEl.hidden = true; }, 4200);
+  }
+
+  function render() {
+    var list = R.load(), ph = R.phase();
+    document.querySelectorAll("[data-phase]").forEach(function (b) { b.setAttribute("aria-checked", b.getAttribute("data-phase") === ph); });
+    document.querySelector("[data-rg-phase-note]").textContent = ph === "preseason"
+      ? "Approved players go into the draft pool. Coaches see them on their Player Pool page and pick them in the auction draft."
+      : "The draft is done. Newly approved players, and anyone not drafted, are free agents. Coaches place sealed FAAB bids, and you approve each claim here.";
+    var count = function (fn) { return list.filter(fn).length; };
+    document.querySelector('[data-kpi="review"]').textContent = count(function (r) { return r.status === "submitted"; });
+    document.querySelector('[data-kpi-note="review"]').textContent = count(function (r) { return r.status === "submitted" && !feeOk(r); }) + " waiting on the fee";
+    document.querySelector('[data-kpi-label="pool"]').textContent = ph === "preseason" ? "Draft pool" : "Free agents";
+    document.querySelector('[data-kpi="pool"]').textContent = count(function (r) { return r.status === "approved"; });
+    document.querySelector('[data-kpi="claim"]').textContent = count(function (r) { return r.status === "claim"; });
+    document.querySelector('[data-kpi="rostered"]').textContent = count(function (r) { return r.status === "rostered"; });
+    document.querySelector('[data-kpi-note="sv"]').textContent = count(function (r) { return r.status === "rostered" && !r.svId; }) + " not linked to SportsVisio";
+
+    var F = [["review", "Awaiting review"], ["pool", ph === "preseason" ? "Draft pool" : "Free agents"], ["claim", "Claims"], ["rostered", "Rostered"], ["declined", "Declined"], ["all", "All"]];
+    document.querySelector("[data-rg-filters]").innerHTML = F.map(function (f) {
+      var n = f[0] === "all" ? list.length : list.filter(function (r) { var o = filter; filter = f[0]; var k = inFilter(r); filter = o; return k; }).length;
+      return '<button type="button" role="tab" class="rg-chip" aria-selected="' + (filter === f[0]) + '" data-f="' + f[0] + '">' + f[1] + ' <b>' + n + '</b></button>';
+    }).join("");
+
+    var shown = list.filter(inFilter).filter(function (r) { return !q || (r.first + " " + r.last + " " + r.id).toLowerCase().indexOf(q) >= 0; })
+      .sort(function (a, b) { return a.submitted < b.submitted ? 1 : -1; });
+    rows.innerHTML = shown.length ? shown.map(function (r) {
+      var st = statusOf(r, ph), fee = FEE[r.payment];
+      return '<tr data-id="' + r.id + '"><td><button type="button" class="rg-name" data-open="' + r.id + '"><b>' + esc(r.first + " " + r.last) + '</b><span>' + r.id + '</span></button></td>' +
+        '<td>' + esc(r.pos.join(", ")) + '</td><td class="tnum">' + esc(R.fmtHt(r.ht)) + '</td><td class="tnum muted">' + R.fmtDate(r.submitted) + '</td>' +
+        '<td><span class="badge ' + fee[1] + '">' + fee[0] + '</span></td><td><span class="badge ' + st[1] + '">' + esc(st[0]) + '</span></td>' +
+        '<td>' + (r.svId ? '<span class="rg-sv-ok">&#10003; Linked</span>' : '<span class="muted">&mdash;</span>') + '</td>' +
+        '<td class="rg-row-act"><button type="button" class="btn btn-sm ' + (r.status === "submitted" || r.status === "claim" ? "btn-primary" : "btn-ghost") + '" data-open="' + r.id + '">' + (r.status === "submitted" ? "Review" : r.status === "claim" ? "Review claim" : "Open") + '</button></td></tr>';
+    }).join("") : '<tr><td colspan="8" class="muted rg-empty">Nothing here right now.</td></tr>';
+    if (openId) fillPanel(openId);
+  }
+
+  function dl(pairs) {
+    return pairs.filter(function (p) { return p[1] !== "" && p[1] != null; }).map(function (p) { return "<dt>" + p[0] + "</dt><dd>" + esc(p[1]) + "</dd>"; }).join("");
+  }
+  function fillPanel(id) {
+    var r = R.load().filter(function (x) { return x.id === id; })[0]; if (!r) return;
+    var ph = R.phase(), st = statusOf(r, ph), fee = FEE[r.payment], P = function (k) { return panel.querySelector('[data-p="' + k + '"]'); };
+    P("id").textContent = r.id + " · registered " + R.fmtDate(r.submitted);
+    P("name").textContent = r.first + " " + r.last;
+    P("badges").innerHTML = '<span class="badge ' + st[1] + '">' + esc(st[0]) + '</span> <span class="badge ' + fee[1] + '">' + fee[0] + '</span>';
+
+    var a = [];
+    if (r.payment === "unpaid") a.push('<div class="rg-act-note">The $100 fee hasn’t been paid. In the real site the payment provider marks this automatically.</div><button type="button" class="btn btn-ghost rg-btn-line" data-act="paid">Mark fee paid</button>');
+    if (r.payment === "assistance-requested") a.push('<div class="rg-act-note">Fee assistance requested. Follow up privately, then:</div><button type="button" class="btn btn-ghost rg-btn-line" data-act="grant">Grant fee assistance</button>');
+    if (r.status === "submitted") a.push('<div class="rg-act-row"><button type="button" class="btn btn-primary" data-act="approve"' + (feeOk(r) ? "" : " disabled") + '>Approve' + (ph === "preseason" ? " to draft pool" : " as free agent") + '</button><button type="button" class="btn btn-ghost rg-btn-line" data-act="decline">Decline</button></div>' + (feeOk(r) ? "" : '<div class="rg-act-note">Approval unlocks once the fee is paid or assistance is granted.</div>'));
+    if (r.status === "claim") a.push('<div class="rg-act-note"><b>' + esc(r.team) + '</b> placed a sealed bid of <b>$' + r.bid + '</b>.</div><div class="rg-act-row"><button type="button" class="btn btn-primary" data-act="claim-ok">Approve claim: ' + esc(r.team) + '</button><button type="button" class="btn btn-ghost rg-btn-line" data-act="claim-no">Reject claim</button></div>');
+    if (r.status === "approved" && ph === "preseason") a.push('<div class="rg-act-row"><label class="sr-only" for="rgDraftTeam">Drafted by</label><select id="rgDraftTeam" class="input">' + R.TEAMS.map(function (t) { return "<option>" + t + "</option>"; }).join("") + '</select><button type="button" class="btn btn-ghost rg-btn-line" data-act="draft">Record draft pick</button></div><div class="rg-act-note">Normally filled in by the Draft Suite when a coach wins the player at auction.</div>');
+    if (r.status === "declined") a.push('<button type="button" class="btn btn-ghost rg-btn-line" data-act="reopen">Move back to review</button>');
+    P("actions").innerHTML = a.join("");
+    P("actions").hidden = !a.length;
+
+    P("game").innerHTML = dl([["Positions", r.pos.map(function (p) { return R.POS[p] || p; }).join(", ")], ["Height", R.fmtHt(r.ht)], ["Shoots", r.hand], ["Experience", r.level],
+      ["Jersey", r.jersey + " · numbers " + r.nums.map(function (n) { return n === "Random" ? "Random" : "#" + n; }).join(", ")], ["Dates they’ll miss", r.conflicts || "None listed"]]);
+    P("sv").innerHTML = r.svId
+      ? '<p class="rg-sv-ok">&#10003; Linked: <a href="https://uh.sportsvisio.com/league/texas-frisco/player/' + esc(r.svId) + '" target="_blank" rel="noopener">' + esc(r.svId) + '</a></p><p class="muted rg-small">Game stats for this ID flow into the player’s page with each stats update.</p><button type="button" class="link-btn rg-small" data-act="sv-clear">Unlink</button>'
+      : (r.status === "approved" || r.status === "claim" || r.status === "rostered"
+        ? '<p class="muted rg-small">After creating this player’s profile on SportsVisio, paste the profile link (or just the player ID) here.</p><div class="rg-act-row"><input class="input" id="rgSv" placeholder="https://uh.sportsvisio.com/league/…/player/…" aria-label="SportsVisio profile link"><button type="button" class="btn btn-ghost rg-btn-line" data-act="sv">Link</button></div><p class="rg-err" data-sv-err hidden>That doesn’t contain a SportsVisio player ID.</p>'
+        : '<p class="muted rg-small">Available once the player is approved.</p>');
+    P("contact").innerHTML = dl([["Email", r.email], ["Phone", r.phone], ["Home church", r.church], ["Heard about us", r.heard]]);
+    P("medical").innerHTML = dl([["Emergency contact", r.ecName + " · " + r.ecPhone], ["Medical notes", r.medical || "None"]]);
+    P("faith").innerHTML = dl([["Believer in Jesus?", r.faith], ["Open to hearing the gospel?", r.open]]);
+    P("log").innerHTML = r.log.slice().reverse().map(function (l) { return "<li><span>" + R.fmtDate(l[0]) + "</span>" + esc(l[1]) + "</li>"; }).join("");
+  }
+
+  function act(kind) {
+    var id = openId, ph = R.phase(), msg = "";
+    var r = R.update(id, function (r) {
+      if (kind === "paid") { r.payment = "paid"; R.addLog(r, "Paid $100"); msg = "Fee marked paid."; }
+      if (kind === "grant") { r.payment = "assistance-granted"; R.addLog(r, "Fee assistance granted"); msg = "Fee assistance granted."; }
+      if (kind === "approve") { r.status = "approved"; R.addLog(r, "Approved by League Admin → " + (ph === "preseason" ? "draft pool" : "free-agent pool")); msg = r.first + " " + r.last + " approved and placed in the " + (ph === "preseason" ? "draft pool" : "free-agent pool") + ". Coaches can see them now."; }
+      if (kind === "decline") { r.status = "declined"; R.addLog(r, "Declined by League Admin"); msg = "Registration declined."; }
+      if (kind === "reopen") { r.status = "submitted"; R.addLog(r, "Moved back to review"); msg = "Moved back to review."; }
+      if (kind === "claim-ok") { r.status = "rostered"; R.addLog(r, "Claim approved: signed with " + r.team + " ($" + r.bid + " FAAB)"); R.addLog(r, "Text sent to player: you’re on the " + r.team + "!"); msg = r.first + " " + r.last + " is on the " + r.team + ". The player was texted (in the real site)."; }
+      if (kind === "claim-no") { R.addLog(r, "Claim by " + r.team + " rejected"); r.status = "approved"; r.team = ""; r.bid = 0; msg = "Claim rejected; the player is back in the free-agent pool."; }
+      if (kind === "draft") { var t = document.getElementById("rgDraftTeam").value; r.status = "rostered"; r.team = t; R.addLog(r, "Drafted by " + t); R.addLog(r, "Text sent to player: you’re on the " + t + "!"); msg = r.first + " " + r.last + " drafted by the " + t + "."; }
+      if (kind === "sv") {
+        var v = R.parseSvId(document.getElementById("rgSv").value);
+        if (!v) { msg = null; return; }
+        r.svId = v; R.addLog(r, "SportsVisio profile linked"); msg = "SportsVisio profile linked. Stats will flow in with the next update.";
+      }
+      if (kind === "sv-clear") { r.svId = ""; R.addLog(r, "SportsVisio profile unlinked"); msg = "SportsVisio link removed."; }
+    });
+    if (kind === "sv" && msg === null) { panel.querySelector("[data-sv-err]").hidden = false; return; }
+    if (r && msg) toast(msg);
+    render();
+  }
+
+  document.addEventListener("click", function (e) {
+    var o = e.target.closest("[data-open]"); if (o) { openId = o.getAttribute("data-open"); fillPanel(openId); panel.showModal(); return; }
+    var f = e.target.closest("[data-f]"); if (f) { filter = f.getAttribute("data-f"); render(); return; }
+    var p = e.target.closest("[data-phase]"); if (p) { R.setPhase(p.getAttribute("data-phase")); toast(p.getAttribute("data-phase") === "preseason" ? "Phase: preseason. Approved players are in the draft pool." : "Phase: draft complete. Approved players are now free agents."); render(); return; }
+    var a = e.target.closest("[data-act]"); if (a && panel.contains(a)) { act(a.getAttribute("data-act")); return; }
+    if (e.target.closest("[data-rg-close]") || e.target === panel) { panel.close(); return; }
+    if (e.target.closest("[data-rg-reset]")) { R.reset(); filter = "review"; render(); toast("Sample data reset."); }
+  });
+  panel.addEventListener("close", function () { openId = null; });
+  document.getElementById("rgQ").addEventListener("input", function (e) { q = e.target.value.trim().toLowerCase(); render(); });
+  window.addEventListener("storage", render);   // another tab (e.g. the coach portal) changed the data
+  render();
+})();
+</script>
 </body>
 </html>

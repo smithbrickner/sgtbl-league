@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Player Pool — SGTBL Team Portal</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/sgtbl-logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/tokens.css?v=20261120c">
+<link rel="stylesheet" href="../assets/css/base.css?v=20261120c">
+<link rel="stylesheet" href="../assets/css/site.css?v=20261120c">
+<link rel="stylesheet" href="../assets/css/admin.css?v=20261120c">
+<style>.team-cell { display: flex; align-items: center; gap: var(--space-3); }</style>
+<link rel="stylesheet" href="../assets/css/captain.css?v=20261120c">
+</head>
+<body class="admin">
+<div class="admin-shell">
+  <div class="admin-scrim"></div>
+  <aside class="admin-side">
+    <a class="brand" href="dashboard.html"><img src="../assets/img/sgtbl-logo.svg" alt="SGTBL logo"><span class="brand-word">SGTBL<span>Team Portal</span></span></a>
+    <ul class="admin-nav">
+      <li class="nav-group-label">Team</li>
+      <li><a href="dashboard.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Dashboard</a></li>
+      <li><a href="my-team.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg>Roster</a></li>
+      <li><a href="submit-transaction.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>Submit a Transaction</a></li>
+      <li class="nav-group-label">League</li>
+      <li><a href="transactions.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg>Transactions</a></li>
+      <li><a href="player-pool.html" aria-current="page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3.5-6 7-6s7 2 7 6"/><path d="M19 8v6M22 11h-6"/></svg>Player Pool</a></li>
+      <li><a href="free-agency.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1.2 1.2-2 2.5-2s2.5.8 2.5 2-1.2 1.5-2.5 2-2.5.8-2.5 2 1.2 2 2.5 2 2.5-.8 2.5-2"/></svg>Free Agency</a></li>
+      <li><a href="scouting.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>Scouting Reports</a></li>
+      <li><a href="stats.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Stats</a></li>
+      <li class="nav-group-label">Film</li>
+      <li><a href="film-room.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3V9z" fill="currentColor" stroke="none"/></svg>Film Room</a></li>
+    </ul>
+    <div class="admin-side-foot">
+      <div class="admin-user">
+        <span class="avatar avatar-sm av-2">RA</span>
+        <div><div class="name">R. Alvarez</div><div class="role">Knicks · Coach</div><span class="portal-tag">Coach</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <button class="btn btn-icon btn-ghost admin-topbar-toggle" aria-label="Toggle navigation"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <h1>Draft Pool</h1>
+      <span class="badge badge-info" data-pp-phase>Preseason</span>
+      <div class="spacer"></div>
+      <div class="notif-wrap">
+        <button class="btn btn-icon btn-ghost" id="notifBtn" aria-haspopup="true" aria-expanded="false" aria-label="Notifications">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          <span class="notif-badge">2</span>
+        </button>
+        <div class="notif-panel" id="notifPanel" hidden>
+          <div class="notif-panel-head">Notifications</div>
+          <div class="notif-list">
+            <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></span><div><div>You won last week's bid on <strong>K. Diallo</strong></div><time>Yesterday</time></div></div>
+            <div class="notif-item unread"><span class="activity-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 17H7l3 3"/></svg></span><div><div>Trade approved — <strong>D. Okafor</strong> added to your roster</div><time>2 hours ago</time></div></div>
+          </div>
+          <a class="notif-panel-foot" href="#">Mark all as read</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <div class="rg-proto"><strong>Prototype:</strong> the pool reads the same sample registrations as the League Admin's Registrations page (saved in this browser only). Approve someone there and they show up here.</div>
+
+      <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="kpi-card"><div class="label" data-pp-label>Draft pool</div><div class="value" data-pp-count>0</div><div class="delta muted" data-pp-sub></div></div>
+        <div class="kpi-card"><div class="label" data-pp-mid-label>On your draft board</div><div class="value" data-pp-mid>0</div><div class="delta muted" data-pp-mid-sub></div></div>
+        <div class="kpi-card"><div class="label">FAAB left</div><div class="value" data-pp-faab>$0</div><div class="delta muted">$100 per season &middot; sealed bids, $1 minimum</div></div>
+      </div>
+
+      <p class="muted" data-pp-intro style="max-width:75ch;margin:0 0 var(--space-4)"></p>
+
+      <div class="rg-tools">
+        <div class="rg-chips" role="tablist" aria-label="Filter by position" data-pp-filters></div>
+        <div class="field rg-search"><label for="ppQ" class="sr-only">Search</label><input id="ppQ" class="input" type="search" placeholder="Search players"></div>
+      </div>
+
+      <div class="pp-grid" data-pp-grid></div>
+      <p class="muted rg-foot">You see basketball details only. Contact information, emergency contacts, medical notes and other registration answers stay with the League Admin.</p>
+    </div>
+  </div>
+</div>
+<div class="rg-toast" role="status" aria-live="polite" data-rg-toast hidden></div>
+
+<script src="../assets/js/interactions.js?v=20261120c"></script>
+<script src="../assets/js/registrations.js?v=20261120c"></script>
+<script>
+(function () {
+  var R = window.SGTBLReg, esc = R.esc, TEAM = "Knicks", pos = "all", q = "";
+  var grid = document.querySelector("[data-pp-grid]"), toastEl = document.querySelector("[data-rg-toast]");
+  function board() { try { return JSON.parse(localStorage.getItem("sgtbl-mock-board") || "[]"); } catch (e) { return []; } }
+  function setBoard(b) { try { localStorage.setItem("sgtbl-mock-board", JSON.stringify(b)); } catch (e) {} }
+  function toast(msg) { toastEl.textContent = msg; toastEl.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function () { toastEl.hidden = true; }, 4200); }
+
+  function render() {
+    var ph = R.phase(), pre = ph === "preseason", list = R.load(), b = board();
+    // In the pool: approved and not on a team. Our own pending claims stay visible (marked); other teams' pending claims are hidden (bids are sealed).
+    var pool = list.filter(function (r) { return r.status === "approved" || (r.status === "claim" && r.team === TEAM); });
+    document.querySelector("h1").textContent = pre ? "Draft Pool" : "Free Agents";
+    document.querySelector("[data-pp-phase]").textContent = pre ? "Preseason · Auction draft" : "In season · Free agency";
+    document.querySelector("[data-pp-label]").textContent = pre ? "Draft pool" : "Free agents";
+    document.querySelector("[data-pp-count]").textContent = list.filter(function (r) { return r.status === "approved" || r.status === "claim"; }).length;
+    document.querySelector("[data-pp-sub]").textContent = "Approved by the League Admin, not on a team";
+    var mine = list.filter(function (r) { return r.status === "claim" && r.team === TEAM; });
+    document.querySelector("[data-pp-mid-label]").textContent = pre ? "On your draft board" : "Your pending claims";
+    document.querySelector("[data-pp-mid]").textContent = pre ? b.filter(function (id) { return pool.some(function (r) { return r.id === id; }); }).length : mine.length;
+    document.querySelector("[data-pp-mid-sub]").textContent = pre ? "Players you've starred for the draft" : "Waiting for League Admin approval";
+    document.querySelector("[data-pp-faab]").textContent = "$" + R.faabLeft(TEAM);
+    document.querySelector("[data-pp-intro]").textContent = pre
+      ? "Everyone approved for the season, before the auction draft. Star the players you want to target; the draft itself runs in the Draft Suite."
+      : "Approved players who aren't on a team, including people who registered after the draft. Place a sealed FAAB bid; the League Admin approves each claim, and the player is told which team they've joined.";
+
+    var P = [["all", "All"], ["PG", "PG"], ["SG", "SG"], ["SF", "SF"], ["PF", "PF"], ["C", "C"]];
+    document.querySelector("[data-pp-filters]").innerHTML = P.map(function (p) {
+      var n = p[0] === "all" ? pool.length : pool.filter(function (r) { return r.pos.indexOf(p[0]) >= 0; }).length;
+      return '<button type="button" role="tab" class="rg-chip" aria-selected="' + (pos === p[0]) + '" data-pos="' + p[0] + '">' + p[1] + ' <b>' + n + '</b></button>';
+    }).join("");
+
+    var shown = pool.filter(function (r) { return pos === "all" || r.pos.indexOf(pos) >= 0; })
+      .filter(function (r) { return !q || (r.first + " " + r.last).toLowerCase().indexOf(q) >= 0; })
+      .sort(function (a, b) { return (a.last + a.first).localeCompare(b.last + b.first); });
+    grid.innerHTML = shown.length ? shown.map(function (r) {
+      var starred = b.indexOf(r.id) >= 0, act;
+      if (pre) act = '<button type="button" class="btn btn-sm btn-ghost rg-btn-line pp-star" aria-pressed="' + starred + '" data-star="' + r.id + '">' + (starred ? "★ On your board" : "☆ Add to draft board") + '</button>';
+      else if (r.status === "claim") act = '<span class="pp-status">Bid placed: $' + r.bid + ' &middot; waiting for League Admin approval</span><button type="button" class="link-btn" data-withdraw="' + r.id + '">Withdraw</button>';
+      else act = '<label class="sr-only" for="bid-' + r.id + '">Bid amount for ' + esc(r.first + " " + r.last) + '</label><input class="input" id="bid-' + r.id + '" type="number" min="1" step="1" placeholder="$1" inputmode="numeric"><button type="button" class="btn btn-sm btn-primary" data-bid="' + r.id + '">Place sealed bid</button>';
+      return '<article class="pp-card"><div><h3>' + esc(r.first + " " + r.last) + '</h3><div class="pp-pos">' + esc(r.pos.map(function (p) { return R.POS[p] || p; }).join(" · ")) + '</div></div>' +
+        '<dl class="pp-facts"><div><dt>Height</dt><dd>' + esc(R.fmtHt(r.ht)) + '</dd></div><div><dt>Shoots</dt><dd>' + esc(r.hand) + '</dd></div><div><dt>Level</dt><dd>' + esc(r.level.replace(/ \(.*\)/, "").replace("Pickup / recreational", "Rec")) + '</dd></div></dl>' +
+        '<p class="pp-miss"><span class="muted">Dates they’ll miss:</span> ' + esc(r.conflicts || "None listed") + '</p>' +
+        (r.svId ? '<p class="pp-miss"><a href="https://uh.sportsvisio.com/league/texas-frisco/player/' + esc(r.svId) + '" target="_blank" rel="noopener">SportsVisio stats &rarr;</a></p>' : "") +
+        '<div class="pp-act">' + act + '</div></article>';
+    }).join("") : '<p class="muted">No one in the pool matches. New players appear here once the League Admin approves them.</p>';
+  }
+
+  document.addEventListener("click", function (e) {
+    var p = e.target.closest("[data-pos]"); if (p) { pos = p.getAttribute("data-pos"); render(); return; }
+    var s = e.target.closest("[data-star]"); if (s) { var id = s.getAttribute("data-star"), b = board(), i = b.indexOf(id); if (i >= 0) b.splice(i, 1); else b.push(id); setBoard(b); render(); return; }
+    var w = e.target.closest("[data-withdraw]"); if (w) { R.update(w.getAttribute("data-withdraw"), function (r) { R.addLog(r, TEAM + " withdrew their bid"); r.status = "approved"; r.team = ""; r.bid = 0; }); toast("Bid withdrawn."); render(); return; }
+    var bd = e.target.closest("[data-bid]");
+    if (bd) {
+      var rid = bd.getAttribute("data-bid"), amt = parseInt(document.getElementById("bid-" + rid).value, 10), left = R.faabLeft(TEAM);
+      if (!(amt >= 1)) { toast("Enter a bid of at least $1."); return; }
+      if (amt > left) { toast("You only have $" + left + " of FAAB left."); return; }
+      var r = R.update(rid, function (r) { r.status = "claim"; r.team = TEAM; r.bid = amt; R.addLog(r, TEAM + " placed a sealed bid of $" + amt); });
+      toast("Sealed bid of $" + amt + " placed for " + r.first + " " + r.last + ". The League Admin will review it.");
+      render();
+    }
+  });
+  document.getElementById("ppQ").addEventListener("input", function (e) { q = e.target.value.trim().toLowerCase(); render(); });
+  window.addEventListener("storage", render);
+  render();
+})();
+</script>
+</body>
+</html>

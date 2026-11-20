@@ -378,6 +378,7 @@
   <div class="footer-bottom"><span>© 2026 Smithtown Gospel Tabernacle Basketball League</span></div>
 </footer>
 <script src="assets/js/interactions.js?v=20261120c"></script>
+<script src="assets/js/registrations.js?v=20261120c"></script>
 <script>
 (function () {
   var form = document.getElementById("regForm"), alertBox = document.getElementById("regAlert");
@@ -512,6 +513,11 @@
     var d = {};
     new FormData(form).forEach(function (v, k) { d[k] = d[k] ? d[k] + ", " + v : v; });
     try { sessionStorage.setItem("sgtbl-registration", JSON.stringify(d)); } catch (err) {}
+    // Prototype: also file it in the sample league database so it shows up in the League Admin's Registrations queue.
+    try {
+      var regId = window.SGTBLReg.upsertFromForm(d, sessionStorage.getItem("sgtbl-registration-id"));
+      sessionStorage.setItem("sgtbl-registration-id", regId);
+    } catch (err) {}
     submitting = true;
     location.href = "register-payment.html";
   });
