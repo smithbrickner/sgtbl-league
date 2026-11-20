@@ -1,4 +1,4 @@
-/* SGTBL Team Portal — extends admin.css shell with captain-specific components */
+/* SGTBL Team Portal — extends admin.css shell with coach-specific (Team Portal) components */
 
 /* ---------- Weekly availability ---------- */
 .avail-row { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); margin-bottom: 8px; }

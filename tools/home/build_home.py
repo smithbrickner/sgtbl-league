@@ -239,6 +239,7 @@ body = f'''
           <p class="eyebrow" style="color:var(--gold-400)">Registrations open</p>
           <h3 style="color:#fff;margin-top:6px">2026&ndash;27 season sign-ups are live</h3>
           <p style="color:rgba(255,255,255,.75);font-size:var(--text-sm);margin-top:6px">Open to any adult 18+. The season runs November through March &mdash; register early to be included in the tryout and auction draft.</p>
+          <a class="btn btn-accent btn-sm" href="register.html" style="margin-top:var(--space-4)">Register now</a>
         </div>
       </aside>
     </div>

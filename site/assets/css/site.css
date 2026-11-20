@@ -185,7 +185,7 @@
    1) .home-grid children default to min-width:auto, so the homepage's horizontal .scroller
       (3 x 280px cards) stretched its grid column and pushed phones to ~870px wide. */
 .home-grid > * { min-width: 0; }
-/* 2) Mid-width desktops (1081-1340px; below 1080 the links collapse into the menu button): brand + 7 links + Captain/Admin + theme toggle didn't fit,
+/* 2) Mid-width desktops (1081-1340px; below 1080 the links collapse into the menu button): brand + 7 links + Coach/Admin + theme toggle didn't fit,
       so wrap the league subtitle onto two lines and tighten the link spacing there. */
 @media (min-width: 1081px) and (max-width: 1340px) {
   .site-nav .wrap { gap: var(--space-4); }

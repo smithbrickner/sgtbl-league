@@ -47,7 +47,7 @@
     <div class="admin-side-foot">
       <div class="admin-user">
         <span class="avatar avatar-sm av-2">RA</span>
-        <div><div class="name">R. Alvarez</div><div class="role">Knicks · Captain</div><span class="portal-tag">Captain</span></div>
+        <div><div class="name">R. Alvarez</div><div class="role">Knicks · Coach</div><span class="portal-tag">Coach</span></div>
       </div>
     </div>
   </aside>
@@ -74,7 +74,7 @@
     </header>
 
     <div class="admin-content">
-      <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-5)">Pick the type of move you want to make. Submitted requests go to League Admin (and, for trades, the other team's captain) for approval — track their status on the <a href="transactions.html">Transactions</a> page.</p>
+      <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-5)">Pick the type of move you want to make. Submitted requests go to League Admin (and, for trades, the other team's coach) for approval — track their status on the <a href="transactions.html">Transactions</a> page.</p>
 
       <div class="tabbar" data-tabbar role="tablist">
         <button role="tab" aria-selected="true" aria-controls="p-nominate" id="t-nominate">Free Agent Nomination</button>
@@ -199,7 +199,7 @@
           </div>
         </div>
 
-        <p class="muted" style="font-size:var(--text-xs);margin:var(--space-4) 0 0">Once both captains confirm, the trade goes to League Admin for final approval before any players move.</p>
+        <p class="muted" style="font-size:var(--text-xs);margin:var(--space-4) 0 0">Once both coaches confirm, the trade goes to League Admin for final approval before any players move.</p>
         <p id="activation-note-knicks" class="muted" style="font-size:var(--text-xs);margin:var(--space-2) 0 0" hidden></p>
         <p id="activation-note-eagles" class="muted" style="font-size:var(--text-xs);margin:var(--space-2) 0 0" hidden></p>
       </div>
@@ -472,7 +472,7 @@
     knicksNoteEl.hidden = !(knicksShort > 0 && inArrive.reserve > 0);
     if (!knicksNoteEl.hidden) knicksNoteEl.textContent = activationMessage("you", knicksShort, "you", "you're", "you");
     eaglesNoteEl.hidden = !(eaglesShort > 0 && outArrive.reserve > 0);
-    if (!eaglesNoteEl.hidden) eaglesNoteEl.textContent = activationMessage("Eagles", eaglesShort, "their captain", "they're", "they");
+    if (!eaglesNoteEl.hidden) eaglesNoteEl.textContent = activationMessage("Eagles", eaglesShort, "their coach", "they're", "they");
 
     refreshBrowseButtons();
   }
