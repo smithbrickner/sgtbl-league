@@ -219,3 +219,8 @@
 .film-result .fr-body .muted { font-size: var(--text-xs); }
 .film-more { display: flex; justify-content: center; margin-top: var(--space-4); }
 .film-more [hidden] { display: none; }
+
+/* The header is dark (--chrome-bg) in both themes, so its outline button ("Coach / Admin") needs light text and border
+   in light mode too; the shared .btn-outline uses --text-primary, which is near-black in light mode. */
+.site-nav .btn-outline { color: #fff; border-color: rgba(255,255,255,.4); }
+.site-nav .btn-outline:hover, .site-nav .btn-outline:focus-visible { color: #fff; background: rgba(255,255,255,.12); border-color: #fff; }
