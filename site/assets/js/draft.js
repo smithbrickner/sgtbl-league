@@ -10,13 +10,16 @@
    - Max bid = budget left - $1 for each other roster spot still to fill.
    - Tied top bids go to another countdown round between the tied teams only. A tied team that doesn't re-bid stays
      at the tied amount; new bids must be at least that amount.
+   - A coach has 30 seconds to nominate; if time runs out, the system nominates for them (their top starred
+     player if they have one, otherwise a random available player).
+   - The commissioner can pause/resume the clock and add time by hand.
    - If the tied teams are all at their max bid (nobody can go higher), the League Admin picks the winner.
    - The League Admin confirms each sale (or voids it, which returns the player to the pool).
    The 5 teams other than the coach persona's Knicks are SIMULATED: their nominations and bids are generated from a
    seeded random generator, so every open tab computes exactly the same result. */
 (function () {
   var R = window.SGTBLReg, KEY = "sgtbl-mock-draft-v1";
-  var BUDGET = 1000, SPOTS = 9, ME = "Knicks", NOM_DELAY = 4000, GAP = 1500;
+  var BUDGET = 1000, SPOTS = 9, ME = "Knicks", NOM_DELAY = 4000, NOM_LIMIT = 30000, GAP = 1500;
 
   function blank() {
     return { status: "setup", secs: 30, order: R.TEAMS.slice(), turn: 0, turnAt: 0, lot: null, result: null, sales: [], voided: [], seed: 1 };
@@ -106,11 +109,17 @@
   // Moves the draft forward in time. Deterministic: every tab gets the same answer from the same state.
   function step(st, now) {
     var changed = false, guard = 0;
+    if (st.paused) return false;                                   // the commissioner has stopped the clock
     while (guard++ < 50) {
       if (st.status === "nominate" && isBot(turnTeam(st)) && now >= st.turnAt + NOM_DELAY) {
         var pick = botPick(st, turnTeam(st));
         if (!pick) { st.status = "done"; changed = true; break; }
         openLot(st, pick.id, turnTeam(st), st.turnAt + NOM_DELAY); changed = true; continue;
+      }
+      if (st.status === "nominate" && !isBot(turnTeam(st)) && now >= st.turnAt + NOM_LIMIT) {
+        var auto = autoPick(st, turnTeam(st));
+        if (!auto) { st.status = "done"; changed = true; break; }
+        openLot(st, auto.id, turnTeam(st), st.turnAt + NOM_LIMIT); st.lot.auto = true; changed = true; continue;
       }
       if (st.status === "bidding" && now >= st.lot.endsAt) {
         var lot = st.lot, fb = finalBids(lot), top = leaders(fb);
@@ -145,6 +154,15 @@
     return p[Math.floor(g() * Math.min(8, p.length))];
   }
 
+  // Nomination clock ran out: the coach's top starred player still available, else a random one (seeded).
+  function autoPick(st, team) {
+    var p = pool(st); if (!p.length) return null;
+    var b = []; try { b = JSON.parse(localStorage.getItem("sgtbl-mock-board") || "[]"); } catch (e) {}
+    if (team === ME) for (var i = 0; i < b.length; i++) { var hit = p.filter(function (r) { return r.id === b[i]; })[0]; if (hit) return hit; }
+    p.sort(function (a, c) { return a.id < c.id ? -1 : 1; });
+    return p[Math.floor(rng(st.seed + "|auto|" + (st.sales.length + st.voided.length) + "|" + team)() * p.length)];
+  }
+
   function nextTurn(st, from) {
     st.lot = null; st.result = null;
     if (!pool(st).length) { st.status = "done"; return; }
@@ -159,7 +177,7 @@
   function act(fn) { var st = load(); step(st, Date.now()); var err = fn(st) || ""; if (!err) save(st); return err; }
 
   var api = {
-    BUDGET: BUDGET, SPOTS: SPOTS, ME: ME, KEY: KEY,
+    BUDGET: BUDGET, SPOTS: SPOTS, ME: ME, KEY: KEY, NOM_DELAY: NOM_DELAY, NOM_LIMIT: NOM_LIMIT,
     load: load, save: save, step: step, pool: pool, player: player, roster: roster, spent: spent,
     budgetLeft: budgetLeft, spotsLeft: spotsLeft, maxBid: maxBid, turnTeam: turnTeam, isBot: isBot, finalBids: finalBids,
 
@@ -174,7 +192,27 @@
       if (!pool(st).length) return "No approved players to draft yet.";
       st.seed = Date.now(); st.turn = 0; st.turnAt = Date.now(); st.status = "nominate";
     }); },
+    // Commissioner clock controls. Pausing freezes every countdown; resuming shifts them all by the paused time.
+    pause: function () { return act(function (st) {
+      if (st.status !== "nominate" && st.status !== "bidding") return "There's no clock running.";
+      if (st.paused) return "Already paused."; st.paused = Date.now();
+    }); },
+    resume: function () { return act(function (st) {
+      if (!st.paused) return "The draft isn't paused.";
+      var p = st.paused, d = Date.now() - p; delete st.paused;
+      st.turnAt += d;
+      if (st.lot) { st.lot.startAt += d; st.lot.endsAt += d; Object.keys(st.lot.bids).forEach(function (t) { if (st.lot.bids[t].at > p) st.lot.bids[t].at += d; }); }
+    }); },
+    addTime: function (secs) { return act(function (st) {
+      secs = Math.floor(secs);
+      if (!(secs >= 1 && secs <= 600)) return "Enter between 1 and 600 seconds.";
+      var ms = secs * 1000, now = st.paused || Date.now();
+      if (st.status === "bidding") st.lot.endsAt = Math.max(st.lot.endsAt, now) + ms;
+      else if (st.status === "nominate") st.turnAt = Math.max(st.turnAt, now - (isBot(turnTeam(st)) ? NOM_DELAY : NOM_LIMIT)) + ms;
+      else return "There's no clock running.";
+    }); },
     nominate: function (pid, team) { return act(function (st) {
+      if (st.paused) return "The draft is paused.";
       if (st.status !== "nominate") return "It isn't time to nominate.";
       if (team !== turnTeam(st)) return "It's the " + turnTeam(st) + "' turn to nominate.";
       if (!pool(st).some(function (r) { return r.id === pid; })) return "That player isn't available.";
@@ -182,6 +220,7 @@
     }); },
     bid: function (team, amt) { return act(function (st) {
       var lot = st.lot;
+      if (st.paused) return "The draft is paused. Bids open again when the commissioner resumes.";
       if (st.status !== "bidding") return "Bidding is closed.";
       if (lot.teams.indexOf(team) < 0) return "Your team isn't in this round.";
       amt = Math.floor(amt);
@@ -217,7 +256,7 @@
     // Demo helper: plays out every remaining lot instantly (the Knicks bid like the simulated coaches) and confirms each sale.
     simulate: function () { return act(function (st) {
       if (st.status === "setup") { st.seed = Date.now(); st.turn = 0; st.turnAt = Date.now(); st.status = "nominate"; }
-      st.simAll = true; var guard = 0;
+      delete st.paused; st.simAll = true; var guard = 0;
       while (guard++ < 200 && st.status !== "done" && st.status !== "final") {
         if (st.status === "nominate") { var p = botPick(st, turnTeam(st)); if (!p) { st.status = "done"; break; } openLot(st, p.id, turnTeam(st), Date.now(), true); }
         if (st.status === "bidding") { var g2 = 0; while (st.status === "bidding" && g2++ < 20) { if (st.lot.round > 6) { var room = st.lot.teams.filter(function (t) { return maxBid(st, t) > st.lot.min; })[0]; if (room) st.lot.bids[room] = { amt: st.lot.min + 1, at: st.lot.startAt }; } step(st, st.lot.endsAt); } }

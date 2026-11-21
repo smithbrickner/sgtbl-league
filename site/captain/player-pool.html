@@ -7,12 +7,12 @@
 <link rel="icon" type="image/svg+xml" href="../assets/img/sgtbl-logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/tokens.css?v=20261121a">
-<link rel="stylesheet" href="../assets/css/base.css?v=20261121a">
-<link rel="stylesheet" href="../assets/css/site.css?v=20261121a">
-<link rel="stylesheet" href="../assets/css/admin.css?v=20261121a">
+<link rel="stylesheet" href="../assets/css/tokens.css?v=20261121c">
+<link rel="stylesheet" href="../assets/css/base.css?v=20261121c">
+<link rel="stylesheet" href="../assets/css/site.css?v=20261121c">
+<link rel="stylesheet" href="../assets/css/admin.css?v=20261121c">
 <style>.team-cell { display: flex; align-items: center; gap: var(--space-3); }</style>
-<link rel="stylesheet" href="../assets/css/captain.css?v=20261121a">
+<link rel="stylesheet" href="../assets/css/captain.css?v=20261121c">
 </head>
 <body class="admin">
 <div class="admin-shell">
@@ -87,8 +87,8 @@
 </div>
 <div class="rg-toast" role="status" aria-live="polite" data-rg-toast hidden></div>
 
-<script src="../assets/js/interactions.js?v=20261121a"></script>
-<script src="../assets/js/registrations.js?v=20261121a"></script>
+<script src="../assets/js/interactions.js?v=20261121c"></script>
+<script src="../assets/js/registrations.js?v=20261121c"></script>
 <script>
 (function () {
   var R = window.SGTBLReg, esc = R.esc, TEAM = "Knicks", pos = "all", q = "";
@@ -129,7 +129,7 @@
       if (pre) act = '<button type="button" class="btn btn-sm btn-ghost rg-btn-line pp-star" aria-pressed="' + starred + '" data-star="' + r.id + '">' + (starred ? "★ On your board" : "☆ Add to draft board") + '</button>';
       else if (r.status === "claim") act = '<span class="pp-status">Bid placed: $' + r.bid + ' &middot; waiting for League Admin approval</span><button type="button" class="link-btn" data-withdraw="' + r.id + '">Withdraw</button>';
       else act = '<label class="sr-only" for="bid-' + r.id + '">Bid amount for ' + esc(r.first + " " + r.last) + '</label><input class="input" id="bid-' + r.id + '" type="number" min="1" step="1" placeholder="$1" inputmode="numeric"><button type="button" class="btn btn-sm btn-primary" data-bid="' + r.id + '">Place sealed bid</button>';
-      return '<article class="pp-card"><div><h3>' + esc(r.first + " " + r.last) + '</h3><div class="pp-pos">' + esc(r.pos.map(function (p) { return R.POS[p] || p; }).join(" · ")) + '</div></div>' +
+      return '<article class="pp-card"><div class="dr-player-head">' + R.avatar(r, "md") + '<div><h3>' + esc(r.first + " " + r.last) + '</h3><div class="pp-pos">' + esc(r.pos.map(function (p) { return R.POS[p] || p; }).join(" · ")) + '</div></div></div>' +
         '<dl class="pp-facts"><div><dt>Height</dt><dd>' + esc(R.fmtHt(r.ht)) + '</dd></div><div><dt>Shoots</dt><dd>' + esc(r.hand) + '</dd></div><div><dt>Level</dt><dd>' + esc(r.level.replace(/ \(.*\)/, "").replace("Pickup / recreational", "Rec")) + '</dd></div></dl>' +
         '<p class="pp-miss"><span class="muted">Dates they’ll miss:</span> ' + esc(r.conflicts || "None listed") + '</p>' +
         (r.svId ? '<p class="pp-miss"><a href="https://uh.sportsvisio.com/league/texas-frisco/player/' + esc(r.svId) + '" target="_blank" rel="noopener">SportsVisio stats &rarr;</a></p>' : "") +

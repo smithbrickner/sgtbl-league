@@ -128,6 +128,24 @@
     return m ? m[0].toLowerCase() : "";
   }
 
+  // MOCK-UP ONLY (user, 2026-11-21): stand-in headshots for the 54 sample players, hot-linked from ESPN's NBA
+  // headshot images (real players' photos, copyrighted; nothing is saved in this repo). They are shown ONLY when the site
+  // is opened from this computer (localhost), never on the public site. Real players' photos will be taken at the draft
+  // combine and replace this. Index = sample player number (SGT-0001 is the first).
+  var MOCK_PHOTOS = "1966 3975 3202 3032977 3945274 4065648 3934672 3059318 3112335 6583 6606 3136193 4279888 4395628 4277905 3908809 4278073 4594268 6450 4251 6430 6442 3992 2779 3468 3136195 4066261 4396993 4066259 5104157 4432573 3917376 3155942 3149673 3064440 3978 6580 6475 6589 3032976 3064514 4066336 4277961 4432158 4432166 4433134 4566434 4871144 4593803 4433255 4431678 3147657 3934719 3062679".split(" ");
+  var LOCAL = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+  function photo(r) {
+    if (!LOCAL || !r || !r.id) return "";
+    var id = MOCK_PHOTOS[(parseInt(String(r.id).slice(4), 10) || 0) - 1];
+    return id ? "https://a.espncdn.com/i/headshots/nba/players/full/" + id + ".png" : "";
+  }
+  // A round headshot, falling back to initials when there's no photo (or it fails to load). size: sm | md | lg
+  function avatar(r, size) {
+    var ini = ((r.first || "").charAt(0) + (r.last || "").charAt(0)).toUpperCase(), src = photo(r);
+    return '<span class="hs hs-' + (size || "sm") + '" aria-hidden="true">' + esc(ini) +
+      (src ? '<img src="' + src + '" alt=""' + (size === "lg" || size === "md" ? "" : ' loading="lazy"') + ' referrerpolicy="no-referrer" onerror="this.remove()">' : "") + '</span>';
+  }
+
   var POS = { PG: "Point Guard", SG: "Shooting Guard", SF: "Small Forward", PF: "Power Forward", C: "Center" };
   function fmtHt(ht) { var p = String(ht || "").split("-"); return p[0] ? p[0] + "′ " + (p[1] || 0) + "″" : ""; }
   function fmtDate(iso) { var d = new Date(iso + "T12:00:00"); return isNaN(d) ? iso : d.toLocaleDateString("en-US", { month: "short", day: "numeric" }); }
@@ -135,7 +153,7 @@
 
   window.SGTBLReg = {
     TEAMS: TEAMS, POS: POS, load: load, save: save, phase: phase, setPhase: setPhase, pool: pool, update: update, addLog: addLog,
-    upsertFromForm: upsertFromForm, parseSvId: parseSvId, fmtHt: fmtHt, fmtDate: fmtDate, esc: esc,
+    upsertFromForm: upsertFromForm, photo: photo, avatar: avatar, parseSvId: parseSvId, fmtHt: fmtHt, fmtDate: fmtDate, esc: esc,
     reset: function () { try { localStorage.removeItem(KEY); localStorage.removeItem(PHASE_KEY); localStorage.removeItem("sgtbl-mock-board"); localStorage.removeItem("sgtbl-mock-draft-v1"); } catch (e) {} },
     // The coach persona's FAAB: $100 per season, $14 already spent (matches the Free Agency page).
     faabLeft: function (team) { var spent = team === "Knicks" ? 14 : 0; load().forEach(function (r) { if (r.team === team && r.status !== "declined") spent += r.bid || 0; }); return 100 - spent; }

@@ -7,10 +7,10 @@
 <link rel="icon" type="image/svg+xml" href="../assets/img/sgtbl-logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/tokens.css?v=20261121a">
-<link rel="stylesheet" href="../assets/css/base.css?v=20261121a">
-<link rel="stylesheet" href="../assets/css/site.css?v=20261121a">
-<link rel="stylesheet" href="../assets/css/admin.css?v=20261121a">
+<link rel="stylesheet" href="../assets/css/tokens.css?v=20261121c">
+<link rel="stylesheet" href="../assets/css/base.css?v=20261121c">
+<link rel="stylesheet" href="../assets/css/site.css?v=20261121c">
+<link rel="stylesheet" href="../assets/css/admin.css?v=20261121c">
 </head>
 <body class="admin">
 <div class="admin-shell">
@@ -136,8 +136,8 @@
 </dialog>
 <div class="rg-toast" role="status" aria-live="polite" data-rg-toast hidden></div>
 
-<script src="../assets/js/interactions.js?v=20261121a"></script>
-<script src="../assets/js/registrations.js?v=20261121a"></script>
+<script src="../assets/js/interactions.js?v=20261121c"></script>
+<script src="../assets/js/registrations.js?v=20261121c"></script>
 <script>
 (function () {
   var R = window.SGTBLReg, esc = R.esc, filter = "review", q = "", openId = null;
@@ -189,7 +189,7 @@
       .sort(function (a, b) { return a.submitted < b.submitted ? 1 : -1; });
     rows.innerHTML = shown.length ? shown.map(function (r) {
       var st = statusOf(r, ph), fee = FEE[r.payment];
-      return '<tr data-id="' + r.id + '"><td><button type="button" class="rg-name" data-open="' + r.id + '"><b>' + esc(r.first + " " + r.last) + '</b><span>' + r.id + '</span></button></td>' +
+      return '<tr data-id="' + r.id + '"><td><button type="button" class="rg-name dr-who" data-open="' + r.id + '">' + R.avatar(r, "sm") + '<span class="rg-name-txt"><b>' + esc(r.first + " " + r.last) + '</b><span>' + r.id + '</span></span></button></td>' +
         '<td>' + esc(r.pos.join(", ")) + '</td><td class="tnum">' + esc(R.fmtHt(r.ht)) + '</td><td class="tnum muted">' + R.fmtDate(r.submitted) + '</td>' +
         '<td><span class="badge ' + fee[1] + '">' + fee[0] + '</span></td><td><span class="badge ' + st[1] + '">' + esc(st[0]) + '</span></td>' +
         '<td>' + (r.svId ? '<span class="rg-sv-ok">&#10003; Linked</span>' : '<span class="muted">&mdash;</span>') + '</td>' +

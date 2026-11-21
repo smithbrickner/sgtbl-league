@@ -20,7 +20,7 @@
 
   function playerBlock(r) {
     if (!r) return '<p class="muted">Player not found.</p>';
-    return '<div class="dr-player"><div><h2>' + esc(r.first + " " + r.last) + '</h2><div class="pp-pos">' + esc((r.pos || []).map(function (p) { return R.POS[p] || p; }).join(" · ")) + '</div></div>' +
+    return '<div class="dr-player"><div class="dr-player-head">' + R.avatar(r, "lg") + '<div><h2>' + esc(r.first + " " + r.last) + '</h2><div class="pp-pos">' + esc((r.pos || []).map(function (p) { return R.POS[p] || p; }).join(" · ")) + '</div></div></div>' +
       '<dl class="pp-facts"><div><dt>Height</dt><dd>' + esc(R.fmtHt(r.ht)) + '</dd></div><div><dt>Shoots</dt><dd>' + esc(r.hand) + '</dd></div><div><dt>Level</dt><dd>' + esc(level(r)) + '</dd></div></dl>' +
       '<p class="pp-miss"><span class="muted">Dates they’ll miss:</span> ' + esc(r.conflicts || "None listed") + '</p></div>';
   }
@@ -41,6 +41,18 @@
   }
 
   function stageHtml(st, now) {
+    var lot = st.lot, h = stageBody(st, now);
+    if (st.status !== "nominate" && st.status !== "bidding") return h;
+    var top = st.paused ? '<div class="dr-paused" role="status"><b>Paused by the commissioner.</b> Every clock is stopped' + (admin ? "." : ", and bids and nominations open again when the draft resumes.") + '</div>' : "";
+    var ctl = admin ? '<div class="dr-clockctl"><div class="dr-label">Commissioner clock</div><div class="rg-act-row">' +
+      (st.paused ? '<button type="button" class="btn btn-primary btn-sm" data-dr="resume">Resume clock</button>' : '<button type="button" class="btn btn-ghost btn-sm rg-btn-line" data-dr="pause">Pause clock</button>') +
+      '<label class="dr-add"><span>Add</span><input id="drAdd" class="input" type="number" inputmode="numeric" min="1" max="600" step="1" value="15" aria-label="Seconds to add"><span>seconds</span></label>' +
+      '<button type="button" class="btn btn-ghost btn-sm rg-btn-line" data-dr="addtime">Add time</button></div>' +
+      '<div class="rg-act-note">Adds to the ' + (st.status === "bidding" ? "bidding countdown" : "nomination clock") + ' for everyone.</div></div>' : "";
+    return top + h + ctl;
+  }
+
+  function stageBody(st, now) {
     var lot = st.lot, h = "";
     if (st.status === "setup") {
       if (!admin) return '<div class="dr-stage-head"><span class="eyebrow">Auction draft</span><h2>The draft hasn’t started</h2></div><p>The League Admin starts the draft from the Draft Suite. Until then, look through the pool below and star the players you want to target. When it starts, this page updates by itself.</p>' +
@@ -56,17 +68,20 @@
     if (st.status === "nominate") {
       var t = D.turnTeam(st), mine = !admin && t === ME, bot = D.isBot(t);
       h = '<div class="dr-stage-head"><span class="eyebrow">Lot ' + (st.sales.length + st.voided.length + 1) + ' · Nomination</span><h2>' + (mine ? "Your turn to nominate" : "The " + esc(t) + " are nominating") + '</h2></div>';
+      var nomLeft = '<b data-dr-timer data-ends="' + (st.turnAt + D.NOM_LIMIT) + '">' + mmss(st.turnAt + D.NOM_LIMIT - now) + '</b>';
+      if (mine) h += '<p class="dr-nomclock">Nominate within ' + nomLeft + ', or a player is chosen for you (your top starred player, if you have one).</p>';
       if (mine) h += '<p>Pick a player to put up for auction. You open the bidding at $1, then every team gets ' + st.secs + ' seconds to place a sealed bid. Use the <strong>Nominate</strong> buttons in the pool below, or choose here:</p>' + nomForm(st, t);
-      else if (bot) h += '<p class="muted">Simulated coach. They nominate in <b data-dr-timer data-ends="' + (st.turnAt + 4000) + '">0:04</b>.</p>';
-      else h += '<p class="muted">Waiting for the ' + esc(t) + ' coach to choose a player.</p>';
+      else if (bot) h += '<p class="muted">Simulated coach. They nominate in <b data-dr-timer data-ends="' + (st.turnAt + D.NOM_DELAY) + '">' + mmss(st.turnAt + D.NOM_DELAY - now) + '</b>.</p>';
+      else h += '<p class="muted">Waiting for the ' + esc(t) + ' coach to choose a player. Time left: ' + nomLeft + '; after that a player is chosen for them.</p>';
       if (admin) h += '<div class="rg-actions"><div class="dr-label">Nominate on the ' + esc(t) + '’ behalf (for example, if their coach is stuck)</div>' + nomForm(st, t) + '</div>';
       return h;
     }
     if (st.status === "bidding") {
       var r = D.player(lot.pid), tb = lot.round > 1, left = lot.endsAt - now, started = now >= lot.startAt;
       h = '<div class="dr-stage-head"><span class="eyebrow">Lot ' + lot.n + ' · Nominated by the ' + esc(lot.nominator) + '</span>' +
-        (tb ? '<span class="badge badge-warning">Tie-break round ' + (lot.round - 1) + ': ' + lot.teams.map(esc).join(" vs ") + '</span>' : '<span class="badge badge-live">Bidding open</span>') + '</div>' +
+        (tb ? '<span class="badge badge-warning">Tie-break round ' + (lot.round - 1) + ': ' + lot.teams.map(esc).join(" vs ") + '</span>' : (st.paused ? '<span class="badge badge-warning">Paused</span>' : '<span class="badge badge-live">Bidding open</span>')) + '</div>' +
         '<div class="dr-live">' + playerBlock(r) + '<div class="dr-clock' + (left <= 5000 ? " low" : "") + '"><div class="dr-label">' + (started ? "Time left" : "Next round starts in") + '</div><div class="dr-time" data-dr-timer data-ends="' + (started ? lot.endsAt : lot.startAt) + '">' + mmss(started ? left : lot.startAt - now) + '</div></div></div>';
+      if (lot.auto && lot.round === 1) h += '<p class="dr-small muted">Chosen automatically: the ' + esc(lot.nominator) + ' ran out of nomination time.</p>';
       if (tb) h += '<p class="dr-small">The top bids tied at <strong>' + money(lot.min) + '</strong>. Only the tied teams bid again: new bids must be at least ' + money(lot.min) + ', and a team that doesn’t re-bid stays at ' + money(lot.min) + '.</p>';
       h += '<div class="dr-label">Sealed bids (amounts are hidden until time runs out)</div><ul class="dr-status">' + st.order.map(function (t) {
         var inR = lot.teams.indexOf(t) >= 0, b = lot.bids[t], vis = b && b.at <= now, cls = !inR ? "out" : vis ? "in" : "wait";
@@ -79,7 +94,7 @@
         else {
           var mb = D.maxBid(st, ME), my = lot.bids[ME];
           h += '<form class="dr-bid" data-dr-bidform><label for="drBid">Your sealed bid</label><div class="rg-act-row"><span class="dr-dollar">$</span><input id="drBid" class="input" type="number" inputmode="numeric" min="' + lot.min + '" max="' + mb + '" step="1" placeholder="' + lot.min + '" required>' +
-            '<button class="btn btn-primary" type="submit"' + (started ? "" : " disabled") + '>' + (my ? "Change my bid" : "Place sealed bid") + '</button></div>' +
+            '<button class="btn btn-primary" type="submit"' + (started && !st.paused ? "" : " disabled") + '>' + (my ? "Change my bid" : "Place sealed bid") + '</button></div>' +
             '<div class="rg-act-note">Max bid ' + money(mb) + ' (you keep $1 for each other open spot). ' + (my ? "Your current bid is <strong>" + money(my.amt) + "</strong>; you can change it until time runs out." : "You can change your bid until time runs out.") + '</div></form>';
         }
       } else h += '<div class="rg-act-row"><button type="button" class="btn btn-sm btn-ghost rg-btn-line" data-dr="void">Cancel this lot (player back to the pool)</button></div>';
@@ -133,7 +148,8 @@
     return '<h3>Results</h3>' + (items.length ? '<ol class="dr-feed">' + items.map(function (s) {
       var bids = s.rounds[s.rounds.length - 1] ? s.rounds[0].bids : {};
       var list = Object.keys(bids).sort(function (a, b) { return bids[b] - bids[a]; }).map(function (t) { return esc(t) + " " + money(bids[t]); }).join(" · ");
-      return '<li><span class="num">' + s.n + '</span><div><b>' + esc(s.name) + '</b><span>' + esc(s.team) + ' · ' + money(s.price) + (s.rounds.length > 1 ? " after a tie-break" : "") + '</span><span class="muted">Bids: ' + list + '</span></div></li>';
+      var fr = D.player(s.pid);
+      return '<li>' + (fr ? R.avatar(fr, "sm") : '<span class="num">' + s.n + '</span>') + '<div><b>' + esc(s.name) + '</b><span>' + esc(s.team) + ' · ' + money(s.price) + (s.rounds.length > 1 ? " after a tie-break" : "") + '</span><span class="muted">Bids: ' + list + '</span></div></li>';
     }).join("") + '</ol>' : '<p class="muted dr-small">Confirmed sales appear here, with every team’s bid.</p>') +
       (st.voided.length ? '<p class="muted dr-small">Voided lots: ' + st.voided.map(function (v) { return esc(v.name); }).join(", ") + '</p>' : "");
   }
@@ -141,8 +157,8 @@
   function rostersHtml(st) {
     return st.order.map(function (t) {
       var ro = D.roster(st, t);
-      return '<div class="dr-roster' + (t === ME && !admin ? " me" : "") + '"><div class="dr-roster-head">' + teamTag(t) + '<span class="muted">' + ro.length + '/' + D.SPOTS + ' · spent ' + money(D.spent(st, t)) + '</span></div>' +
-        (ro.length ? '<ul>' + ro.map(function (s) { var r = D.player(s.pid); return '<li><span>' + esc(s.name) + ' <span class="muted">' + esc(r ? posText(r) : "") + '</span></span><b class="tnum">' + money(s.price) + '</b></li>'; }).join("") + '</ul>' : '<p class="muted dr-small">No players yet.</p>') + '</div>';
+      return '<div class="dr-roster' + (t === ME && !admin ? " me" : "") + '"><div class="dr-roster-head"><span>' + teamTag(t) + '</span><span class="muted">' + ro.length + '/' + D.SPOTS + ' · spent ' + money(D.spent(st, t)) + '</span></div>' +
+        (ro.length ? '<ul>' + ro.map(function (s) { var r = D.player(s.pid); return '<li><span class="dr-who">' + (r ? R.avatar(r, "xs") : "") + esc(s.name) + ' <span class="muted">' + esc(r ? posText(r) : "") + '</span></span><b class="tnum">' + money(s.price) + '</b></li>'; }).join("") + '</ul>' : '<p class="muted dr-small">No players yet.</p>') + '</div>';
     }).join("");
   }
 
@@ -159,7 +175,7 @@
       .sort(function (x, y) { return (x.last + x.first).localeCompare(y.last + y.first); });
     var rows = shown.map(function (r) {
       var star = b.indexOf(r.id) >= 0;
-      return '<tr><td><b>' + esc(r.first + " " + r.last) + '</b></td><td>' + esc(posText(r)) + '</td><td>' + esc(R.fmtHt(r.ht)) + '</td><td>' + esc(r.hand) + '</td><td>' + esc(level(r)) + '</td><td class="dr-miss">' + esc(r.conflicts || "—") + '</td><td class="rg-row-act">' +
+      return '<tr><td><span class="dr-who">' + R.avatar(r, "sm") + '<b>' + esc(r.first + " " + r.last) + '</b></span></td><td>' + esc(posText(r)) + '</td><td>' + esc(R.fmtHt(r.ht)) + '</td><td>' + esc(r.hand) + '</td><td>' + esc(level(r)) + '</td><td class="dr-miss">' + esc(r.conflicts || "—") + '</td><td class="rg-row-act">' +
         (admin ? "" : '<button type="button" class="btn btn-sm btn-ghost dr-star" aria-pressed="' + star + '" aria-label="' + (star ? "Remove from" : "Add to") + ' draft board" data-dr-star="' + r.id + '">' + (star ? "★" : "☆") + '</button>') +
         (canNom ? '<button type="button" class="btn btn-sm btn-primary" data-dr="nominate" data-pid="' + r.id + '" data-team="' + esc(nomTeam) + '">Nominate</button>' : "") + '</td></tr>';
     }).join("");
@@ -177,18 +193,20 @@
   }
 
   function statusText(st) {
+    if (st.paused && (st.status === "nominate" || st.status === "bidding")) return "Paused";
     return { setup: "Not started", nominate: "Live · nominating", bidding: "Live · bidding", review: admin ? "Live · confirm sale" : "Live · awaiting admin", done: "All lots sold", final: "Complete" }[st.status] || "";
   }
 
   function render(force) {
-    var now = Date.now(), st = D.load();
-    if (D.step(st, now)) D.save(st);
+    var st = D.load();
+    if (D.step(st, Date.now())) D.save(st);
+    var now = st.paused || Date.now();                               // clocks freeze while paused
     var vis = st.lot ? Object.keys(st.lot.bids).filter(function (t) { return st.lot.bids[t].at <= now; }).join(",") + (now >= st.lot.startAt) : "";
     var sig = JSON.stringify(st) + "|" + vis + "|" + localStorage.getItem("sgtbl-mock-board") + "|" + localStorage.getItem("sgtbl-mock-registrations-v2") + "|" + posF + starredOnly + q;
     if (force || sig !== lastSig) {
       lastSig = sig;
       var ae = document.activeElement, focusId = ae && ae.id, keep = {};
-      ["drBid", "drNom", "drQ"].forEach(function (id) { var el = document.getElementById(id); if (el) keep[id] = el.value; });
+      ["drBid", "drNom", "drQ", "drAdd"].forEach(function (id) { var el = document.getElementById(id); if (el) keep[id] = el.value; });
       var selStart = ae && ae.id === "drQ" ? ae.selectionStart : null;
       stage.innerHTML = stageHtml(st, now);
       if (teamsEl) teamsEl.innerHTML = teamsHtml(st);
@@ -196,7 +214,7 @@
       if (rostersEl) rostersEl.innerHTML = rostersHtml(st);
       if (poolEl) poolEl.innerHTML = poolHtml(st);
       if (kpiEl) kpiEl.innerHTML = kpisHtml(st);
-      if (statusEl) { statusEl.textContent = statusText(st); statusEl.className = "badge " + (st.status === "final" ? "badge-success" : st.status === "setup" ? "badge-info" : st.status === "done" ? "badge-warning" : "badge-live"); }
+      if (statusEl) { statusEl.textContent = statusText(st); statusEl.className = "badge " + (st.paused ? "badge-warning" : st.status === "final" ? "badge-success" : st.status === "setup" ? "badge-info" : st.status === "done" ? "badge-warning" : "badge-live"); }
       Object.keys(keep).forEach(function (id) { var el = document.getElementById(id); if (el && id !== "drQ") el.value = keep[id]; });
       if (focusId) { var f = document.getElementById(focusId); if (f) { f.focus(); if (selStart != null && f.setSelectionRange) try { f.setSelectionRange(selStart, selStart); } catch (e) {} } }
     }
@@ -218,6 +236,9 @@
         if (!pid) return toast("Choose a player to nominate.");
         var r = D.player(pid); return done(D.nominate(pid, team), (r ? r.first + " " + r.last : "Player") + " is on the block. Bidding is open.");
       }
+      if (k === "pause") return done(D.pause(), "Clock paused for everyone.");
+      if (k === "resume") return done(D.resume(), "Clock resumed.");
+      if (k === "addtime") { var sec = parseInt((document.getElementById("drAdd") || {}).value, 10); return done(D.addTime(sec), "Added " + sec + " seconds."); }
       if (k === "award") return done(D.award(b.getAttribute("data-team")), "Awarded to the " + b.getAttribute("data-team") + ". Confirm the sale to finish.");
       if (k === "flip") { var tied = D.load().result.tied, w = tied[Math.floor(Math.random() * tied.length)]; return done(D.award(w), "Coin flip: the " + w + " win. Confirm the sale to finish."); }
       if (k === "confirm") { var st = D.load(), res = st.result; return done(D.confirm(), res ? "Sale confirmed: " + res.winner + " for $" + res.price + "." : ""); }
