@@ -510,3 +510,93 @@ body.admin { background: var(--surface-alt); }
 .dr-hero-scout .dr-hs { margin-top: 0; }
 .dr-hero-scout .dr-hs-row { grid-template-columns: 104px minmax(0, 1fr) 22px; }
 @media (max-width: 1240px) { .dr-hero-bid { grid-row: auto; } .dr-hero-scout { grid-column: 1 / -1; } }
+/* Overbid protection: 1-second pause after each new high bid (draft-ui.js) */
+.dr-cool { display: grid; gap: 4px; }
+.dr-cool-txt { font-size: 12px; font-weight: 700; color: #f5c451; }
+.dr-cool-bar { display: block; height: 4px; border-radius: 3px; background: rgba(255,255,255,.12); overflow: hidden; }
+.dr-cool-bar i { display: block; height: 100%; background: #f5c451; transform: scaleX(0); transform-origin: left; transition: transform .25s linear; }
+/* Draft board slots: price on the second line beside the position, so narrow columns never cut it off */
+.dr-col li .dr-slot-txt .dr-plink { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+.dr-slot-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; min-width: 0; }
+.dr-slot-meta em { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.dr-slot-meta b { flex: none; font-variant-numeric: tabular-nums; color: var(--rg); font-size: 12px; }
+/* Draft board gets the full width; the bid log sits under it as two side-by-side lists */
+.dr-lower { grid-template-columns: minmax(0, 1fr); }
+[data-dr-log] { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-2) var(--space-5); }
+.dr-log-col { min-width: 0; }
+
+/* NBA team logos in the draft room (localhost only) */
+.dr-tlogo { width: 18px; height: 18px; object-fit: contain; margin-right: 6px; vertical-align: -4px; flex: none; }
+.dr-tile-logo { width: 22px; height: 22px; object-fit: contain; margin-right: 6px; vertical-align: -6px; }
+.dr-col-logo { width: 20px; height: 20px; object-fit: contain; margin-right: 6px; vertical-align: -5px; background: rgba(255,255,255,.9); border-radius: 50%; padding: 2px; }
+.dr-tile-top b { display: inline-flex; align-items: center; min-width: 0; }
+
+/* Skill radar chart (draft room scouting) */
+.dr-radar { display: block; width: 100%; height: auto; overflow: visible; }
+.dr-rd-ring { fill: none; stroke: rgba(255,255,255,.1); stroke-width: 1; }
+.dr-rd-ring.outer { stroke: rgba(255,255,255,.22); fill: rgba(255,255,255,.03); }
+.dr-rd-axis { stroke: rgba(255,255,255,.1); stroke-width: 1; }
+.dr-rd-shape { fill: rgba(47,191,113,.28); stroke: #2fbf71; stroke-width: 2; stroke-linejoin: round; }
+.dr-rd-dot { fill: #2fbf71; stroke: #0b1520; stroke-width: 1.5; }
+.dr-rd-label { fill: #c9d6e2; font-size: 11.5px; font-weight: 600; font-family: var(--font-body, Inter, sans-serif); }
+.dr-rd-val { fill: #fff; font-family: var(--font-display); font-size: 15px; font-weight: 800; }
+.dr-rd-val.none { fill: #6f8597; }
+.dr-hs-body { display: grid; grid-template-columns: minmax(220px, 300px) minmax(0, 1fr); gap: var(--space-5); align-items: center; }
+.dr-hs-radar { max-width: 300px; }
+.dr-hs-side { min-width: 0; }
+.dr-hs-side .dr-label { margin-top: 0; }
+.dr-scout-grid { display: grid; grid-template-columns: minmax(200px, 280px) minmax(0, 1fr); gap: var(--space-4); align-items: center; margin-bottom: var(--space-3); }
+.dr-scout-grid .dr-skills { grid-template-columns: 1fr; margin: 0; gap: 6px; }
+.dr-scout-grid .dr-skill { grid-template-columns: minmax(0, 1fr) 70px !important; }
+@media (max-width: 640px) { .dr-hs-body, .dr-scout-grid { grid-template-columns: 1fr; } .dr-hs-radar, .dr-scout-radar { max-width: 280px; margin: 0 auto; } }
+.dr-tile-top b span { margin-left: 4px; }
+.dr-sample { font-style: normal; font-family: var(--font-body, inherit); font-size: 10px; font-weight: 800; letter-spacing: .4px; text-transform: uppercase; padding: 2px 6px; border-radius: 999px; background: rgba(245,196,81,.16); color: #f5c451; margin-left: 6px; vertical-align: 2px; }
+/* Pool ranks next to scouting grades: "9 (#3)" */
+.dr-rd-rank { fill: #8fa3b5; font-family: var(--font-body, Inter, sans-serif); font-size: 10.5px; font-weight: 700; }
+.dr-hs-head em.dr-rank { color: var(--rt); font-weight: 700; }
+.dr-skill { grid-template-columns: minmax(0, 1fr) 70px 46px !important; }
+.dr-skill-rank { font-style: normal; font-size: 12px; font-weight: 700; color: var(--rm); }
+.dr-scout .dr-rk { color: var(--rm); font-size: 12px; font-weight: 700; }
+/* Overall total uses the same number size as the skill grades on the radar (user, 2026-11-21) */
+.dr-hs-head b, .dr-hs-head b span { font-family: var(--font-display); font-size: 15px; font-weight: 800; }
+.dr-hs-head b { color: #fff; }
+.dr-hs-head b span { color: #fff; }
+.dr-hs-head em.dr-rank { font-size: 10.5px; color: #8fa3b5; font-weight: 700; }
+/* Winning team's logo to the right of the player's name and position */
+.dr-name-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-4); }
+.dr-name-col { min-width: 0; }
+.dr-name-col .dr-pos { margin-bottom: 0; }
+.dr-win { flex: none; display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 88px; }
+.dr-win-art { width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.92); box-shadow: 0 0 0 3px var(--tc), 0 6px 18px rgba(0,0,0,.35); }
+.dr-win-logo { width: 54px; height: 54px; object-fit: contain; }
+.dr-win-dot { width: 100%; height: 100%; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; }
+.dr-win-txt { display: grid; text-align: center; line-height: 1.2; }
+.dr-win-txt em { font-style: normal; font-size: 10px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; color: var(--rm); }
+.dr-win-txt b { font-size: var(--text-sm); }
+@media (max-width: 760px) { .dr-win-art { width: 56px; height: 56px; } .dr-win-logo { width: 42px; height: 42px; } }
+.dr-tile-tag { display: block; margin-top: 4px; font-style: normal; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: var(--rm); }
+.dr-tile.high .dr-tile-tag, .dr-tile.won .dr-tile-tag { color: var(--rg); }
+.dr-tile.nom .dr-tile-tag { color: #ff8b91; }
+.dr-tile-top b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Winning team badge: bare logo (no circle), a little larger, more room above the label (user, 2026-11-21) */
+.dr-win { gap: 10px; }
+.dr-win-art { width: auto; height: auto; border-radius: 0; background: none; box-shadow: none; }
+.dr-win-logo { width: 84px; height: 84px; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(0,0,0,.4)); }
+.dr-win-dot { width: 72px; height: 72px; }
+@media (max-width: 760px) { .dr-win-art { width: auto; height: auto; } .dr-win-logo { width: 64px; height: 64px; } .dr-win-dot { width: 56px; height: 56px; } }
+/* Winning team's logo behind the on-the-block headshot (faded, like the public player page) */
+.hs .dr-photo-team { position: absolute; inset: 6% 8% 16%; width: 84%; height: 78%; object-fit: contain; object-position: 50% 50%; opacity: .4; z-index: 0; transform: none; }
+.hs .dr-photo-team[hidden] { display: none; }
+.hs-xl img:not(.dr-photo-team) { z-index: 1; }
+/* Draft board column header: name + money on the left, a larger bare logo on the right (user, 2026-11-21) */
+.dr-col-head { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.dr-col-txt { display: grid; gap: 1px; min-width: 0; }
+.dr-col-txt b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dr-col-logo { width: 36px; height: 36px; margin: -4px 0; padding: 0; background: none; border-radius: 0; flex: none; filter: drop-shadow(0 1px 2px rgba(0,0,0,.35)); }
+/* Larger scouting grade numbers (user, 2026-11-21); the overall total stays the same size as the skill grades */
+.dr-rd-val { font-size: 20px; }
+.dr-rd-rank { font-size: 12px; }
+.dr-hs-head b, .dr-hs-head b span { font-size: 20px; }
+.dr-hs-head em.dr-rank { font-size: 12px; }
+/* Larger winner's logo behind the headshot on the "Sold" screen (user, 2026-11-21) */
+.hs .dr-photo-team { inset: auto; left: 50%; top: 46%; width: 112%; height: 112%; transform: translate(-50%, -50%); }

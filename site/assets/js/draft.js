@@ -11,13 +11,15 @@
      A new bid must beat the high bid by the minimum raise: $1 under $50, $5 from $50 up to $200, $10 from $200 up.
    - Each new high bid tops the clock back up to 10 seconds if it had less. When the clock runs out, the high bidder wins.
    - Max bid = budget left - $1 for each other roster spot still to fill. You can't outbid yourself.
+   - Overbid protection (user, 2026-11-21): after every new high bid, other teams can't bid for 1 second (their buttons
+     grey out), and every bid carries the high bid the coach saw; if the price moved in between, the bid is refused.
    - The commissioner can pause/resume the clock and add time by hand.
    - The League Admin confirms each sale (or voids it, which returns the player to the pool).
    The 5 teams other than the coach persona's Knicks are SIMULATED: each has a hidden price limit per player (seeded
    random), and they raise after a short seeded delay, so every open tab computes exactly the same auction. */
 (function () {
   var R = window.SGTBLReg, KEY = "sgtbl-mock-draft-v2";
-  var BUDGET = 1000, SPOTS = 9, ME = "Knicks", NOM_DELAY = 4000, NOM_LIMIT = 30000, TOPUP = 10000;
+  var BUDGET = 1000, SPOTS = 9, ME = "Knicks", NOM_DELAY = 4000, NOM_LIMIT = 30000, TOPUP = 10000, COOLDOWN = 1000;
 
   function blank() {
     return { status: "setup", secs: 30, order: R.TEAMS.slice(), turn: 0, turnAt: 0, lot: null, result: null, sales: [], voided: [], seed: 1 };
@@ -170,7 +172,7 @@
   function act(fn) { var st = load(); step(st, Date.now()); var err = fn(st) || ""; if (!err) save(st); return err; }
 
   var api = {
-    BUDGET: BUDGET, SPOTS: SPOTS, ME: ME, KEY: KEY, NOM_DELAY: NOM_DELAY, NOM_LIMIT: NOM_LIMIT, TOPUP: TOPUP,
+    BUDGET: BUDGET, SPOTS: SPOTS, ME: ME, KEY: KEY, NOM_DELAY: NOM_DELAY, NOM_LIMIT: NOM_LIMIT, TOPUP: TOPUP, COOLDOWN: COOLDOWN,
     load: load, save: save, step: step, pool: pool, player: player, roster: roster, spent: spent, raise: raise, minNext: minNext,
     budgetLeft: budgetLeft, spotsLeft: spotsLeft, maxBid: maxBid, turnTeam: turnTeam, isBot: isBot,
 
@@ -207,16 +209,19 @@
     nominate: function (pid, team) { return act(function (st) {
       if (st.paused) return "The draft is paused.";
       if (st.status !== "nominate") return "It isn't time to nominate.";
-      if (team !== turnTeam(st)) return "It's the " + turnTeam(st) + "' turn to nominate.";
+      if (team !== turnTeam(st)) return "It's another team's turn to nominate.";
       if (!pool(st).some(function (r) { return r.id === pid; })) return "That player isn't available.";
       openLot(st, pid, team, Date.now());
     }); },
-    bid: function (team, amt) { return act(function (st) {
+    // seen = the high bid the coach was looking at when they clicked (overbid protection).
+    bid: function (team, amt, seen) { return act(function (st) {
       var lot = st.lot;
       if (st.paused) return "The draft is paused. Bidding opens again when the commissioner resumes.";
       if (st.status !== "bidding") return "Bidding is closed.";
       if (lot.teams.indexOf(team) < 0) return "Your roster is full.";
       if (lot.high.team === team) return "You're already the high bidder.";
+      if (seen != null && +seen !== lot.high.amt) return "The price moved to $" + lot.high.amt + ". Check it and bid again.";
+      if (Date.now() - lot.high.at < COOLDOWN) return "The price just changed. Take a second to check it, then bid.";
       amt = Math.floor(amt);
       if (!(amt >= minNext(lot))) return "The next bid must be at least $" + minNext(lot) + ".";
       if (amt > maxBid(st, team)) return "Your max bid is $" + maxBid(st, team) + " (you need $1 for each other open roster spot).";

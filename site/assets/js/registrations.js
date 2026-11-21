@@ -154,7 +154,7 @@
 
   window.SGTBLReg = {
     TEAMS: TEAMS, POS: POS, load: load, save: save, phase: phase, setPhase: setPhase, pool: pool, update: update, addLog: addLog,
-    upsertFromForm: upsertFromForm, photo: photo, avatar: avatar, parseSvId: parseSvId, fmtHt: fmtHt, fmtDate: fmtDate, esc: esc,
+    upsertFromForm: upsertFromForm, photo: photo, avatar: avatar, local: LOCAL, parseSvId: parseSvId, fmtHt: fmtHt, fmtDate: fmtDate, esc: esc,
     reset: function () { try { localStorage.removeItem(KEY); localStorage.removeItem(PHASE_KEY); localStorage.removeItem("sgtbl-mock-board"); localStorage.removeItem("sgtbl-mock-draft-v1"); localStorage.removeItem("sgtbl-mock-draft-v2"); } catch (e) {} },
     // The coach persona's FAAB: $100 per season, $14 already spent (matches the Free Agency page).
     faabLeft: function (team) { var spent = team === "Knicks" ? 14 : 0; load().forEach(function (r) { if (r.team === team && r.status !== "declined") spent += r.bid || 0; }); return 100 - spent; }

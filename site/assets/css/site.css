@@ -101,7 +101,7 @@
    of a large faded team logo, and the box is pulled down to the header's bottom edge (negative
    margin = the header's bottom padding) so the photo's cropped-off chest meets the edge cleanly. */
 .profile-visual { position: relative; flex: none; width: 210px; height: 168px; align-self: flex-end; margin-bottom: calc(-1 * var(--space-7)); }
-.profile-visual .pv-logo { position: absolute; inset: 0 0 12px; width: 100%; height: calc(100% - 12px); object-fit: contain; opacity: .45; }
+.profile-visual .pv-logo { position: absolute; left: 50%; top: 44%; width: 150%; height: 150%; transform: translate(-50%, -50%); object-fit: contain; opacity: .45; } /* larger, spilling past the photo (user, 2026-11-21) */
 .profile-visual .pv-photo { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; }
 /* When the header stacks (phones), the visual sits above the name instead of on the bottom edge,
    so fade the photo's cropped chest out rather than leaving a hard cut line mid-header. */
