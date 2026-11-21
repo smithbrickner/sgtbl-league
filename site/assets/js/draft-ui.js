@@ -10,7 +10,7 @@
   var el = { teams: $("[data-dr-teams]"), photo: $("[data-dr-photo]"), main: $("[data-dr-main]"), bid: $("[data-dr-bidbox]"),
     extra: $("[data-dr-extra]"), board: $("[data-dr-board]"), log: $("[data-dr-log]"), pool: $("[data-dr-pool]") };
   var statusEl = $("[data-dr-status]"), toastEl = $("[data-rg-toast]");
-  var posF = "all", starredOnly = false, q = "";
+  var posF = "all", starredOnly = false, q = "", sortBy = admin ? "name" : "scout";
 
   function toast(msg) { if (!toastEl) return; toastEl.textContent = msg; toastEl.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function () { toastEl.hidden = true; }, 4200); }
   function board() { try { return JSON.parse(localStorage.getItem("sgtbl-mock-board") || "[]"); } catch (e) { return []; } }
@@ -23,6 +23,17 @@
   function dot(t) { return '<span class="dr-team-dot dr-t-' + t.toLowerCase() + '" aria-hidden="true"></span>'; }
   function the(t) { return "the " + esc(t); }
   function timer(ends) { return '<span data-dr-timer data-ends="' + ends + '"></span>'; }
+
+  // ---- Private scouting reports (coaches only; user 2026-11-21): 8 skills rated 1-10 plus notes, kept per team.
+  //      Only that team sees them; the League Admin doesn't. Prototype: saved in this browser. ----
+  var SKILLS = [["sh", "Shooting"], ["fi", "Finishing"], ["bh", "Ball handling"], ["pa", "Passing"], ["re", "Rebounding"], ["de", "Defense"], ["at", "Athleticism"], ["iq", "Basketball IQ"]];
+  var SCOUT_KEY = "sgtbl-mock-scouting";
+  function scoutAll() { try { return JSON.parse(localStorage.getItem(SCOUT_KEY) || "{}"); } catch (e) { return {}; } }
+  function scout(pid) { var a = scoutAll()[ME] || {}, x = a[pid] || {}; return { r: x.r || {}, notes: x.notes || "" }; }
+  function saveScout(pid, rep) { var a = scoutAll(); a[ME] = a[ME] || {}; rep.at = Date.now(); a[ME][pid] = rep; try { localStorage.setItem(SCOUT_KEY, JSON.stringify(a)); } catch (e) {} }
+  function rated(rep) { return SKILLS.filter(function (k) { return rep.r[k[0]]; }).length; }
+  function total(rep) { return SKILLS.reduce(function (m, k) { return m + (rep.r[k[0]] || 0); }, 0); }
+  function plink(r, html) { return '<button type="button" class="dr-plink" data-dr-player="' + r.id + '">' + (html || esc(r.first + " " + r.last)) + '</button>'; }
 
   // Replace a region's HTML only when it changed; keep focus and typed values in it.
   function set(node, html) {
@@ -78,7 +89,7 @@
       var r = D.player(lot.pid);
       if (!r) return '<p>Player not found.</p>';
       return '<div class="dr-eyebrow">On the block · Lot ' + lot.n + ' · Nominated by ' + the(lot.nominator) + (lot.auto ? ' (automatic)' : "") + '</div>' +
-        '<h2 class="dr-name">' + esc(r.first) + ' <b>' + esc(r.last) + '</b></h2>' +
+        '<h2 class="dr-name">' + plink(r, esc(r.first) + ' <b>' + esc(r.last) + '</b>') + '</h2>' +
         '<div class="dr-pos">' + esc((r.pos || []).map(function (p) { return R.POS[p] || p; }).join(" · ")) + '</div>' +
         '<dl class="dr-facts"><div><dt>Height</dt><dd>' + esc(R.fmtHt(r.ht)) + '</dd></div><div><dt>Shoots</dt><dd>' + esc(r.hand) + '</dd></div><div><dt>Level</dt><dd>' + esc(level(r)) + '</dd></div><div><dt>Will miss</dt><dd>' + esc(r.conflicts || "None listed") + '</dd></div></dl>';
     }
@@ -150,7 +161,7 @@
       var ro = D.roster(st, t), slots = [];
       for (var i = 0; i < D.SPOTS; i++) {
         var s = ro[i], r = s && D.player(s.pid);
-        slots.push(s ? '<li>' + (r ? R.avatar(r, "xs") : "") + '<span class="dr-slot-txt">' + esc(s.name) + '<em>' + esc(r ? posText(r) : "") + '</em></span><b>' + money(s.price) + '</b></li>' : '<li class="empty"><span class="dr-slot-txt">Open spot</span></li>');
+        slots.push(s ? '<li>' + (r ? R.avatar(r, "xs") : "") + '<span class="dr-slot-txt">' + (r ? plink(r) : esc(s.name)) + '<em>' + esc(r ? posText(r) : "") + '</em></span><b>' + money(s.price) + '</b></li>' : '<li class="empty"><span class="dr-slot-txt">Open spot</span></li>');
       }
       return '<div class="dr-col' + (!admin && t === ME ? " me" : "") + '"><div class="dr-col-head dr-tc-' + t.toLowerCase() + '"><b>' + esc(t) + '</b><span>' + money(D.budgetLeft(st, t)) + ' left</span></div><ol>' + slots.join("") + '</ol></div>';
     }).join("") + '</div>';
@@ -167,7 +178,7 @@
     var sales = st.sales.slice().reverse().slice(0, 10);
     h += '<div class="dr-label">Recent sales</div>' + (sales.length ? '<ol class="dr-sales">' + sales.map(function (s) {
       var r = D.player(s.pid);
-      return '<li>' + (r ? R.avatar(r, "sm") : "") + '<span class="dr-sale-txt"><b>' + esc(s.name) + '</b><em>' + dot(s.team) + esc(s.team) + '</em></span><strong>' + money(s.price) + '</strong></li>';
+      return '<li>' + (r ? R.avatar(r, "sm") : "") + '<span class="dr-sale-txt"><b>' + (r ? plink(r) : esc(s.name)) + '</b><em>' + dot(s.team) + esc(s.team) + '</em></span><strong>' + money(s.price) + '</strong></li>';
     }).join("") + '</ol>' : '<p class="dr-muted dr-small">No players sold yet.</p>');
     if (st.voided.length) h += '<p class="dr-muted dr-small">Voided: ' + st.voided.map(function (v) { return esc(v.name); }).join(", ") + '</p>';
     return h;
@@ -184,17 +195,92 @@
     var shown = list.filter(function (r) { return posF === "all" || r.pos.indexOf(posF) >= 0; })
       .filter(function (r) { return !starredOnly || b.indexOf(r.id) >= 0; })
       .filter(function (r) { return !q || (r.first + " " + r.last).toLowerCase().indexOf(q) >= 0; })
-      .sort(function (x, y) { return (x.last + x.first).localeCompare(y.last + y.first); });
+      .sort(sorter());
     var rows = shown.map(function (r) {
       var star = b.indexOf(r.id) >= 0;
-      return '<tr><td><span class="dr-who">' + R.avatar(r, "sm") + '<b>' + esc(r.first + " " + r.last) + '</b></span></td><td>' + esc(posText(r)) + '</td><td>' + esc(R.fmtHt(r.ht)) + '</td><td>' + esc(r.hand) + '</td><td>' + esc(level(r)) + '</td><td class="dr-miss">' + esc(r.conflicts || "—") + '</td><td class="dr-act">' +
+      return '<tr><td><span class="dr-who">' + R.avatar(r, "sm") + '<b>' + plink(r) + '</b></span></td>' + (admin ? "" : scoutCell(r)) + '<td>' + esc(posText(r)) + '</td><td>' + esc(R.fmtHt(r.ht)) + '</td><td>' + esc(r.hand) + '</td><td>' + esc(level(r)) + '</td><td class="dr-miss">' + esc(r.conflicts || "—") + '</td><td class="dr-act">' +
         (admin ? "" : '<button type="button" class="dr-star" aria-pressed="' + star + '" aria-label="' + (star ? "Remove from" : "Add to") + ' draft board" data-dr-star="' + r.id + '">' + (star ? "★" : "☆") + '</button>') +
         (canNom ? '<button type="button" class="btn btn-sm dr-btn-primary" data-dr="nominate" data-pid="' + r.id + '" data-team="' + esc(nomTeam) + '">Nominate</button>' : "") + '</td></tr>';
     }).join("");
-    return '<div class="dr-tools"><div class="dr-chips" role="group" aria-label="Filter by position">' + chips + '</div><label for="drQ" class="sr-only">Search players</label><input id="drQ" class="input dr-search" type="search" placeholder="Search players" value="' + esc(q) + '"></div>' +
-      '<div class="dr-table-wrap"><table class="dr-table"><thead><tr><th>Player</th><th>Pos</th><th>Ht</th><th>Shoots</th><th>Level</th><th>Will miss</th><th><span class="sr-only">Actions</span></th></tr></thead><tbody>' +
-      (rows || '<tr><td colspan="7" class="dr-muted">No available players match.</td></tr>') + '</tbody></table></div>';
+    return '<div class="dr-tools"><div class="dr-chips" role="group" aria-label="Filter by position">' + chips + '</div><label for="drQ" class="sr-only">Search players</label><div class="dr-tools-r"><label for="drSort" class="sr-only">Sort players</label><select id="drSort" class="input dr-sort">' +
+      (admin ? "" : '<option value="scout"' + (sortBy === "scout" ? " selected" : "") + '>Sort: your scouting total</option>') +
+      '<option value="name"' + (sortBy === "name" ? " selected" : "") + '>Sort: name</option><option value="ht"' + (sortBy === "ht" ? " selected" : "") + '>Sort: height</option></select>' +
+      '<input id="drQ" class="input dr-search" type="search" placeholder="Search players" value="' + esc(q) + '"></div></div>' +
+      '<div class="dr-table-wrap"><table class="dr-table"><thead><tr><th>Player</th>' + (admin ? "" : '<th title="Your private scouting total: 8 skills, 1 to 10 each">Your scout</th>') + '<th>Pos</th><th>Ht</th><th>Shoots</th><th>Level</th><th>Will miss</th><th><span class="sr-only">Actions</span></th></tr></thead><tbody>' +
+      (rows || '<tr><td colspan="' + (admin ? 7 : 8) + '" class="dr-muted">No available players match.</td></tr>') + '</tbody></table></div>';
   }
+
+  function inches(r) { var p = String(r.ht || "0-0").split("-"); return (+p[0] || 0) * 12 + (+p[1] || 0); }
+  function sorter() {
+    var byName = function (x, y) { return (x.last + x.first).localeCompare(y.last + y.first); };
+    if (sortBy === "ht") return function (x, y) { return inches(y) - inches(x) || byName(x, y); };
+    if (sortBy === "scout" && !admin) {
+      var all = scoutAll()[ME] || {}, tot = function (r) { var x = all[r.id]; return x && x.r ? total({ r: x.r }) : -1; };
+      return function (x, y) { return tot(y) - tot(x) || byName(x, y); };   // highest total first; unrated players last
+    }
+    return byName;
+  }
+  function scoutCell(r) {
+    var rep = scout(r.id), n = rated(rep);
+    return '<td class="dr-scout">' + (n ? '<b>' + total(rep) + '</b><span>/80</span>' + (n < 8 ? '<em>' + n + ' of 8</em>' : "") : '<span class="dr-muted">Not rated</span>') +
+      (rep.notes ? ' <i title="You have notes on this player" aria-label="Has notes">&#9998;</i>' : "") + '</td>';
+  }
+
+  // ---- Player pop-up: details, where the player stands, and (coaches) a private scouting report ----
+  document.body.insertAdjacentHTML("beforeend", '<dialog class="dr-pdlg" id="drPlayer" aria-labelledby="drPName"><button type="button" class="dr-pdlg-x" data-dr-close aria-label="Close">&#10005;</button><div data-dr-pbody></div></dialog>');
+  var dlg = document.getElementById("drPlayer"), dlgBody = dlg.querySelector("[data-dr-pbody]"), openPid = "", saveT;
+  function pstatusHtml(st, r) {
+    var sale = st.sales.filter(function (x) { return x.pid === r.id; })[0], lot = st.lot, h = "";
+    if (sale) h = '<span class="dr-pill">Drafted</span> ' + dot(sale.team) + esc(sale.team) + ' for <b>' + money(sale.price) + '</b>';
+    else if (lot && lot.pid === r.id && st.status === "bidding") h = '<span class="dr-pill live">On the block</span> High bid <b>' + money(lot.high.amt) + '</b> by ' + dot(lot.high.team) + esc(lot.high.team);
+    else if (lot && lot.pid === r.id && st.status === "review") h = '<span class="dr-pill live">Sold</span> to ' + dot(st.result.winner) + esc(st.result.winner) + ' for <b>' + money(st.result.price) + '</b>, waiting for League Admin';
+    else if (r.status === "approved") h = '<span class="dr-pill">Available</span> In the draft pool';
+    else h = '<span class="dr-pill">' + esc(r.status) + '</span>';
+    var acts = "";
+    if (!admin && !sale && !(lot && lot.pid === r.id)) {
+      var star = board().indexOf(r.id) >= 0;
+      acts += '<button type="button" class="btn btn-sm dr-btn-ghost" data-dr-star="' + r.id + '">' + (star ? "★ On your board" : "☆ Add to your board") + '</button>';
+    }
+    if (st.status === "nominate" && !st.paused && !sale && r.status === "approved" && (admin || D.turnTeam(st) === ME))
+      acts += '<button type="button" class="btn btn-sm dr-btn-primary" data-dr="nominate" data-pid="' + r.id + '" data-team="' + esc(D.turnTeam(st)) + '">Nominate' + (admin ? " for " + the(D.turnTeam(st)) : "") + '</button>';
+    return '<div class="dr-pstatus-line">' + h + '</div>' + (acts ? '<div class="dr-row">' + acts + '</div>' : "");
+  }
+  function scoutTotalText(rep) { var n = rated(rep); return n ? "Total " + total(rep) + " / 80" + (n < 8 ? " · " + n + " of 8 skills rated" : "") : "Not rated yet"; }
+  function openPlayer(pid) {
+    var r = D.player(pid), st = D.load(); if (!r) return;
+    openPid = pid;
+    var h = '<div class="dr-phead">' + R.avatar(r, "lg") + '<div><div class="dr-eyebrow">' + esc((r.pos || []).map(function (p) { return R.POS[p] || p; }).join(" · ")) + '</div><h2 id="drPName">' + esc(r.first + " " + r.last) + '</h2>' +
+      (r.svId ? '<a href="https://uh.sportsvisio.com/league/texas-frisco/player/' + esc(r.svId) + '" target="_blank" rel="noopener">SportsVisio stats &rarr;</a>' : '<span class="dr-muted dr-small">No SportsVisio profile linked yet</span>') + '</div></div>' +
+      '<dl class="dr-facts"><div><dt>Height</dt><dd>' + esc(R.fmtHt(r.ht)) + '</dd></div><div><dt>Shoots</dt><dd>' + esc(r.hand) + '</dd></div><div><dt>Level</dt><dd>' + esc(level(r)) + '</dd></div><div><dt>Will miss</dt><dd>' + esc(r.conflicts || "None listed") + '</dd></div></dl>' +
+      '<div class="dr-pstatus" data-dr-pstatus></div>';
+    if (admin) h += '<p class="dr-muted dr-small">Coaches keep their own scouting ratings and notes on each player. They are private to each team, so they don\u2019t appear here.</p>';
+    else {
+      var rep = scout(pid);
+      h += '<section class="dr-scouting"><div class="dr-scout-head"><h3>Your scouting report</h3><span data-dr-stotal' + (rated(rep) ? "" : ' class="none"') + '>' + scoutTotalText(rep) + '</span></div>' +
+        '<div class="dr-skills">' + SKILLS.map(function (k) {
+          var v = rep.r[k[0]] || "";
+          return '<label class="dr-skill"><span>' + k[1] + '</span><select class="input" data-skill="' + k[0] + '"><option value="">&ndash;</option>' +
+            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function (n) { return '<option' + (n === v ? " selected" : "") + '>' + n + '</option>'; }).join("") + '</select></label>';
+        }).join("") + '</div>' +
+        '<label class="dr-notes-l" for="drSNotes">Notes</label><textarea id="drSNotes" class="input dr-notes" rows="4" placeholder="Optional: strengths, fit with your roster, availability concerns, the most you\u2019d pay\u2026">' + esc(rep.notes) + '</textarea>' +
+        '<p class="dr-muted dr-small">1 = weak, 10 = elite. Only the ' + esc(ME) + ' can see your ratings and notes. They save as you go, and the player list sorts by your total.</p></section>';
+    }
+    dlgBody.innerHTML = h;
+    var ps = dlgBody.querySelector("[data-dr-pstatus]"); ps._h = ""; set(ps, pstatusHtml(st, r));
+    if (!dlg.open) dlg.showModal();
+  }
+  function saveFromDialog() {
+    if (!openPid || admin) return;
+    var rep = { r: {}, notes: (document.getElementById("drSNotes") || {}).value || "" };
+    dlgBody.querySelectorAll("[data-skill]").forEach(function (sel) { if (sel.value) rep.r[sel.getAttribute("data-skill")] = +sel.value; });
+    saveScout(openPid, rep);
+    var t = dlgBody.querySelector("[data-dr-stotal]"); if (t) { t.textContent = scoutTotalText(rep); t.classList.toggle("none", !rated(rep)); }
+    render();
+  }
+  dlg.addEventListener("click", function (e) { if (e.target === dlg || e.target.closest("[data-dr-close]")) dlg.close(); });
+  dlg.addEventListener("close", function () { if (saveT) { clearTimeout(saveT); saveFromDialog(); } openPid = ""; });
+  dlg.addEventListener("change", function (e) { if (e.target.matches("[data-skill]")) saveFromDialog(); });
+  dlg.addEventListener("input", function (e) { if (e.target.id === "drSNotes") { clearTimeout(saveT); saveT = setTimeout(function () { saveT = null; saveFromDialog(); }, 400); } });
 
   function statusText(st) {
     if (st.paused && (st.status === "nominate" || st.status === "bidding")) return "Paused";
@@ -207,6 +293,7 @@
     var now = st.paused || Date.now();                               // clocks freeze while paused
     set(el.teams, teamsHtml(st)); set(el.photo, photoHtml(st)); set(el.main, mainHtml(st)); set(el.bid, bidHtml(st));
     set(el.extra, extraHtml(st)); set(el.board, boardHtml(st)); set(el.log, logHtml(st)); set(el.pool, poolHtml(st));
+    if (dlg.open && openPid) { var pr = D.player(openPid); if (pr) set(dlgBody.querySelector("[data-dr-pstatus]"), pstatusHtml(st, pr)); }
     var hero = $(".dr-hero"); if (hero) { hero.classList.toggle("is-review", st.status === "review"); hero.classList.toggle("is-paused", !!st.paused); }
     if (statusEl) { statusEl.textContent = statusText(st); statusEl.className = "badge " + (st.paused ? "badge-warning" : st.status === "final" ? "badge-success" : st.status === "setup" ? "badge-info" : st.status === "done" ? "badge-warning" : "badge-live"); }
     document.querySelectorAll("[data-dr-timer]").forEach(function (t) {
@@ -222,6 +309,7 @@
   }
 
   document.addEventListener("click", function (e) {
+    var pl = e.target.closest("[data-dr-player]"); if (pl) return openPlayer(pl.getAttribute("data-dr-player"));
     var b = e.target.closest("[data-dr]");
     if (b) {
       var k = b.getAttribute("data-dr");
@@ -231,7 +319,8 @@
       if (k === "nominate") {
         var sel = b.parentNode.querySelector("select"), pid = b.getAttribute("data-pid") || (sel && sel.value), team = b.getAttribute("data-team");
         if (!pid) return toast("Choose a player to nominate.");
-        var r = D.player(pid); return done(D.nominate(pid, team), (r ? r.first + " " + r.last : "Player") + " is on the block.");
+        var r = D.player(pid), err = D.nominate(pid, team); if (!err && dlg.open) dlg.close();
+        return done(err, (r ? r.first + " " + r.last : "Player") + " is on the block.");
       }
       if (k === "bid") return doBid(+b.getAttribute("data-amt"));
       if (k === "pause") return done(D.pause(), "Clock paused for everyone.");
@@ -245,9 +334,12 @@
     var p = e.target.closest("[data-dr-pos]"); if (p) { posF = p.getAttribute("data-dr-pos"); return render(); }
     if (e.target.closest("[data-dr-starred]")) { starredOnly = !starredOnly; return render(); }
     var s = e.target.closest("[data-dr-star]");
-    if (s) { var id = s.getAttribute("data-dr-star"), bd = board(), i = bd.indexOf(id); if (i >= 0) bd.splice(i, 1); else bd.push(id); setBoard(bd); render(); }
+    if (s) { var id = s.getAttribute("data-dr-star"), bd = board(), i = bd.indexOf(id); if (i >= 0) bd.splice(i, 1); else bd.push(id); setBoard(bd); render(); if (dlg.open && openPid) { var sp = D.player(openPid); if (sp) set(dlgBody.querySelector("[data-dr-pstatus]"), pstatusHtml(D.load(), sp)); } }
   });
-  document.addEventListener("change", function (e) { if (e.target.id === "drSecs") done(D.setSecs(+e.target.value)); });
+  document.addEventListener("change", function (e) {
+    if (e.target.id === "drSecs") done(D.setSecs(+e.target.value));
+    if (e.target.id === "drSort") { sortBy = e.target.value; render(); }
+  });
   document.addEventListener("input", function (e) { if (e.target.id === "drQ") { q = e.target.value.trim().toLowerCase(); render(); } });
   document.addEventListener("submit", function (e) {
     if (!e.target.matches("[data-dr-bidform]")) return;
