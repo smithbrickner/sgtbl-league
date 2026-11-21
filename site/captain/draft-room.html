@@ -7,12 +7,12 @@
 <link rel="icon" type="image/svg+xml" href="../assets/img/sgtbl-logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/tokens.css?v=20261121c">
-<link rel="stylesheet" href="../assets/css/base.css?v=20261121c">
-<link rel="stylesheet" href="../assets/css/site.css?v=20261121c">
-<link rel="stylesheet" href="../assets/css/admin.css?v=20261121c">
+<link rel="stylesheet" href="../assets/css/tokens.css?v=20261121g">
+<link rel="stylesheet" href="../assets/css/base.css?v=20261121g">
+<link rel="stylesheet" href="../assets/css/site.css?v=20261121g">
+<link rel="stylesheet" href="../assets/css/admin.css?v=20261121g">
 <style>.team-cell { display: flex; align-items: center; gap: var(--space-3); }</style>
-<link rel="stylesheet" href="../assets/css/captain.css?v=20261121c">
+<link rel="stylesheet" href="../assets/css/captain.css?v=20261121g">
 </head>
 <body class="admin" data-draft-role="coach">
 <div class="admin-shell">
@@ -66,24 +66,28 @@
 
     <div class="admin-content">
       <div class="rg-proto"><strong>Prototype:</strong> the draft runs in this browser only. You are the Knicks; the other five coaches are simulated. The League Admin runs and confirms the draft in the <a href="../admin/draft.html" target="_blank" rel="noopener">Draft Suite</a> (open it in a second tab).</div>
-      <div class="kpi-grid" data-dr-kpis></div>
-      <div class="dr-layout">
-        <aside class="dr-side dr-teams-side" data-dr-teams></aside>
-        <section class="dr-stage" data-dr-stage aria-label="Player on the block"></section>
-        <aside class="dr-side dr-feed-side" data-dr-feed></aside>
+      <div class="dr-room">
+        <div class="dr-strip" data-dr-teams aria-label="Teams"></div>
+        <section class="dr-hero" aria-label="On the block">
+          <div class="dr-hero-photo" data-dr-photo></div>
+          <div class="dr-hero-main" data-dr-main></div>
+          <div class="dr-hero-bid" data-dr-bidbox></div>
+        </section>
+        <div data-dr-extra></div>
+        <div class="dr-lower">
+          <section class="dr-panel"><h3>Draft board</h3><div class="dr-board" data-dr-board></div></section>
+          <section class="dr-panel"><h3>Bid log</h3><div data-dr-log></div></section>
+        </div>
+        <section class="dr-panel"><h3>Available players</h3><div data-dr-pool></div></section>
       </div>
-      <h2 class="dr-section-title">Rosters</h2>
-      <div class="dr-rosters" data-dr-rosters></div>
-      <h2 class="dr-section-title">Available players</h2>
-      <div data-dr-pool></div>
       <p class="muted rg-foot">Stars are shared with your Player Pool page. You see basketball details only; contact, emergency and medical details stay with the League Admin.</p>
     </div>
   </div>
 </div>
 <div class="rg-toast" role="status" aria-live="polite" data-rg-toast hidden></div>
-<script src="../assets/js/interactions.js?v=20261121c"></script>
-<script src="../assets/js/registrations.js?v=20261121c"></script>
-<script src="../assets/js/draft.js?v=20261121c"></script>
-<script src="../assets/js/draft-ui.js?v=20261121c"></script>
+<script src="../assets/js/interactions.js?v=20261121g"></script>
+<script src="../assets/js/registrations.js?v=20261121g"></script>
+<script src="../assets/js/draft.js?v=20261121g"></script>
+<script src="../assets/js/draft-ui.js?v=20261121g"></script>
 </body>
 </html>

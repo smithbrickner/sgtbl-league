@@ -142,8 +142,9 @@
   // A round headshot, falling back to initials when there's no photo (or it fails to load). size: sm | md | lg
   function avatar(r, size) {
     var ini = ((r.first || "").charAt(0) + (r.last || "").charAt(0)).toUpperCase(), src = photo(r);
-    return '<span class="hs hs-' + (size || "sm") + '" aria-hidden="true">' + esc(ini) +
-      (src ? '<img src="' + src + '" alt=""' + (size === "lg" || size === "md" ? "" : ' loading="lazy"') + ' referrerpolicy="no-referrer" onerror="this.remove()">' : "") + '</span>';
+    // With a photo: a clean cut-out (no circle, no initials). If the photo fails to load, it falls back to initials.
+    return '<span class="hs hs-' + (size || "sm") + (src ? " hs-photo" : "") + '" aria-hidden="true"><span class="hs-ini">' + esc(ini) + '</span>' +
+      (src ? '<img src="' + src + '" alt=""' + (size === "xl" || size === "lg" || size === "md" ? "" : ' loading="lazy"') + ' referrerpolicy="no-referrer" onerror="this.parentNode.classList.remove(\'hs-photo\');this.remove()">' : "") + '</span>';
   }
 
   var POS = { PG: "Point Guard", SG: "Shooting Guard", SF: "Small Forward", PF: "Power Forward", C: "Center" };
@@ -154,7 +155,7 @@
   window.SGTBLReg = {
     TEAMS: TEAMS, POS: POS, load: load, save: save, phase: phase, setPhase: setPhase, pool: pool, update: update, addLog: addLog,
     upsertFromForm: upsertFromForm, photo: photo, avatar: avatar, parseSvId: parseSvId, fmtHt: fmtHt, fmtDate: fmtDate, esc: esc,
-    reset: function () { try { localStorage.removeItem(KEY); localStorage.removeItem(PHASE_KEY); localStorage.removeItem("sgtbl-mock-board"); localStorage.removeItem("sgtbl-mock-draft-v1"); } catch (e) {} },
+    reset: function () { try { localStorage.removeItem(KEY); localStorage.removeItem(PHASE_KEY); localStorage.removeItem("sgtbl-mock-board"); localStorage.removeItem("sgtbl-mock-draft-v1"); localStorage.removeItem("sgtbl-mock-draft-v2"); } catch (e) {} },
     // The coach persona's FAAB: $100 per season, $14 already spent (matches the Free Agency page).
     faabLeft: function (team) { var spent = team === "Knicks" ? 14 : 0; load().forEach(function (r) { if (r.team === team && r.status !== "declined") spent += r.bid || 0; }); return 100 - spent; }
   };
