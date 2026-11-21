@@ -1,7 +1,7 @@
 /* SGTBL registrations: PROTOTYPE data layer.
    Stands in for the real database (planned: Supabase). Everything lives in this browser's localStorage under one key,
-   so the public form, the League Admin Registrations page and the Team Portal Player Pool all see the same records on
-   this computer. Nothing is sent anywhere. Sample players are fictional.
+   so the public form, the League Admin Registrations page, the Team Portal Player Pool and the auction draft
+   (draft.js) all see the same records on this computer. Nothing is sent anywhere. Sample players are fictional.
 
    Record lifecycle:
      status:  submitted -> approved -> (claim -> rostered) | declined
@@ -9,7 +9,7 @@
    An approved, unrostered player is in the DRAFT POOL while the league phase is "preseason" and in the FREE-AGENT POOL
    once the phase is "inseason" (draft complete). */
 (function () {
-  var KEY = "sgtbl-mock-registrations-v1", PHASE_KEY = "sgtbl-mock-phase";
+  var KEY = "sgtbl-mock-registrations-v2", PHASE_KEY = "sgtbl-mock-phase";
   var TEAMS = ["Knicks", "Eagles", "Sharks", "Wolves", "Tigers", "Rams"];
 
   function rec(o) {
@@ -51,9 +51,35 @@
       log: [["2026-11-17", "Registered"], ["2026-11-17", "Paid $100"]] }),
     rec({ id: "SGT-0009", submitted: "2026-11-01", first: "Isaiah", last: "Grant", email: "igrant@example.com", phone: "(631) 555-0149", heard: "A friend or family member",
       pos: ["PG", "SG"], ht: "6-2", hand: "Right", level: "College (varsity) or higher", jersey: "L", nums: ["0", "10", "Random"],
-      ecName: "Denise Grant", ecPhone: "(631) 555-0150", faith: "Yes", status: "rostered", team: "Eagles", svId: "4f1c2b7e-8d3a-4e61-9b2f-0c5a7d9e1f23",
-      log: [["2026-11-01", "Registered"], ["2026-11-01", "Paid $100"], ["2026-11-02", "Approved by League Admin"], ["2026-11-10", "Drafted by Eagles"], ["2026-11-11", "SportsVisio profile linked"]] })
+      ecName: "Denise Grant", ecPhone: "(631) 555-0150", faith: "Yes", status: "approved", svId: "4f1c2b7e-8d3a-4e61-9b2f-0c5a7d9e1f23",
+      log: [["2026-11-01", "Registered"], ["2026-11-01", "Paid $100"], ["2026-11-02", "Approved by League Admin"], ["2026-11-11", "SportsVisio profile linked"]] })
   ];
+
+  // 45 more fictional, already-approved players so the auction draft has a full pool:
+  // 50 approved in all, plus 4 still awaiting review (6 teams x 9 = 54 roster spots, so the admin approves those 4 to fill every roster).
+  // "Name|positions|height|level|shooting hand"  level: V varsity+, C college club, H high school, P pickup
+  var LV = { V: "College (varsity) or higher", C: "College (club or intramural)", H: "High school", P: "Pickup / recreational" };
+  var SIZES = { PG: "M", SG: "L", SF: "L", PF: "XL", C: "2XL" };
+  var HEARD = ["Church announcement", "A friend or family member", "Social media", "Flyer or poster"];
+  ("Nathan Cole|PG|5-11|H|R;Elijah Brooks|SG,SF|6-3|C|R;Marco Bianchi|SF|6-4|H|R;Derek Lindqvist|C|6-9|V|R;Samuel Adeyemi|PF,C|6-7|C|R;" +
+   "Aaron Feldman|PG,SG|6-0|P|R;Kevin Tran|SG|5-10|H|L;Christopher Hale|SF,PF|6-5|V|R;Jordan Pierce|PG|6-1|C|R;Micah Bennett|SG|6-2|H|R;" +
+   "Owen Gallagher|PF|6-6|C|R;Ryan Castillo|SF|6-3|P|R;Terrence Wallace|C|6-8|H|R;Gabriel Nunez|PG|5-9|P|R;Patrick Doyle|PF,C|6-7|H|L;" +
+   "Simon Achebe|SG,SF|6-4|V|R;Joshua Kim|PG,SG|5-11|C|R;Victor Santos|SF|6-5|H|R;Mason Reid|SG|6-1|P|R;Nicholas Petrov|C|6-10|C|R;" +
+   "Darius Coleman|PF|6-6|V|R;Ethan Walsh|SF,PF|6-4|H|R;Matthew Osei|PG|6-0|H|R;Brandon Hughes|SG|6-2|C|L;Peter Novak|PF|6-7|P|R;" +
+   "Isaac Mendel|SF|6-3|H|R;Trevor Banks|C|6-8|C|R;Dominic Russo|PG,SG|6-1|V|R;Corey Jenkins|SG,SF|6-3|P|R;Felix Moreau|PF|6-5|H|R;" +
+   "Joel Andersen|C|6-9|H|R;Malik Hayes|PG|6-0|C|R;Stephen Clarke|SF|6-4|P|L;Adrian Vega|SG|6-1|H|R;Gideon Mensah|PF,C|6-8|C|R;" +
+   "Lucas Hartmann|SF,PF|6-6|H|R;Reggie Dunn|PG|5-10|P|R;Tobias Lang|SG,SF|6-3|C|R;Wesley Barnes|C|6-7|H|R;Henry Caldwell|PF|6-5|P|R;" +
+   "Andrew Silva|PG,SG|6-0|H|R;Cameron Price|SF|6-4|C|R;Noah Fitzgerald|SG|6-2|H|R;Julian Ortiz|PF|6-6|V|R;Kofi Asante|C|6-8|H|R")
+  .split(";").forEach(function (row, i) {
+    var f = row.split("|"), nm = f[0].split(" "), pos = f[1].split(","), n = 10 + i, day = String(1 + (i * 7) % 18).padStart(2, "0");
+    var date = "2026-11-" + day, ph = "(631) 555-" + String(200 + i * 2), aid = i % 15 === 7;
+    SEED.push(rec({ id: "SGT-" + String(n).padStart(4, "0"), submitted: date, first: nm[0], last: nm[1],
+      email: (nm[0] + "." + nm[1]).toLowerCase() + "@example.com", phone: ph, heard: HEARD[i % 4], church: i % 6 === 5 ? "NA" : "Smithtown Gospel Tabernacle",
+      pos: pos, ht: f[2], hand: f[4] === "L" ? "Left" : "Right", level: LV[f[3]], jersey: SIZES[pos[0]], nums: [String((i * 7 + 2) % 60), "Random"],
+      ecName: "Family contact", ecPhone: "(631) 555-" + String(201 + i * 2), faith: ["Yes", "Yes", "Not sure", "No"][i % 4], open: i % 4 >= 2 ? "Yes" : "",
+      aid: aid, payment: aid ? "assistance-granted" : "paid", status: "approved",
+      log: [[date, "Registered"], [date, aid ? "Fee assistance granted" : "Paid $100"], [date, "Approved by League Admin"]] }));
+  });
 
   function load() {
     try { var raw = localStorage.getItem(KEY); if (raw) return JSON.parse(raw); } catch (e) {}
@@ -110,7 +136,7 @@
   window.SGTBLReg = {
     TEAMS: TEAMS, POS: POS, load: load, save: save, phase: phase, setPhase: setPhase, pool: pool, update: update, addLog: addLog,
     upsertFromForm: upsertFromForm, parseSvId: parseSvId, fmtHt: fmtHt, fmtDate: fmtDate, esc: esc,
-    reset: function () { try { localStorage.removeItem(KEY); localStorage.removeItem(PHASE_KEY); localStorage.removeItem("sgtbl-mock-board"); } catch (e) {} },
+    reset: function () { try { localStorage.removeItem(KEY); localStorage.removeItem(PHASE_KEY); localStorage.removeItem("sgtbl-mock-board"); localStorage.removeItem("sgtbl-mock-draft-v1"); } catch (e) {} },
     // The coach persona's FAAB: $100 per season, $14 already spent (matches the Free Agency page).
     faabLeft: function (team) { var spent = team === "Knicks" ? 14 : 0; load().forEach(function (r) { if (r.team === team && r.status !== "declined") spent += r.bid || 0; }); return 100 - spent; }
   };

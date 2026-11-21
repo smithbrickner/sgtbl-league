@@ -7,10 +7,10 @@
 <link rel="icon" type="image/svg+xml" href="../assets/img/sgtbl-logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/tokens.css?v=20261120c">
-<link rel="stylesheet" href="../assets/css/base.css?v=20261120c">
-<link rel="stylesheet" href="../assets/css/site.css?v=20261120c">
-<link rel="stylesheet" href="../assets/css/admin.css?v=20261120c">
+<link rel="stylesheet" href="../assets/css/tokens.css?v=20261121a">
+<link rel="stylesheet" href="../assets/css/base.css?v=20261121a">
+<link rel="stylesheet" href="../assets/css/site.css?v=20261121a">
+<link rel="stylesheet" href="../assets/css/admin.css?v=20261121a">
 </head>
 <body class="admin">
 <div class="admin-shell">
@@ -136,8 +136,8 @@
 </dialog>
 <div class="rg-toast" role="status" aria-live="polite" data-rg-toast hidden></div>
 
-<script src="../assets/js/interactions.js?v=20261120c"></script>
-<script src="../assets/js/registrations.js?v=20261120c"></script>
+<script src="../assets/js/interactions.js?v=20261121a"></script>
+<script src="../assets/js/registrations.js?v=20261121a"></script>
 <script>
 (function () {
   var R = window.SGTBLReg, esc = R.esc, filter = "review", q = "", openId = null;
@@ -213,7 +213,7 @@
     if (r.payment === "assistance-requested") a.push('<div class="rg-act-note">Fee assistance requested. Follow up privately, then:</div><button type="button" class="btn btn-ghost rg-btn-line" data-act="grant">Grant fee assistance</button>');
     if (r.status === "submitted") a.push('<div class="rg-act-row"><button type="button" class="btn btn-primary" data-act="approve"' + (feeOk(r) ? "" : " disabled") + '>Approve' + (ph === "preseason" ? " to draft pool" : " as free agent") + '</button><button type="button" class="btn btn-ghost rg-btn-line" data-act="decline">Decline</button></div>' + (feeOk(r) ? "" : '<div class="rg-act-note">Approval unlocks once the fee is paid or assistance is granted.</div>'));
     if (r.status === "claim") a.push('<div class="rg-act-note"><b>' + esc(r.team) + '</b> placed a sealed bid of <b>$' + r.bid + '</b>.</div><div class="rg-act-row"><button type="button" class="btn btn-primary" data-act="claim-ok">Approve claim: ' + esc(r.team) + '</button><button type="button" class="btn btn-ghost rg-btn-line" data-act="claim-no">Reject claim</button></div>');
-    if (r.status === "approved" && ph === "preseason") a.push('<div class="rg-act-row"><label class="sr-only" for="rgDraftTeam">Drafted by</label><select id="rgDraftTeam" class="input">' + R.TEAMS.map(function (t) { return "<option>" + t + "</option>"; }).join("") + '</select><button type="button" class="btn btn-ghost rg-btn-line" data-act="draft">Record draft pick</button></div><div class="rg-act-note">Normally filled in by the Draft Suite when a coach wins the player at auction.</div>');
+    if (r.status === "approved" && ph === "preseason") a.push('<div class="rg-act-note">In the draft pool. Coaches bid on them in the auction draft; the <a href="draft.html">Draft Suite</a> adds them to a roster when you confirm the sale.</div>');
     if (r.status === "declined") a.push('<button type="button" class="btn btn-ghost rg-btn-line" data-act="reopen">Move back to review</button>');
     P("actions").innerHTML = a.join("");
     P("actions").hidden = !a.length;
@@ -241,7 +241,6 @@
       if (kind === "reopen") { r.status = "submitted"; R.addLog(r, "Moved back to review"); msg = "Moved back to review."; }
       if (kind === "claim-ok") { r.status = "rostered"; R.addLog(r, "Claim approved: signed with " + r.team + " ($" + r.bid + " FAAB)"); R.addLog(r, "Text sent to player: you’re on the " + r.team + "!"); msg = r.first + " " + r.last + " is on the " + r.team + ". The player was texted (in the real site)."; }
       if (kind === "claim-no") { R.addLog(r, "Claim by " + r.team + " rejected"); r.status = "approved"; r.team = ""; r.bid = 0; msg = "Claim rejected; the player is back in the free-agent pool."; }
-      if (kind === "draft") { var t = document.getElementById("rgDraftTeam").value; r.status = "rostered"; r.team = t; R.addLog(r, "Drafted by " + t); R.addLog(r, "Text sent to player: you’re on the " + t + "!"); msg = r.first + " " + r.last + " drafted by the " + t + "."; }
       if (kind === "sv") {
         var v = R.parseSvId(document.getElementById("rgSv").value);
         if (!v) { msg = null; return; }

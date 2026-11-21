@@ -7,12 +7,12 @@
 <link rel="icon" type="image/svg+xml" href="../assets/img/sgtbl-logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/tokens.css?v=20261120c">
-<link rel="stylesheet" href="../assets/css/base.css?v=20261120c">
-<link rel="stylesheet" href="../assets/css/site.css?v=20261120c">
-<link rel="stylesheet" href="../assets/css/admin.css?v=20261120c">
+<link rel="stylesheet" href="../assets/css/tokens.css?v=20261121a">
+<link rel="stylesheet" href="../assets/css/base.css?v=20261121a">
+<link rel="stylesheet" href="../assets/css/site.css?v=20261121a">
+<link rel="stylesheet" href="../assets/css/admin.css?v=20261121a">
 </head>
-<body class="admin">
+<body class="admin" data-draft-role="admin">
 <div class="admin-shell">
   <div class="admin-scrim"></div>
   <aside class="admin-side">
@@ -38,9 +38,8 @@
     <header class="admin-topbar">
       <button class="btn btn-icon btn-ghost admin-topbar-toggle" aria-label="Toggle navigation"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
       <h1>Draft Suite</h1>
-      <span class="badge badge-live">Season 1 · Auction Draft</span>
+      <span class="badge badge-info" data-dr-status>Not started</span>
       <div class="spacer"></div>
-      <button class="btn btn-outline btn-sm">Pause Auction</button>
       <div class="notif-wrap">
         <button class="btn btn-icon btn-ghost" id="notifBtn" aria-haspopup="true" aria-expanded="false" aria-label="Notifications">
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
@@ -72,79 +71,26 @@
     </header>
 
     <div class="admin-content">
-      <p class="muted" style="font-size:var(--text-sm);margin-bottom:var(--space-5);max-width:70ch">Coaches bid from a one-time $1,000 draft budget on one nominated player at a time. The draft budget exists only for this auction — unspent dollars disappear afterward and don't carry into the in-season $100 FAAB budget. Season 2+ new-entrant drafts use a straight order by reverse standings instead — this auction room is for the Season 1 full-pool build.</p>
-      <div class="draft-shell">
-        <div class="stack" style="gap:var(--space-4)">
-          <h3>Draft Budgets Remaining</h3>
-          <div class="pick-order-item"><span class="num">1</span>Rams<span class="muted tnum" style="margin-left:auto;font-weight:700">$210</span></div>
-          <div class="pick-order-item"><span class="num">2</span>Tigers<span class="muted tnum" style="margin-left:auto;font-weight:700">$185</span></div>
-          <div class="pick-order-item current"><span class="num">3</span>Wolves<span class="tnum" style="margin-left:auto;font-weight:700;color:var(--gold-600)">$162</span></div>
-          <div class="pick-order-item"><span class="num">4</span>Sharks<span class="muted tnum" style="margin-left:auto;font-weight:700">$140</span></div>
-          <div class="pick-order-item"><span class="num">5</span>Eagles<span class="muted tnum" style="margin-left:auto;font-weight:700">$98</span></div>
-          <div class="pick-order-item"><span class="num">6</span>Knicks<span class="muted tnum" style="margin-left:auto;font-weight:700">$76</span></div>
-        </div>
-
-        <div class="stack" style="gap:var(--space-5)">
-          <div class="on-clock">
-            <span class="eyebrow" style="color:var(--gold-400)">Now Nominated</span>
-            <div class="team" style="display:flex;align-items:center;justify-content:center;gap:10px"><span class="avatar avatar-sm av-3">TB</span><a href="player.html">Theo Bianchi</a> <span class="muted" style="font-weight:400;font-size:var(--text-sm)">· Center Back</span></div>
-            <div class="muted" style="font-size:var(--text-xs);margin:4px 0">Base price $120</div>
-            <div class="timer" data-countdown="0:18">0:18</div>
-            <div class="row" style="justify-content:center;gap:10px;margin-top:var(--space-3)">
-              <div style="text-align:left">
-                <div class="muted" style="font-size:var(--text-xs);color:rgba(255,255,255,.65)">Current high bid</div>
-                <div style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:800;color:var(--gold-400)">$142 <span style="font-size:var(--text-sm);color:#fff">— Wolves</span></div>
-              </div>
-            </div>
-            <div class="row" style="justify-content:center;gap:8px;margin-top:var(--space-4)">
-              <input class="input" type="number" value="148" style="width:100px;text-align:center">
-              <button class="btn btn-accent btn-sm">Place Bid</button>
-              <button class="btn btn-primary btn-sm">Sell — Going, Going, Gone</button>
-            </div>
-          </div>
-
-          <div class="filters" style="margin-bottom:0">
-            <div class="field search"><label for="dq">Search</label><input id="dq" class="input" type="search" placeholder="Search player pool…" data-filter-input="[data-pool-row]"></div>
-            <div class="field"><label for="dpos">Position</label><select id="dpos" class="input"><option>All Positions</option><option>Goalkeeper</option><option>Wing</option><option>Back</option><option>Pivot</option></select></div>
-            <div class="field"><label for="dsort">Sort By</label><select id="dsort" class="input"><option>Base Price</option><option>Name</option></select></div>
-          </div>
-
-          <div>
-            <h3 style="margin-bottom:var(--space-3)">Up Next — Nomination Queue</h3>
-            <div class="player-pool-row" data-pool-row data-filter-text="grace holloway pivot">
-              <span class="avatar avatar-sm av-4">GH</span>
-              <div><strong><a href="player.html">Grace Holloway</a></strong><div class="muted" style="font-size:var(--text-xs)">Pivot · Base price $95</div></div>
-              <span class="badge">Pool</span>
-              <button class="btn btn-outline btn-sm">Nominate</button>
-            </div>
-            <div class="player-pool-row" data-pool-row data-filter-text="eli farrow right wing">
-              <span class="avatar avatar-sm av-6">EF</span>
-              <div><strong><a href="player.html">Eli Farrow</a></strong><div class="muted" style="font-size:var(--text-xs)">Right Wing · Base price $80</div></div>
-              <span class="badge">Pool</span>
-              <button class="btn btn-outline btn-sm">Nominate</button>
-            </div>
-            <div class="player-pool-row" data-pool-row data-filter-text="nina volkov goalkeeper">
-              <span class="avatar avatar-sm av-8">NV</span>
-              <div><strong><a href="player.html">Nina Volkov</a></strong><div class="muted" style="font-size:var(--text-xs)">Goalkeeper · Base price $70</div></div>
-              <span class="badge">Pool</span>
-              <button class="btn btn-outline btn-sm">Nominate</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="stack" style="gap:var(--space-3)">
-          <h3>Recently Sold</h3>
-          <div class="card card-pad">
-            <div class="pick-feed-item"><span class="avatar avatar-sm av-5">KB</span><div><strong><a href="player.html">Kwame Boateng</a></strong><div class="muted" style="font-size:var(--text-xs)">Right Back · Sold to Tigers for $96</div></div></div>
-            <div class="pick-feed-item"><span class="avatar avatar-sm av-2">RH</span><div><strong><a href="player.html">Rosa Herrera</a></strong><div class="muted" style="font-size:var(--text-xs)">Left Wing · Sold to Rams for $88</div></div></div>
-            <div class="pick-feed-item"><span class="avatar avatar-sm av-7">DM</span><div><strong><a href="player.html">Diego Mora</a></strong><div class="muted" style="font-size:var(--text-xs)">Pivot · Sold to Knicks for $104</div></div></div>
-          </div>
-          <p class="muted" style="font-size:var(--text-xs)">Sales auto-update team rosters and post to the public Transactions Log once published.</p>
-        </div>
+      <div class="rg-proto"><strong>Prototype:</strong> the draft runs in this browser only. The Knicks are the coach you can play in the Team Portal’s <a href="../captain/draft-room.html" target="_blank" rel="noopener">Draft Room</a> (open it in a second tab); the other five coaches are simulated. The pool is the approved players from <a href="registrations.html">Registrations</a>. <button type="button" class="link-btn" data-dr="reset">Reset draft</button>
+        <p class="dr-small" style="margin:6px 0 0">Season 1 auction draft: each team has a one-time $1,000 draft budget (gone after the draft, separate from FAAB) to fill 9 roster spots. Coaches take turns nominating; the nominator opens at $1. Bids are sealed until the countdown ends, then every team’s bid is shown. Ties go to another countdown between the tied teams. You confirm each sale.</p>
       </div>
+      <div class="dr-layout">
+        <aside class="dr-side dr-teams-side" data-dr-teams></aside>
+        <section class="dr-stage" data-dr-stage aria-label="Player on the block"></section>
+        <aside class="dr-side dr-feed-side" data-dr-feed></aside>
+      </div>
+      <h2 class="dr-section-title">Rosters</h2>
+      <div class="dr-rosters" data-dr-rosters></div>
+      <h2 class="dr-section-title">Available players</h2>
+      <div data-dr-pool></div>
+      <p class="muted rg-foot">Coaches see the same player details as on their Player Pool page. Contact, emergency and medical details stay on the Registrations page.</p>
     </div>
   </div>
 </div>
-<script src="../assets/js/interactions.js?v=20261120c"></script>
+<div class="rg-toast" role="status" aria-live="polite" data-rg-toast hidden></div>
+<script src="../assets/js/interactions.js?v=20261121a"></script>
+<script src="../assets/js/registrations.js?v=20261121a"></script>
+<script src="../assets/js/draft.js?v=20261121a"></script>
+<script src="../assets/js/draft-ui.js?v=20261121a"></script>
 </body>
 </html>
