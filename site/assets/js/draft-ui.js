@@ -8,7 +8,7 @@
   var role = document.body.getAttribute("data-draft-role") || "coach", ME = D.ME, admin = role === "admin";
   var $ = function (s) { return document.querySelector(s); };
   var el = { teams: $("[data-dr-teams]"), photo: $("[data-dr-photo]"), main: $("[data-dr-main]"), bid: $("[data-dr-bidbox]"),
-    extra: $("[data-dr-extra]"), board: $("[data-dr-board]"), log: $("[data-dr-log]"), pool: $("[data-dr-pool]") };
+    extra: $("[data-dr-extra]"), scout: $("[data-dr-scout]"), board: $("[data-dr-board]"), log: $("[data-dr-log]"), pool: $("[data-dr-pool]") };
   var statusEl = $("[data-dr-status]"), toastEl = $("[data-rg-toast]");
   var posF = "all", starredOnly = false, q = "", sortBy = admin ? "name" : "scout";
 
@@ -33,6 +33,27 @@
   function saveScout(pid, rep) { var a = scoutAll(); a[ME] = a[ME] || {}; rep.at = Date.now(); a[ME][pid] = rep; try { localStorage.setItem(SCOUT_KEY, JSON.stringify(a)); } catch (e) {} }
   function rated(rep) { return SKILLS.filter(function (k) { return rep.r[k[0]]; }).length; }
   function total(rep) { return SKILLS.reduce(function (m, k) { return m + (rep.r[k[0]] || 0); }, 0); }
+  // A 1-10 grade as a bar (red -> yellow -> green, like the public player pages' percentile bars) with a marker.
+  function gradeBar(v) {
+    return v ? '<span class="dr-gbar"><span class="dr-gmark" style="left:' + ((v - 1) / 9 * 100).toFixed(1) + '%"></span></span>' : '<span class="dr-gbar empty"></span>';
+  }
+  // Coach's own scouting report for the player on the block, shown under the details (read-only; edit in the pop-up).
+  function heroScout(r) {
+    var rep = scout(r.id), n = rated(rep);
+    var h = '<section class="dr-hs" aria-label="Your scouting report"><div class="dr-hs-head"><span class="dr-label">Your scouting report</span>' +
+      (n ? '<b>' + total(rep) + '<span>/80</span></b>' + (n < 8 ? '<em>' + n + ' of 8 rated</em>' : "") : "") +
+      '<button type="button" class="dr-hs-edit" data-dr-player="' + r.id + '">' + (n || rep.notes ? "Edit report" : "Rate this player") + '</button></div>';
+    h += '<div class="dr-hs-grid">' + SKILLS.map(function (k) {
+      var v = rep.r[k[0]];
+      return '<div class="dr-hs-row"><span>' + k[1] + '</span>' + gradeBar(v) + '<b>' + (v || "&ndash;") + '</b></div>';
+    }).join("") + '</div>';
+    h += rep.notes ? '<p class="dr-hs-notes">&ldquo;' + esc(rep.notes) + '&rdquo;</p>' : '<p class="dr-hs-notes dr-muted">No notes yet. Only your team sees your ratings and notes.</p>';
+    return h + '</section>';
+  }
+  function scoutHeroHtml(st) {
+    if (admin || !st.lot || (st.status !== "bidding" && st.status !== "review")) return "";
+    var r = D.player(st.lot.pid); return r ? heroScout(r) : "";
+  }
   function plink(r, html) { return '<button type="button" class="dr-plink" data-dr-player="' + r.id + '">' + (html || esc(r.first + " " + r.last)) + '</button>'; }
 
   // Replace a region's HTML only when it changed; keep focus and typed values in it.
@@ -259,7 +280,7 @@
       h += '<section class="dr-scouting"><div class="dr-scout-head"><h3>Your scouting report</h3><span data-dr-stotal' + (rated(rep) ? "" : ' class="none"') + '>' + scoutTotalText(rep) + '</span></div>' +
         '<div class="dr-skills">' + SKILLS.map(function (k) {
           var v = rep.r[k[0]] || "";
-          return '<label class="dr-skill"><span>' + k[1] + '</span><select class="input" data-skill="' + k[0] + '"><option value="">&ndash;</option>' +
+          return '<label class="dr-skill"><span>' + k[1] + '</span>' + gradeBar(v) + '<select class="input" data-skill="' + k[0] + '" aria-label="' + k[1] + ' grade"><option value="">&ndash;</option>' +
             [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function (n) { return '<option' + (n === v ? " selected" : "") + '>' + n + '</option>'; }).join("") + '</select></label>';
         }).join("") + '</div>' +
         '<label class="dr-notes-l" for="drSNotes">Notes</label><textarea id="drSNotes" class="input dr-notes" rows="4" placeholder="Optional: strengths, fit with your roster, availability concerns, the most you\u2019d pay\u2026">' + esc(rep.notes) + '</textarea>' +
@@ -279,7 +300,11 @@
   }
   dlg.addEventListener("click", function (e) { if (e.target === dlg || e.target.closest("[data-dr-close]")) dlg.close(); });
   dlg.addEventListener("close", function () { if (saveT) { clearTimeout(saveT); saveFromDialog(); } openPid = ""; });
-  dlg.addEventListener("change", function (e) { if (e.target.matches("[data-skill]")) saveFromDialog(); });
+  dlg.addEventListener("change", function (e) {
+    if (!e.target.matches("[data-skill]")) return;
+    var bar = e.target.previousElementSibling; if (bar) bar.outerHTML = gradeBar(+e.target.value || 0);
+    saveFromDialog();
+  });
   dlg.addEventListener("input", function (e) { if (e.target.id === "drSNotes") { clearTimeout(saveT); saveT = setTimeout(function () { saveT = null; saveFromDialog(); }, 400); } });
 
   function statusText(st) {
@@ -292,7 +317,7 @@
     if (D.step(st, Date.now())) D.save(st);
     var now = st.paused || Date.now();                               // clocks freeze while paused
     set(el.teams, teamsHtml(st)); set(el.photo, photoHtml(st)); set(el.main, mainHtml(st)); set(el.bid, bidHtml(st));
-    set(el.extra, extraHtml(st)); set(el.board, boardHtml(st)); set(el.log, logHtml(st)); set(el.pool, poolHtml(st));
+    set(el.extra, extraHtml(st)); set(el.scout, scoutHeroHtml(st)); set(el.board, boardHtml(st)); set(el.log, logHtml(st)); set(el.pool, poolHtml(st));
     if (dlg.open && openPid) { var pr = D.player(openPid); if (pr) set(dlgBody.querySelector("[data-dr-pstatus]"), pstatusHtml(st, pr)); }
     var hero = $(".dr-hero"); if (hero) { hero.classList.toggle("is-review", st.status === "review"); hero.classList.toggle("is-paused", !!st.paused); }
     if (statusEl) { statusEl.textContent = statusText(st); statusEl.className = "badge " + (st.paused ? "badge-warning" : st.status === "final" ? "badge-success" : st.status === "setup" ? "badge-info" : st.status === "done" ? "badge-warning" : "badge-live"); }
